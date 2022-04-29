@@ -1,3 +1,84 @@
+/* colors */
+:root {
+  /* --background: #F7F7F7; */
+  --background: linear-gradient(to right,
+      #BD2932,
+      #611821);
+  --pri-t: #020101;
+  --sec-t: #ffffff;
+  --tri-t: #020101;
+  --pri-c: #222d69;
+  --sec-c: #69c4b7;
+  --navb-c: #222d69;
+  --foot-c: #939597;
+
+  /* typography */
+  --font: "Inter", sans-serif;
+
+  /* Web Size */
+  /* h1 weight/Bold lineheight/80*/
+  --wh1: 72px;
+  /* --mh1: 56px; */
+  --mh1: 47px;
+  /* h2 weight/Bold lineheight/64*/
+  --wh2: 56px;
+  --mh2: 40px;
+  /* h3 weight/Bold lineheight/48*/
+  --wh3: 40px;
+  --mh3: 23px;
+  /* h4 weight/Bold lineheight/32*/
+  --wh4: 24px;
+  /* --mh4: ; */
+  /* h5 weight/Regular lineheight/24*/
+  --wh5: 16px;
+  /* --mh5: ; */
+  /* label weight/Bold lineheight/auto*/
+  --wlabel: 12px;
+  --mlabel: 12px;
+  /* text-big weight/Regular lineheight/32*/
+  --wtb: 20px;
+  --mtb: 20px;
+  /* text weight/Bold lineheight/24*/
+  --wt: 16px;
+  --mt: 12px;
+  /* text-Gray...input text weight/Regular lineheight/24*/
+  --wtg: 16px;
+  --mtg: 16px;
+  /* text-Gray weight/Bold lineheight/24*/
+  --wts: 12px;
+  --mts: 12px;
+  /* button text weight/Bold lineheight/24*/
+  --wb: 16px;
+  --mb: 24px;
+
+  /* Grid Layout */
+  --wcol: 10% auto 10%;
+  --mcol: 5% auto 5%;
+  /* Section Padding */
+
+  --brad: 10px;
+}
+
+* {
+  transition: all 0.3s ease-in-out;
+}
+
+body {
+  width: 100vw;
+  background: var(--background);
+  /* something here for dark and light mode */
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -7,7 +88,29 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+
+/* Extra small devices (phones, 600px and down) */
+@media only screen and (max-width: 600px) {}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+  .container {
+    display: grid;
+    grid-template-columns: var(--mcol);
+  }
 }
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+  .container {
+    display: grid;
+    grid-template-columns: var(--wcol);
+  }
+
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {}
