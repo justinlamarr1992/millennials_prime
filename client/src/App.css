@@ -4,6 +4,7 @@
     /* --background: linear-gradient(to right,
             #BD2932,
             #611821); */
+    --form-c: #ffffff;
     --pri-t: #020101;
     --sec-t: #ffffff;
     --tri-t: #020101;
@@ -11,6 +12,8 @@
     --sec-c: #BD2932;
     --navb-c: #611821;
     --foot-c: #939597;
+
+    --outline: #8F92A1;
 
     /* typography */
     --font: "Inter", sans-serif;
@@ -56,7 +59,11 @@
     --mcol: 5% auto 5%;
     /* Section Padding */
 
-    --brad: 10px;
+    --brad: 32px;
+    --lbrad: 32px 0 0 32px;
+    --rbrad: 0 32px 32px 0;
+    --tbrad: 32px 32px 0 0;
+    --bbrad: 0 0 32px 32px;
 }
 
 * {

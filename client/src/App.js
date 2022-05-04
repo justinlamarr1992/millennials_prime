@@ -12,6 +12,8 @@ import Settings from "./Pages/Settings/Settings";
 import SignOut from "./Pages/auth/SignOut";
 import SignIn from "./Pages/auth/SignIn";
 import Register from "./Pages/auth/Register";
+import Questionaire from "./Pages/auth/Questionaire";
+import PasswordRecovery from "./Pages/auth/PasswordRecovery";
 
 function App() {
   return (
@@ -27,6 +29,8 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/signout" element={<SignOut />} />
         <Route path="/signin" element={<SignIn />} />
+        <Route path="/passwordrecover" element={<PasswordRecovery />} />
+        <Route path="/questionaire" element={<Questionaire />} />
       </Routes>
     </>
   );

@@ -1,5 +1,5 @@
 import React from "react";
-import "./signOut.css";
+import "./auth.css";
 
 const SignOut = () => {
   return <h1>This is the Sign Out Page</h1>;
