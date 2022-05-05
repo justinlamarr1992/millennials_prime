@@ -29,7 +29,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/signout" element={<SignOut />} />
         <Route path="/signin" element={<SignIn />} />
-        <Route path="/passwordrecover" element={<PasswordRecovery />} />
+        <Route path="/passwordrecovery" element={<PasswordRecovery />} />
         <Route path="/questionaire" element={<Questionaire />} />
       </Routes>
     </>

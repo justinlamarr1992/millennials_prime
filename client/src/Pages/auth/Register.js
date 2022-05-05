@@ -4,18 +4,27 @@ import { Link } from "react-router-dom";
 
 const Register = () => {
   return (
-    <div className="signin">
+    <div className="page">
       <div className="pic">
-        <h6>Already Have An Account?</h6>
-        {/* Needs to be Link for SignIn */}
-        <button>Login</button>
+        <div className="pic-container">
+          <h5 className="center-item">Already Have An Account?</h5>
+          {/* Needs to be Link for SignIn */}
+          <button className="auth-button other-button center-item">
+            Login
+          </button>
+        </div>
       </div>
       <div className="form">
-        <div className="signin-form">
-          <h2>Logo</h2>
-          <h4>Create an Account</h4>
-          <h5>Sign Up to Continue</h5>
-          <form action="">
+        <div className="form-container">
+          <div className="form-title">
+            <h2>Logo Go Here</h2>
+            <div className="form-text">
+              <h4>Create an Account</h4>
+              <h6 className="text-gray">Sign Up to Continue</h6>
+            </div>
+          </div>
+
+          <form className="auth-form" action="">
             <div className="label-input">
               <label htmlFor="">Name</label>
               <input type="text" />
@@ -28,11 +37,13 @@ const Register = () => {
               <label htmlFor="">Password</label>
               <input type="password" />
             </div>
-            <button>Create an Account</button>
+            <button className="auth-button login">Create an Account</button>
           </form>
-          <h6>Connect With Socials</h6>
-          <button>Connect With Google</button>
-          <button>Connect With Apple</button>
+          <h6 className="center-item">Connect With Socials</h6>
+          <div className="social-buttons">
+            <button className="auth-button google">Connect With Google</button>
+            <button className="auth-button apple">Connect With Apple</button>
+          </div>
         </div>
       </div>
     </div>

@@ -3,23 +3,34 @@ import "./auth.css";
 import { Link } from "react-router-dom";
 const PasswordRecovery = () => {
   return (
-    <div className="signin">
+    <div className="page">
       <div className="pic">
-        <h6>Remember Your Password?</h6>
-        {/* Needs to be Link for SignIn */}
-        <button>Login</button>
+        <div className="pic-container">
+          <h5 className="center-item">Remember Your Password?</h5>
+          {/* Needs to be Link for SignIn */}
+          <button className="auth-button other-button center-item">
+            Login
+          </button>
+        </div>
       </div>
       <div className="form">
-        <div className="signin-form">
-          <h2>Logo</h2>
-          <h4>Password Recovery</h4>
-          <h5>Enter your Email to Recover Your Password</h5>
-          <form action="">
+        <div className="form-container">
+          <div className="form-title">
+            <h2>Logo</h2>
+            <div className="form-text">
+              <h4>Password Recovery</h4>
+              <h6 className="text-gray">
+                Enter your Email to Recover Your Password
+              </h6>
+            </div>
+          </div>
+
+          <form className="auth-form" action="">
             <div className="label-input">
               <label htmlFor="">Email</label>
               <input type="email" />
             </div>
-            <button>Send Email</button>
+            <button className="auth-button login">Send Email</button>
           </form>
         </div>
       </div>

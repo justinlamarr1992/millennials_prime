@@ -1,0 +1,29 @@
+Navbar
+    Fix color
+    Icons/Buttons
+    Icon Glow
+    Text with Icons when hover
+
+
+SignIn Page
+
+Sign Out Page
+
+Register
+
+Password Recovery 
+
+Questionaire
+
+Home Page
+    Hard Coded format with Components
+
+Spacing
+
+Inputs
+
+Buttons
+
+
+
+form verification

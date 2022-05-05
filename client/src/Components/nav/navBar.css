@@ -1,26 +1,43 @@
 
 .nav-container:hover, .nav-container.expanded {
-    width: 250px;
+    width: var(--nav-hw);
     overflow: hidden;
     /* Maybe */
     opacity: 1;
 }
 
 .nav-container {
-    background: var(--pri-c);
-    color: pink;
+    background: var(--navb-c);
+    background-image: linear-gradient(
+        to left,
+         white 0%, 
+         var(--tri-c) 25%, 
+         var(--sec-c) 50%,
+        var(--pri-c) 75%,
+        black 100%
+         );
+    background-size: 250% 200%;
+    animation: movingGradient 5s linear infinite alternate;
+
+    color: var(--sec-t);
+    border-radius: var(--rbrad);
     position: absolute;
     top: 0;
     bottom: 0;
     height: 100%;
     left: 0;
-    width: 55px;
+    width: var(--nav-w);
     overflow: hidden ;
     -webkit-transition:width .2s linear;
     transition:width .2s linear;
     -webkit-transform:translateZ(0) scale(1, 1);
     box-shadow: 1px 0 15px rgba(0, 0, 0, 0.07);
     opacity:1;
+}
+
+@keyframes movingGradient {
+    from {background-position: 0 0;}
+    to{ background-position: 100% 100%;}
 }
 
 .nav-container>ul {
