@@ -17,6 +17,12 @@ const Questionaire = () => {
               <h6 className="text-gray">Answer the Following Questions</h6>
             </div>
           </div>
+          {/* Separate pages */}
+          {/* First page: peerson date of birth ect... */}
+          {/* Second page: COngrats... About you and Business how to help build */}
+          {/* Third Page: Needs like resources, equiptments */}
+          {/*  */}
+          {/* no typing answers only drop downs */}
 
           <form className="auth-form" action="">
             <div className="label-input">

@@ -19,7 +19,7 @@ const NavBar = (props) => {
             Logo Here
           </a>
           {/* this is the reason for the off measured buttons */}
-          <h4>Welcome Primer, {props.name}</h4>
+          {/* <h4>Welcome Primer, {props.name}</h4> */}
           {/* still figuring out the spacing and design */}
           {/* here is the Props passed from the app.js file...
           ...(props, state)...NavBar name="Justin"
