@@ -1,5 +1,6 @@
-/* colors */
+
 :root {
+    /* colors */
     --background: #F7F7F7;
     /* --background: linear-gradient(to right,
             #BD2932,
@@ -11,9 +12,9 @@
     --pri-c: #611821;
     --sec-c: #8e202b;
     --tri-c: #BD2932;
-    --qua-c: ##fffd9b;
-    --qui-c: ##ddcd76;
-    --hex-c: ##b9a054;
+    --qua-c: #fffd9b;
+    --qui-c: #ddcd76;
+    --hex-c: #b9a054;
     --navb-c: #BD2932;
     --foot-c: #939597;
 
@@ -65,32 +66,37 @@
     /* Section Padding */
 
     /* Boarder Radius */
+    --brad:2rem 2rem 2rem 2rem;
     --lbrad: 2rem 0 0 2rem;
     --rbrad: 0 2rem 2rem 0;
     --tbrad: 2rem 2rem 0 0;
     --bbrad: 0 0 2rem 2rem;
 
     /* NAVE BAR WIDTH */
---nav-w:15.625rem;
---nav-hw:30.438rem;
+    --nav-w:15.625rem;
+    --nav-hw:30.438rem;
 
-/* Button */
---but-h:3rem;
+    --navbutpad:0.5rem;
+
+    /* Button */
+--but-h:4rem;
 --but-w:100%;
 --but-brad:0.625rem;
 --but-bor:0 solid var(--outline);
 --but-mar:0.25rem 0.125rem;
 
 /* Inputs */
-    --inp-h:3rem;
+    --inp-h:4rem;
     --inp-w:100%;
     --inp-brad: 0.313rem;
     --inp-bor:1px solid var(--outline);
+    --inp-ind: 1rem;
 
 }
 
 * {
     transition: all 0.3s ease-in-out;
+    -webkit-transition: .2s ease;
 }
 
 body {

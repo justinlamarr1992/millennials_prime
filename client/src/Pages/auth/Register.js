@@ -39,7 +39,7 @@ const Register = () => {
             </div>
             <button className="auth-button login">Create an Account</button>
           </form>
-          <h6 className="center-item">Connect With Socials</h6>
+          <h6 className="center-item text-gray">Connect With Socials</h6>
           <div className="social-buttons">
             <button className="auth-button google">Connect With Google</button>
             <button className="auth-button apple">Connect With Apple</button>

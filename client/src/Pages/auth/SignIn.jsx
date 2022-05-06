@@ -34,12 +34,12 @@ const SignIn = () => {
               <label htmlFor="">Password</label>
               <input type="password" />
             </div>
-            <Link className="text-gray" key="home" to="/passwordrecover">
+            <Link className="text-gray" key="home" to="/passwordrecovery">
               Forgot Password
             </Link>
             <button className="auth-button login">Login</button>
           </form>
-          <h6 className="center-item">Connect With Socials</h6>
+          <h6 className="center-item text-gray">Connect With Socials</h6>
           <div className="social-buttons">
             <button className="auth-button google">Connect With Google</button>
             <button className="auth-button apple">Connect With Apple</button>

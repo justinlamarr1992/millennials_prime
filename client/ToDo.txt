@@ -1,11 +1,5 @@
-Navbar
-    Fix color
-    Icons/Buttons
-    Icon Glow
-    Text with Icons when hover
-
-
 SignIn Page
+    put max on inputs and button widths
 
 Sign Out Page
 
@@ -27,3 +21,11 @@ Buttons
 
 
 form verification
+
+Make all buttons same height
+
+Navbar
+    Text with Icons when hover
+    Make buttons more of square
+
+

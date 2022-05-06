@@ -9,16 +9,16 @@ import Messages from "./Pages/Messaging/Messages";
 import ConnectedUsers from "./Pages/ConnectedUsers/ConnectedUsers";
 import Settings from "./Pages/Settings/Settings";
 
-import SignOut from "./Pages/auth/SignOut";
+import SignOut from "./Pages/auth/SignOut.jsx";
 import SignIn from "./Pages/auth/SignIn";
 import Register from "./Pages/auth/Register";
 import Questionaire from "./Pages/auth/Questionaire";
 import PasswordRecovery from "./Pages/auth/PasswordRecovery";
 
-function App() {
+function App(props, state) {
   return (
     <>
-      <NavBar />
+      <NavBar name="Justin" />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/messages" element={<Messages />} />
