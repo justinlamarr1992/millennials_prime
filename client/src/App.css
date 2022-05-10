@@ -84,6 +84,9 @@
 --but-brad:0.625rem;
 --but-bor:0 solid var(--outline);
 --but-mar:0.25rem 0.125rem;
+/* laptop Screen */
+--but-h-l:3rem;
+--but-mar-l:0.25rem 0.125rem;
 
 /* Inputs */
     --inp-h:4rem;
@@ -91,6 +94,10 @@
     --inp-brad: 0.313rem;
     --inp-bor:1px solid var(--outline);
     --inp-ind: 1rem;
+        /* laptop Screen */
+    --inp-h-l:3rem;
+    --inp-ind-l: 1rem;
+
 
 }
 
@@ -125,6 +132,16 @@ body {
         display: grid;
         grid-template-columns: var(--wcol);
     }
+    /* Testing button sizes and changes */
+    button{
+        height: var(--but-h-l);
+    font-size: var(--wh4);
+    }
+
+    input {
+    height: var(--inp-h-l);
+    }
+    /* Testing button sizes and changes */
 
 }
 

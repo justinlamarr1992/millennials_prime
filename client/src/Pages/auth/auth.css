@@ -72,14 +72,14 @@ justify-content: space-evenly;
 .label-input input {
     border-radius: var(--inp-brad);
     border: var(--inp-bor);
-    height: var(--inp-h);
+    /* height: var(--inp-h); */
     font-size: var(--wh4);
     text-indent: var(--inp-ind);
 }
 
 .auth-button {
     width: var(--but-w);
-    height: var(--but-h);
+    /* height: var(--but-h); */
     border-radius: var(--but-brad);
     border: var(--but-bor);
     margin: var(--but-mar);
