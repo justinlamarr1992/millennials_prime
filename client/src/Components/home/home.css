@@ -56,6 +56,9 @@ margin: 2% 5%;
 .item-shade{
 box-shadow:var(--tshade);
 }
+.p-item-shade{
+box-shadow:var(--p-bshade);
+}
 
 
 
@@ -112,6 +115,7 @@ height: 1rem;
 
 }
 .pr-video{
+    border-radius: var(--brad);
   /* border: 1px solid white; */
 
 }

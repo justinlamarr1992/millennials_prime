@@ -6,7 +6,7 @@ const PrimeNews = () => {
   return (
     <section id="prime" className="prime-container news-container p-con-shade ">
       <h2 className="pr-title">Prime News</h2>
-      <Video className="pr-video item-shade" />
+      <Video />
       <UserPostInfo className="pr-user-info" />
       <div className="pr-video-info">
         <h3>
