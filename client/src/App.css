@@ -2,10 +2,12 @@
 :root {
     /* colors */
     --background: #F7F7F7;
+    /* --background: #C4C4C4; */
     /* --background: linear-gradient(to right,
             #BD2932,
             #611821); */
     --form-c: #ffffff;
+    /* --form-c: #F7F7F7; */
     --pri-t: #020101;
     --sec-t: #ffffff;
     --tri-t: #8F92A1;
@@ -19,6 +21,14 @@
     --foot-c: #939597;
 
     --outline: #8F92A1;
+
+    --gl:0 0px 10px 4px var(--qua-c);
+    --gl-hov:0 0px 10px 10px var(--qui-c);
+
+    --shade:#8F92A1;
+    --bshade: 0 0px 25px 1px hsla(0, 0%, 56%, 0.381);
+    --p-bshade: 0 0px 25px 1px black;
+    --tshade: 0 0px 25px 1px var(--shade);
 
     /* typography */
     --font: "Inter", sans-serif;
@@ -63,7 +73,12 @@
     /* Grid Layout */
     --wcol: 10% auto 10%;
     --mcol: 5% auto 5%;
+
+    --boxcol: 6% auto 6%;
     /* Section Padding */
+    
+    /* Section Margins */
+
 
     /* Boarder Radius */
     --brad:2rem 2rem 2rem 2rem;
@@ -111,6 +126,9 @@ body {
     margin:0;
     padding:0;
 }
+h1, h2, h3, h4, h5, h6{
+    margin: 0;
+}
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {}
@@ -148,6 +166,8 @@ body {
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 @media only screen and (min-width: 1200px) {
     /* Font Sizes */
+
+
     h1 {
         font-size: var(--wh1);
         font-weight: Bold;
@@ -207,3 +227,17 @@ body {
         text-decoration: none;
     }
 }
+    /* background-image: linear-gradient(to top,
+     #fffd9b 0%, 
+     #f9f494 9.09%, 
+     #f3eb8d 18.18%, 
+     #ece286 27.27%, 
+     #e6d97f 36.36%, 
+     #e0d179 45.45%, 
+     #daca73 54.54%, 
+     #d4c26d 63.63%, 
+     #cdb967 72.72%, 
+     #c7b160 81.81%, 
+     #c0a85a 90.90%,
+     #b9a054 100%
+           ); */

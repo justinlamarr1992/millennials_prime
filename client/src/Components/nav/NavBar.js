@@ -12,7 +12,7 @@ import "./navBar.css";
 
 const NavBar = (props) => {
   return (
-    <nav className="nav-container">
+    <nav className="nav-container con-shade">
       <ul className="nav-buttons">
         <li className="nav-list top">
           <a href="" className="logo">

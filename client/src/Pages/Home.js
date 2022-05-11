@@ -1,17 +1,23 @@
 import React from "react";
 import Video from "../Components/video/Video";
+import HotItems from "../Components/home/HotItems";
+import Newsfeed from "../Components/home/Newsfeed";
+import UserPostInfo from "../Components/reusuables/UserPostInfo";
 
-import "./home.css";
+import "../Components/home/home.css";
+import PrimeNews from "../Components/home/PrimeNews";
+import SearchBar from "../Components/home/SearchBar";
+import FeatPrimes from "../Components/newsfeed/FeatPrimes";
 
 const Home = () => {
   return (
     <div className="page">
-      <div className="feed-container">
-        <h3>Prime News</h3>
-        <Video />
-        <div className="user-info"></div>
-        <div className="video-info"></div>
-        <div className="hot-items"></div>
+      <div className="home-container">
+        <SearchBar />
+        <PrimeNews />
+        <HotItems />
+        <FeatPrimes />
+        <Newsfeed />
       </div>
     </div>
   );

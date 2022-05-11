@@ -18,7 +18,7 @@ const Video = () => {
   } = useVideoPlayer(videoElement);
 
   return (
-    <div className="container">
+    <div className="pr-video">
       <div className="video-wrapper">
         <video
           src={video}
