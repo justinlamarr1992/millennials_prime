@@ -80,7 +80,7 @@ justify-content: space-evenly;
 
 .auth-button {
     width: var(--but-w);
-    /* height: var(--but-h); */
+    height: var(--but-h);
     border-radius: var(--but-brad);
     border: var(--but-bor);
     margin: var(--but-mar);

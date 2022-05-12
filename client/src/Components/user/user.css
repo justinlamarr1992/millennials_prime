@@ -13,6 +13,9 @@ padding-left: var(--nav-w);
 
 /* User Modal */
 .right-modal {
+    display: grid;
+    grid-template-columns: 5% auto 5%;
+    grid-template-rows: 5% auto 5%;
     /* border: 1px solid black; */
     height: 100vh;
     width: var(--mod-w);
@@ -27,13 +30,6 @@ padding-left: var(--nav-w);
     color: var(--pri-t);
     border-radius: var(--lbrad);
     overflow-x: hidden ;
-    /* -webkit-transform:translateZ(0) scale(1, 1);
-    box-shadow: 1px 0 15px rgba(0, 0, 0, 0.07);
-    opacity:1; */
-
-    display: grid;
-    grid-template-columns: 5% auto 5% ;
-    grid-template-rows: ;
 }
 .verified-modal{
         color: var(--sec-t);
@@ -51,4 +47,61 @@ background-image: linear-gradient(to top,
      #c0a85a 90.90%,
      #b9a054 100%
            );
+}
+
+/* Modal Contents */
+.modal-container{
+    grid-column: 2/3;
+    grid-row: 2/3;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* items in Modal */
+/* notifaction and profile pic */
+.modal-t-boxes{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-self: flex-end;
+}
+.top-boxes{
+    width: 82.5px;
+  height: 100%;
+  border-radius: var(--brad);
+}
+
+/* notifaction box */
+.noti-box{
+background-color: var(--pri-c);
+display: flex;
+justify-content: center;
+
+}
+.noti-num {
+    /* border: 1px solid black; */
+    align-self: center;
+    color: var(--sec-t);
+}
+.prof-pic{
+  /* border: 1px solid white; */
+  margin-left: 40px;
+}
+
+/* Modal Profile Picture */
+.modal-prof-info{
+width: 75%;
+  border-radius: var(--brad);
+
+}
+.modal-prof-pic{
+    /* maybe make this smaller for the profile picture in the modal */
+    width: 100%;
+  border-radius: var(--brad);
+}
+
+.prof-info-text{
+    text-align: center;
 }
