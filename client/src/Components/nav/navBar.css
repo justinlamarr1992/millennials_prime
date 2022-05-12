@@ -5,6 +5,10 @@
     opacity: 1;
 } */
 
+/* MAYBE MAKE THE PAGE GRID
+NAV Home Home SideDrawer
+*/
+
 .nav-container {
     height: 100vh;
     width: var(--nav-w);

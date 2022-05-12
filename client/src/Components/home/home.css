@@ -36,6 +36,11 @@ margin: 2% 5%;
 .pad-ring {
 
 }
+
+.title-space{
+    padding-bottom: 1.25rem;
+}
+
 .glow-ring {
       border-radius: var(--brad);
     background: var(--form-c);
@@ -115,6 +120,7 @@ height: 1rem;
 }
 .pr-video{
     border-radius: var(--brad);
+    margin: 20px 0;
   /* border: 1px solid white; */
 
 }

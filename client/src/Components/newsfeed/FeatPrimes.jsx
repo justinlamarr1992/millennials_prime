@@ -4,7 +4,7 @@ import Image from "../../Assets/Images/user.jpeg";
 const FeatPrimes = () => {
   return (
     <section className="feat-primes norm-container con-shade">
-      <h3 className="ht-item-title">Featured Primes</h3>
+      <h3 className="ht-item-title title-space">Featured Primes</h3>
       <div className="nr-items">
         {/* Every button need to be link to that contents param */}
         <div className="item1 fp-box hovering glow-ring">

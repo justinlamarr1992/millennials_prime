@@ -93,6 +93,9 @@
 
     --navbutpad:0.5rem;
 
+    /* MODAL  */
+    --mod-w:30.438rem;
+
     /* Button */
 --but-h:4rem;
 --but-w:100%;
