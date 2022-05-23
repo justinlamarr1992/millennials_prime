@@ -113,6 +113,17 @@ input[type="range"]::-moz-range-progress {
   column-gap: 20px;
 
 }
+/* Item Info */
+.item-user-info{
+  /* border: 1px solid white; */
+  display: grid;
+  grid-template-columns: auto 80%;
+  grid-template-rows: 50% 50%;
+  max-width: 500px;
+  height: 100px;
+  column-gap: 20px;
+
+}
 .info-pic{
   grid-area: 1/1/3/2;
   width: 82.5px;

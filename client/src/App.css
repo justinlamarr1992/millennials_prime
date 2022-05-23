@@ -29,6 +29,7 @@
     --bshade: 0 0px 25px 1px hsla(0, 0%, 56%, 0.381);
     --p-bshade: 0 0px 25px 1px black;
     --tshade: 0 0px 25px 1px var(--shade);
+    /* --active-shade: */
 
     /* typography */
     --font: "Inter", sans-serif;
@@ -132,6 +133,71 @@ body {
 h1, h2, h3, h4, h5, h6{
     margin: 0;
 }
+button {
+    cursor: pointer;
+    /* This interfers with video button */
+     /* width: var(--but-w);
+    height: var(--but-h);
+    border-radius: var(--but-brad);
+    border: var(--but-bor);
+    margin: var(--but-mar);
+    color: var(--sec-t);
+    font-size: var(--wh4);
+    font-weight: bold; */
+
+  
+}
+
+button:hover {
+
+
+}
+button:active {
+
+    box-shadow:var(--bshade);
+  transform: translateY(4px);
+}
+.clickable:hover {
+  cursor: pointer;
+
+}
+.clickable:active {
+      box-shadow:var(--bshade);
+  transform: translateY(4px);
+}
+
+/* shading and glowing */
+.pad-ring {
+
+}
+
+.title-space{
+    padding-bottom: 1.25rem;
+}
+
+.glow-ring {
+      border-radius: var(--brad);
+    background: var(--form-c);
+    box-shadow:var(--gl);
+}
+.hovering:hover{
+    border-radius: var(--brad);
+    background: var(--form-c);
+    box-shadow:var(--gl-hov);
+}
+.p-con-shade{
+    box-shadow: var(--p-bshade);
+}
+.con-shade{
+    box-shadow: var(--bshade);
+}
+.item-shade{
+box-shadow:var(--tshade);
+}
+.p-item-shade{
+box-shadow:var(--p-bshade);
+}
+
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {}

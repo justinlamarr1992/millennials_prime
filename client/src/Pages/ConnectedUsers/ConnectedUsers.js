@@ -1,7 +1,17 @@
 import React from "react";
-import "./connectedUsers.css";
+import SearchBar from "../../Components/home/SearchBar";
+import ConnectUserBox from "../../Components/reusuables/connectedUsers/ConnectedUserBox";
+import "../../Components/reusuables/connectedUsers/connectedUsers.css";
 
 const ConnectedUsers = () => {
-  return <h1>This is the Connected Users Page</h1>;
+  return (
+    <div className="page">
+      <div className="home-container">
+        <SearchBar />
+        <h1>Connected Users</h1>
+        <ConnectUserBox />
+      </div>
+    </div>
+  );
 };
 export default ConnectedUsers;

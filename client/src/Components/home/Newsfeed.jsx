@@ -1,13 +1,14 @@
 import React from "react";
 import SearchBar from "./SearchBar";
 import FeatPrimes from "../newsfeed/FeatPrimes";
-import PostComp from "../newsfeed/PostComp";
+import PostList from "../../Components/reusuables/post/PostList";
 
 const Newsfeed = () => {
   return (
-    <div>
-      <PostComp />
-    </div>
+    <section>
+      {/* <h3 className="ht-item-title title-space">News Feed</h3> */}
+      {/* <PostList /> */}
+    </section>
   );
 };
 export default Newsfeed;

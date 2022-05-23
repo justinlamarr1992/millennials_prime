@@ -18,7 +18,9 @@ padding-left: var(--nav-w);
     grid-template-rows: 5% auto 5%;
     /* border: 1px solid black; */
     height: 100vh;
-    width: var(--mod-w);
+    /* mod width too big for laptop */
+    /* width: var(--mod-w); */
+    width: 20rem;
     position: fixed;
     z-index: 1;
     top: 0;
@@ -68,8 +70,10 @@ background-image: linear-gradient(to top,
     align-self: flex-end;
 }
 .top-boxes{
-    width: 82.5px;
-  height: 100%;
+    /* width: 82.5px; */
+    width: 41.25px;
+  height: 41.25px;
+  /* height: 100%; */
   border-radius: var(--brad);
 }
 
@@ -90,18 +94,55 @@ justify-content: center;
   margin-left: 40px;
 }
 
-/* Modal Profile Picture */
+/* Modal Profile Picture and info*/
 .modal-prof-info{
+  display: flex;
+  flex-direction: column;
 width: 75%;
   border-radius: var(--brad);
+  align-items: center;
 
 }
 .modal-prof-pic{
     /* maybe make this smaller for the profile picture in the modal */
-    width: 100%;
+    width: 50%;
+    /* 50% works for laptop */
   border-radius: var(--brad);
 }
 
 .prof-info-text{
     text-align: center;
+}
+
+/* Buttons for modal */
+.modal-user-buttons{
+  display: flex;
+  flex-direction: row;
+}
+
+.modal-connect-button{
+  background-color: var(--sec-c);
+   width: var(--but-w);
+    height: var(--but-h);
+    border-radius: var(--but-brad);
+    border: var(--but-bor);
+    margin: 0 0.5rem;
+    color: var(--sec-t);
+    font-size: var(--wh4);
+    font-weight: bold;
+}
+
+.modal-mail-button{
+background-color: var(--sec-t);
+color: var(--sec-c);
+
+/* width: var(--but-w); */
+width: 5rem;
+height: var(--but-h);
+border-radius: var(--but-brad);
+border: 2px solid var(--sec-c);;
+/* margin: var(--but-mar); */
+margin: 0 0.5rem;
+font-size: var(--wh4);
+font-weight: bold;
 }

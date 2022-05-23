@@ -1,0 +1,22 @@
+.feed-items {
+    width: 100%;
+}
+
+.post-item-container {
+    display: grid;
+    grid-template-columns: var(--boxcol);
+    grid-template-rows: repeat(4, auto);
+}
+
+.item-user-info {
+    grid-column: 2/3;
+    grid-row: 1/2;
+}
+.item-user-status {
+     grid-column: 2/3;
+    grid-row: 2/3;
+}
+.item-user-content {
+     grid-column: 2/3;
+    grid-row: 3/4;
+}
