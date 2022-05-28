@@ -1,6 +1,8 @@
 import React from "react";
 import "../components.css";
 
+// Make resuauable buttons
+
 interface Props {
   border: string;
   color: string;

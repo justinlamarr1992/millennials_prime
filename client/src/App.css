@@ -23,12 +23,17 @@
     --outline: #8F92A1;
 
     --gl:0 0px 10px 4px var(--qua-c);
+    --gl-red:0 0px 10px 4px var(--tri-c);
     --gl-hov:0 0px 10px 10px var(--qui-c);
 
     --shade:#8F92A1;
-    --bshade: 0 0px 25px 1px hsla(0, 0%, 56%, 0.381);
+    /* --bshade: 0 0px 25px 1px hsla(0, 0%, 56%, 0.764); */
+    --bshade: 0 0px 25px 1px #97989e;
+    --bshadeclicked: none;
     --p-bshade: 0 0px 25px 1px black;
-    --tshade: 0 0px 25px 1px var(--shade);
+    /* --tshade: 0 0px 25px 1px var(--shade); */
+    --tshade: 0 0px 25px 1px #000000;
+    --btn-shade:0 0px 25px 1px black;
     /* --active-shade: */
 
     /* typography */
@@ -144,8 +149,16 @@ button {
     color: var(--sec-t);
     font-size: var(--wh4);
     font-weight: bold; */
-
-  
+}
+.page-button{
+    width: var(--but-w);
+    height: var(--but-h);
+    border-radius: var(--but-brad);
+    border: var(--but-bor);
+    margin: var(--but-mar);
+    color: var(--sec-t);
+    font-size: var(--wh4);
+    font-weight: bold;
 }
 
 button:hover {
@@ -162,7 +175,7 @@ button:active {
 
 }
 .clickable:active {
-      box-shadow:var(--bshade);
+      box-shadow:var(--bshadecicked);
   transform: translateY(4px);
 }
 
@@ -190,6 +203,15 @@ button:active {
 }
 .con-shade{
     box-shadow: var(--bshade);
+}
+.connected-btn-shade{
+    box-shadow: var(--gl-red);
+}
+.connected-prime-btn-shade{
+box-shadow: var(--gl);
+}
+.btn-shade{
+box-shadow: var(--btn-shade);
 }
 .item-shade{
 box-shadow:var(--tshade);

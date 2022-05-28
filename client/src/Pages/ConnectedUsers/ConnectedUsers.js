@@ -10,6 +10,8 @@ const ConnectedUsers = () => {
         <SearchBar />
         <h1>Connected Users</h1>
         <ConnectUserBox />
+        <ConnectUserBox />
+        <ConnectUserBox />
       </div>
     </div>
   );

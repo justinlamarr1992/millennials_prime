@@ -14,7 +14,7 @@ margin: 2% 5%;
 }
 .home-container section:hover {
         box-shadow:var(--tshade);
-  /* transform: translateY(4px); */
+  transform: scale(1.1, 1.1);
 }
 
 .prime-container {
