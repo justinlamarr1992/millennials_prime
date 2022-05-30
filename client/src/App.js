@@ -22,7 +22,7 @@ function App(props, state) {
   return (
     <>
       <NavBar name="Justin" />
-      <Routes>
+      <Routes className="container-comp">
         {/* Main */}
         <Route path="/" element={<Home />} />
         <Route path="/messages" element={<Messages />} />

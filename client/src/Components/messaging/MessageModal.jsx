@@ -1,7 +1,7 @@
 import React from "react";
 const MessageModal = () => {
   return (
-    <div className="message-modal">
+    <div className="message-modal con-shade">
       <div className="message-modal-container">
         <div className="message-modal-sender">
           <div className="message-sender-pic">Sender Pic</div>
