@@ -12,7 +12,7 @@ padding-left: var(--nav-w);
 }
 
 /* User Modal */
-.right-modal {
+.profile-modal {
     display: grid;
     grid-template-columns: 5% auto 5%;
     grid-template-rows: 5% auto 5%;

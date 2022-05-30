@@ -1,0 +1,92 @@
+.message-container{
+display: flex;
+flex-direction: column;
+/* margin: auto; */
+/* padding-left: var(--nav-w); */
+padding-left: 100px;
+margin: 2% 6%;
+    /* border: 1px solid black; */
+    width: 30%
+}
+.message-container section:hover {
+  box-shadow: var(--tshade);
+  /* transform: scale(1.1, 1.1); */
+}
+
+.message-modal {
+    display: grid;
+    grid-template-columns: 5% auto 5%;
+    grid-template-rows: 5% auto 5%;
+    /* border: 1px solid black; */
+    height: 100vh;
+    /* mod width too big for laptop */
+    /* width: var(--mod-w); */
+    /* width: 50rem; */
+    width: 60%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    right: 0;
+    background-color: var(--form-c);
+
+    background-size: 250% 200%;
+    animation: movingGradient 5s linear infinite alternate;
+    color: var(--pri-t);
+    border-radius: var(--lbrad);
+    overflow-x: hidden ;
+}
+.message-modal-container{
+    grid-area: 2/2/3/3;
+    display: flex;
+    flex-direction: column;
+}
+
+
+.message-select{
+    display: flex;
+    justify-content: space-between;
+     margin-bottom: 2rem;
+}
+
+.inbox-message-container{
+    padding: 10px 10px;
+    display: grid;
+    grid-template-columns: 10% auto 10%;
+    grid-template-rows: repeat(2, auto) ;
+    justify-items: center;
+    align-items: center;
+    column-gap:2% ;
+    margin: 1rem 0;
+}
+
+.inbox-sender-pic{
+width: 100%;
+border-radius: var(--brad);
+grid-area: 1/1/3/2;
+}
+.inbox-sender-name{
+grid-area: 1/2/2/3;
+justify-self: start;
+}
+.inbox-sender-message{
+grid-area: 2/2/3/3;
+justify-self: start;
+}
+.inbox-sender-time{
+    grid-area: 1/3/2/4;
+justify-self: center;
+}
+.inbox-sender-noti{
+    grid-area: 2/3/3/4;
+justify-self: center;
+display: flex;
+justify-content: center;
+}
+.prime-noti{
+background-color: var(--qui-c);
+
+}
+.norm-noti{
+background-color: var(--sec-c);
+
+}

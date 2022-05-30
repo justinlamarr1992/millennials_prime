@@ -4,8 +4,9 @@ import { FaEnvelope } from "react-icons/fa";
 
 const ProfileModal = () => {
   return (
-    <div className="right-modal con-shade">
+    <div className="profile-modal con-shade">
       <div className="modal-container">
+        {/* Make this its own componenet */}
         <div className="modal-t-boxes">
           <div className="noti-box top-boxes p-con-shade clickable">
             {/* <h3 className="noti-num">2</h3> */}
@@ -18,6 +19,8 @@ const ProfileModal = () => {
             alt="User Image here"
           />
         </div>
+        {/* Make this its own componenet */}
+
         <div className="modal-prof-info">
           <img
             className="modal-prof-pic p-con-shade"

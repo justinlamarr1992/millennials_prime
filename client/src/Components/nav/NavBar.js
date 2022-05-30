@@ -35,11 +35,19 @@ const NavBar = (props) => {
           {/* Home
             <FontAwesomeIcon icon="fa-solid fa-house" /> */}
 
+          {/* This is the test for getting to the profile page not a button that will remain here */}
           <div className="test">
+            <Link key="profile" to="/user">
+              User
+            </Link>
+          </div>
+          {/* This is the test for getting to the profile page not a button that will remain here */}
+
+          {/* <div className="test">
             <a href="">
               <span className="nav-text">Button2</span>
             </a>
-          </div>
+          </div> */}
           <div className="test">
             <Link key="messages" to="/messages">
               <FaEnvelope />
