@@ -1,6 +1,7 @@
 import React from "react";
 import Video from "../video/Video";
 import UserPostInfo from "../reusuables/UserPostInfo";
+import PostLikeDisLike from "../reusuables/post/PostLikeDislike";
 
 const PrimeNews = () => {
   return (
@@ -20,6 +21,9 @@ const PrimeNews = () => {
           temporibus et dolor voluptatum tempore suscipit sed quibusdam ipsa,
           ducimus hic quis.
         </h5>
+      </div>
+      <div className="pr-like-dislike">
+        <PostLikeDisLike />
       </div>
     </section>
   );

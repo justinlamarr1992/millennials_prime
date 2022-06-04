@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import Logo from "../../Assets/Images/Logo.png";
 import {
   FaHome,
   FaEnvelope,
@@ -15,8 +16,8 @@ const NavBar = (props) => {
     <nav className="nav-container p-con-shade">
       <ul className="nav-buttons">
         <li className="nav-list top">
-          <a href="" className="logo">
-            Logo Here
+          <a href="" className="logo-link">
+            <img className="logo" src={Logo} alt="MPrime Logo" />
           </a>
           {/* this is the reason for the off measured buttons */}
           {/* <h4>Welcome Primer, {props.name}</h4> */}

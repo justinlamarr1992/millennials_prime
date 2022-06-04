@@ -30,6 +30,7 @@
     padding: 6.25rem;
 }
 
+
 .form {
     width: 50vw;
     height: 100vh;
@@ -37,6 +38,14 @@
     background: var(--form-c);
     border-radius: var(--lbrad);
 display: flex;
+}
+.form-title{
+    display: flex;
+    flex-direction: column;
+}
+.auth-logo{
+    width: 40%;
+    align-self: center;
 }
 .form-text{
     padding-top: 1rem;

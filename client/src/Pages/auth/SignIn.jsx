@@ -1,5 +1,6 @@
 import React from "react";
 import "./auth.css";
+import Logo from "../../Assets/Images/Logo.png";
 
 import { Link } from "react-router-dom";
 
@@ -18,7 +19,8 @@ const SignIn = () => {
       <div className="form">
         <div className="form-container">
           <div className="form-title">
-            <h2>Logo Go Here</h2>
+            <img className="auth-logo" src={Logo} alt="MPrime Logo" />
+
             <div className="form-text">
               <h4>Welcome Back</h4>
               <h6 className="text-gray">Sign in to Continue</h6>

@@ -2,7 +2,7 @@ import React from "react";
 import "./auth.css";
 import Logo from "../../Assets/Images/Logo.png";
 
-const Questionaire = () => {
+const Questionaire2 = () => {
   return (
     <div className="page">
       <div className="pic pic2">
@@ -56,4 +56,4 @@ const Questionaire = () => {
     </div>
   );
 };
-export default Questionaire;
+export default Questionaire2;

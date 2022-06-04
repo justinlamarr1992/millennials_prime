@@ -1,6 +1,7 @@
 import React from "react";
 import "./auth.css";
 import { Link } from "react-router-dom";
+import Logo from "../../Assets/Images/Logo.png";
 
 const Register = () => {
   return (
@@ -17,7 +18,8 @@ const Register = () => {
       <div className="form">
         <div className="form-container">
           <div className="form-title">
-            <h2>Logo Go Here</h2>
+            <img className="auth-logo" src={Logo} alt="MPrime Logo" />
+
             <div className="form-text">
               <h4>Create an Account</h4>
               <h6 className="text-gray">Sign Up to Continue</h6>

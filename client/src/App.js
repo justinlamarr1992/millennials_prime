@@ -23,6 +23,7 @@ function App(props, state) {
     <>
       <NavBar name="Justin" />
       <Routes className="container-comp">
+        {/* MAy have found a way to change the sidenav... We will see */}
         {/* Main */}
         <Route path="/" element={<Home />} />
         <Route path="/messages" element={<Messages />} />

@@ -1,6 +1,8 @@
 import React from "react";
 import "./auth.css";
 import { Link } from "react-router-dom";
+import Logo from "../../Assets/Images/Logo.png";
+
 const PasswordRecovery = () => {
   return (
     <div className="page">
@@ -16,7 +18,8 @@ const PasswordRecovery = () => {
       <div className="form">
         <div className="form-container">
           <div className="form-title">
-            <h2>Logo</h2>
+            <img className="auth-logo" src={Logo} alt="MPrime Logo" />
+
             <div className="form-text">
               <h4>Password Recovery</h4>
               <h6 className="text-gray">
