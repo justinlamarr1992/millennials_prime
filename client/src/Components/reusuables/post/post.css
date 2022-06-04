@@ -77,7 +77,6 @@ justify-content: center;
 
 /* Comment Box */
 .comment-box{
-    border: 1px solid black;
 display: flex;
 flex-direction: column;
 /* flex-wrap: wrap; */
@@ -86,7 +85,7 @@ max-width: 90%;
 margin: 50px auto;
 background: var(--form-c);
 border-radius: var(--brad);
-box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+box-shadow: var(--bshade);
 overflow: hidden;
 padding: 14px;
 transition: min-height var(--transition);
@@ -131,10 +130,12 @@ margin-right: 10px;
 }
 
 .comment-box-field {
+    /* border: 1px solid black; */
+align-self: center;
     color: var(--black);
   transition: transform var(--transition);
   font-size: 18px;
-  width: 100%;
+  width: 90%;
   outline: none;
   padding: 0;
   min-height: 60px;
