@@ -1,3 +1,5 @@
+// CHANGING  THE TOP SECTION FROM SHOWING USER PICTURE AND NAME AND JUST SHOWING PREVIOUS COMMENTS!!!! MAKES THE MOST SENSE!!!
+
 import React, { useState, useRef } from "react";
 import User from "../../Assets/Images/user.jpeg";
 // import "../components.css";

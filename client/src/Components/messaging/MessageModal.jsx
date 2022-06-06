@@ -1,5 +1,6 @@
 import React from "react";
 import User from "../../Assets/Images/user.jpeg";
+import { FaPlus } from "react-icons/fa";
 
 import SendText from "./SendText";
 import RecText from "./RecText";
@@ -9,6 +10,7 @@ import SendAud from "./SendAud";
 import RecAud from "./RecAud";
 import SendVid from "./SendVid";
 import RecVid from "./RecVid";
+import MessageBox from "./MessageBox";
 const MessageModal = () => {
   return (
     <div className="message-modal con-shade">
@@ -33,6 +35,12 @@ const MessageModal = () => {
           <RecAud />
           <SendVid />
           <RecVid />
+        </div>
+        <div className="reply-container">
+          <button className="reply-button">
+            <FaPlus className="reply-button-icon" />
+          </button>
+          <MessageBox />
         </div>
       </div>
     </div>

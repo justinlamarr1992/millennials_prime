@@ -167,10 +167,14 @@ button[type="submit"] {
 textarea{
     border: none;
     resize: none;
+    outline: none;
     font-family: var(--font);
 }
 textarea::placeholder{
     color: var(--tri-t);
+}
+input{
+    outline: none;
 }
 
 .page-button{
