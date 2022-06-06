@@ -33,6 +33,18 @@ const PostList = () => {
         next={fetchData}
         hasMore={hasMore}
         loader={<h4>Loading...</h4>}
+        endMessage={
+          <p style={{ textAlign: "center" }}>
+            <b>Yay! You have seen it all</b>
+          </p>
+        }
+        style={{
+          // height: 300,
+          overflow: "visible",
+          display: "flex",
+          flexDirection: "column",
+        }}
+        //test
       >
         {postData.map((item) => {
           return (
