@@ -2,7 +2,7 @@ import React from "react";
 
 import { FaSearch, FaBackspace } from "react-icons/fa";
 
-import "./home.css";
+// import "./home.css";
 const SearchBar = () => {
   return (
     <section id="search" className="norm-container con-shade">

@@ -5,7 +5,7 @@ const SendText = () => {
   return (
     <div className="sender-message message-box">
       <SenderInfo />
-      <div className="sender-content message-text">
+      <div className="sender-content message-text message-text-box">
         This is where their Text message will go
       </div>
     </div>

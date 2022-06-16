@@ -1,5 +1,5 @@
 import React from "react";
-import SearchBar from "./SearchBar";
+import SearchBar from "../reusuables/SearchBar";
 import FeatPrimes from "../newsfeed/FeatPrimes";
 import PostList from "../../Components/reusuables/post/PostList";
 

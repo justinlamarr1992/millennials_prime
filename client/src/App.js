@@ -8,6 +8,9 @@ import Home from "./Pages/Home";
 import Messages from "./Pages/Messaging/Messages";
 import ConnectedUsers from "./Pages/ConnectedUsers/ConnectedUsers";
 import Settings from "./Pages/Settings/Settings";
+import Notifications from "./Pages/Settings/Notifications";
+import PrivacyPolicy from "./Pages/Settings/PrivacyPolicy";
+import ContactUs from "./Pages/Settings/ContactUs";
 
 import SignOut from "./Pages/auth/SignOut.jsx";
 import SignIn from "./Pages/auth/SignIn";
@@ -29,6 +32,9 @@ function App(props, state) {
         <Route path="/messages" element={<Messages />} />
         <Route path="/connectedusers" element={<ConnectedUsers />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/notifications" element={<Notifications />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+        <Route path="/contact-us" element={<ContactUs />} />
 
         {/* Auth */}
         <Route path="/register" element={<Register />} />

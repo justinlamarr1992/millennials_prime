@@ -19,10 +19,10 @@ const NavBar = (props) => {
           <a href="" className="logo-link">
             <img className="logo" src={Logo} alt="MPrime Logo" />
           </a>
-          {/* this is the reason for the off measured buttons */}
-          {/* <h4>Welcome Primer, {props.name}</h4> */}
-          {/* still figuring out the spacing and design */}
-          {/* here is the Props passed from the app.js file...
+          {/* this is the reason for the off measured buttons
+          <h4>Welcome Primer, {props.name}</h4>
+          still figuring out the spacing and design
+          here is the Props passed from the app.js file...
           ...(props, state)...NavBar name="Justin"
            maybe a good route to take to put the users information on the navbar */}
         </li>
@@ -35,7 +35,6 @@ const NavBar = (props) => {
 
           {/* Home
             <FontAwesomeIcon icon="fa-solid fa-house" /> */}
-
           {/* This is the test for getting to the profile page not a button that will remain here */}
           <div className="test">
             <Link key="profile" to="/user">
@@ -43,7 +42,6 @@ const NavBar = (props) => {
             </Link>
           </div>
           {/* This is the test for getting to the profile page not a button that will remain here */}
-
           {/* <div className="test">
             <a href="">
               <span className="nav-text">Button2</span>

@@ -2,25 +2,31 @@
 .user-container{
    display: flex;
 flex-direction: column;
-/* margin: auto; */
 padding-left: var(--nav-w);
-/* margin: 2% 5%;  */
+margin: 2% 5%; 
+width: 50%;
+min-width: 50%;
+height: 100%;
 }
 .user-container section {
     margin: 1.5rem 0;
     padding: 3rem 0;
 }
+.user-container section:hover {
+        box-shadow:var(--tshade);
+  transform: scale(1.1, 1.1);
+}
 
 /* User Modal */
-.profile-modal {
+.modal {
     display: grid;
     grid-template-columns: 5% auto 5%;
     grid-template-rows: 5% auto 5%;
     /* border: 1px solid black; */
     height: 100vh;
     /* mod width too big for laptop */
-    /* width: var(--mod-w); */
-    width: 20rem;
+    width: var(--mod-w);
+    /* width: 20rem; */
     position: fixed;
     z-index: 1;
     top: 0;
@@ -57,8 +63,10 @@ background-image: linear-gradient(to top,
     grid-row: 2/3;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
     align-items: center;
+}
+.modal-user-container{
+  justify-content: space-between;
 }
 
 /* items in Modal */
@@ -70,10 +78,10 @@ background-image: linear-gradient(to top,
     align-self: flex-end;
 }
 .top-boxes{
-    /* width: 82.5px; */
-    width: 41.25px;
-  height: 41.25px;
-  /* height: 100%; */
+    width: 82.5px;
+    /* width: 41.25px;
+  height: 41.25px; */
+  height: 100%;
   border-radius: var(--brad);
 }
 
@@ -145,4 +153,49 @@ border: 2px solid var(--sec-c);;
 margin: 0 0.5rem;
 font-size: var(--wh4);
 font-weight: bold;
+}
+/* Feed Text */
+/* Feed Photos */
+.feed-photos-text {
+     grid-column: 2/3;
+    grid-row: 3/4;
+    padding: 20px 0 ;
+
+
+}
+.feed-photos-gallery{
+  max-width: 100%;
+  width: auto;
+  grid-area: 4/2/5/3;
+  display: grid;
+  grid-template-columns: 1fr var(--cgap) .5fr var(--cgap) .5fr;
+  grid-template-rows: .5fr var(--rgap) .5fr;
+}
+.feed-photos-images{
+  
+  width: 100%;
+  height: 100%;
+  border-radius: var(--brad);
+  object-fit: cover;
+  
+}
+.photo1{
+  grid-area: 1/1/4/2;
+}
+.photo2{
+  grid-area: 1/3/2/4;
+}
+.photo3{
+  grid-area: 1/5/2/6;
+}
+.photo4{
+  grid-area: 3/3/4/4;
+}
+.photo5{
+  grid-area: 3/5/4/6;
+}
+.feed-photos-interactions{
+grid-row: 5/6;
+    padding-top: 20px;
+
 }

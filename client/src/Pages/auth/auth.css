@@ -1,12 +1,4 @@
-/* change naming for this */
-.page {
-    width: 100vw;
-    height: 100vh;
-    background: var(--background);
-    display: flex;
-    flex-direction: row;
-    /* margin: auto; */
-}
+
 
 .pic {
     width: 50vw;
@@ -85,6 +77,19 @@ justify-content: space-evenly;
     /* height: var(--inp-h); */
     font-size: var(--wh4);
     text-indent: var(--inp-ind);
+    color: var(--tri-t);
+}
+.label-input select{
+     border-radius: var(--inp-brad);
+    border: var(--inp-bor);
+    height: var(--inp-h);
+    font-size: var(--wh4);
+    text-indent: 0.5rem;
+    color: var(--tri-t);
+
+}
+select{
+    background: var(--form-c);
 }
 
 .auth-button {

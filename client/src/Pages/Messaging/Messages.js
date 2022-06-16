@@ -1,10 +1,15 @@
-import React from "react";
-import SearchBar from "../../Components/home/SearchBar";
+import React, { useState } from "react";
+import SearchBar from "../../Components/reusuables/SearchBar";
 import InboxMessage from "../../Components/messaging/InboxMessage";
 import MessageModal from "../../Components/messaging/MessageModal";
 import "../../Components/messaging/messages.css";
 
 const Messages = () => {
+  const [modal, setModal] = useState(true);
+
+  const onClick = () => {
+    setModal(!modal);
+  };
   return (
     <div className="page">
       <div className="message-container">
@@ -18,8 +23,10 @@ const Messages = () => {
         </div>
         <InboxMessage />
         <InboxMessage />
-
-        <MessageModal />
+        <button className="test-modal-button" onClick={onClick}>
+          Modal Test Button
+        </button>
+        {modal && <MessageModal />}
       </div>
     </div>
   );
