@@ -196,7 +196,17 @@ font-weight: bold;
 }
 
 .feed-post-video{
-  
+  /* grid-area: 4/2/5/3; */
+}
+.feed-post-video-title {
+      grid-column: 2/3;
+    grid-row: 3/4;
+    padding-top: 20px;
+}
+.feed-post-episode-title{
+     grid-column: 2/3;
+    grid-row: 3/4;
+    padding-top: 20px;
 }
 
 

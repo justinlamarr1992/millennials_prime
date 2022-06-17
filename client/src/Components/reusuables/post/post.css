@@ -36,6 +36,12 @@
     grid-template-rows: repeat(5, auto); 
 }
 
+.post-episode-container{
+             display: grid;
+    grid-template-columns: var(--boxcol);
+    grid-template-rows: repeat(5, auto); 
+}
+
 
 
 
