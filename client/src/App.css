@@ -81,6 +81,9 @@
     --mcol: 5% auto 5%;
 
     --boxcol: 6% auto 6%;
+
+    --cgap:20px;
+    --rgap:10px;
     /* Section Padding */
     
     /* Section Margins */
@@ -114,7 +117,7 @@
 --but-mar-l:0.25rem 0.125rem;
 
 /* Inputs */
-    --inp-h:4rem;
+    --inp-h:3rem;
     --inp-w:100%;
     --inp-brad: 0.313rem;
     --inp-bor:1px solid var(--outline);
@@ -164,15 +167,49 @@ button[type="submit"] {
   border-radius: var(--but-brad);
   border: none;
 }
+.test-modal-button{
+    position: fixed;
+}
+/* unvisited link */
+a:link {
+  color:white;
+}
+
+/* visited link */
+a:visited {
+  color: white;
+}
+
+/* mouse over link */
+/* a:hover {
+  color: hotpink;
+} */
+
+/* selected link */
+a:active {
+  color: yellow;
+}
 textarea{
     border: none;
     resize: none;
+    outline: none;
     font-family: var(--font);
 }
 textarea::placeholder{
     color: var(--tri-t);
 }
-
+input{
+    outline: none;
+}
+/* change naming for this */
+.page {
+    width: 100vw;
+    height: 100vh;
+    background: var(--background);
+    display: flex;
+    flex-direction: row;
+    /* margin: auto; */
+}
 .page-button{
     width: var(--but-w);
     height: var(--but-h);

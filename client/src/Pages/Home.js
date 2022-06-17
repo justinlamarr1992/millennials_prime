@@ -6,7 +6,7 @@ import UserPostInfo from "../Components/reusuables/UserPostInfo";
 
 import "../Components/home/home.css";
 import PrimeNews from "../Components/home/PrimeNews";
-import SearchBar from "../Components/home/SearchBar";
+import SearchBar from "../Components/reusuables/SearchBar";
 import FeatPrimes from "../Components/newsfeed/FeatPrimes";
 import PostList from "../Components/reusuables/post/PostList";
 

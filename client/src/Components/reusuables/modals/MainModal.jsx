@@ -1,11 +1,8 @@
 import React from "react";
-import User from "../../Assets/Images/user.jpeg";
-import { FaEnvelope } from "react-icons/fa";
-
-const ProfileModal = () => {
+const MainModal = () => {
   return (
-    <div className="modal con-shade verified-modal">
-      <div className="modal-container modal-user-container">
+    <div className="modal con-shade">
+      <div className="modal-container">
         {/* Make this its own componenet */}
         <div className="modal-t-boxes">
           <div className="noti-box top-boxes p-con-shade clickable">
@@ -46,4 +43,4 @@ const ProfileModal = () => {
     </div>
   );
 };
-export default ProfileModal;
+export default MainModal;

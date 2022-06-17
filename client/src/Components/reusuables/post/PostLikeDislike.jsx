@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { FaHeart, FaSkull, FaRegCommentAlt, FaShare } from "react-icons/fa";
 import CommentBox from "../CommentBox";
 
 const PostLikeDisLike = () => {
+  const [comments, setComments] = useState(false);
+
+  const onClick = () => {
+    setComments(!comments);
+  };
   return (
-    <div className="post-interaction">
+    <div className="post-interaction feed-photos-interactions">
       <div className="post-like-dislike">
         <div className="post-like-dislike-left">
           <button className="post-like-btn">
@@ -14,7 +19,7 @@ const PostLikeDisLike = () => {
           <button className="post-like-btn">
             <FaSkull className="text-gray" />
           </button>
-          <button className="post-like-btn">
+          <button onClick={onClick} className="post-like-btn">
             <div className="post-comment">
               {/* Figure a way to expand the comments by pressing this */}
               <FaRegCommentAlt className="text-gray post-btn-space" />
@@ -31,9 +36,11 @@ const PostLikeDisLike = () => {
           </button>
         </div>
       </div>
-      <div className="post-comment">
-        <CommentBox />
-      </div>
+      {comments && (
+        <div className="post-comment">
+          <CommentBox />
+        </div>
+      )}
     </div>
   );
 };

@@ -1,5 +1,5 @@
 import React from "react";
-import SearchBar from "../../Components/home/SearchBar";
+import SearchBar from "../../Components/reusuables/SearchBar";
 import ConnectUserBox from "../../Components/reusuables/connectedUsers/ConnectedUserBox";
 import "../../Components/reusuables/connectedUsers/connectedUsers.css";
 
