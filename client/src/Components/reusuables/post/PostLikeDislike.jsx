@@ -9,7 +9,7 @@ const PostLikeDisLike = () => {
     setComments(!comments);
   };
   return (
-    <div className="post-interaction feed-photos-interactions">
+    <div className="post-interaction feed-post-interactions">
       <div className="post-like-dislike">
         <div className="post-like-dislike-left">
           <button className="post-like-btn">

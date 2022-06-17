@@ -156,7 +156,7 @@ font-weight: bold;
 }
 /* Feed Text */
 /* Feed Photos */
-.feed-photos-text {
+.feed-post-text {
      grid-column: 2/3;
     grid-row: 3/4;
     padding: 20px 0 ;
@@ -194,7 +194,13 @@ font-weight: bold;
 .photo5{
   grid-area: 3/5/4/6;
 }
-.feed-photos-interactions{
+
+.feed-post-video{
+  
+}
+
+
+.feed-post-interactions{
 grid-row: 5/6;
     padding-top: 20px;
 

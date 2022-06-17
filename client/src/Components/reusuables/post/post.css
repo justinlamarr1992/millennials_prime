@@ -30,6 +30,11 @@
     grid-template-columns: var(--boxcol);
     grid-template-rows: repeat(5, auto);
 }
+.post-video-container{
+         display: grid;
+    grid-template-columns: var(--boxcol);
+    grid-template-rows: repeat(5, auto); 
+}
 
 
 

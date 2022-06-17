@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import FeedPhoto from "../../Components/reusuables/post/FeedPhoto";
 import FeedText from "../../Components/reusuables/post/FeedText";
+import FeedVideo from "../../Components/reusuables/post/FeedVideo";
 import PostLikeDisLike from "../../Components/reusuables/post/PostLikeDislike";
 import SearchBar from "../../Components/reusuables/SearchBar";
 import ProfileModal from "../../Components/user/ProfileModal";
@@ -47,7 +48,7 @@ const User = () => {
           <h1>Toggle Feed Selections</h1>
           <FeedText />
           <FeedPhoto />
-          <h1>Post Video</h1>
+          <FeedVideo />
           <h1>Post Photos</h1>
           <h1>Post Shows</h1>
           <h1>Music</h1>

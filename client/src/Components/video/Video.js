@@ -18,7 +18,7 @@ const Video = () => {
   } = useVideoPlayer(videoElement);
 
   return (
-    <div className="pr-video p-item-shade hovering">
+    <div className="pr-video p-item-shade hovering feed-post-video">
       <div className="video-wrapper">
         <video
           src={video}

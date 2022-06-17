@@ -8,7 +8,7 @@ const FeedPhoto = () => {
   return (
     <section className="post-photo-container norm-container con-shade ">
       <ItemUserInfo className="pr-user-info item-user-info" />
-      <h5 className="feed-photos-text text-gray">
+      <h5 className="feed-post-text text-gray">
         This is the Status of the text post
       </h5>
       <div className="feed-photos-gallery">
