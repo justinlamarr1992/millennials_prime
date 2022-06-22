@@ -204,9 +204,35 @@ font-weight: bold;
     padding-top: 20px;
 }
 .feed-post-episode-title{
-     grid-column: 2/3;
-    grid-row: 3/4;
-    padding-top: 20px;
+     grid-column: 2/4;
+    grid-row: 2/3;
+    /* padding-top: 20px; */
+    align-self: center;
+}
+.feed-post-episode-video{
+  grid-column: 2/4;
+    grid-row: 1/2;
+}
+.feed-post-episode-button{
+  /* padding: 20px; */
+  border: var(--but-bor);
+margin: var(--but-mar);
+  border-radius: var(--brad);
+  background-color: var(--qua-c);
+  color:var(--pri-t);
+  align-self: center;
+  justify-self: end;
+  grid-column: 3/4;
+grid-row: 3/4;
+}
+
+.feed-post-music-music{
+   grid-column: 2/4;
+    grid-row: 1/2;
+}
+.feed-post-button-border{
+  padding: 0 20px;
+
 }
 
 

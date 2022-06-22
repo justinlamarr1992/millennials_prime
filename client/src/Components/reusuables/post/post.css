@@ -8,9 +8,13 @@
     grid-template-rows: repeat(5, auto);
 }
 
-.item-user-info {
+.post-item-user-info {
     grid-column: 2/3;
     grid-row: 1/2;
+}
+.post-item-user-info-under {
+    grid-column: 2/3;
+    grid-row: 3/4;
 }
 .item-user-status {
      grid-column: 2/3;
@@ -38,9 +42,18 @@
 
 .post-episode-container{
              display: grid;
-    grid-template-columns: var(--boxcol);
+    grid-template-columns: 6% auto auto 6%;
+    /* grid-template-columns: var(--boxcol); */
     grid-template-rows: repeat(5, auto); 
 }
+.post-music-container{
+             display: grid;
+    grid-template-columns: 6% auto auto 6%;
+    /* grid-template-columns: var(--boxcol); */
+    grid-template-rows: repeat(5, auto); 
+}
+
+
 
 
 

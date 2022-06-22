@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import FeedEpisode from "../../Components/reusuables/post/FeedEpisode";
+import FeedMusic from "../../Components/reusuables/post/FeedMusic";
 import FeedPhoto from "../../Components/reusuables/post/FeedPhoto";
 import FeedText from "../../Components/reusuables/post/FeedText";
 import FeedVideo from "../../Components/reusuables/post/FeedVideo";
@@ -29,13 +30,14 @@ const User = () => {
           <FeedPhoto />
           <FeedVideo />
           <FeedEpisode />
-          <h1>Music</h1>
+          <FeedMusic />
           <h1>Store</h1>
         </div>
 
         <button className="test-modal-button" onClick={onClick}>
           Modal Test Button
         </button>
+        {/* Figure out w away to chage div width based on when this button is pushed */}
         {/* <section>Users Post</section> */}
         {modal && <ProfileModal />}
       </div>

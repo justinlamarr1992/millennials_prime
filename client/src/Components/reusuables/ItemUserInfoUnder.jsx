@@ -1,8 +1,9 @@
 import React from "react";
 import User from "../../Assets/Images/user.jpeg";
-const ItemUserInfo = () => {
+
+const ItemUserInfoUnder = () => {
   return (
-    <div className="item-user-info post-item-user-info">
+    <div className="item-user-info post-item-user-info-under">
       <img className="info-pic" src={User} alt="User Image here" />
       <div className="info-name">
         <h4>Justin Williams</h4>
@@ -13,4 +14,4 @@ const ItemUserInfo = () => {
     </div>
   );
 };
-export default ItemUserInfo;
+export default ItemUserInfoUnder;
