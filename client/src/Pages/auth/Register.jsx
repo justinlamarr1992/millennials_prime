@@ -9,8 +9,8 @@ const Register = () => {
   const [locked, setLocked] = useState(true);
 
   const input = document.querySelector(".pwd input");
-  const eye = document.querySelector(".pwd .fa-eye-slash");
-  const lock = document.querySelector(".pwd fa-lock");
+  const eye = document.querySelector(".pwd .eye-slash");
+  // const lock = document.querySelector(".pwd fa-lock");
   const overlay = document.querySelector(".pwd .overlay");
 
   useEffect(() => {
@@ -25,26 +25,25 @@ const Register = () => {
   }, []);
 
   const onClick = () => {
+    setLocked((current) => !current);
+
     // if  the password is hidden...
     if (locked == true) {
-      locked = false;
+      console.log(locked);
+
       // show it
       input.type = "text";
       // Toggle between icons
-      eye.classList.remove("fa-eye-slash");
-      eye.classList.add("fa-eye");
-      // change the color of the Lock eye in 500ms
-      setTimeout(() => {
-        lock.getElementsByClassName.color = "#111625";
-      }, 500);
+      eye.classList.remove("eye-slash");
+      eye.classList.add("eye");
     } else {
+      console.log(locked);
+
       // Hide it
       input.type = "password";
       // Toggle between eye icons
-      eye.classList.remove("fa-eye");
-      eye.classList.add("fa-eye-slash");
-      // change the color of the lock icon
-      lock.getElementsByClassName.color = "#dbdbdb";
+      eye.classList.remove("eye");
+      eye.classList.add("eye-slash");
     }
     // if (input.type === "password") {
     //   // show it
@@ -120,10 +119,16 @@ const Register = () => {
               <input type="password" />
             </div> */}
             <div className="pwd">
-              <div onClick={onClick} className="overlay"></div>
-              <div>
-                <input type="password" placeholder="Password..." />
-                {locked === true && <FaEyeSlash />}
+              <input type="password" placeholder="Password..." />
+
+              <div onClick={onClick} className="overlay ">
+                <div className="locked-bubble">
+                  {locked === true ? (
+                    <FaEyeSlash className="eye-slash" />
+                  ) : (
+                    <FaEye className="eye" />
+                  )}
+                </div>
               </div>
             </div>
 
