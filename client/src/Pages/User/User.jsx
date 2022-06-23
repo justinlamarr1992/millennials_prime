@@ -24,6 +24,7 @@ const User = () => {
         <div className="prime-video">
           <SearchBar />
           <PrimeUpdateVideo />
+          <h1>User to post here</h1>
 
           <h1>Toggle Feed Selections</h1>
           <FeedText />

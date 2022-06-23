@@ -1,31 +1,111 @@
-SignIn Page
-    put max on inputs and button widths
+GOALS FOR WEEK 14
 
-Sign Out Page
+Huge Screen
 
 Register
+    faded image
+    form verification
+    Specify Password Requirements
+        one lowercase charater
+        one specila charater
+        8 chararters minimum
+        add password strength meter
+        add ability for user to see password
+        allw login with finger print or face
 
-Password Recovery 
+SignIn Page
+    faded image
+    form verification
+    add ability recover password
+
+Sign Out Page
+    Design the Page
+
+
+
+Password Recovery
+    faded image
+    form verification
+    Link to password recovery Link 
 
 Questionaire
+    HArd Code Questions
+    Create Link for 2nd and 3rd set of questions
+    Figure how to group Questions
+    1st: Info on personal information
+    2nd: Info on what they do and will do for the Web/application 
+    3rd: Info on  extra stuff
 
 Home Page
-    Hard Coded format with Components
+    Search Bar
+        Off with spacing
 
-Spacing
+    Post Components
+        Like/DisLike space  
+            Color of button
+            comment sections needs to be added
+            share button needs to give option to share to various sites and own profile
 
-Inputs
+    Hot items
+        Add Title to the items
 
-Buttons
+    Featured Primes
+        Add name of Primes
 
+    Post
+        Add Post Comment/ Video/ Post/ Episode/ Music/ Item  Sectioon fro users to add to the database
 
-
-form verification
-
-Make all buttons same height
+    News Feed
+        Add Real examples of different post from differnet members
 
 Navbar
-    Text with Icons when hover
+    Add Text When hovering
     Make buttons more of square
+    make button change color based of of page that it is on
 
+    Signout Button
+        Remove the token and Link to Signout Page
 
+User
+    Make madal Button like the iPhone bottom line bar button 
+    Make the columns into two when the modal is closed/ one when modal is open
+    Create Section for user or someone to post on indiviuals profile 
+    Create Toggle Section for options of different selections Comment/ Video/ Post/ Episode/ Music/ Item
+    User Modal
+        Add Dynamic post, amount of Connections
+        Industy and B2B Oppurtunity sections
+        Add Connected Users Section
+
+Music Post
+    Make Custom sound Player
+
+Ecomm Post
+    Make the Component
+
+Messages
+    Make madal Button like the iPhone bottom line bar button 
+    Make ths section of DM/ GC/ Archived for users to switch
+    make different messages clickable
+    hover effect of items in the message modal
+    Change plus button to video and picture buttons 
+    make ability to post messages 
+    Sender Banner options:
+        Add Link to senders Profile
+
+Connections
+    Add Shadows to Pictures
+    make clickable link to users profile
+
+Settings
+    Create Notication Page
+    Create Privacy Policy Page
+    Create Contact Us
+
+General Pages Not Made
+    Loading Screen
+    Success Screen
+    Error Screen
+    Confirmation Screen
+
+General Designs not implememted
+    Shimmer Loading Effect

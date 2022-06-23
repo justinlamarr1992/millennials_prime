@@ -18,6 +18,7 @@ const Home = () => {
         <PrimeNews />
         <HotItems />
         <FeatPrimes />
+        <h1>User to Post here</h1>
         <PostList />
         {/* <Newsfeed /> */}
       </div>

@@ -68,10 +68,53 @@ justify-content: space-evenly;
     padding-top:0.625rem ;
     padding-bottom:1.875rem;
 }
+
+/* Test */
+.validation-wrapper{
+    position: relative;
+     width: 100%;
+      padding-top:0.625rem ;
+    padding-bottom:1.875rem;
+    height: auto;
+    display: flex;
+    justify-content: space-between;
+}
+
+.fname{
+    /* width: 10rem;
+    height: 2.5rem;
+    padding: 0 0.5rem;
+    border-radius: 0.25rem;
+    border: 1px solid #585858;
+    color: #f9f9f9; */
+}
+.validation{
+    position: absolute;
+    top: 0.55rem;
+    right: 0.7rem;
+    opacity: 0;
+    color: #fd4444;
+}
+
+@keyframes shake {
+    0%, 100% {transform: translateX(0);}
+    25% {transform: translateX(8px);}
+    75% {transform: translateX(-8px);}
+}
+
+/* .fname:valid {border-color: #55d688;} */
+.fname:invalid, .lname:invalid {border-color: #fd4444;}
+.fname:invalid ~ .validation, .lname:invalid ~ .validation {opacity: 1;}
+.fname:invalid, .fname:invalid ~ .validation, .lname:invalid, .lname:invalid ~ .validation {
+    animation: shake 0.1635S 0s 3;
+}
+
+/* Test */
+
 .label-input label{
     margin:5px;
 }
-.label-input input {
+.label-input input, .validation-wrapper input {
     border-radius: var(--inp-brad);
     border: var(--inp-bor);
     /* height: var(--inp-h); */
@@ -88,6 +131,61 @@ justify-content: space-evenly;
     color: var(--tri-t);
 
 }
+
+.pwd {
+    background-color: #111625 ;
+    border-radius: var(--inp-brad);
+    box-shadow: var(--bshade);
+    position: relative;
+}
+
+.pwd input{
+    background: transparent;
+    border: none;
+    color: #5358b9;
+}
+
+.pwd input:focus{
+    outline: none;
+}
+
+.pwd-lock{
+    font-size: 1.4em;
+    padding: 1em;
+    color: #dbdbdb;
+    transition: 0.3s;
+}
+
+.pwd .fa-eye, .pwd .fa-eye-slash {
+    cursor: pointer;
+    color: #5358b9;
+    width: 1.2em;
+}
+
+.pwd .overlay {
+    position: absolute;
+    top: 50%;
+    right: 1em;
+    transform: translateY(-50%);
+    background: #dbdbdb;
+    width: 2.5em;
+    height: 2.5em;
+    border-radius: 50%;
+    z-index: 0;
+    transition: 0.5s ease-in-out;
+}
+
+.pwd .overLaycover {
+    width: 100%;
+    height: 100%;
+    border-radius: 12px;
+    right: 0;
+}
+
+.pwd > div:nth-child(2) {
+    position: relative;
+}
+
 select{
     background: var(--form-c);
 }
