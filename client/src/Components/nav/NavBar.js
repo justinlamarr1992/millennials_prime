@@ -16,9 +16,10 @@ const NavBar = (props) => {
     <nav className="nav-container p-con-shade">
       <ul className="nav-buttons">
         <li className="nav-list top">
-          <a href="" className="logo-link">
+          <Link key="home" to="/" className="logo-link">
             <img className="logo" src={Logo} alt="MPrime Logo" />
-          </a>
+          </Link>
+          <a href=""></a>
           {/* this is the reason for the off measured buttons
           <h4>Welcome Primer, {props.name}</h4>
           still figuring out the spacing and design
@@ -27,12 +28,6 @@ const NavBar = (props) => {
            maybe a good route to take to put the users information on the navbar */}
         </li>
         <li className="nav-list middle">
-          <div className="test test2">
-            <Link key="home" to="/">
-              <FaHome className="" />
-            </Link>
-          </div>
-
           {/* Home
             <FontAwesomeIcon icon="fa-solid fa-house" /> */}
           {/* This is the test for getting to the profile page not a button that will remain here */}
