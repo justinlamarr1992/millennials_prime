@@ -1,7 +1,7 @@
 import React from "react";
 import "./auth.css";
 import { Link } from "react-router-dom";
-import Logo from "../../Assets/Images/Logo.png";
+import Logo from "../../Assets/Images/MillennialsPrimeLogo.png";
 
 const PasswordRecovery = () => {
   return (

@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
 import "./auth.css";
 import { Link } from "react-router-dom";
-import Logo from "../../Assets/Images/Logo.png";
+import Logo from "../../Assets/Images/MillennialsPrimeLogo.png";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 
 const Register = () => {

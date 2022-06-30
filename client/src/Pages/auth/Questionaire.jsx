@@ -1,6 +1,6 @@
 import React from "react";
 import "./auth.css";
-import Logo from "../../Assets/Images/Logo.png";
+import Logo from "../../Assets/Images/MillennialsPrimeLogo.png";
 
 const Questionaire = () => {
   return (
