@@ -1,19 +1,41 @@
-import React from "react";
+import React, { useRef } from "react";
+import Company1 from "../../Assets/Images/Companies/Company1.jpeg";
+import Company2 from "../../Assets/Images/Companies/Company2.jpeg";
+import Company3 from "../../Assets/Images/Companies/Company3.jpg";
+
 import "./auth.css";
 import Logo from "../../Assets/Images/MillennialsPrimeLogo.png";
 
 import { Link } from "react-router-dom";
 
 const SignIn = () => {
+  const ref = useRef(null);
+
   return (
     <div className="page">
-      <div className="pic">
+      {/* <div className="pic">
         <div className="pic-container">
-          <h5 className="center-item">Dont have an Account Yet</h5>
-          {/* Needs to be Link for SignUp */}
-          <button className="auth-button other-button center-item">
-            Create an Account
-          </button>
+          
+        </div>
+      </div> */}
+      <div className="pic" ref={ref} id="container">
+        <div className="pic-container">
+          <div className="background">
+            <img src={Company1} alt="" className="company" />
+            <img src={Company2} alt="" className="company" />
+            <img src={Company3} alt="" className="company" />
+            <img src={Company1} alt="" className="company" />
+          </div>
+          <div className="content">
+            <h5 className="center-item">Dont have an Account Yet</h5>
+            {/* Needs to be Link for SignUp */}
+
+            <Link className="" key="register" to="/register">
+              <button className="auth-button other-button center-item">
+                Create an Account
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
       <div className="form">

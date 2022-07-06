@@ -195,7 +195,7 @@ textarea{
     outline: none;
     font-family: var(--font);
 }
-textarea::placeholder{
+textarea::placeholder, input::placeholder{
     color: var(--tri-t);
 }
 input{
