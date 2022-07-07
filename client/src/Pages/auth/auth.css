@@ -164,7 +164,16 @@ justify-content: space-evenly;
     font-size: var(--wh4);
     text-indent: 0.5rem;
     color: var(--tri-t);
+}
 
+.location{
+    display: grid;
+    grid-template-columns:auto auto;
+    grid-template-rows: auto auto auto;
+    column-gap: 50px;
+}
+.location-label{
+    grid-column: 1/3;
 }
 
 .pwd {

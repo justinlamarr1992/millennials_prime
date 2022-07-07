@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from "react";
 import "./auth.css";
-// import { Link } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Logo from "../../Assets/Images/MillennialsPrimeLogo.png";
 import Company1 from "../../Assets/Images/Companies/Company1.jpeg";
 import Company2 from "../../Assets/Images/Companies/Company2.jpeg";
@@ -203,9 +203,12 @@ const Register = () => {
           <div className="content">
             <h5 className="center-item">Already Have An Account?</h5>
             {/* Needs to be Link for SignIn */}
-            <button className="auth-button other-button center-item">
-              Login
-            </button>
+
+            <Link className="" key="login" to="/signin">
+              <button className="auth-button other-button center-item">
+                Login
+              </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -285,7 +288,10 @@ const Register = () => {
               </div>
             </div>
 
-            <button className="auth-button login">Create an Account</button>
+            {/* <button className="auth-button login">Create an Account</button> */}
+            <Link className="" key="questionaire" to="/questionaire">
+              <button className="auth-button login">Create an Account</button>
+            </Link>
           </form>
           <h6 className="center-item text-gray">Connect With Socials</h6>
           <div className="social-buttons">

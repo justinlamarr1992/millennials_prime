@@ -1,4 +1,6 @@
 import React from "react";
+import { Link } from "react-router-dom";
+
 import "./auth.css";
 import Logo from "../../Assets/Images/MillennialsPrimeLogo.png";
 
@@ -16,25 +18,36 @@ const Questionaire = () => {
             <img className="auth-logo" src={Logo} alt="MPrime Logo" />
 
             <div className="form-text">
-              <h4>Profile Questionaire</h4>
+              <h4>Do You Make the Cut?</h4>
               <h6 className="text-gray">Answer the Following Questions</h6>
             </div>
           </div>
-          {/* Separate pages */}
-          {/* First page: peerson date of birth ect... */}
-          {/* Second page: COngrats... About you and Business how to help build */}
-          {/* Third Page: Needs like resources, equiptments */}
-          {/*  */}
-          {/* no typing answers only drop downs */}
 
           <form className="auth-form" action="">
             <div className="label-input">
-              <label htmlFor="">Question 1</label>
-              <input type="email" />
+              <label htmlFor="">When were you Born</label>
+              <input type="date" name="dateofbirth" id="dateofbirth" />
             </div>
-            <div className="label-input">
-              <label htmlFor="">Question 2</label>
-              <input type="email" />
+            <div className="label-input location">
+              <label className="location-label" htmlFor="">
+                Where are you From?
+              </label>
+              <input
+                className="location-input"
+                type="text"
+                placeholder="Country"
+              />
+              <input
+                className="location-input"
+                type="text"
+                placeholder="City"
+              />
+              <input
+                className="location-input"
+                type="text"
+                placeholder="State"
+              />
+              <input className="location-input" type="text" placeholder="Zip" />
             </div>
             <div className="label-input">
               <label htmlFor="">Question 3</label>
@@ -49,7 +62,9 @@ const Questionaire = () => {
               <input type="email" />
             </div>
 
-            <button className="auth-button login">Send Email</button>
+            <Link className="" key="questionaire" to="/questionaire2">
+              <button className="auth-button login">Next</button>
+            </Link>
           </form>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import NavBar from "../../Components/nav/NavBar";
 import FeedEpisode from "../../Components/reusuables/post/FeedEpisode";
 import FeedMusic from "../../Components/reusuables/post/FeedMusic";
 import FeedPhoto from "../../Components/reusuables/post/FeedPhoto";
@@ -19,6 +20,8 @@ const User = () => {
   };
   return (
     <div className="page">
+      {/* <NavBar name="Justin" /> */}
+
       <div className="user-container">
         {/* Find a way to make this into component but have infor pasted in */}
         <div className="prime-video">

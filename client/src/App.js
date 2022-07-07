@@ -26,7 +26,7 @@ import Verified from "./Pages/User/Verified";
 function App(props, state) {
   return (
     <>
-      {/* <NavBar name="Justin" /> */}
+      <NavBar name="Justin" />
       <Routes className="container-comp">
         {/* MAy have found a way to change the sidenav... We will see */}
         {/* Main */}
