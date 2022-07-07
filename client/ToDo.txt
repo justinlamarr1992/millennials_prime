@@ -3,7 +3,7 @@ GOALS FOR WEEK 14
 Huge Screen
 
 Register
-    faded image
+    faded image Done
     form verification
     Specify Password Requirements
         one lowercase charater
@@ -14,7 +14,6 @@ Register
         allw login with finger print or face
 
 SignIn Page
-    faded image
     form verification
     add ability recover password
 
