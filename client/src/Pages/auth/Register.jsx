@@ -223,24 +223,29 @@ const Register = () => {
           </div>
 
           <form className="auth-form" action="">
-            <div className="validation-wrapper">
-              {/* <label htmlFor="">Name</label> */}
-              <input
-                className="fname names"
-                type="text"
-                placeholder="First Name"
-                required
-              />
-              <input
-                type="text"
-                className="lname names"
-                placeholder="Last Name"
-                required
-              />
-              <div className="validation">*</div>
-              {/* <label htmlFor="">Name</label>
+            <div className="label-input">
+              <label htmlFor="">Full Name</label>
+              <div className="validation-wrapper">
+                {/* <label htmlFor="">Name</label> */}
+
+                <input
+                  className="fname names"
+                  type="text"
+                  placeholder="First Name"
+                  required
+                />
+                <input
+                  type="text"
+                  className="lname names"
+                  placeholder="Last Name"
+                  required
+                />
+                <div className="validation">*</div>
+                {/* <label htmlFor="">Name</label>
               <input type="text" /> */}
+              </div>
             </div>
+
             <div className="label-input">
               <label htmlFor="">Email</label>
               <input type="email" />

@@ -20,27 +20,20 @@ const SignIn = () => {
       </div> */}
       <div className="pic" ref={ref} id="container">
         <div className="pic-container">
+          <div className="content">
+            <h5 className="center-item">Don't have an Account Yet?</h5>
+
+            <Link className="auth-link center-link" to="/register">
+              <button className="auth-button other-button center-item">
+                Create an Account
+              </button>
+            </Link>
+          </div>
           <div className="background">
             <img src={Company1} alt="" className="company" />
             <img src={Company2} alt="" className="company" />
             <img src={Company3} alt="" className="company" />
             <img src={Company1} alt="" className="company" />
-          </div>
-          <div className="content">
-            <h5 className="center-item">Dont have an Account Yet</h5>
-            {/* Needs to be Link for SignUp */}
-
-            {/* <Link className="" key="register" to="/register">
-              <button className="auth-button other-button center-item">
-                Create an Account
-              </button>
-            </Link> */}
-
-            <button className="auth-button other-button center-item">
-              <Link className="auth-link" key="register" to="/register">
-                Create an Account
-              </Link>
-            </button>
           </div>
         </div>
       </div>
@@ -64,12 +57,18 @@ const SignIn = () => {
               <label htmlFor="">Password</label>
               <input type="password" />
             </div>
-            <Link className="text-gray" key="home" to="/passwordrecovery">
-              Forgot Password
+            <Link
+              className="password-recover-link"
+              key="home"
+              to="/passwordrecovery"
+            >
+              <h6 className="text-gray">Forgot Password</h6>
             </Link>
             <button className="auth-button login">Login</button>
           </form>
-          <h6 className="center-item text-gray">Connect With Socials</h6>
+          <h6 className="social-text center-item text-gray">
+            Connect With Socials
+          </h6>
           <div className="social-buttons">
             <button className="auth-button google">Connect With Google</button>
             <button className="auth-button apple">Connect With Apple</button>

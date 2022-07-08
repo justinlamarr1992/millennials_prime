@@ -2,17 +2,29 @@ import React from "react";
 import "./auth.css";
 import { Link } from "react-router-dom";
 import Logo from "../../Assets/Images/MillennialsPrimeLogo.png";
+import Company1 from "../../Assets/Images/Companies/Company1.jpeg";
+import Company2 from "../../Assets/Images/Companies/Company2.jpeg";
+import Company3 from "../../Assets/Images/Companies/Company3.jpg";
 
 const PasswordRecovery = () => {
   return (
     <div className="page">
       <div className="pic">
         <div className="pic-container">
-          <h5 className="center-item">Remember Your Password?</h5>
-          {/* Needs to be Link for SignIn */}
-          <button className="auth-button other-button center-item">
-            Login
-          </button>
+          <div className="content">
+            <h5 className="center-item">Remember Your Password?</h5>
+            <Link className="auth-link center-item" to="/signin">
+              <button className="auth-button other-button center-item">
+                Login
+              </button>
+            </Link>
+          </div>
+          <div className="background">
+            <img src={Company1} alt="" className="company" />
+            <img src={Company2} alt="" className="company" />
+            <img src={Company3} alt="" className="company" />
+            <img src={Company1} alt="" className="company" />
+          </div>
         </div>
       </div>
       <div className="form">

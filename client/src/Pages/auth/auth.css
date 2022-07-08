@@ -89,6 +89,9 @@ justify-content: space-evenly;
 }
 .auth-form {
     height: auto;
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 30px;
 }
 
 /* Style for label and input */
@@ -105,8 +108,8 @@ justify-content: space-evenly;
 .validation-wrapper{
     position: relative;
      width: 100%;
-      padding-top:0.625rem ;
-    padding-bottom:1.875rem;
+      /* padding-top:0.625rem ;
+    padding-bottom:1.875rem; */
     height: auto;
     display: flex;
     justify-content: space-between;
@@ -333,6 +336,9 @@ width: 100%;
 align-self: center;
 /* height: 100%; */
 }
+.password-recover-link{
+    align-self: end;
+}
 .social-buttons button{
 margin-top: 1rem;
 margin-bottom: 1rem;
@@ -341,6 +347,9 @@ margin-bottom: 1rem;
     margin-top: 1.875rem;
     background-color: var(--pri-c);
     
+}
+.social-text{
+/* padding-top: 20px; */
 }
 .apple{
     background-color: #1E1F20;
