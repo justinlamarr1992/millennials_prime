@@ -1,8 +1,9 @@
 
 
 .pic {
-    width: 50vw;
-    height: 100vh;
+    width: 50%;
+    /* width: 50vw; */
+    height: 100%;
     background: var(--background);
     z-index: 0;
 }
@@ -23,13 +24,13 @@
     /* padding: 6.25rem; */
 }
 .background{
-    /* position: absolute; */
+    position: absolute;
     display: grid;
     grid-template-columns: auto auto;
     grid-template-rows: auto auto;
 opacity: .1;
 z-index: 0;
-width: 100%;
+width: 50%;
 }
 .company{
     width: 100%;
@@ -37,7 +38,7 @@ width: 100%;
     object-fit: fill;
 }
 .content {
-    position: absolute;
+    /* position: absolute; */
     align-self: center;
      width: 50%;
     height: 100%;
@@ -45,6 +46,7 @@ width: 100%;
     flex-direction: column;
     justify-content: center;
     /* padding: 6.25rem; */
+    z-index: 1;
 }
 
 
@@ -174,6 +176,14 @@ justify-content: space-evenly;
 }
 .location-label{
     grid-column: 1/3;
+}
+.location-input{
+    padding: 0;
+    width: 100%;
+/* margin-bottom: 20px; */
+}
+.input-1{
+    padding-bottom: 20px;
 }
 
 .pwd {
@@ -318,6 +328,11 @@ select{
     font-size: var(--wh4);
     font-weight: bold;
 }
+.auth-link{
+width: 100%;
+align-self: center;
+/* height: 100%; */
+}
 .social-buttons button{
 margin-top: 1rem;
 margin-bottom: 1rem;
@@ -337,7 +352,7 @@ margin-bottom: 1rem;
 }
 .other-button{
     background-color: var(--sec-c);
-    width: 50%;
+    /* width: 50%; */
 }
 .center-item {
     align-self: center;

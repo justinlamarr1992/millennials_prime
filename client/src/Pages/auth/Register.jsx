@@ -194,21 +194,20 @@ const Register = () => {
       {/* Think about using these settings with the div below commented out */}
       <div className="pic" ref={ref} id="container">
         <div className="pic-container">
+          <div className="content">
+            <h5 className="center-item">Already Have An Account?</h5>
+
+            <Link className="auth-link center-item" to="/signin">
+              <button className="auth-button other-button center-item">
+                Login
+              </button>
+            </Link>
+          </div>
           <div className="background">
             <img src={Company1} alt="" className="company" />
             <img src={Company2} alt="" className="company" />
             <img src={Company3} alt="" className="company" />
             <img src={Company1} alt="" className="company" />
-          </div>
-          <div className="content">
-            <h5 className="center-item">Already Have An Account?</h5>
-            {/* Needs to be Link for SignIn */}
-
-            <Link className="" key="login" to="/signin">
-              <button className="auth-button other-button center-item">
-                Login
-              </button>
-            </Link>
           </div>
         </div>
       </div>

@@ -33,7 +33,7 @@ const Questionaire = () => {
                 Where are you From?
               </label>
               <input
-                className="location-input"
+                className="location-input input1"
                 type="text"
                 placeholder="Country"
               />
@@ -50,15 +50,17 @@ const Questionaire = () => {
               <input className="location-input" type="text" placeholder="Zip" />
             </div>
             <div className="label-input">
-              <label htmlFor="">Question 3</label>
+              <label htmlFor="">Do you have a business?</label>
               <input type="email" />
             </div>
             <div className="label-input">
-              <label htmlFor="">Question 4</label>
+              <label htmlFor="">What is the Industry Your Operate in?</label>
               <input type="email" />
             </div>
             <div className="label-input">
-              <label htmlFor="">Question 5</label>
+              <label htmlFor="">
+                Are you Open to Business with Users here.
+              </label>
               <input type="email" />
             </div>
 

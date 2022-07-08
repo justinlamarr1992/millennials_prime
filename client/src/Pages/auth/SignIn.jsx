@@ -30,11 +30,17 @@ const SignIn = () => {
             <h5 className="center-item">Dont have an Account Yet</h5>
             {/* Needs to be Link for SignUp */}
 
-            <Link className="" key="register" to="/register">
+            {/* <Link className="" key="register" to="/register">
               <button className="auth-button other-button center-item">
                 Create an Account
               </button>
-            </Link>
+            </Link> */}
+
+            <button className="auth-button other-button center-item">
+              <Link className="auth-link" key="register" to="/register">
+                Create an Account
+              </Link>
+            </button>
           </div>
         </div>
       </div>
