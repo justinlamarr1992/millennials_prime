@@ -72,7 +72,7 @@ justify-content: space-between;
 
 }
 .post-like-dislike-left{
-    width: 25%;
+    width: 30%;
 display: flex;
 justify-content: space-around;
 }
@@ -103,6 +103,15 @@ justify-content: center;
     cursor: pointer;
     overflow: hidden;
     outline: none;
+}
+.heart{
+    color: var(--tri-c)
+}
+.skull{
+    color: var(--hex-c);
+}
+.comment-icon{
+    color:var(--pri-t)
 }
 .post-btn-space {
     padding-right: 10px;

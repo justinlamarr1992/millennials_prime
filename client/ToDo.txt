@@ -15,33 +15,24 @@ Register
 
 SignIn Page
     form verification
-    add ability recover password
 
 Sign Out Page
-    Design the Page
-
+PENDING
 
 
 Password Recovery
-    faded image
     form verification
     Link to password recovery Link 
 
 Questionaire
-    HArd Code Questions
-    Create Link for 2nd and 3rd set of questions
-    Figure how to group Questions
-    1st: Info on personal information
-    2nd: Info on what they do and will do for the Web/application 
-    3rd: Info on  extra stuff
-
+    html the selects
+    Find way to pass the answers to users profile
 Home Page
     Search Bar
         Off with spacing
 
     Post Components
         Like/DisLike space  
-            Color of button
             comment sections needs to be added
             share button needs to give option to share to various sites and own profile
 

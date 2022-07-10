@@ -81,7 +81,6 @@ const Register = () => {
       passInput.style.background = "#112d37";
     }
   }
-
   function addClass(className) {
     percentBar.classList.remove("weak");
     percentBar.classList.remove("average");

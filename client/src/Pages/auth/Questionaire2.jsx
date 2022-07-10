@@ -3,13 +3,21 @@ import { Link } from "react-router-dom";
 
 import "./auth.css";
 import Logo from "../../Assets/Images/MillennialsPrimeLogo.png";
+import Company1 from "../../Assets/Images/Companies/Company1.jpeg";
+import Company2 from "../../Assets/Images/Companies/Company2.jpeg";
+import Company3 from "../../Assets/Images/Companies/Company3.jpg";
 
 const Questionaire2 = () => {
   return (
     <div className="page">
       <div className="pic pic2">
         <div className="pic-container">
-          <h2 className="center-item">Picture Goes Here Alone</h2>
+          <div className="background">
+            <img src={Company1} alt="" className="company" />
+            <img src={Company2} alt="" className="company" />
+            <img src={Company3} alt="" className="company" />
+            <img src={Company1} alt="" className="company" />
+          </div>
         </div>
       </div>
       <div className="form form2">

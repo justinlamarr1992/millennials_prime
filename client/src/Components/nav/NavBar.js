@@ -66,10 +66,9 @@ const NavBar = (props) => {
         </li>
         <li className="nav-list bottom">
           <div className="test test1">
-            <Link key="signout" to="/signout">
+            <Link key="signout" to="/signin">
               <FaSignOutAlt />
-              {/* Sign Out */}
-              {/* <FontAwesomeIcon icon="fa-solid fa-arrow-right-from-bracket" /> */}
+              {/* Here is where the fuction goes to remove the user token and send to Sign in page */}
             </Link>
           </div>
         </li>
