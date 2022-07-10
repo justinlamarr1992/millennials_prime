@@ -111,23 +111,19 @@ const Questionaire = () => {
                 <option value="no">No</option>
               </select>
             </div>
-            {entrepreneur == true ? (
+            {entrepreneur == true && (
               <div className="label-input">
                 <label htmlFor="">What is the Industry Your Operate in?</label>
                 <input type="email" />
               </div>
-            ) : (
-              <></>
             )}
-            {entrepreneur == true ? (
+            {entrepreneur == true && (
               <div className="label-input">
                 <label htmlFor="">
                   Are you Open to Business with Users here.
                 </label>
                 <input type="email" />
               </div>
-            ) : (
-              <></>
             )}
 
             <div className="label-input">

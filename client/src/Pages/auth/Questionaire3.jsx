@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 import "./auth.css";
@@ -8,6 +8,31 @@ import Company2 from "../../Assets/Images/Companies/Company2.jpeg";
 import Company3 from "../../Assets/Images/Companies/Company3.jpg";
 
 const Questionaire3 = () => {
+  const [art, setArt] = useState(false);
+  const [answers, setAnswers] = useState(false);
+
+  const artCheck = (e) => {
+    console.log(art);
+    const inputArtist = document.getElementById("artist").value;
+    if (inputArtist === "yes") {
+      setArt(true);
+    } else {
+      setArt(false);
+    }
+    console.log(inputArtist);
+    continueCheck();
+  };
+  // TODO: Figure out how to disable the button until all the answers completed
+
+  const continueCheck = () => {
+    const inputArtist = document.getElementById("artist").value;
+    if ((inputArtist = null)) {
+      console.log("Works");
+    } else {
+      console.log(inputArtist);
+    }
+  };
+
   return (
     <div className="page">
       <div className="pic pic2">
@@ -26,7 +51,7 @@ const Questionaire3 = () => {
             <img className="auth-logo" src={Logo} alt="MPrime Logo" />
 
             <div className="form-text">
-              <h4>Let's talks Art and Connections!</h4>
+              <h4>Let's talks Art!</h4>
               <h6 className="text-gray">Answer the Following Questions</h6>
             </div>
           </div>
@@ -39,64 +64,104 @@ const Questionaire3 = () => {
 
           <form className="auth-form" action="">
             <div className="label-input">
-              <label htmlFor="">
-                Have you worked as a professional artist before?
-              </label>
-              <input type="email" />
+              <label htmlFor="">Are you an Artist?</label>
+              <select
+                name="artist"
+                id="artist"
+                onChange={artCheck}
+                placeholder="Select Answer"
+              >
+                <option value="" disabled selected>
+                  Select your option
+                </option>
+                <option value="yes">Yes</option>
+                <option value="no">No</option>
+              </select>
             </div>
-            <div className="label-input">
-              <label htmlFor="">What's the purpose or goal of your work?</label>
-              <input type="email" />
-            </div>
-            <div className="label-input">
-              <label htmlFor="">
-                How can your work affect societal issues?
-              </label>
-              <input type="email" />
-            </div>
-            <div className="label-input">
-              <label htmlFor="">
-                How do you navigate the professional art industry?
-              </label>
-              <input type="email" />
-            </div>
-            <div className="label-input">
-              <label htmlFor="">
-                Which art/music trends inspire your current work?
-              </label>
-              <input type="email" />
-            </div>
-            <div className="label-input">
-              <label htmlFor="">How has your style changed over time? </label>
-              <input type="email" />
-            </div>
-            <div className="label-input">
-              <label htmlFor="">
-                What are your favorite and least favorite parts of professional
-                art?
-              </label>
-              <input type="email" />
-            </div>
-            <div className="label-input">
-              <label htmlFor="">
-                Do you have a network of other artists, and how do they support
-                you?
-              </label>
-              {/* If yes give a brief one to sentence description */}
-              <input type="email" />
-            </div>
-            <div className="label-input">
-              <label htmlFor="">What have critics said about your work?</label>
-              <input type="email" />
-            </div>
-            <div className="label-input">
-              <label htmlFor="">
-                Is there a specific environment or material that's integral to
-                your work?
-              </label>
-              <input type="email" />
-            </div>
+            {art == true && (
+              <div className="label-input">
+                <label htmlFor="">
+                  Have you worked as a professional artist before?
+                </label>
+                <input type="email" />
+              </div>
+            )}
+            {art == true && (
+              <div className="label-input">
+                <label htmlFor="">
+                  What's the purpose or goal of your work?
+                </label>
+                <input type="email" />
+              </div>
+            )}
+            {art == true && (
+              <div className="label-input">
+                <label htmlFor="">
+                  How can your work affect societal issues?
+                </label>
+                <input type="email" />
+              </div>
+            )}
+            {art == true && (
+              <div className="label-input">
+                <label htmlFor="">
+                  How do you navigate the professional art industry?
+                </label>
+                <input type="email" />
+              </div>
+            )}
+            {art == true && (
+              <div className="label-input">
+                <label htmlFor="">
+                  Which art/music trends inspire your current work?
+                </label>
+                <input type="email" />
+              </div>
+            )}
+            {art == true && (
+              <div className="label-input">
+                <label htmlFor="">How has your style changed over time? </label>
+                <input type="email" />
+              </div>
+            )}
+            {art == true && (
+              <div className="label-input">
+                <label htmlFor="">
+                  What are your favorite and least favorite parts of
+                  professional art?
+                </label>
+                <input type="email" />
+              </div>
+            )}
+            {art == true && (
+              <div className="label-input">
+                <label htmlFor="">
+                  Do you have a network of other artists, and how do they
+                  support you?
+                </label>
+                {/* If yes give a brief one to sentence description */}
+                <input type="email" />
+              </div>
+            )}
+            {art == true && (
+              <div className="label-input">
+                <label htmlFor="">
+                  What have critics said about your work?
+                </label>
+                <input type="email" />
+              </div>
+            )}
+            {art == true && (
+              <div className="label-input">
+                <label htmlFor="">
+                  Is there a specific environment or material that's integral to
+                  your work?
+                </label>
+                <input type="email" />
+              </div>
+            )}
 
+            {}
             <Link className="" key="home" to="/">
               <button className="auth-button login">Finished</button>
             </Link>
