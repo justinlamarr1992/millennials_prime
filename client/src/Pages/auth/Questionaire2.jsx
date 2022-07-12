@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import "./auth.css";
@@ -20,7 +20,7 @@ const Questionaire2 = () => {
           </div>
         </div>
       </div>
-      <div className="form form2">
+      <div className="form form2 con-shade">
         <div className="form-container">
           <div className="form-title">
             <img className="auth-logo" src={Logo} alt="MPrime Logo" />
@@ -30,13 +30,6 @@ const Questionaire2 = () => {
               <h6 className="text-gray">Answer the Following Questions</h6>
             </div>
           </div>
-          {/* Separate pages */}
-          {/* First page: peerson date of birth ect... */}
-          {/* Second page: COngrats... About you and Business how to help build */}
-          {/* Third Page: Needs like resources, equiptments */}
-          {/*  */}
-          {/* no typing answers only drop downs */}
-
           <form className="auth-form" action="">
             <div className="label-input">
               <label htmlFor="" id="business-start">
@@ -60,7 +53,7 @@ const Questionaire2 = () => {
               <label htmlFor="">
                 Why did you decide to start your own business?
               </label>
-              <select name="business" id="business" placeholder="Select Answer">
+              <select name="business" id="business">
                 <option value="" disabled selected>
                   Select your option
                 </option>

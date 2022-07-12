@@ -25,7 +25,6 @@ Password Recovery
     Link to password recovery Link 
 
 Questionaire
-    html the selects
     Find way to pass the answers to users profile
 Home Page
     Search Bar
@@ -99,3 +98,11 @@ General Pages Not Made
 
 General Designs not implememted
     Shimmer Loading Effect
+
+Right modals
+    Size (too big)
+    need dynamic info 
+    finds pictures
+    Link to profile
+    link to notifications
+    Dynamic Connected and Connect Button Changes

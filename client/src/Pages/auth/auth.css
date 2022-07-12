@@ -159,6 +159,9 @@ justify-content: space-evenly;
     background: var(--form-c);
     /* width: 100%; */
 }
+.input1{
+    margin-bottom: 25px;
+}
 .names {
     width: 45%;
 }

@@ -54,8 +54,8 @@ const Questionaire = () => {
           </div>
         </div>
       </div>
-      <div className="form form2">
-        <div className="form-container">
+      <div className="form form2 con-shade">
+        <div className="form-container ">
           <div className="form-title">
             <img className="auth-logo" src={Logo} alt="MPrime Logo" />
 

@@ -20,7 +20,7 @@ const User = () => {
   };
   return (
     <div className="page">
-      {/* <NavBar name="Justin" /> */}
+      <NavBar name="Justin" />
 
       <div className="user-container">
         {/* Find a way to make this into component but have infor pasted in */}

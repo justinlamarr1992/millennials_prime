@@ -98,7 +98,12 @@
 
     /* NAVE BAR WIDTH */
     --nav-w:15.625rem;
+    --nav-w-plus-padding:16.625rem;
     --nav-hw:30.438rem;
+
+    --nav-per:12%;
+    --home-per:60%;
+    --mod-w-per:20%;
 
     --navbutpad:0.5rem;
 
@@ -133,6 +138,7 @@
 * {
     transition: all 0.3s ease-in-out;
     -webkit-transition: .2s ease;
+    box-sizing: border-box;
 }
 
 body {
@@ -204,7 +210,7 @@ input{
 /* change naming for this */
 .page {
     width: 100vw;
-    height: 100vh;
+    height: 100%;
     background: var(--background);
     display: flex;
     flex-direction: row;

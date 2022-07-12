@@ -27,7 +27,7 @@ const PasswordRecovery = () => {
           </div>
         </div>
       </div>
-      <div className="form">
+      <div className="form con-shade">
         <div className="form-container">
           <div className="form-title">
             <img className="auth-logo" src={Logo} alt="MPrime Logo" />

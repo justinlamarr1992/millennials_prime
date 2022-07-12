@@ -2,9 +2,17 @@
 .user-container{
    display: flex;
 flex-direction: column;
-padding-left: var(--nav-w);
-margin: 2% 5%; 
-width: 50%;
+/* padding-left: var(--nav-w); */
+
+/* Test */
+margin: 2% auto 2% auto; 
+/* margin: 2% 5%;  */
+
+/* Test */
+width: var(--home-per);
+
+
+/* width: 50%; */
 min-width: 50%;
 height: 100%;
 }
@@ -25,7 +33,13 @@ height: 100%;
     /* border: 1px solid black; */
     height: 100vh;
     /* mod width too big for laptop */
-    width: var(--mod-w);
+
+
+    /* TEST */
+    width: var(--mod-w-per);
+
+
+    /* width: var(--mod-w); */
     /* width: 20rem; */
     position: fixed;
     z-index: 1;
