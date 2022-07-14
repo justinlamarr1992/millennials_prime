@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
+import { useEffect } from "react";
 import NavBar from "../../Components/nav/NavBar";
 import FeedEpisode from "../../Components/reusuables/post/FeedEpisode";
 import FeedMusic from "../../Components/reusuables/post/FeedMusic";
@@ -14,15 +15,42 @@ import "../../Components/user/user.css";
 
 const User = () => {
   const [modal, setModal] = useState(true);
+  const [pageWidth, setPageWidth] = useState("var(--home-per)");
+  const widthRef = useRef(null);
+
+  useEffect(() => {
+    console.log(
+      "the width of the user container is ",
+      widthRef.current.offsetWidth
+    );
+  }, []);
 
   const onClick = () => {
     setModal(!modal);
+    pageWidthChange();
+  };
+
+  const pageWidthChange = () => {
+    if (modal == true) {
+      console.log("true");
+      setPageWidth(widthRef.current.offsetWidth);
+      // widthRef.current.width = "100px";
+      console.log(pageWidth);
+    } else {
+      console.log("false");
+      setPageWidth(widthRef.current.offsetWidth);
+      // widthRef.current.width = "100px";
+      console.log(pageWidth);
+    }
   };
   return (
     <div className="page">
-      <NavBar name="Justin" />
+      {/* <NavBar name="Justin" /> */}
 
-      <div className="user-container">
+      <div
+        className={"user-container " + (modal ? "user-true" : "user-false")}
+        ref={widthRef}
+      >
         {/* Find a way to make this into component but have infor pasted in */}
         <div className="prime-video">
           <SearchBar />

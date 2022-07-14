@@ -13,12 +13,12 @@ NAV Home Home SideDrawer
     height: 100vh;
 
     /* Test */
-    width: var(--nav-per);
+    /* width: var(--nav-per); */
 
 
-    /* width: var(--nav-w); */
-    /* position: fixed; */
-    position: sticky;
+    width: var(--nav-w);
+    position: fixed;
+    /* position: sticky; */
     z-index:1;
     top: 0;
     /* left: 0; */

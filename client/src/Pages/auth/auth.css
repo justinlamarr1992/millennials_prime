@@ -3,7 +3,7 @@
 .pic {
     width: 50%;
     /* width: 50vw; */
-    height: 100%;
+    height: 100vh;
     background: var(--background);
     z-index: 0;
 }

@@ -20,6 +20,8 @@
     --navb-c: #BD2932;
     --foot-c: #939597;
 
+    --transp-white:rgba(255, 255, 255, 0.9);
+
     --outline: #8F92A1;
 
     --gl:0 0px 10px 4px var(--qua-c);
@@ -87,6 +89,7 @@
     /* Section Padding */
     
     /* Section Margins */
+    --page-mar: 2% 10% 2% 0;
 
 
     /* Boarder Radius */
@@ -136,7 +139,7 @@
 }
 
 * {
-    transition: all 0.3s ease-in-out;
+    transition: all 0.5s ease-in-out;
     -webkit-transition: .2s ease;
     box-sizing: border-box;
 }
@@ -209,12 +212,13 @@ input{
 }
 /* change naming for this */
 .page {
-    width: 100vw;
-    height: 100%;
+    width: 100%;
+    /* height: 100%; */
     background: var(--background);
-    display: flex;
-    flex-direction: row;
+    /* display: flex;
+    flex-direction: row; */
     /* margin: auto; */
+    padding-left: calc(var(--nav-w) + 6%);
 }
 .page-button{
     width: var(--but-w);
