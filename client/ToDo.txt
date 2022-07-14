@@ -35,12 +35,6 @@ Home Page
             comment sections needs to be added
             share button needs to give option to share to various sites and own profile
 
-    Hot items
-        Add Title to the items
-
-    Featured Primes
-        Add name of Primes
-
     Post
         Add Post Comment/ Video/ Post/ Episode/ Music/ Item  Sectioon fro users to add to the database
 
