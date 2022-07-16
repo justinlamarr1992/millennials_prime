@@ -1,12 +1,16 @@
-import React from "react";
-import Video from "../../video/Video";
-import ItemUserInfo from "../ItemUserInfo";
+import React, { useEffect, useState } from "react";
 import ItemUserInfoUnder from "../ItemUserInfoUnder";
 import EpisodeVideo from "./EpisodeVideo";
 import PostLikeDisLike from "./PostLikeDislike";
-const FeedEpisode = () => {
+
+const FeedEpisode = ({ modal, setModal }) => {
   return (
-    <section className="post-episode-container prime-container p-con-shade ">
+    <section
+      className={
+        "post-episode-container prime-container p-con-shade wrapping " +
+        (modal ? "no-wrapping" : "wrapping")
+      }
+    >
       <EpisodeVideo />
       {/* <ItemUserInfo className="pr-user-info item-user-info" /> */}
       <ItemUserInfoUnder />

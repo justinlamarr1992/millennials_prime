@@ -2,8 +2,8 @@
 .settings-container{
     display: flex;
 flex-direction: column;
-padding-left: var(--nav-w);
-margin: 2% 5%;
+/* padding-left: var(--nav-w); */
+margin: 2% 0;
 width: 50%;
 min-width: 50%;
 height: 100%;
@@ -83,14 +83,18 @@ background-image: linear-gradient(to top,
     color: var(--sec-t);
 }
 .modal-setting-container{
-    padding-top: 100px;
+   padding-top: 100px;
+height: 100%;
+display: flex;
+flex-direction: column;
+justify-content: space-around;
 }
 .modal-setting-title{}
 .modal-setting-button{
     display: flex;
     align-items: center;
     width: 100%;
-    padding:50px 0;
+    /* padding:50px 0; */
     /* border: 1px solid white; */
 }
 .setting-button-icon-box{
@@ -108,7 +112,7 @@ background-image: linear-gradient(to top,
 .setting-button-icon{
     color: var(--sec-t);
     font-size: 3rem;
-        padding: 20px;
+        padding: 0.5rem;
 }
 .setting-button-icon-selected{
     color: var(--pri-t);

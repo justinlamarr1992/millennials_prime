@@ -20,8 +20,10 @@ const SettingsModal = () => {
             alt="User Image here"
           />
         </div>
+        <h3 className="modal-setting-title">Settings</h3>
+
         <div className="modal-setting-container">
-          <h3 className="modal-setting-title">Settings</h3>
+          {/* <h3 className="modal-setting-title">Settings</h3> */}
           <Link key="account" to="/settings" className="modal-setting-button">
             <div className="setting-button-icon-box setting-button-icon-box-selected">
               <FaUserAlt className="setting-button-icon setting-button-icon-selected" />

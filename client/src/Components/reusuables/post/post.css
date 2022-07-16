@@ -52,6 +52,12 @@
     /* grid-template-columns: var(--boxcol); */
     grid-template-rows: repeat(5, auto); 
 }
+.post-store-container{
+     display: grid;
+    grid-template-columns: 6% auto auto 6%;
+    /* grid-template-columns: var(--boxcol); */
+    grid-template-rows: repeat(5, auto); 
+}
 
 
 

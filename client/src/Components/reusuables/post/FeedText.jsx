@@ -1,9 +1,14 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ItemUserInfo from "../ItemUserInfo";
 import PostLikeDisLike from "./PostLikeDislike";
-const FeedText = () => {
+const FeedText = ({ modal, setModal }) => {
   return (
-    <section className="post-item-container norm-container con-shade ">
+    <section
+      className={
+        "post-item-container norm-container con-shade " +
+        (modal ? "no-wrapping" : "wrapping")
+      }
+    >
       <ItemUserInfo className="pr-user-info item-user-info" />
       {/* <h3 className="item-user-content">{title}</h3> */}
       <h3 className="item-user-content">This is the Title of the TExt Post</h3>
