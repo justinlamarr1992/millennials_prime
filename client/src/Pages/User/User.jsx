@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useEffect } from "react";
+import MessageBox from "../../Components/messaging/MessageBox";
 import NavBar from "../../Components/nav/NavBar";
 import FeedEpisode from "../../Components/reusuables/post/FeedEpisode";
 import FeedMusic from "../../Components/reusuables/post/FeedMusic";
@@ -12,7 +13,10 @@ import PrimeUpdateVideo from "../../Components/reusuables/post/PrimeUpdateVideo"
 import SearchBar from "../../Components/reusuables/SearchBar";
 import ProfileModal from "../../Components/user/ProfileModal";
 
+import { FaPlus } from "react-icons/fa";
+
 import "../../Components/user/user.css";
+import FeedPost from "../../Components/reusuables/post/FeedPost";
 
 const User = () => {
   const [modal, setModal] = useState(true);
@@ -57,7 +61,7 @@ const User = () => {
           {/* change name from just prime video to folder container stuff */}
           <SearchBar />
           <PrimeUpdateVideo />
-          <h1>User to post here</h1>
+          <FeedPost />
 
           <h1>Toggle Feed Selections</h1>
           <div

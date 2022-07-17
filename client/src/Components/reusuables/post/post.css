@@ -2,6 +2,13 @@
     width: 100%;
 }
 
+.post-reply-container{
+     display: grid;
+    grid-template-columns: 6% auto auto 6%;
+    /* grid-template-columns: var(--boxcol); */
+    grid-template-rows: repeat(2, auto);
+}
+
 .post-item-container {
     display: grid;
     grid-template-columns: var(--boxcol);

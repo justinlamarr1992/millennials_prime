@@ -14,6 +14,41 @@ import MessageBox from "./MessageBox";
 const MessageModal = () => {
   return (
     <div className="message-modal con-shade">
+      <div className="message-modal-sender">
+        <div className="message-sender">
+          <img className="message-sender-pic" src={User} alt="" />
+          <div className="message-sender-info">
+            <h3 className="message-sender-name">Sender Name</h3>
+            <h5 className="message-sender-status">Online</h5>
+          </div>
+        </div>
+
+        <div className="message-sender-options">Options</div>
+      </div>
+      <div className="reply-container">
+        <button className="reply-button">
+          <FaPlus className="reply-button-icon" />
+        </button>
+        <MessageBox />
+      </div>
+      <div className="message-modal-container">
+        <div className="message-modal-chat">
+          <SendText />
+          <RecText />
+          <SendPic />
+          <RecPic />
+          <SendAud />
+          <RecAud />
+          <SendVid />
+          <RecVid />
+        </div>
+      </div>
+    </div>
+  );
+};
+export default MessageModal;
+{
+  /* <div className="message-modal con-shade">
       <div className="message-modal-container">
         <div className="message-modal-sender">
           <div className="message-sender">
@@ -43,7 +78,5 @@ const MessageModal = () => {
           <MessageBox />
         </div>
       </div>
-    </div>
-  );
-};
-export default MessageModal;
+    </div> */
+}

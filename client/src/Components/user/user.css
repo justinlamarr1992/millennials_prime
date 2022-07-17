@@ -190,6 +190,27 @@ margin: 0 0.5rem;
 font-size: var(--wh4);
 font-weight: bold;
 }
+/* Feed Reply */
+.feed-reply-text{
+  grid-column: 2/4;
+  grid-row: 1/2;
+
+}
+.feed-reply-attachment{
+grid-area: 2/2/3/3;
+padding: 20px;
+display: flex;
+justify-content: space-between;
+background: rgba( 247, 247, 247, 0.25 );
+box-shadow: var(--bshade);
+border-radius: var(--brad);
+border: 1px solid rgba( 255, 255, 255, 0.18 );
+
+}
+.feed-reply-post{
+  grid-area: 2/3/3/4;
+
+}
 /* Feed Text */
 /* Feed Photos */
 .feed-post-text {

@@ -19,7 +19,6 @@ const Messages = () => {
             // + (modal ? "user-true" : "user-false")
           }
         >
-          {" "}
           <SearchBar />
           {/* Add button to send new message */}
           <h2>Inbox</h2>
