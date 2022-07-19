@@ -4,9 +4,14 @@ import ItemUserInfo from "../ItemUserInfo";
 import "./post.css";
 import PostLikeDisLike from "./PostLikeDislike";
 
-const HomeFeedPostItem = ({ title, status }) => {
+const HomeFeedPostItem = ({ title, status, modal, setModal }) => {
   return (
-    <section className="post-item-container norm-container con-shade ">
+    <section
+      className={
+        "post-item-container norm-container con-shade " +
+        (modal ? "no-wrapping" : "wrapping")
+      }
+    >
       <ItemUserInfo className="pr-user-info item-user-info" />
       <h3 className="item-user-content">{title}</h3>
 

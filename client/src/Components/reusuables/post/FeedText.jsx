@@ -10,10 +10,8 @@ const FeedText = ({ modal, setModal }) => {
       }
     >
       <ItemUserInfo className="pr-user-info item-user-info" />
-      {/* <h3 className="item-user-content">{title}</h3> */}
       <h3 className="item-user-content">This is the Title of the TExt Post</h3>
 
-      {/* <h5 className="item-user-status text-gray">{status}</h5> */}
       <h5 className="item-user-status text-gray">
         This is the Status of the text post
       </h5>

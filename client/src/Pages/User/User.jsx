@@ -1,6 +1,4 @@
-import React, { useState, useRef } from "react";
-import { useEffect } from "react";
-import MessageBox from "../../Components/messaging/MessageBox";
+import React, { useState, useRef, useEffect } from "react";
 import NavBar from "../../Components/nav/NavBar";
 import FeedEpisode from "../../Components/reusuables/post/FeedEpisode";
 import FeedMusic from "../../Components/reusuables/post/FeedMusic";
@@ -12,8 +10,6 @@ import PostLikeDisLike from "../../Components/reusuables/post/PostLikeDislike";
 import PrimeUpdateVideo from "../../Components/reusuables/post/PrimeUpdateVideo";
 import SearchBar from "../../Components/reusuables/SearchBar";
 import ProfileModal from "../../Components/user/ProfileModal";
-
-import { FaPlus } from "react-icons/fa";
 
 import "../../Components/user/user.css";
 import FeedPost from "../../Components/reusuables/post/FeedPost";
@@ -79,7 +75,6 @@ const User = () => {
         <button className="test-modal-button" onClick={onClick}>
           Modal Test Button
         </button>
-        {/* Figure out w away to chage div width based on when this button is pushed */}
         {/* <section>Users Post</section> */}
         {modal && <ProfileModal />}
       </div>

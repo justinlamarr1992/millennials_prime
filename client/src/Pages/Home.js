@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useRef, useEffect } from "react";
 import Video from "../Components/video/Video";
 import HotItems from "../Components/home/HotItems";
 import Newsfeed from "../Components/home/Newsfeed";
@@ -12,19 +12,51 @@ import FeatPrimes from "../Components/newsfeed/FeatPrimes";
 import PostList from "../Components/reusuables/post/PostList";
 import HomeFeedPost from "../Components/reusuables/post/HomeFeedPost";
 
+import MainModal from "../Components/reusuables/modals/MainModal";
+import HomeFeedPhoto from "../Components/reusuables/post/HomeFeedPhoto";
+
 const Home = () => {
+  const [modal, setModal] = useState(true);
+  const [pageWidth, setPageWidth] = useState("var(--home-per)");
+  const widthRef = useRef(null);
+
+  const onClick = () => {
+    setModal(!modal);
+    pageWidthChange();
+  };
+
+  const pageWidthChange = () => {
+    if (modal == true) {
+      // console.log("true");
+      setPageWidth(widthRef.current.offsetWidth);
+      // widthRef.current.width = "100px";
+      // console.log(pageWidth);
+    } else {
+      // console.log("false");
+      setPageWidth(widthRef.current.offsetWidth);
+      // widthRef.current.width = "100px";
+      // console.log(pageWidth);
+    }
+  };
+
   return (
     <div className="page">
       {/* <NavBar name="Justin" /> */}
-      <div className="home-container">
+      <div
+        className={"home-container " + (modal ? "user-true" : "user-false")}
+        ref={widthRef}
+      >
         <SearchBar />
         <PrimeNews />
         <HotItems />
         <FeatPrimes />
-        <h1>User to Post here</h1>
         <HomeFeedPost />
-        <PostList />
-        {/* <Newsfeed /> */}
+        <HomeFeedPhoto />
+        <PostList modal={modal} setModal={setModal} widthRef={widthRef} />s{" "}
+        <button className="test-modal-button" onClick={onClick}>
+          Modal Test Button
+        </button>
+        {modal && <MainModal />}
       </div>
     </div>
   );

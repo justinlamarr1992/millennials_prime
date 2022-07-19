@@ -31,6 +31,8 @@ Home Page
         Off with spacing
 
     Post Components
+        Comment Post find way to have different placeholder text from home and users page
+
         Duplicate HomeFeedPostItem for each user Feed...
 
         Like/DisLike space  
@@ -52,6 +54,9 @@ Navbar
         Remove the token and Link to Signout Page
 
 User
+    E-Comm
+        Make title of item and descrption on the post
+        set up separate page for viewing items alone
     Make madal Button like the iPhone bottom line bar button 
     Make the columns into two when the modal is closed/ one when modal is open
     Create Section for user or someone to post on indiviuals profile 

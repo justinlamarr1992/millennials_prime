@@ -1,4 +1,7 @@
 import React from "react";
+import User from "../../../Assets/Images/user.jpeg";
+import { FaEnvelope } from "react-icons/fa";
+
 const MainModal = () => {
   return (
     <div className="modal con-shade">

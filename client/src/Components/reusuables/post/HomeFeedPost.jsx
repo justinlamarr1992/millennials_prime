@@ -7,7 +7,7 @@ const HomeFeedPost = () => {
     <section className="post-reply-container norm-container con-shade">
       <h3 className="feed-reply-heading">Connect with Millennials Prime</h3>
       <div className="feed-reply-text">
-        <MessageBox />
+        <MessageBox placeHolder={"What have you accomplished today?"} />
       </div>
       <button className="reply-button feed-reply-attachment">
         <FaPlus className="reply-button-icon" />

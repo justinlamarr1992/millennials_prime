@@ -1,14 +1,15 @@
 import React, { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { data } from "./data";
-import HomeFeedPostItem from "./HomeFeedPostItem";
+import HomeFeedText from "./HomeFeedText";
 
-const LIMIT = 7;
+const LIMIT = 10;
 
-const PostList = () => {
+const PostList = ({ modal, setModal, widthRef }) => {
   const [postData, setPostData] = useState(data.splice(0, LIMIT));
   const [visible, setVisible] = useState(LIMIT);
   const [hasMore, setHasMore] = useState(true);
+  // const [modal, setModal] = useState(true);
 
   const fetchData = () => {
     const newLimit = visible + LIMIT;
@@ -27,7 +28,7 @@ const PostList = () => {
   return (
     <div className="feed-items">
       <h3 className="ht-item-title title-space">News Feed</h3>
-
+      {/* THIS IS THE FORMAT TO GO WITH */}
       <InfiniteScroll
         dataLength={postData.length}
         next={fetchData}
@@ -38,20 +39,39 @@ const PostList = () => {
             <b>Yay! You have seen it all</b>
           </p>
         }
-        style={{
-          // height: 300,
-          overflow: "visible",
-          display: "flex",
-          flexDirection: "column",
-        }}
+        style={
+          modal
+            ? {
+                overflow: "visible",
+                display: "flex",
+                flexDirection: "column",
+              }
+            : {
+                overflow: "visible",
+                display: "flex",
+                flexDirection: "row",
+                flexWrap: "wrap",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }
+        }
+
+        // style={{
+        //   // height: 300,
+        //   overflow: "visible",
+        //   display: "flex",
+        //   flexDirection: "column",
+        // }}
         //test
       >
         {postData.map((item) => {
           return (
-            <HomeFeedPostItem
+            <HomeFeedText
               key={item.id}
               title={item.title}
               status={item.status}
+              modal={modal}
+              setModal={setModal}
             />
           );
         })}

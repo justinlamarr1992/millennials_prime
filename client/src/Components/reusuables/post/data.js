@@ -100,3 +100,13 @@ export const data = [
     status: "this is the test to see if what the user types appears",
   },
 ];
+export const photoData = [
+  {
+    id: 1,
+    status: "this is the test to see if what the user types appears",
+    // REQUIRE WAS THE FIX
+    img: require("../../../Assets/Images/user.jpeg"),
+    name: "Pic1",
+    number: 2,
+  },
+];

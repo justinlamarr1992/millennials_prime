@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import ItemUserInfo from "../ItemUserInfo";
 import PostLikeDisLike from "./PostLikeDislike";
 import img1 from "../../../Assets/Images/user.jpeg";
@@ -43,10 +43,6 @@ const FeedPhoto = ({ modal, setModal }) => {
           alt=""
         />
       </div>
-      {/* <h3 className="item-user-content">{title}</h3> */}
-      {/* <h3 className="item-user-content">This is the Title of the TExt Post</h3> */}
-      {/* <h5 className="item-user-status text-gray">{status}</h5> */}
-
       <PostLikeDisLike />
     </section>
   );
