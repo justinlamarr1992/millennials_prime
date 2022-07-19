@@ -16,8 +16,13 @@ const FeedStore = ({ modal, setModal }) => {
         (modal ? "no-wrapping" : "wrapping")
       }
     >
-      <div className="feed-post-e-comm ">
-        <img src={Item} className="ecomm-pic" alt="Users Image" />
+      <div className="feed-post-e-comm p-item-shade hovering">
+        <img
+          src={Item}
+          className="ecomm-pic p-item-shade hovering"
+          alt="Users Image"
+        />
+        {/* TODO: make a link to the item indivually */}
       </div>
       <ItemUserInfoUnder />
       <button className="feed-post-episode-button p-con-shade">

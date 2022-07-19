@@ -18,7 +18,7 @@ const FeedMusic = ({ modal, setModal }) => {
       <ItemUserInfoUnder />
       <button className="feed-post-episode-button p-con-shade">
         <div className="feed-post-button-border">
-          <h4>Next Track</h4>
+          <h4>Next</h4>
         </div>
       </button>
     </section>

@@ -10,6 +10,7 @@ import PrimeNews from "../Components/home/PrimeNews";
 import SearchBar from "../Components/reusuables/SearchBar";
 import FeatPrimes from "../Components/newsfeed/FeatPrimes";
 import PostList from "../Components/reusuables/post/PostList";
+import HomeFeedPost from "../Components/reusuables/post/HomeFeedPost";
 
 const Home = () => {
   return (
@@ -21,6 +22,7 @@ const Home = () => {
         <HotItems />
         <FeatPrimes />
         <h1>User to Post here</h1>
+        <HomeFeedPost />
         <PostList />
         {/* <Newsfeed /> */}
       </div>

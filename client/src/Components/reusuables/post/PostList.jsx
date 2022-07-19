@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import InfiniteScroll from "react-infinite-scroll-component";
 import { data } from "./data";
-import PostItem from "./PostItem";
+import HomeFeedPostItem from "./HomeFeedPostItem";
 
 const LIMIT = 7;
 
@@ -48,7 +48,11 @@ const PostList = () => {
       >
         {postData.map((item) => {
           return (
-            <PostItem key={item.id} title={item.title} status={item.status} />
+            <HomeFeedPostItem
+              key={item.id}
+              title={item.title}
+              status={item.status}
+            />
           );
         })}
       </InfiniteScroll>

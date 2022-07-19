@@ -1,16 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import { FaPlus } from "react-icons/fa";
 import MessageBox from "../../messaging/MessageBox";
 
-const FeedPost = () => {
-  const [placeholder, setPlaceholder] = useState("Home Placeholder Text");
+const HomeFeedPost = () => {
   return (
     <section className="post-reply-container norm-container con-shade">
-      <h3 className="feed-reply-heading">Connect with (USER NAME HERE)</h3>
+      <h3 className="feed-reply-heading">Connect with Millennials Prime</h3>
       <div className="feed-reply-text">
-        <MessageBox placeHolder={"This is the Text"} />
+        <MessageBox />
       </div>
-
       <button className="reply-button feed-reply-attachment">
         <FaPlus className="reply-button-icon" />
       </button>
@@ -20,4 +18,4 @@ const FeedPost = () => {
     </section>
   );
 };
-export default FeedPost;
+export default HomeFeedPost;

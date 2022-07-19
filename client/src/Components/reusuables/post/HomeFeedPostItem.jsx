@@ -4,7 +4,7 @@ import ItemUserInfo from "../ItemUserInfo";
 import "./post.css";
 import PostLikeDisLike from "./PostLikeDislike";
 
-const PostItem = ({ title, status }) => {
+const HomeFeedPostItem = ({ title, status }) => {
   return (
     <section className="post-item-container norm-container con-shade ">
       <ItemUserInfo className="pr-user-info item-user-info" />
@@ -15,4 +15,4 @@ const PostItem = ({ title, status }) => {
     </section>
   );
 };
-export default PostItem;
+export default HomeFeedPostItem;

@@ -6,7 +6,7 @@
      display: grid;
     grid-template-columns: 6% auto auto 6%;
     /* grid-template-columns: var(--boxcol); */
-    grid-template-rows: repeat(2, auto);
+    grid-template-rows: repeat(3, auto);
 }
 
 .post-item-container {

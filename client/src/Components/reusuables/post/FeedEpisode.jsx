@@ -16,7 +16,7 @@ const FeedEpisode = ({ modal, setModal }) => {
       <ItemUserInfoUnder />
       <button className="feed-post-episode-button p-con-shade">
         <div className="button-border-test">
-          <h4>Next Episode</h4>
+          <h4>Next</h4>
         </div>
       </button>
       {/* //TODO: Change Marquee */}

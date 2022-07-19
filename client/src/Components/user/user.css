@@ -191,13 +191,18 @@ font-size: var(--wh4);
 font-weight: bold;
 }
 /* Feed Reply */
+.feed-reply-heading{
+   grid-column: 2/4;
+  grid-row: 1/2;
+}
 .feed-reply-text{
   grid-column: 2/4;
-  grid-row: 1/2;
+  grid-row: 2/3;
 
 }
 .feed-reply-attachment{
-grid-area: 2/2/3/3;
+grid-column: 2/3;
+  grid-row: 3/4;
 padding: 20px;
 display: flex;
 justify-content: space-between;
@@ -208,7 +213,8 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
 
 }
 .feed-reply-post{
-  grid-area: 2/3/3/4;
+  grid-column: 3/4;
+  grid-row: 3/4;
 
 }
 /* Feed Text */
@@ -272,6 +278,7 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
 }
 .feed-post-episode-button{
   /* padding: 20px; */
+  width: 100px;
   border: var(--but-bor);
 margin: var(--but-mar);
   border-radius: var(--brad);
@@ -289,14 +296,16 @@ grid-row: 3/4;
 }
 .feed-post-e-comm{
   grid-column: 2/4;
+  border-radius: var(--brad);
+
 }
 .ecomm-pic{
   width: 100%;
+  border-radius: var(--brad);
 }
 .feed-post-button-border{
   padding: 0 20px;
 }
-
 
 
 .feed-post-interactions{

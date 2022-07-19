@@ -31,6 +31,8 @@ Home Page
         Off with spacing
 
     Post Components
+        Duplicate HomeFeedPostItem for each user Feed...
+
         Like/DisLike space  
             comment sections needs to be added
             share button needs to give option to share to various sites and own profile

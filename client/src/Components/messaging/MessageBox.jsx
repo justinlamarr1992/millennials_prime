@@ -2,10 +2,11 @@ import React, { useState, useRef } from "react";
 import User from "../../Assets/Images/user.jpeg";
 import useDynamicHeightField from "../reusuables/post/useDynamicHeightField";
 
-const MessageBox = () => {
+const MessageBox = ({ placeHolder }) => {
   const [commentValue, setCommentValue] = useState("");
   const textRef = useRef(null);
   const containerRef = useRef(null);
+  // const placeHolder = "This is the Text";
 
   useDynamicHeightField(textRef, commentValue);
 
@@ -31,7 +32,8 @@ const MessageBox = () => {
         ref={textRef}
         onChange={onChange}
         className="reply-box-field"
-        placeholder="Leave a Comment"
+        // placeholder={placeholder}
+        placeholder={placeHolder}
         value={commentValue}
         name="comment"
         id="comment"
