@@ -14,6 +14,7 @@ import HomeFeedPost from "../Components/reusuables/post/HomeFeedPost";
 
 import MainModal from "../Components/reusuables/modals/MainModal";
 import HomeFeedPhoto from "../Components/reusuables/post/HomeFeedPhoto";
+import HomeFeedVideo from "../Components/reusuables/post/HomeFeedVideo";
 
 const Home = () => {
   const [modal, setModal] = useState(true);
@@ -51,7 +52,7 @@ const Home = () => {
         <HotItems />
         <FeatPrimes />
         <HomeFeedPost />
-        <HomeFeedPhoto />
+        {/* <HomeFeedVideo /> */}
         <PostList modal={modal} setModal={setModal} widthRef={widthRef} />s{" "}
         <button className="test-modal-button" onClick={onClick}>
           Modal Test Button

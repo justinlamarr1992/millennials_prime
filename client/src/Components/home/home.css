@@ -191,8 +191,10 @@ height: 1rem;
 
 
 .ht-box{
-  width: 20%;
-  height: 100%;
+  width: 210px;
+  height: 210px;
+  /* width: 20%;
+  height: 100%; */
   max-width: 400px;
   align-self: center;
    border-radius: var(--brad);
@@ -237,10 +239,13 @@ opacity: 0;
 }
 
 .fp-box{
-  width: 9%;
-  height: 100%;
+  width: 103px;
+  height: 103px;
   max-width: 160px;
   max-height: 160px;
+  /* width: 82.5px;
+height: 82.5px; */
+  object-fit:fill;
   /* align-self: center; */
 }
 .fp-item-pic{

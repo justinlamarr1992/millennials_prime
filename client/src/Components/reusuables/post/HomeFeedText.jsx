@@ -4,7 +4,16 @@ import ItemUserInfo from "../ItemUserInfo";
 import "./post.css";
 import PostLikeDisLike from "./PostLikeDislike";
 
-const HomeFeedPostItem = ({ title, status, modal, setModal }) => {
+const HomeFeedText = ({
+  user,
+  pic,
+  title,
+  status,
+  modal,
+  postedDate,
+  id,
+  setModal,
+}) => {
   return (
     <section
       className={
@@ -12,7 +21,12 @@ const HomeFeedPostItem = ({ title, status, modal, setModal }) => {
         (modal ? "no-wrapping" : "wrapping")
       }
     >
-      <ItemUserInfo className="pr-user-info item-user-info" />
+      <ItemUserInfo
+        user={user}
+        pic={pic}
+        postedDate={postedDate}
+        className="pr-user-info item-user-info"
+      />
       <h3 className="item-user-content">{title}</h3>
 
       <h5 className="item-user-status text-gray">{status}</h5>
@@ -20,4 +34,4 @@ const HomeFeedPostItem = ({ title, status, modal, setModal }) => {
     </section>
   );
 };
-export default HomeFeedPostItem;
+export default HomeFeedText;

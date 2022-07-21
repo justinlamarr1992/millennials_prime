@@ -3,23 +3,24 @@ import Video from "../video/Video";
 import UserPostInfo from "../reusuables/UserPostInfo";
 import PostLikeDisLike from "../reusuables/post/PostLikeDislike";
 
+import { primePostData } from "../reusuables/post/data";
+
 const PrimeNews = () => {
   return (
     <section id="prime" className="prime-container news-container p-con-shade ">
       <h2 className="pr-title title-space">Prime News</h2>
-      <Video />
-      <UserPostInfo className="pr-user-info" />
+      {/* no map needed each time a video is uploaded it will be put in front of the array */}
+      <Video video={primePostData[0].uploadedVid.video} />
+      <UserPostInfo
+        user={primePostData[0].user}
+        pic={primePostData[0].pic}
+        postedDate={primePostData[0].postedDate}
+        className="pr-user-info"
+      />
       <div className="pr-video-info">
-        <h3>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Numquam,
-          incidunt.
-        </h3>
+        <h3>{primePostData[0].uploadedVid.title}</h3>
         <h5 className="text-gray">
-          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sapiente
-          expedita odio provident harum accusamus unde quis facere blanditiis,
-          delectus aliquam commodi at quia eius, a iure. Accusamus laborum
-          temporibus et dolor voluptatum tempore suscipit sed quibusdam ipsa,
-          ducimus hic quis.
+          {primePostData[0].uploadedVid.description}
         </h5>
       </div>
       <div className="pr-like-dislike">

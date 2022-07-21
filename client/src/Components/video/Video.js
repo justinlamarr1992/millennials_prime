@@ -1,12 +1,12 @@
 import React, { useRef } from "react";
 import "../components.css";
 
-import video from "../../Assets/Videos/video.mp4";
+// import video from "../../Assets/Videos/video.mp4";
 import useVideoPlayer from "../../Hooks/useVideoPlayer";
 
 import { FaPause, FaPlay, FaVolumeUp, FaVolumeMute } from "react-icons/fa";
 
-const Video = () => {
+const Video = ({ video }) => {
   const videoElement = useRef(null);
   const {
     playerState,
