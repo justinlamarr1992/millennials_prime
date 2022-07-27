@@ -3,6 +3,8 @@ import ItemUserInfoUnder from "../ItemUserInfoUnder";
 import EpisodeVideo from "./EpisodeVideo";
 import PostLikeDisLike from "./PostLikeDislike";
 
+import { episodeData, videoData } from "./data";
+
 const FeedEpisode = ({ modal, setModal }) => {
   return (
     <section
@@ -11,21 +13,20 @@ const FeedEpisode = ({ modal, setModal }) => {
         (modal ? "no-wrapping" : "wrapping")
       }
     >
-      <EpisodeVideo />
-      {/* <ItemUserInfo className="pr-user-info item-user-info" /> */}
-      <ItemUserInfoUnder />
+      <EpisodeVideo episode={episodeData[0].episodes[0].uploadedVid.video} />
+      <ItemUserInfoUnder
+        user={episodeData[0].user}
+        pic={episodeData[0].pic}
+        postedDate={episodeData[0].postedDate}
+      />
       <button className="feed-post-episode-button p-con-shade">
         <div className="button-border-test">
           <h4>Next</h4>
         </div>
       </button>
       {/* //TODO: Change Marquee */}
-      {/* <h3 className="item-user-content">{title}</h3> */}
       <marquee className="feed-post-episode-title">
-        <h4>
-          Episode 2: Example Episode Title of the Episode that Will be really
-          Long
-        </h4>
+        <h4>{episodeData[0].episodes[0].uploadedVid.title}</h4>
       </marquee>
       {/* <h4 className="feed-post-episode-title">
         Episode 2: Example Episode Titl...

@@ -475,3 +475,29 @@ export const videoData = [
     ],
   },
 ];
+export const episodeData = [
+  {
+    user: "Annie Frank",
+    pic: require("../../../Assets/Images/testUsers/User3.jpeg"),
+    postedDate: "2022-02-04",
+    id: 1,
+    status: "Just Checking",
+    // figure way to have multiple pictures from adding
+    episodes: [
+      {
+        uploadedVid: {
+          video: require("../../../Assets/Videos/video.mp4"),
+          title: "Episode 1: The March of the Coder",
+          number: 1,
+        },
+      },
+      {
+        uploadedVid: {
+          video: require("../../../Assets/Videos/video2.mp4"),
+          title: "Vid2",
+          number: 2,
+        },
+      },
+    ],
+  },
+];

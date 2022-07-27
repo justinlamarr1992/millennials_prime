@@ -7,7 +7,7 @@ const HotItems = () => {
   return (
     <section className="pr-hot-items norm-container con-shade">
       <h3 className="ht-item-title title-space">Hot Items</h3>
-      <div className="nr-items">
+      <div className="nr1-items">
         {/* Every button need to be link to that contents param */}
         <div className="item1 ht-box words-scroll item-shade hovering pad-ring">
           <img className="ht-item-pic" src={textData[8].pic} alt="" />

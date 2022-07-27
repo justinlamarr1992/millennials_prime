@@ -1,9 +1,9 @@
 import React from "react";
 import Video from "../../video/Video";
-const EpisodeVideo = () => {
+const EpisodeVideo = ({ episode }) => {
   return (
     <div className="feed-post-episode-video">
-      <Video />
+      <Video video={episode} />
     </div>
   );
 };

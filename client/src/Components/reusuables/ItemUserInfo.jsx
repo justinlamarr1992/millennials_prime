@@ -1,5 +1,4 @@
 import React from "react";
-import User from "../../Assets/Images/user.jpeg";
 import TimeCalc from "./TimeCalc";
 const ItemUserInfo = ({ user, pic, postedDate }) => {
   return (
