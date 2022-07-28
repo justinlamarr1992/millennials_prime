@@ -22,6 +22,7 @@ const FeedPhoto = ({ modal, setModal }) => {
       />
       <h5 className="feed-post-text text-gray">{photoData[0].status}</h5>
       <div className="feed-photos-gallery">
+        {/* FIgure way to dynamically change layout depending on number of photos uploaded */}
         <img
           className="feed-photos-images photo1 con-shade"
           src={photoData[0].images[0].uploadedPic.image}

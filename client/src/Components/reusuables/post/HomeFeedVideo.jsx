@@ -29,7 +29,7 @@ const HomeFeedVideo = ({ modal, setModal }) => {
           {/* <h5 className="feed-post-text text-gray">
         This is the Status of the Video post
       </h5> */}
-          <Video />
+          <Video video={data.videos[0].uploadedVid.video} />
           <PostLikeDisLike />
         </section>
       ))}

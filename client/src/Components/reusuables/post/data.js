@@ -15,6 +15,22 @@ export const primePostData = [
     },
   },
 ];
+export const userProgressData = [
+  {
+    user: "Justin Williams",
+    pic: require("../../../Assets/Images/user.jpeg"),
+    postedDate: "2022-03-12",
+    id: 1,
+    status: "Just Checking",
+    uploadedVid: {
+      video: require("../../../Assets/Videos/video.mp4"),
+      title: "Test Video for User Weekly Progress Video",
+      description:
+        "This video was taken from online. It is a random due beating some drums by a body of water. Probably high... Likely High",
+      number: 1,
+    },
+  },
+];
 export const textData = [
   {
     user: "Jackson Tucker",
@@ -495,6 +511,122 @@ export const episodeData = [
         uploadedVid: {
           video: require("../../../Assets/Videos/video2.mp4"),
           title: "Vid2",
+          number: 2,
+        },
+      },
+    ],
+  },
+];
+export const musicData = [
+  {
+    user: "Annie Frank",
+    pic: require("../../../Assets/Images/testUsers/User3.jpeg"),
+    postedDate: "2022-02-04",
+    id: 1,
+    status: "Just Checking",
+    // figure way to have multiple pictures from adding
+    albums: [
+      {
+        album: {
+          name: "Second Album",
+          artwork: require("../../../Assets/Images/TestArtWork2.jpeg"),
+          tracks: [
+            {
+              song: require("../../../Assets/Music/Recording.m4a"),
+              artist: "Track Artist feat. Lil Feature",
+              title: "Track 1: The March of the Coder",
+              trackNum: 1,
+            },
+            {
+              song: require("../../../Assets/Music/Recording.m4a"),
+              artist: "Track Artist feat. Lil Feature",
+              title: "Track 2: The March of the Coder",
+              trackNum: 2,
+            },
+            {
+              song: require("../../../Assets/Music/Recording.m4a"),
+              artist: "Track Artist feat. Lil Feature",
+              title: "Track 3: The March of the Coder",
+              trackNum: 3,
+            },
+            {
+              song: require("../../../Assets/Music/Recording.m4a"),
+              artist: "Track Artist feat. Lil Feature",
+              title: "Track 4: The March of the Coder",
+              trackNum: 4,
+            },
+          ],
+        },
+      },
+      {
+        album: {
+          name: "First Album",
+          artwork: require("../../../Assets/Images/TestArtWork.jpeg"),
+
+          tracks: [
+            {
+              song: require("../../../Assets/Music/Recording.m4a"),
+              artist: "Track Artist feat. Lil Feature",
+              title: "Track 1: The March of the Coder",
+              trackNum: 1,
+            },
+            {
+              song: require("../../../Assets/Music/Recording.m4a"),
+              artist: "Track Artist feat. Lil Feature",
+              title: "Track 2: The March of the Coder",
+              trackNum: 2,
+            },
+            {
+              song: require("../../../Assets/Music/Recording.m4a"),
+              artist: "Track Artist feat. Lil Feature",
+              title: "Track 3: The March of the Coder",
+              trackNum: 3,
+            },
+            {
+              song: require("../../../Assets/Music/Recording.m4a"),
+              artist: "Track Artist feat. Lil Feature",
+              title: "Track 4: The March of the Coder",
+              trackNum: 4,
+            },
+          ],
+        },
+      },
+    ],
+  },
+];
+export const storeData = [
+  {
+    user: "Adam West",
+    pic: require("../../../Assets/Images/testUsers/User1.jpeg"),
+    postedDate: "2022-03-12",
+    id: 1,
+    status: "Just Checking",
+    // figure way to have multiple pictures from adding
+    store: [
+      {
+        item: {
+          itemName: "Golden Microphone",
+          itemPic: require("../../../Assets/Images/Microphone.jpg"),
+          itemDescription: "This item is a golden Microphone",
+          price: 50,
+          number: 1,
+        },
+      },
+      {
+        item: {
+          itemName: "Golden Guitar",
+          itemPic: require("../../../Assets/Images/Guitar.jpeg"),
+          itemDescription: "This item is a golden Guitar",
+          price: 500,
+          number: 2,
+        },
+      },
+      {
+        item: {
+          itemName: "Golden Drum Set",
+          itemPic: require("../../../Assets/Images/Drums.jpeg"),
+          itemDescription: "This item is a golden Drum Set",
+          price: 675,
           number: 2,
         },
       },
