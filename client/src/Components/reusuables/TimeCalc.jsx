@@ -20,7 +20,7 @@ const TimeCalc = ({ postDate }) => {
     var timePast = TotalTime + " Minute ago";
   } else if (difference / (1000 * 60) < 60) {
     TotalTime = Math.floor(difference / (1000 * 60));
-    console.log(Math.floor(difference / (1000 * 60)), "Minutes");
+    // console.log(Math.floor(difference / (1000 * 60)), "Minutes");
     var timePast = TotalTime + " Minutes ago";
   } else if (Math.floor(difference / (1000 * (60 * 60)) == 1)) {
     TotalTime = difference / (1000 * (60 * 60));
@@ -41,7 +41,7 @@ const TimeCalc = ({ postDate }) => {
     var timePast = TotalTime + " Day ago";
   } else if (difference / (1000 * (60 * 60) * 24) < 30) {
     TotalTime = Math.floor(difference / (1000 * (60 * 60) * 24));
-    console.log(Math.floor(difference / (1000 * (60 * 60) * 24)), "Days");
+    // console.log(Math.floor(difference / (1000 * (60 * 60) * 24)), "Days");
     var timePast = TotalTime + " Days ago";
   } else if (Math.floor(difference / (1000 * (60 * 60) * 24 * 30)) == 1) {
     TotalTime = Math.floor(difference / (1000 * (60 * 60) * 24 * 30));

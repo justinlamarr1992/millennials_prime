@@ -2,7 +2,7 @@
 :root {
     /* colors */
     --background: #F7F7F7;
-    /* --background: #C4C4C4; */
+    --background2: #C4C4C4;
     /* --background: linear-gradient(to right,
             #BD2932,
             #611821); */
@@ -134,6 +134,9 @@
         /* laptop Screen */
     --inp-h-l:3rem;
     --inp-ind-l: 1rem;
+
+    /* React-Icons Sizing */
+    --r-i-Big: 2.5rem;
 
 --transition: 0.4s ease;
 

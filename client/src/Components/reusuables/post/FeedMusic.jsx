@@ -36,14 +36,14 @@ const FeedMusic = ({ modal, setModal }) => {
       }
     >
       <div className="feed-post-music-music ">
-        <MusicPlayer />
-        {/* <audio
+        {/* <MusicPlayer /> */}
+        <audio
           src={musicData[0].albums[1].album.tracks[trackNum].song}
           type="audio/mpeg"
           controls
-        ></audio> */}
+        ></audio>
       </div>
-      {/* <ItemUserInfoUnder
+      <ItemUserInfoUnder
         user={musicData[0].user}
         pic={musicData[0].pic}
         postedDate={musicData[0].postedDate}
@@ -69,7 +69,7 @@ const FeedMusic = ({ modal, setModal }) => {
         <h4 className="feed-post-music-info-artist">
           {musicData[0].albums[1].album.tracks[trackNum].artist}
         </h4>
-      </div> */}
+      </div>
     </section>
   );
 };

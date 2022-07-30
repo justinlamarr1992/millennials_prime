@@ -12,6 +12,40 @@ export const primePostData = [
       description:
         "This video was taken from online. It has a bunch of beacons of whatever they are called. I amd showing this because people hardly ever read the description but NEVERTHELESS!",
       number: 1,
+      comments: [
+        {
+          user: "Jackson Tucker",
+          pic: require("../../../Assets/Images/testUsers/User1.jpeg"),
+          postedDate: "2022-07-12",
+          id: 1,
+          comment: "This is pretty cool",
+          like: true,
+        },
+        {
+          user: "Tomas Dillard",
+          pic: require("../../../Assets/Images/testUsers/User2.jpeg"),
+          postedDate: "2022-07-13",
+          id: 2,
+          comment: "This is is not cool",
+          like: false,
+        },
+        {
+          user: "Annie Frank",
+          pic: require("../../../Assets/Images/testUsers/User3.jpeg"),
+          postedDate: "2022-07-14",
+          id: 3,
+          comment: "This is freaking amazing",
+          like: true,
+        },
+        {
+          user: "Cedric Langley",
+          pic: require("../../../Assets/Images/testUsers/User4.jpeg"),
+          postedDate: "2022-07-15",
+          id: 4,
+          comment: "This the best thing i ave ever seen! DOPE!!!",
+          like: true,
+        },
+      ],
     },
   },
 ];
