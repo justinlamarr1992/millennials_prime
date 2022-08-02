@@ -31,6 +31,20 @@ margin: 2% 10% 2% 0;
     animation: movingGradient 10s linear infinite alternate;
     color: var(--sec-t);
 }
+.s-prime-container {
+            background-image: linear-gradient(
+        to top,
+         #611821 0%, 
+         #771c26 25%, 
+         #8e202b 50%,
+        #a5242f 75%,
+        #bd2932 100%
+         );
+    border-radius: var(--s-brad);
+    background-size: 150% 150%;
+    animation: movingGradient 10s linear infinite alternate;
+    color: var(--sec-t);
+}
 
 .norm-container {
     background-color: var(--form-c);
@@ -265,4 +279,95 @@ height: 82.5px; */
   height: 100%;
   border-radius: var(--brad);
   /* margin: auto; */
+}
+
+/* Home Modal */
+.home-modal{
+  background-image: linear-gradient(to top,
+     #5e5e5e 0%, 
+     #565656 9.09%, 
+     #4f4f4f 18.18%, 
+     #474747 27.27%, 
+     #404040 36.36%, 
+     #3a3a3a 45.45%, 
+     #333333 54.54%, 
+     #2d2d2d 63.63%, 
+     #262626 72.72%, 
+     #1f1f1f 81.81%, 
+     #181818 90.90%,
+     #111111 100%
+           );
+}
+
+.modal-section{
+  display: flex;
+  flex-direction: column;
+    width: 100%;
+  color: var(--sec-t);
+
+}
+.modal-home-ad{
+  height: 20%;
+  background-color: var(--hex-c);
+  border-radius: var(--brad);
+  padding: 10px;
+}
+.modal-home-ad-text{
+  line-height: none;
+}
+.modal-home-follows{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.modal-home-follows-comp{
+  display: grid;
+  grid-template-columns: 25% 50% 25%;
+  grid-template-rows: 50% 50%;
+  padding: 5px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+.modal-home-follows-pic{
+  width:90%;
+  height:90%;
+  align-self: center;
+  justify-self: start;
+  border-radius: var(--s-brad);
+
+  grid-column: 1/2;
+  grid-row: 1/3;
+
+}
+.modal-home-follows-name{
+  grid-column: 2/3;
+  grid-row: 1/2;
+  align-self: center;
+  font-weight: bold;
+}
+.modal-home-follows-industry{ 
+  grid-column: 2/3;
+  grid-row: 2/3;
+  align-self: center;
+}
+
+.modal-home-follows-add{
+  width:90%;
+  height:90%;
+  grid-column: 3/4;
+  grid-row: 1/3;
+  align-self: center;
+  justify-self: center;
+  background-color: var(--sec-c);
+  border-radius: var(--s-brad);
+  display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.modal-home-connections{
+}
+
+.modal-section-title{
+  justify-self: start;
 }

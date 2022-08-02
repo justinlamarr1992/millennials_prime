@@ -107,3 +107,8 @@ Right modals
     Link to profile
     link to notifications
     Dynamic Connected and Connect Button Changes
+
+Share Box
+    Get instagram logo with colors
+    create modals that will resemble facebook shares
+    create anchor tag or what ever needed for te connection

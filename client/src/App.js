@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 
 import NavBar from "./Components/nav/NavBar";
@@ -25,33 +25,35 @@ import Verified from "./Pages/User/Verified";
 
 function App(props, state) {
   return (
-    <>
-      <NavBar name="Justin" />
-      <Routes className="container-comp">
-        {/* MAy have found a way to change the sidenav... We will see */}
-        {/* Main */}
-        <Route path="/" element={<Home />} />
-        <Route path="/messages" element={<Messages />} />
-        <Route path="/connectedusers" element={<ConnectedUsers />} />
-        <Route path="/settings" element={<Settings />} />
-        <Route path="/notifications" element={<Notifications />} />
-        <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-        <Route path="/contact-us" element={<ContactUs />} />
+    <div className="App">
+      <BrowserRouter>
+        <NavBar name="Justin" />
+        <Routes className="container-comp">
+          {/* MAy have found a way to change the sidenav... We will see */}
+          {/* Main */}
+          <Route path="/" element={<Home />} />
+          <Route path="/messages" element={<Messages />} />
+          <Route path="/connectedusers" element={<ConnectedUsers />} />
+          <Route path="/settings" element={<Settings />} />
+          <Route path="/notifications" element={<Notifications />} />
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/contact-us" element={<ContactUs />} />
 
-        {/* Auth */}
-        <Route path="/register" element={<Register />} />
-        <Route path="/signout" element={<SignOut />} />
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/passwordrecovery" element={<PasswordRecovery />} />
-        <Route path="/questionaire" element={<Questionaire />} />
-        <Route path="/questionaire2" element={<Questionaire2 />} />
-        <Route path="/questionaire3" element={<Questionaire3 />} />
+          {/* Auth */}
+          <Route path="/register" element={<Register />} />
+          <Route path="/signout" element={<SignOut />} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/passwordrecovery" element={<PasswordRecovery />} />
+          <Route path="/questionaire" element={<Questionaire />} />
+          <Route path="/questionaire2" element={<Questionaire2 />} />
+          <Route path="/questionaire3" element={<Questionaire3 />} />
 
-        {/* Users */}
-        <Route path="/user" element={<User />} />
-        <Route path="/verified" element={<Verified />} />
-      </Routes>
-    </>
+          {/* Users */}
+          <Route path="/user" element={<User />} />
+          <Route path="/verified" element={<Verified />} />
+        </Routes>
+      </BrowserRouter>
+    </div>
   );
 }
 

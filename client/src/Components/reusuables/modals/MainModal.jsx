@@ -1,10 +1,12 @@
 import React from "react";
 import User from "../../../Assets/Images/user.jpeg";
 import { FaEnvelope } from "react-icons/fa";
+import HomeFollowComp from "./HomeFollowComp";
+import HomeConnectionsComp from "./HomeConnectionsComp";
 
 const MainModal = () => {
   return (
-    <div className="modal con-shade">
+    <div className="modal con-shade home-modal">
       <div className="modal-container">
         {/* Make this its own componenet */}
         <div className="modal-t-boxes">
@@ -21,27 +23,29 @@ const MainModal = () => {
         </div>
         {/* Make this its own componenet */}
 
-        <div className="modal-prof-info">
-          <img
-            className="modal-prof-pic p-con-shade"
-            src={User}
-            alt="User Image here"
-          />
-          {/* <h3 className="prof-info-text">Justin Williams</h3> */}
-          <h4 className="prof-info-text">Justin Williams</h4>
-          <h5 className="text-gray prof-info-text">@justinWilliams</h5>
+        <div className="modal-section modal-home-ad">
+          <h4 className="modal-home-ad-title">Go Prime</h4>
+          <h6 className="modal-home-ad-text">
+            Try the Prime membership to influence our community the right way!
+          </h6>
+          {/* <button className="modal-home-ad-button page-button">Try Here</button> */}
         </div>
-        <div className="modal-user-buttons">
-          <button className="modal-connect-button item-shade ">
-            Connected
-          </button>
-          <button className="modal-mail-button item-shade">
-            <FaEnvelope />
-          </button>
+        <div className="modal-section ">
+          <h4 className="modal-section-title">Who to Follow</h4>
+          <div className="modal-home-follows">
+            <HomeFollowComp />
+            <HomeFollowComp />
+            <HomeFollowComp />
+          </div>
         </div>
-        <div>Info on the profile</div>
-        <div>Connected Userd title</div>
-        <div>Conneected Users</div>
+        <div className="modal-section ">
+          <h4 className="modal-section-title">Connections</h4>
+          <div className="modal-home-connections">
+            <HomeConnectionsComp />
+            <div>Thing 2</div>
+            <div>Thing 3</div>
+          </div>
+        </div>
       </div>
     </div>
   );

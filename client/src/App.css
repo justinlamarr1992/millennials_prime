@@ -92,12 +92,18 @@
     --page-mar: 2% 10% 2% 0;
 
 
-    /* Boarder Radius */
+    /* Border Radius */
     --brad:2rem 2rem 2rem 2rem;
     --lbrad: 2rem 0 0 2rem;
     --rbrad: 0 2rem 2rem 0;
     --tbrad: 2rem 2rem 0 0;
     --bbrad: 0 0 2rem 2rem;
+
+    --s-brad:1rem 1rem 1rem 1rem;
+    --s-lbrad: 1rem 0 0 1rem;
+    --s-rbrad: 0 1rem 1rem 0;
+    --s-tbrad: 1rem 1rem 0 0;
+    --s-bbrad: 0 0 1rem 1rem;
 
     /* NAVE BAR WIDTH */
     --nav-w:15.625rem;
@@ -292,6 +298,9 @@ box-shadow:var(--tshade);
 }
 .p-item-shade{
 box-shadow:var(--p-bshade);
+}
+.small-border{
+    border-radius: var(--s-brad);
 }
 
 

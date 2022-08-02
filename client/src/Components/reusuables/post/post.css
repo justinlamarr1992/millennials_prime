@@ -130,7 +130,8 @@ justify-content: center;
     color: var(--pri-t);
 }
 .share-socials{
-    border: 1px solid black;
+    /* border: 1px solid black; */
+    padding: 20px;
 }
 .share-socials-item{
     /* border: 1px solid black; */
@@ -138,10 +139,12 @@ justify-content: center;
     justify-content: space-between;
     padding: 10px;
     font-size: var(--r-i-Big);
+    height: auto;
 
 }
 .share-socials-item:hover{
     background-color: var(--qua-c);
+    cursor: pointer;
 }
 .share-socials-facebook{
     color: #4267B2;
