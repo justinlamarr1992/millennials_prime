@@ -1,4 +1,6 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
+import { useLogin } from "../../Hooks/useLogin";
+
 import Company1 from "../../Assets/Images/Companies/Company1.jpeg";
 import Company2 from "../../Assets/Images/Companies/Company2.jpeg";
 import Company3 from "../../Assets/Images/Companies/Company3.jpg";
@@ -9,7 +11,15 @@ import Logo from "../../Assets/Images/MillennialsPrimeLogo.png";
 import { Link } from "react-router-dom";
 
 const SignIn = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const { login, error, isLoading } = useLogin();
   const ref = useRef(null);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    await login(email, password);
+  };
 
   return (
     <div className="page">
@@ -46,11 +56,21 @@ const SignIn = () => {
           <form className="auth-form" action="">
             <div className="label-input">
               <label htmlFor="">Email</label>
-              <input type="email" />
+              <input
+                type="email"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+              />
             </div>
             <div className="label-input">
               <label htmlFor="">Password</label>
-              <input type="password" />
+              <input
+                type="password"
+                placeholder="Enter password"
+                // onChange={handlePassInput}
+                onChange={(e) => setPassword(e.target.value)}
+                value={password}
+              />
             </div>
             <Link
               className="password-recover-link"
@@ -59,7 +79,14 @@ const SignIn = () => {
             >
               <h6 className="text-gray">Forgot Password</h6>
             </Link>
-            <button className="auth-button login">Login</button>
+            <button
+              onClick={handleSubmit}
+              className="auth-button login"
+              disabled={isLoading}
+            >
+              Login
+            </button>
+            {error && <div>{error}</div>}
           </form>
           <h6 className="social-text center-item text-gray">
             Connect With Socials

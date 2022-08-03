@@ -2,6 +2,8 @@ require("dotenv").config();
 
 const express = require("express");
 const mongoose = require("mongoose");
+const cors = require("cors");
+
 const userRoutes = require("./routes/user");
 // const nameorRoutes = require('./routes/nameof')
 
@@ -15,6 +17,15 @@ app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();
 });
+
+app.use(
+  cors({
+    // Specific to orgin
+    origin: "http://127.0.0.1:4000",
+    // Everything
+    // origin: "*",
+  })
+);
 
 //routes
 // app.use('/api/post',postRoutes)

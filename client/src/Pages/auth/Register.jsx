@@ -1,4 +1,7 @@
 import React, { useRef, useEffect, useState } from "react";
+
+import { useSignup } from "../../Hooks/useSignup";
+
 import "./auth.css";
 import { Link } from "react-router-dom";
 import Logo from "../../Assets/Images/MillennialsPrimeLogo.png";
@@ -8,6 +11,14 @@ import Company3 from "../../Assets/Images/Companies/Company3.jpg";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 
 const Register = () => {
+  // getting info for signing up
+  const [email, setEmail] = useState("Williams@fff.com");
+  const [password, setPassword] = useState("ABcd1234!@");
+  const [first, setFirst] = useState("");
+  const [last, setLast] = useState("");
+  // const name = "";
+  const { signup, error, isLoading } = useSignup();
+
   const ref = useRef(null);
   // const [locked, setLocked] = useState(true);
 
@@ -35,6 +46,13 @@ const Register = () => {
     const el = document.querySelector("#container");
     console.log(el);
   }, []);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const name = first + " " + last;
+
+    await signup(email, password, name);
+  };
 
   function handlePassInput(e) {
     if (passInput.value.length === 0) {
@@ -90,104 +108,6 @@ const Register = () => {
     }
   }
 
-  // const handlePassInput = (e) => {
-  //   if (passInput.value.length == 0) {
-  //     passLabel.innerHTML = "Strength";
-  //     addClass();
-  //   } else if (passInput.value.length < 4) {
-  //     passLabel.innerHTML = "weak";
-  //     addClass("weak");
-  //   } else if (passInput.value.length < 7) {
-  //     passLabel.innerHTML = "Not Bad";
-  //     addClass("average");
-  //   } else {
-  //     passLabel.innerHTML = "Strong";
-  //     addClass("strong");
-  //   }
-  // };
-  // const togglePassInput = (e) => {
-  //   const type = passInput.getAttribute("type");
-  //   if (type === "password") {
-  //     passInput.setAttribute("type", "text");
-  //     toggleIcon.innerHTML = <FaEye className="eye" />;
-  //     ripple.getElementsByClassName.cssText = `
-  //     border-radius: 4px;
-  //     width: 100%;
-  //     height: 100%;
-  //     right: 0;
-  //     z-index: -1;
-  //     `;
-  //     passInput.style.color = "#000";
-  //     passInput.style.background = "transparent";
-  //     toggleIcon.style.fontSize = "27px";
-  //   } else {
-  //     passInput.setAttribute("type", "password");
-  //     toggleIcon.innerHTML = <FaEyeSlash className="eye-slash" />;
-  //     toggleIcon.style.fontSize = "25px";
-  //     ripple.getElementsByClassName.cssText = `
-  //     border-radius: 50%;
-  //     width: 35px;
-  //     height: 35px;
-  //     right: 10px;
-  //     z-index: 1;
-  //     `;
-  //     passInput.style.color = "#fff";
-  //     passInput.style.background = "#112d37";
-  //   }
-  // };
-  // const addClass = (className) => {
-  //   percentBar.classList.remove("weak");
-  //   percentBar.classList.remove("average");
-  //   percentBar.classList.remove("strong");
-  //   if (className) {
-  //     percentBar.classList.add(className);
-  //   }
-  // };
-
-  // const onClick = () => {
-  //   setLocked((current) => !current);
-
-  //   // if  the password is hidden...
-  //   if (locked == true) {
-  //     console.log(locked);
-
-  //     // show it
-  //     input.type = "text";
-  //     // Toggle between icons
-  //     eye.classList.remove("eye-slash");
-  //     eye.classList.add("eye");
-  //   } else {
-  //     console.log(locked);
-
-  //     // Hide it
-  //     input.type = "password";
-  //     // Toggle between eye icons
-  //     eye.classList.remove("eye");
-  //     eye.classList.add("eye-slash");
-  //   }
-  //   // if (input.type === "password") {
-  //   //   // show it
-  //   //   input.type = "text";
-  //   //   // Toggle between icons
-  //   //   eye.classList.remove("fa-eye-slash");
-  //   //   eye.classList.add("fa-eye");
-  //   //   // change the color of the Lock eye in 500ms
-  //   //   setTimeout(() => {
-  //   //     lock.getElementsByClassName.color = "#111625";
-  //   //   }, 500);
-  //   // } else {
-  //   //   // Hide it
-  //   //   input.type = "password";
-  //   //   // Toggle between eye icons
-  //   //   eye.classList.remove("fa-eye");
-  //   //   eye.classList.add("fa-eye-slash");
-  //   //   // change the color of the lock icon
-  //   //   lock.getElementsByClassName.color = "#dbdbdb";
-  //   // }
-  //   // toggle the overlay
-  //   overlay.classList.toggle("overlaycover");
-  // };
-
   return (
     <div className="page">
       {/* Think about using these settings with the div below commented out */}
@@ -225,57 +145,44 @@ const Register = () => {
             <div className="label-input">
               <label htmlFor="">Full Name</label>
               <div className="validation-wrapper">
-                {/* <label htmlFor="">Name</label> */}
-
                 <input
                   className="fname names"
                   type="text"
                   placeholder="First Name"
+                  onChange={(e) => setFirst(e.target.value)}
+                  value={first}
                   required
                 />
                 <input
                   type="text"
                   className="lname names"
                   placeholder="Last Name"
+                  onChange={(e) => setLast(e.target.value)}
+                  value={last}
                   required
                 />
                 <div className="validation">*</div>
-                {/* <label htmlFor="">Name</label>
-              <input type="text" /> */}
               </div>
             </div>
 
             <div className="label-input">
               <label htmlFor="">Email</label>
-              <input type="email" />
+              <input
+                type="email"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+              />
             </div>
-            {/* <div className="label-input">
-              <label htmlFor="">Password</label>
-              <input type="password" />
-            </div> */}
 
-            {/* first password */}
-            {/* <div className="pwd">
-              <input type="password" placeholder="Password..." />
-
-              <div onClick={onClick} className="overlay ">
-                <div className="locked-bubble">
-                  {locked === true ? (
-                    <FaEyeSlash className="eye-slash" />
-                  ) : (
-                    <FaEye className="eye" />
-                  )}
-                </div>
-              </div>
-            </div> */}
-            {/* second password */}
             <div className="label-input">
               <label htmlFor="">Password</label>
               <div className="input-group">
                 <input
                   type="password"
                   placeholder="Enter password"
-                  onChange={handlePassInput}
+                  // onChange={handlePassInput}
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
                 />
 
                 <span className="toggle" onClick={togglePassInput}>
@@ -291,10 +198,17 @@ const Register = () => {
               </div>
             </div>
 
-            {/* <button className="auth-button login">Create an Account</button> */}
-            <Link className="" key="questionaire" to="/questionaire">
+            {/* <Link className="" key="questionaire" to="/questionaire">
               <button className="auth-button login">Create an Account</button>
-            </Link>
+            </Link> */}
+            <button
+              onClick={handleSubmit}
+              className="auth-button login"
+              disabled={isLoading}
+            >
+              Create an Account
+            </button>
+            {error && <div>{error}</div>}
           </form>
           <h6 className="center-item text-gray">Connect With Socials</h6>
           <div className="social-buttons">
