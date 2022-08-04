@@ -4,9 +4,11 @@ import { usePostsContext } from "../../../Hooks/usePostsContext";
 import { FaPlus } from "react-icons/fa";
 import MessageBox from "../../messaging/MessageBox";
 import { useState } from "react";
+import { useAuthContext } from "../../../Hooks/useAuthContext";
 
 const HomeFeedPost = () => {
   const { dispatch } = usePostsContext();
+  const { user } = useAuthContext();
 
   const [title, setTitle] = useState("");
   const [status, setStatus] = useState("");
@@ -24,6 +26,11 @@ const HomeFeedPost = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if (!user) {
+      setError("You Need to be Logged In");
+      return;
+    }
+
     const post = { title, status };
 
     const response = await fetch("/api/post", {
@@ -31,6 +38,7 @@ const HomeFeedPost = () => {
       body: JSON.stringify(post),
       headers: {
         "Content-Type": "application/json",
+        Authorization: `Bearer ${user.token}`,
       },
     });
     const json = await response.json();
@@ -56,9 +64,31 @@ const HomeFeedPost = () => {
       <button className="reply-button feed-reply-attachment">
         <FaPlus className="reply-button-icon" />
       </button>
-      <button className="feed-reply-post page-button connect-btn clickable con-shade">
-        Post Button
-      </button>
+
+      <form className="create" onSubmit={handleSubmit}>
+        <h3>Add a New Workout</h3>
+
+        <label>Title of Post:</label>
+        <input
+          type="text"
+          onChange={(e) => setTitle(e.target.value)}
+          value={title}
+          className={emptyFields.includes("title") ? "error" : ""}
+        />
+
+        <label>Status of Post:</label>
+        <input
+          type="text"
+          onChange={(e) => setStatus(e.target.value)}
+          value={status}
+          className={emptyFields.includes("status") ? "error" : ""}
+        />
+
+        <button className="feed-reply-post page-button connect-btn clickable con-shade">
+          Post Button
+        </button>
+        {error && <div className="error">{error}</div>}
+      </form>
     </section>
   );
 };
