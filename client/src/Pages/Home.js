@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
+// import { usePostsContext } from "../Hooks/usePostsContext";
+
 import Video from "../Components/video/Video";
 import HotItems from "../Components/home/HotItems";
 import Newsfeed from "../Components/home/Newsfeed";
@@ -23,6 +25,20 @@ const Home = () => {
   const [modal, setModal] = useState(true);
   const [pageWidth, setPageWidth] = useState("var(--home-per)");
   const widthRef = useRef(null);
+  // const { posts, dispatch } = usePostsContext();
+
+  // useEffect(() => {
+  //   const fetchPosts = async () => {
+  //     const response = await fetch("/api/post");
+  //     const json = await response.json();
+
+  //     if (response.ok) {
+  //       dispatch({ type: "SET_POSTS", payload: json });
+  //     }
+  //   };
+
+  //   fetchPosts();
+  // }, [dispatch]);
 
   const onClick = () => {
     setModal(!modal);
@@ -60,7 +76,7 @@ const Home = () => {
         <HomeFeedEpisode />
         <HomeFeedMusic />
         <HomeFeedStore />
-        <PostList modal={modal} setModal={setModal} widthRef={widthRef} />s{" "}
+        <PostList modal={modal} setModal={setModal} widthRef={widthRef} />
         <button className="test-modal-button" onClick={onClick}>
           Modal Test Button
         </button>

@@ -30,7 +30,7 @@ const NavBar = (props) => {
             <img className="logo" src={Logo} alt="MPrime Logo" />
           </Link>
           <a href=""></a>
-          {user && <span>{user.name}</span>}
+          {user && <span>{user.email}</span>}
 
           {/* this is the reason for the off measured buttons still figuring out the
           spacing and design here is the Props passed from the app.js file...

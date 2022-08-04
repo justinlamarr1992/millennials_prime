@@ -1,47 +1,74 @@
 import React, { useState } from "react";
+
+import { usePostsContext } from "../../../Hooks/usePostsContext";
+import { useAuthContext } from "../../../Hooks/useAuthContext";
+
 import InfiniteScroll from "react-infinite-scroll-component";
 import { textData, photoData, videoData } from "./data";
 import HomeFeedPhoto from "./HomeFeedPhoto";
 import HomeFeedText from "./HomeFeedText";
+import { useEffect } from "react";
 
 const LIMIT = 0;
 
 const PostList = ({ modal, setModal, widthRef }) => {
-  // change to textData
-  const [postData, setPostData] = useState(textData.splice(0, LIMIT));
-  const [picData, setPicData] = useState(photoData.splice(0, LIMIT));
-  // const [videoData, setVideoData] = useState(videoData.splice(0, LIMIT));
-  const [visible, setVisible] = useState(3);
-  const [hasMore, setHasMore] = useState(true);
-  // const [modal, setModal] = useState(true);
+  const { posts, dispatch } = usePostsContext();
+  const { user } = useAuthContext();
 
-  const fetchDataPost = () => {
-    const newLimit = visible + LIMIT;
-    const dataToAdd = textData.splice(visible, newLimit);
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await fetch("/api/post", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      const json = await response.json();
 
-    if (textData.length > postData.length) {
-      setTimeout(() => {
-        setPostData([...postData].concat(dataToAdd));
-      }, 2000);
-      setVisible(newLimit);
-    } else {
-      setHasMore(true);
+      if (response.ok) {
+        dispatch({ type: "SET_POSTS", payload: json });
+      }
+    };
+
+    if (user) {
+      fetchPosts();
     }
-  };
+  }, [dispatch, user]);
 
-  const fetchDataPhoto = () => {
-    const newLimit = visible + LIMIT;
-    const dataToAdd = photoData.splice(visible, newLimit);
+  // // change to textData
+  // const [postData, setPostData] = useState(textData.splice(0, LIMIT));
+  // const [picData, setPicData] = useState(photoData.splice(0, LIMIT));
+  // // const [videoData, setVideoData] = useState(videoData.splice(0, LIMIT));
+  // const [visible, setVisible] = useState(3);
+  // const [hasMore, setHasMore] = useState(true);
+  // // const [modal, setModal] = useState(true);
 
-    if (photoData.length > picData.length) {
-      setTimeout(() => {
-        setPicData([...picData].concat(dataToAdd));
-      }, 2000);
-      setVisible(newLimit);
-    } else {
-      setHasMore(false);
-    }
-  };
+  // const fetchDataPost = () => {
+  //   const newLimit = visible + LIMIT;
+  //   const dataToAdd = textData.splice(visible, newLimit);
+
+  //   if (textData.length > postData.length) {
+  //     setTimeout(() => {
+  //       setPostData([...postData].concat(dataToAdd));
+  //     }, 2000);
+  //     setVisible(newLimit);
+  //   } else {
+  //     setHasMore(true);
+  //   }
+  // };
+
+  // const fetchDataPhoto = () => {
+  //   const newLimit = visible + LIMIT;
+  //   const dataToAdd = photoData.splice(visible, newLimit);
+
+  //   if (photoData.length > picData.length) {
+  //     setTimeout(() => {
+  //       setPicData([...picData].concat(dataToAdd));
+  //     }, 2000);
+  //     setVisible(newLimit);
+  //   } else {
+  //     setHasMore(false);
+  //   }
+  // };
 
   // const fetchDataVideo = () => {
   //   const newLimit = visible + LIMIT;
@@ -64,6 +91,9 @@ const PostList = ({ modal, setModal, widthRef }) => {
   return (
     <div className="feed-items">
       <h3 className="ht-item-title title-space">News Feed</h3>
+      {posts &&
+        posts.map((post) => <HomeFeedText post={post} key={post._id} />)}
+
       {/* THIS IS THE FORMAT TO GO WITH */}
       {/* <InfiniteScroll
         dataLength={picData.length}
@@ -107,7 +137,7 @@ const PostList = ({ modal, setModal, widthRef }) => {
           );
         })}
       </InfiniteScroll> */}
-      <InfiniteScroll
+      {/* <InfiniteScroll
         dataLength={postData.length}
         next={fetchDataPost}
         hasMore={hasMore}
@@ -148,7 +178,7 @@ const PostList = ({ modal, setModal, widthRef }) => {
             />
           );
         })}
-      </InfiniteScroll>
+      </InfiniteScroll> */}
     </div>
   );
 };
