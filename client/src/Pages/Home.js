@@ -71,11 +71,11 @@ const Home = () => {
         {/* <HotItems />
         <FeatPrimes /> */}
         <HomeFeedPost />
-        <HomeFeedPhoto />
+        {/* <HomeFeedPhoto />
         <HomeFeedVideo />
         <HomeFeedEpisode />
         <HomeFeedMusic />
-        <HomeFeedStore />
+        <HomeFeedStore /> */}
         <PostList modal={modal} setModal={setModal} widthRef={widthRef} />
         <button className="test-modal-button" onClick={onClick}>
           Modal Test Button

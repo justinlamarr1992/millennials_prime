@@ -65,9 +65,7 @@ const HomeFeedPost = () => {
         <FaPlus className="reply-button-icon" />
       </button>
 
-      <form className="create" onSubmit={handleSubmit}>
-        <h3>Add a New Workout</h3>
-
+      <form className="feed-reply-text" onSubmit={handleSubmit}>
         <label>Title of Post:</label>
         <input
           type="text"

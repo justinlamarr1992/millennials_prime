@@ -4,7 +4,7 @@
 
 .post-reply-container{
      display: grid;
-    grid-template-columns: 6% auto auto 6%;
+    grid-template-columns: 6% auto auto auto 6%;
     /* grid-template-columns: var(--boxcol); */
     grid-template-rows: repeat(3, auto);
 }
