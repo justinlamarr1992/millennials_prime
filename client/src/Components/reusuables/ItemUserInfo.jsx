@@ -1,4 +1,5 @@
 import React from "react";
+import { FaEllipsisV } from "react-icons/fa";
 import TimeCalc from "./TimeCalc";
 const ItemUserInfo = ({ user, pic, postedDate }) => {
   return (
@@ -11,6 +12,9 @@ const ItemUserInfo = ({ user, pic, postedDate }) => {
         <h6 className="text-gray">
           <TimeCalc postDate={new Date(postedDate)} />
         </h6>
+      </div>
+      <div className="info-options">
+        <FaEllipsisV />
       </div>
     </div>
   );

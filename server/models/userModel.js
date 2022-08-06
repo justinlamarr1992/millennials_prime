@@ -4,15 +4,19 @@ const validator = require("validator");
 
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
-  email: { type: String, require: true, unique: true },
-  password: { type: String, required: true },
-  name: { type: String, required: true },
-  // name: {
-  //   first: { type: String },
-  //   last: { type: String },
-  // },
-});
+const userSchema = new Schema(
+  {
+    email: { type: String, require: true, unique: true },
+    password: { type: String, required: true },
+    name: { type: String, required: true },
+    // name: {
+    //   first: { type: String },
+    //   last: { type: String },
+    // },
+    image: { type: String },
+  },
+  { timestamps: true }
+);
 
 // static signup method
 userSchema.statics.signup = async function (email, password, name) {

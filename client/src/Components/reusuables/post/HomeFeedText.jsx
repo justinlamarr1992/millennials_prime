@@ -9,6 +9,7 @@ import PostLikeDisLike from "./PostLikeDislike";
 
 // Test
 import test from "../../../Assets/Images/user.jpeg";
+import { FaEllipsisV } from "react-icons/fa";
 
 const HomeFeedText = ({ pic, postedDate, post, modal }) => {
   const { dispatch } = usePostsContext;
@@ -44,7 +45,7 @@ const HomeFeedText = ({ pic, postedDate, post, modal }) => {
       <h3 className="item-user-content">{post.title}</h3>
 
       <h5 className="item-user-status text-gray">{post.status}</h5>
-      <h1 onClick={handleClick}>delete</h1>
+      {/* <h1 onClick={handleClick}>X</h1> */}
       {/* This is the item that will delete the post FOR NOW */}
       <PostLikeDisLike />
     </section>

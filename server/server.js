@@ -11,7 +11,7 @@ const postRoutes = require("./routes/post");
 const app = express();
 
 //middleware
-app.use(express.json());
+app.use(express.json({ limit: "30mb", extended: true }));
 
 app.use((req, res, next) => {
   console.log(req.path, req.method);
@@ -31,6 +31,7 @@ app.use(
 // app.use('/api/post',postRoutes)
 app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
+
 
 // connect to db
 mongoose
