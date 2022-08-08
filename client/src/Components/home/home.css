@@ -276,7 +276,7 @@ opacity: 0;
   object-fit:fill;
 }
 .fp-item-pic{
-  border-radius: var(--brad);
+  border-radius: var(--s-brad);
   /* margin: auto; */
 }
 
