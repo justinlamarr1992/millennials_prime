@@ -3,26 +3,13 @@ import User from "../../../Assets/Images/user.jpeg";
 import { FaEnvelope } from "react-icons/fa";
 import HomeFollowComp from "./HomeFollowComp";
 import HomeConnectionsComp from "./HomeConnectionsComp";
+import ModalTop from "./ModalTop";
 
 const MainModal = () => {
   return (
     <div className="modal con-shade home-modal">
       <div className="modal-container">
-        {/* Make this its own componenet */}
-        <div className="modal-t-boxes">
-          <div className="noti-box top-boxes p-con-shade clickable">
-            {/* <h3 className="noti-num">2</h3> */}
-            {/* Sixes for big screen vs laptop */}
-            <h4 className="noti-num">2</h4>
-          </div>
-          <img
-            className="prof-pic top-boxes p-con-shade clickable"
-            src={User}
-            alt="User Image here"
-          />
-        </div>
-        {/* Make this its own componenet */}
-
+        <ModalTop />
         <div className="modal-section modal-home-ad">
           <h4 className="modal-home-ad-title">Go Prime</h4>
           <h6 className="modal-home-ad-text">

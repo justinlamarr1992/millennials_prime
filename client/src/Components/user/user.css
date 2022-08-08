@@ -110,16 +110,13 @@ background-image: linear-gradient(to top,
 .modal-t-boxes{
     display: flex;
     flex-direction: row;
-    justify-content: flex-end;
-    align-self: flex-end;
+    justify-content: space-between;
+    align-self: flex-start;
 }
 .top-boxes{
-    width: 20%;
-    /* width: 82.5px; */
-    /* width: 41.25px;
-  height: 41.25px; */
-  height: 100%;
   border-radius: var(--s-brad);
+  margin: 0 15px;
+width: 25%;
 }
 
 /* notifaction box */
@@ -127,16 +124,19 @@ background-image: linear-gradient(to top,
 background-color: var(--pri-c);
 display: flex;
 justify-content: center;
-
 }
 .noti-num {
     /* border: 1px solid black; */
-    align-self: center;
+    text-align: center;
     color: var(--sec-t);
 }
 .prof-pic{
   /* border: 1px solid white; */
-  margin-left: 40px;
+  /* width: 20%; */
+}
+.prof-pic-pic{
+ object-fit: cover;
+border-radius: var(--s-brad);
 }
 
 /* Modal Profile Picture and info*/

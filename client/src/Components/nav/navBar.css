@@ -83,6 +83,19 @@ height: 100%;
     /* border: 1px solid gold; */
     /* height: auto; */
 }
+.top-half{
+height: auto;
+justify-self: center;
+align-self: center;
+}
+.bottom-half{
+    height: auto;
+    justify-self: center;
+align-self: center;
+}
+.welcome{
+    text-align: center;
+}
 .top{
     /* align-self: start; */
     height: auto;

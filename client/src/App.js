@@ -1,5 +1,6 @@
 import React from "react";
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { useAuthContext } from "./Hooks/useAuthContext";
 import "./App.css";
 
 import NavBar from "./Components/nav/NavBar";
@@ -21,9 +22,11 @@ import Questionaire3 from "./Pages/auth/Questionaire3";
 import PasswordRecovery from "./Pages/auth/PasswordRecovery";
 
 import User from "./Pages/User/User";
+import TestUser from "./Pages/User/TestUser";
 import Verified from "./Pages/User/Verified";
 
 function App(props, state) {
+  const { user } = useAuthContext();
   return (
     <div className="App">
       <BrowserRouter>
@@ -31,26 +34,75 @@ function App(props, state) {
         <Routes className="container-comp">
           {/* MAy have found a way to change the sidenav... We will see */}
           {/* Main */}
-          <Route path="/" element={<Home />} />
-          <Route path="/messages" element={<Messages />} />
-          <Route path="/connectedusers" element={<ConnectedUsers />} />
-          <Route path="/settings" element={<Settings />} />
-          <Route path="/notifications" element={<Notifications />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/contact-us" element={<ContactUs />} />
+          <Route
+            path="/"
+            element={user ? <Home /> : <Navigate to="/signin" />}
+          />
+          <Route
+            path="/messages"
+            element={user ? <Messages /> : <Navigate to="/signin" />}
+          />
+          <Route
+            path="/connectedusers"
+            element={user ? <ConnectedUsers /> : <Navigate to="/signin" />}
+          />
+          <Route
+            path="/settings"
+            element={user ? <Settings /> : <Navigate to="/signin" />}
+          />
+          <Route
+            path="/notifications"
+            element={user ? <Notifications /> : <Navigate to="/signin" />}
+          />
+          <Route
+            path="/privacy-policy"
+            element={user ? <PrivacyPolicy /> : <Navigate to="/signin" />}
+          />
+          <Route
+            path="/contact-us"
+            element={user ? <ContactUs /> : <Navigate to="/signin" />}
+          />
 
           {/* Auth */}
-          <Route path="/register" element={<Register />} />
-          <Route path="/signout" element={<SignOut />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/passwordrecovery" element={<PasswordRecovery />} />
-          <Route path="/questionaire" element={<Questionaire />} />
-          <Route path="/questionaire2" element={<Questionaire2 />} />
-          <Route path="/questionaire3" element={<Questionaire3 />} />
+          <Route
+            path="/register"
+            element={!user ? <Register /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/signout"
+            element={!user ? <SignOut /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/signin"
+            element={!user ? <SignIn /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/passwordrecovery"
+            element={!user ? <PasswordRecovery /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/questionaire"
+            element={!user ? <Questionaire /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/questionaire2"
+            element={!user ? <Questionaire2 /> : <Navigate to="/" />}
+          />
+          <Route
+            path="/questionaire3"
+            element={!user ? <Questionaire3 /> : <Navigate to="/" />}
+          />
 
           {/* Users */}
-          <Route path="/user" element={<User />} />
-          <Route path="/verified" element={<Verified />} />
+          <Route
+            path="/user"
+            element={user ? <User /> : <Navigate to="/signin" />}
+          />
+          <Route path="/testuser/:id" element={<TestUser />} />
+          <Route
+            path="/verified"
+            element={user ? <Verified /> : <Navigate to="/signin" />}
+          />
         </Routes>
       </BrowserRouter>
     </div>
