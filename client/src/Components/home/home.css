@@ -274,9 +274,10 @@ opacity: 0;
 .fp-box{
   width: 10%;
   object-fit:fill;
+  border-radius: var(--s-brad);
+
 }
 .fp-item-pic{
-  border-radius: var(--s-brad);
   /* margin: auto; */
 }
 
