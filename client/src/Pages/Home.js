@@ -68,8 +68,8 @@ const Home = () => {
       >
         <SearchBar />
         <PrimeNews />
-        {/* <HotItems />
-        <FeatPrimes /> */}
+        <HotItems />
+        <FeatPrimes />
         <HomeFeedPost />
         {/* <HomeFeedPhoto />
         <HomeFeedVideo />

@@ -32,8 +32,12 @@ const ProfileModal = () => {
           <h4 className="prof-info-text">Justin Williams</h4>
           <h5 className="text-gray prof-info-text">@justinWilliams</h5>
           <div className="prof-info-numbers">
-            <h5>50 Post</h5>
-            <h5>345 Connections</h5>
+            <h5>
+              <span className="bold">50</span> Post
+            </h5>
+            <h5>
+              <span className="bold">345</span> Connections
+            </h5>
           </div>
         </div>
         <div className="modal-user-buttons">
@@ -64,11 +68,13 @@ const ProfileModal = () => {
           <h5 className="work-with-title">Connections</h5>
           <div className="prof-connected-users">
             {textData.slice(0, 16).map((data) => (
-              <img
-                className="prof-connected-users-img item-shade clickable"
-                src={data.pic}
-                alt=""
-              />
+              <div className="prof-connected-users-img-container square-container ">
+                <img
+                  className="square-container-contents prof-connected-users-img item-shade clickable"
+                  src={data.pic}
+                  alt=""
+                />
+              </div>
             ))}
           </div>
         </div>
