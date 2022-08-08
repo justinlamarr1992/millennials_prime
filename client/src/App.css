@@ -78,6 +78,10 @@
     --wb: 1rem;
     --mb: 1.5rem;
 
+
+    /* bold */
+    --bold: bold;
+
     /* Grid Layout */
     --wcol: 10% auto 10%;
     --mcol: 5% auto 5%;
@@ -226,17 +230,13 @@ input{
     /* height: 100%; */
     background: var(--background);
 
-
-
     /* The reason for page mess up */
     display: flex;
     flex-direction: row;
-
-
-
     
     /* margin: auto; */
     padding-left: calc(var(--nav-w) + 6%);
+    /* padding-left: var(--nav-w); */
 }
 .page-button{
     width: var(--but-w);
