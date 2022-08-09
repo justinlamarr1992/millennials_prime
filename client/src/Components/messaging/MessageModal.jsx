@@ -16,7 +16,14 @@ const MessageModal = () => {
     <div className="message-modal con-shade">
       <div className="message-modal-sender">
         <div className="message-sender">
-          <img className="message-sender-pic" src={User} alt="" />
+          <div className="message-sender-pic-container square-container">
+            <img
+              className="message-sender-pic square-container-contents"
+              src={User}
+              alt=""
+            />
+          </div>
+
           <div className="message-sender-info">
             <h3 className="message-sender-name">Sender Name</h3>
             <h5 className="message-sender-status">Online</h5>

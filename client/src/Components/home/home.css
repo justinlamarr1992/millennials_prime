@@ -49,6 +49,7 @@ margin: 2% 10% 2% 0;
 .norm-container {
     background-color: var(--form-c);
     border-radius: var(--brad);
+    color: var(--pri-t);
 }
 
 

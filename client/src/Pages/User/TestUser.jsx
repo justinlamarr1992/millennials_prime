@@ -14,13 +14,22 @@ import ProfileModal from "../../Components/user/ProfileModal";
 import "../../Components/user/user.css";
 import FeedPost from "../../Components/reusuables/post/FeedPost";
 import { useParams } from "react-router-dom";
+import useFetch from "../../Hooks/useFetch";
+
+import { textData } from "../../Components/reusuables/post/data";
 
 const TestUser = () => {
   const [modal, setModal] = useState(true);
   const [pageWidth, setPageWidth] = useState("var(--home-per)");
   const widthRef = useRef(null);
 
-  const params = useParams();
+  const { id } = useParams();
+  // Youtube
+  const {
+    data: page,
+    error,
+    isPending,
+  } = useFetch("http://localhost:3000/testuser/" + id);
 
   useEffect(() => {
     console.log(
@@ -49,32 +58,38 @@ const TestUser = () => {
   };
   return (
     <div className="page">
-      <div
-        className={"user-container " + (modal ? "user-true" : "user-false")}
-        ref={widthRef}
-      >
-        <div>Client Stuff: {JSON.stringify(params)}</div>
-        {/* <div className="prime-video">
-          <SearchBar />
-          <PrimeUpdateVideo />
-          <FeedPost />
-          <h1>Toggle Feed Selections</h1>
-          <div
-            className={modal ? "feed-section-no-wrap" : "feed-section-wrapped"}
-          >
-            <FeedText modal={modal} setModal={setModal} />
-            <FeedPhoto modal={modal} setModal={setModal} />
-            <FeedVideo modal={modal} setModal={setModal} />
-            <FeedEpisode modal={modal} setModal={setModal} />
-            <FeedMusic modal={modal} setModal={setModal} />
-            <FeedStore modal={modal} setModal={setModal} />
+      {isPending && <div>Loading...</div>}
+      {error && <div>{error}</div>}
+      {page && (
+        <div
+          className={"user-container " + (modal ? "user-true" : "user-false")}
+          ref={widthRef}
+        >
+          {/* <div>Client Stuff: {JSON.stringify(params)}</div> */}
+          <div className="prime-video">
+            <SearchBar />
+            <PrimeUpdateVideo />
+            <FeedPost />
+            <h1>Toggle Feed Selections</h1>
+            <div
+              className={
+                modal ? "feed-section-no-wrap" : "feed-section-wrapped"
+              }
+            >
+              <FeedText modal={modal} setModal={setModal} />
+              <FeedPhoto modal={modal} setModal={setModal} />
+              <FeedVideo modal={modal} setModal={setModal} />
+              <FeedEpisode modal={modal} setModal={setModal} />
+              <FeedMusic modal={modal} setModal={setModal} />
+              <FeedStore modal={modal} setModal={setModal} />
+            </div>
           </div>
+          <button className="test-modal-button" onClick={onClick}>
+            Modal Test Button
+          </button>
+          {modal && <ProfileModal />}
         </div>
-        <button className="test-modal-button" onClick={onClick}>
-          Modal Test Button
-        </button> */}
-        {modal && <ProfileModal />}
-      </div>
+      )}
     </div>
   );
 };

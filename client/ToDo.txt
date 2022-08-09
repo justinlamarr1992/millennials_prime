@@ -112,3 +112,8 @@ Share Box
     Get instagram logo with colors
     create modals that will resemble facebook shares
     create anchor tag or what ever needed for te connection
+
+
+    LAST THING I WAS DOING WAS FIGURING OUT HOW TO AAUATOMATCIALLT SEE IF THE USER IS VERIFIED OR NOT... 
+    THIS WOULD BE THROUGH THEIR DATABASE IF IT WAS VERIFIED OR NOT
+    THEN I WOULD CHANGE THE WAY THE USERS CONNECTED USER DISPLAY WOULD LOOK

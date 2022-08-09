@@ -1,10 +1,13 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import User from "../../Assets/Images/user.jpeg";
 import { FaEnvelope } from "react-icons/fa";
 import { textData } from "../reusuables/post/data.js";
 import ModalTop from "../reusuables/modals/ModalTop";
+import { useParams } from "react-router-dom";
 
 const ProfileModal = () => {
+  const params = useParams();
   return (
     <div className="modal con-shade verified-modal">
       <div className="modal-container modal-user-container">
@@ -56,13 +59,16 @@ const ProfileModal = () => {
           <h5 className="work-with-title">Connections</h5>
           <div className="prof-connected-users">
             {textData.slice(0, 16).map((data) => (
-              <div className="prof-connected-users-img-container square-container ">
+              <Link
+                className="prof-connected-users-img-container square-container "
+                to={`/testuser/${data.id}`}
+              >
                 <img
                   className="square-container-contents prof-connected-users-img item-shade clickable"
                   src={data.pic}
                   alt=""
                 />
-              </div>
+              </Link>
             ))}
           </div>
         </div>

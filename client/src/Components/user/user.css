@@ -112,6 +112,7 @@ background-image: linear-gradient(to top,
     flex-direction: row;
     justify-content: space-between;
     align-self: flex-start;
+    width: 100%;
 }
 .top-boxes{
   border-radius: var(--s-brad);

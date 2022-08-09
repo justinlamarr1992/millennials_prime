@@ -6,9 +6,13 @@
     align-items: center;
     column-gap:2% ;
 }
-.connected-user-info-pic{
-grid-area: 1/1/3/2;
+.connected-user-info-pic-container{
+    grid-area: 1/1/3/2;
 width: 65%;
+}
+.connected-user-info-pic{
+
+/* width: 65%; */
 border-radius: var(--brad);
 }
 .connected-user-info-name{
@@ -43,11 +47,11 @@ grid-area: 2/3/3/4;
 }
 
 /* Move this up to top level of css when things become dynamic */
-.connected-btn{
+.verified-btn{
     color: var(--pri-t);
     background-color: var(--qui-c);
 }
-.connect-btn{
+.norm-btn{
     color: var(--sec-t);
     background-color: var(--tri-c);
 }

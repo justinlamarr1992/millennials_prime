@@ -72,16 +72,20 @@ color: var(--sec-t);
 
 }
 
-
-
 .message-sender{
     display: flex;
+    width: 100%;
+}
+.message-sender-pic-container{
+    width: 14%;
+align-self: center;
+border-radius: var(--brad);
+margin-right: 30px;
 }
 .message-sender-pic{
-    border-radius: var(--brad);
-    width: 20%;
-    box-shadow: var(--bshade);
-    margin-right: 30px;
+box-shadow: var(--bshade);
+object-fit: cover;
+border-radius: var(--brad);
 }
 .message-sender-info{
     align-self: center;

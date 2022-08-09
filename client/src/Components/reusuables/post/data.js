@@ -81,6 +81,8 @@ export const textData = [
     id: "2",
     title: "two",
     status: "this is the test to see if what the user types appears",
+    verified: false,
+    description: "",
   },
   {
     user: "Annie Frank",
@@ -89,6 +91,8 @@ export const textData = [
     id: "3",
     title: "three",
     status: "this is the test to see if what the user types appears",
+    verified: false,
+    description: "",
   },
   {
     user: "Cedric Langley",
@@ -97,6 +101,8 @@ export const textData = [
     id: "4",
     title: "four",
     status: "this is the test to see if what the user types appears",
+    verified: false,
+    description: "",
   },
   {
     user: "Addie Moore",
@@ -105,6 +111,8 @@ export const textData = [
     id: "5",
     title: "five",
     status: "this is the test to see if what the user types appears",
+    verified: false,
+    description: "",
   },
   {
     user: "Meredith Black",
@@ -113,6 +121,8 @@ export const textData = [
     id: "6",
     title: "six",
     status: "this is the test to see if what the user types appears",
+    verified: false,
+    description: "",
   },
   {
     user: "Goku Myoshie",
@@ -121,6 +131,8 @@ export const textData = [
     id: "7",
     title: "seven",
     status: "this is the test to see if what the user types appears",
+    verified: false,
+    description: "",
   },
   {
     user: "Waylan Max",
@@ -129,6 +141,8 @@ export const textData = [
     id: "8",
     title: "eight",
     status: "this is the test to see if what the user types appears",
+    verified: false,
+    description: "",
   },
   {
     user: "Jared Crouch",
@@ -137,6 +151,8 @@ export const textData = [
     id: "9",
     title: "nine",
     status: "this is the test to see if what the user types appears",
+    verified: false,
+    description: "",
   },
   {
     user: "Jason Vorhees",
@@ -145,6 +161,8 @@ export const textData = [
     id: "10",
     title: "ten",
     status: "this is the test to see if what the user types appears",
+    verified: false,
+    description: "",
   },
   {
     user: "Wally Pixy",
@@ -153,6 +171,8 @@ export const textData = [
     id: "11",
     title: "eleven",
     status: "this is the test to see if what the user types appears",
+    verified: false,
+    description: "",
   },
   {
     user: "Matt Porky",
@@ -161,6 +181,8 @@ export const textData = [
     id: "12",
     title: "twelve",
     status: "this is the test to see if what the user types appears",
+    verified: false,
+    description: "",
   },
   {
     user: "Jim Witwhipkey",
@@ -169,6 +191,8 @@ export const textData = [
     id: "13",
     title: "thriteen",
     status: "this is the test to see if what the user types appears",
+    verified: false,
+    description: "",
   },
   {
     user: "Sarah Richie",
@@ -177,6 +201,8 @@ export const textData = [
     id: "14",
     title: "fourteen",
     status: "this is the test to see if what the user types appears",
+    verified: false,
+    description: "",
   },
   {
     user: "Chadayney Poory",
@@ -185,6 +211,8 @@ export const textData = [
     id: "15",
     title: "fifteen",
     status: "this is the test to see if what the user types appears",
+    verified: false,
+    description: "",
   },
   {
     user: "Chris Chapman",
@@ -193,6 +221,8 @@ export const textData = [
     id: "16",
     title: "sixteen",
     status: "this is the test to see if what the user types appears",
+    verified: false,
+    description: "",
   },
   {
     user: "David Racer",
@@ -201,6 +231,8 @@ export const textData = [
     id: "17",
     title: "seventeen",
     status: "this is the test to see if what the user types appears",
+    verified: false,
+    description: "",
   },
   {
     user: "Alex Kramer",
@@ -209,6 +241,8 @@ export const textData = [
     id: "18",
     title: "eighteen",
     status: "this is the test to see if what the user types appears",
+    verified: false,
+    description: "",
   },
   {
     user: "Alexis Texas",
@@ -217,6 +251,8 @@ export const textData = [
     id: "19",
     title: "ninteen",
     status: "this is the test to see if what the user types appears",
+    verified: false,
+    description: "",
   },
   {
     user: "Scott Scotch",
@@ -225,6 +261,8 @@ export const textData = [
     id: "20",
     title: "twenty",
     status: "this is the test to see if what the user types appears",
+    verified: false,
+    description: "",
   },
 ];
 export const photoData = [
