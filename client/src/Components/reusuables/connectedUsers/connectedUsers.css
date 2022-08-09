@@ -55,3 +55,11 @@ grid-area: 2/3/3/4;
     color: var(--sec-t);
     background-color: var(--tri-c);
 }
+.connected-btn{
+    color: var(--pri-t);
+    background-color: var(--qui-c);
+}
+.connect-btn{
+    color: var(--sec-t);
+    background-color: var(--tri-c);
+}
