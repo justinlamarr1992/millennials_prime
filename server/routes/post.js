@@ -2,7 +2,9 @@ const express = require("express");
 
 const {
   createPost,
+  testPost,
   getPosts,
+  getProfilePosts,
   getPost,
   deletePost,
   updatePost,
@@ -18,11 +20,16 @@ router.use(requireAuth);
 // GET all Post
 router.get("/", getPosts);
 
+// GET Profile Post
+router.get("/profile", getProfilePosts);
+
 // GET a single Post
 router.get("/:id", getPost);
 
 // POST a new Post
 router.post("/", createPost);
+// POST a Test Post
+router.post("/test", testPost);
 
 // Delete a Post
 router.delete("/:id", deletePost);

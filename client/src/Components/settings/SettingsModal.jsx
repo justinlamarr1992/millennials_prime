@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import User from "../../Assets/Images/user.jpeg";
 import { FaUserAlt, FaBell, FaShieldAlt, FaPhoneAlt } from "react-icons/fa";
@@ -24,38 +24,58 @@ const SettingsModal = () => {
 
         <div className="modal-setting-container">
           {/* <h3 className="modal-setting-title">Settings</h3> */}
-          <Link key="account" to="/settings" className="modal-setting-button">
-            <div className="setting-button-icon-box setting-button-icon-box-selected">
-              <FaUserAlt className="setting-button-icon setting-button-icon-selected" />
+          <NavLink
+            key="account"
+            to="/settings/config"
+            className="modal-setting-button"
+            style={({ isActive }) => {
+              return isActive ? { color: "var(--qua-c)" } : {};
+            }}
+          >
+            <div className="setting-button-icon-box">
+              <FaUserAlt className="setting-button-icon" />
             </div>
             <h4 className="setting-button-text">My Account</h4>
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             key="account"
-            to="/notifications"
+            to="/settings/notifications"
             className="modal-setting-button"
+            style={({ isActive }) => {
+              return isActive ? { color: "var(--qua-c)" } : {};
+            }}
           >
             <div className="setting-button-icon-box">
               <FaBell className="setting-button-icon" />
             </div>
             <h4 className="setting-button-text">Notifications</h4>
-          </Link>
-          <Link
+          </NavLink>
+          <NavLink
             key="account"
-            to="/privacy-policy"
+            to="/settings/privacy-policy"
             className="modal-setting-button"
+            style={({ isActive }) => {
+              return isActive ? { color: "var(--qua-c)" } : {};
+            }}
           >
             <div className="setting-button-icon-box">
               <FaShieldAlt className="setting-button-icon" />
             </div>
             <h4 className="setting-button-text">Privacy Policy</h4>
-          </Link>
-          <Link key="account" to="/contact-us" className="modal-setting-button">
+          </NavLink>
+          <NavLink
+            key="account"
+            to="/settings/contact-us"
+            className="modal-setting-button"
+            style={({ isActive }) => {
+              return isActive ? { color: "var(--qua-c)" } : {};
+            }}
+          >
             <div className="setting-button-icon-box">
               <FaPhoneAlt className="setting-button-icon" />
             </div>
             <h4 className="setting-button-text">Contact Us</h4>
-          </Link>
+          </NavLink>
         </div>
       </div>
     </div>

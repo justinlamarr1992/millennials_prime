@@ -28,7 +28,7 @@ const SignIn = () => {
           <div className="content">
             <h5 className="center-item">Don't have an Account Yet?</h5>
 
-            <Link className="auth-link center-link" to="/register">
+            <Link className="auth-link center-link" to="/auth/register">
               <button className="auth-button other-button center-item">
                 Create an Account
               </button>
@@ -75,7 +75,7 @@ const SignIn = () => {
             <Link
               className="password-recover-link"
               key="home"
-              to="/passwordrecovery"
+              to="/auth/passwordrecovery"
             >
               <h6 className="text-gray">Forgot Password</h6>
             </Link>

@@ -1,9 +1,27 @@
 const Post = require("../models/postModel");
+const User = require("../models/userModel");
 const mongoose = require("mongoose");
+const { db } = require("../models/userModel");
 
-// get all post
+// Get all post
 const getPosts = async (req, res) => {
   const posts = await Post.find({}).sort({ createdAt: -1 });
+
+  res.status(200).json(posts);
+};
+
+// will be used for all friends/ connections post
+// // get all post
+// const getPosts = async (req, res) => {
+//   const posts = await Post.find({}).sort({ createdAt: -1 });
+
+//   res.status(200).json(posts);
+// };
+
+// Get profile post
+const getProfilePosts = async (req, res) => {
+  const user_id = req.user._id;
+  const posts = await Post.find({ user_id }).sort({ createdAt: -1 });
 
   res.status(200).json(posts);
 };
@@ -28,6 +46,12 @@ const getPost = async (req, res) => {
 // create new post
 const createPost = async (req, res) => {
   const { title, status } = req.body;
+  const user_id = req.user._id;
+
+  // const user = await User.findOne({ _id: _id });
+  // console.log(user);
+
+  // const test = await db.getUsers();
 
   let emptyFields = [];
 
@@ -45,7 +69,43 @@ const createPost = async (req, res) => {
 
   //   add doc to db
   try {
-    const post = await Post.create({ title, status });
+    const user_id = req.user._id;
+    // These are all the things that will be saved for a post
+    const post = await Post.create({ title, status, user_id });
+    res.status(200).json(post);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+// create new post
+const testPost = async (req, res) => {
+  const { title, status } = req.body;
+  const user_id = req.user._id;
+
+  const user = await User.findOne({ _id: _id });
+  // console.log(user);
+
+  // const test = await db.getUsers();
+
+  let emptyFields = [];
+
+  if (!title) {
+    emptyFields.push("title");
+  }
+  if (!status) {
+    emptyFields.push("status");
+  }
+  if (emptyFields.length > 0) {
+    return res
+      .status(400)
+      .json({ error: "Please Fill in all the fields", emptyFields });
+  }
+
+  //   add doc to db
+  try {
+    const user_id = req.user._id;
+    // These are all the things that will be saved for a post
+    const post = await Post.create({ title, status, user_id });
     res.status(200).json(post);
   } catch (error) {
     res.status(400).json({ error: error.message });
@@ -94,7 +154,9 @@ const updatePost = async (req, res) => {
 module.exports = {
   createPost,
   getPosts,
+  getProfilePosts,
   getPost,
   deletePost,
   updatePost,
+  testPost,
 };

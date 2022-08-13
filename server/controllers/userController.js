@@ -5,6 +5,20 @@ const createToken = (_id) => {
   return jwt.sign({ _id }, process.env.SECRET, { expiresIn: "1d" });
 };
 
+const getUsers = async (req, res) => {
+  const users = await User.find({}).sort({ createdAt: -1 });
+
+  res.status(200).json(users);
+};
+const getUser = async (req, res) => {
+  // const id = req.user._id;
+  const user = await User.findOne({ slug: req.params.slug }).sort({
+    createdAt: -1,
+  });
+
+  res.status(200).json(user);
+};
+
 // login user
 const loginUser = async (req, res) => {
   const { email, password } = req.body;
@@ -37,4 +51,4 @@ const signupUser = async (req, res) => {
   }
 };
 
-module.exports = { signupUser, loginUser };
+module.exports = { getUsers, getUser, signupUser, loginUser };

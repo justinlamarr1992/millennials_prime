@@ -23,6 +23,7 @@ import HomeFeedStore from "../Components/reusuables/post/HomeFeedStore";
 
 const Home = () => {
   const [modal, setModal] = useState(true);
+
   const [pageWidth, setPageWidth] = useState("var(--home-per)");
   const widthRef = useRef(null);
   // const { posts, dispatch } = usePostsContext();
@@ -67,15 +68,16 @@ const Home = () => {
         ref={widthRef}
       >
         <SearchBar />
+
         <PrimeNews />
         <HotItems />
         <FeatPrimes />
         <HomeFeedPost />
-        <HomeFeedPhoto />
+        {/* <HomeFeedPhoto />
         <HomeFeedVideo />
         <HomeFeedEpisode />
         <HomeFeedMusic />
-        <HomeFeedStore />
+        <HomeFeedStore /> */}
         <PostList modal={modal} setModal={setModal} widthRef={widthRef} />
         <button className="test-modal-button" onClick={onClick}>
           Modal Test Button

@@ -10,11 +10,13 @@ import { PostsContextProvider } from "./Context/PostsContext";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <AuthContextProvider>
-      <PostsContextProvider>
-        <App />
-      </PostsContextProvider>
-    </AuthContextProvider>
+    <BrowserRouter>
+      <AuthContextProvider>
+        <PostsContextProvider>
+          <App />
+        </PostsContextProvider>
+      </AuthContextProvider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 

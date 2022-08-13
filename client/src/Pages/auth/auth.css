@@ -52,7 +52,7 @@ width: 50%;
 
 .form {
     width: 50vw;
-    height: 100%;
+    height: 100vh;
     /* padding: ; */
     background: var(--form-c);
     border-radius: var(--lbrad);

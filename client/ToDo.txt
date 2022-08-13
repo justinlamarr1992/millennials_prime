@@ -27,8 +27,13 @@ Password Recovery
 Questionaire
     Find way to pass the answers to users profile
 Home Page
+
+    Fix difference between borders with user page and the home page
+
+
     Search Bar
         Off with spacing
+        move the tested div inside of search bar for results
 
     Post Components
         Comment Post find way to have different placeholder text from home and users page

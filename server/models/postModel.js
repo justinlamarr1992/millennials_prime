@@ -13,8 +13,11 @@ const postSchema = new Schema(
     // id: { type: Number, required: true, unique: true },
     title: { type: String },
     status: { type: String },
+    user_id: { type: String, required: true },
+    // name: { type: String, required: true },
   },
-  { timestamps: true }
+  { timestamps: true },
+  { typeKey: "$type" }
 );
 
 module.exports = mongoose.model("post", postSchema);

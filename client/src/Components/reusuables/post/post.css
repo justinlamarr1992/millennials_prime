@@ -152,8 +152,10 @@ justify-content: center;
 .share-socials-twitter{
     color: #1DA1F2;
 }
+
 .share-socials-instagram{
-color: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%); 
+/* color: linear-gradient(45deg, #f09433 0%,#e6683c 25%,#dc2743 50%,#cc2366 75%,#bc1888 100%);  */
+width: var(--r-i-Big);
 }
 
 

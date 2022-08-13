@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { usePostsContext } from "../../../Hooks/usePostsContext";
 import { useAuthContext } from "../../../Hooks/useAuthContext";
@@ -7,13 +7,14 @@ import InfiniteScroll from "react-infinite-scroll-component";
 import { textData, photoData, videoData } from "./data";
 import HomeFeedPhoto from "./HomeFeedPhoto";
 import HomeFeedText from "./HomeFeedText";
-import { useEffect } from "react";
+import useFetch from "../../../Hooks/useFetch";
 
 const LIMIT = 0;
 
 const PostList = ({ modal, setModal, widthRef }) => {
   const { posts, dispatch } = usePostsContext();
   const { user } = useAuthContext();
+  const { data: users, isLoading, error } = useFetch("/api/user");
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -33,6 +34,8 @@ const PostList = ({ modal, setModal, widthRef }) => {
       fetchPosts();
     }
   }, [dispatch, user]);
+
+  // usefetch in useeffect to fetch all the users
 
   // // change to textData
   // const [postData, setPostData] = useState(textData.splice(0, LIMIT));
@@ -91,6 +94,9 @@ const PostList = ({ modal, setModal, widthRef }) => {
   return (
     <div className="feed-items">
       <h3 className="ht-item-title title-space">News Feed</h3>
+      {error && <div>{error}</div>}
+      {isLoading && <div>Loading...</div>}
+      {users && <pre>{JSON.stringify(users)}</pre>}
       {posts &&
         posts.map((post) => <HomeFeedText post={post} key={post._id} />)}
 

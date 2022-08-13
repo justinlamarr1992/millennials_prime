@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 import { useLogout } from "../../Hooks/useLogout";
 import { useAuthContext } from "../../Hooks/useAuthContext";
@@ -27,9 +27,9 @@ const NavBar = (props) => {
       {user ? (
         <ul className="nav-buttons">
           <li className="nav-list top">
-            <Link key="home" to="/" className="logo-link">
+            <NavLink key="home" to="/" className="logo-link">
               <img className="logo" src={Logo} alt="MPrime Logo" />
-            </Link>
+            </NavLink>
             <a href=""></a>
             {/* {user && <span>{user.email}</span>} */}
 
@@ -43,9 +43,15 @@ const NavBar = (props) => {
             <FontAwesomeIcon icon="fa-solid fa-house" /> */}
             {/* This is the test for getting to the profile page not a button that will remain here */}
             <div className="test">
-              <Link key="profile" to="/user">
+              <NavLink
+                key="profile"
+                to="/user/profile"
+                style={({ isActive }) => {
+                  return isActive ? { color: "var(--qua-c)" } : {};
+                }}
+              >
                 User
-              </Link>
+              </NavLink>
             </div>
             {/* This is the test for getting to the profile page not a button that will remain here */}
             {/* <div className="test">
@@ -54,32 +60,50 @@ const NavBar = (props) => {
             </a>
           </div> */}
             <div className="test">
-              <Link key="messages" to="/messages">
+              <NavLink
+                key="messages"
+                to="/messages"
+                style={({ isActive }) => {
+                  return isActive ? { color: "var(--qua-c)" } : {};
+                }}
+              >
                 <FaEnvelope />
                 {/* Messages */}
                 {/* <FontAwesomeIcon icon="fa-solid fa-messages" /> */}
-              </Link>
+              </NavLink>
             </div>
             <div className="test">
-              <Link key="connected" to="connectedusers">
+              <NavLink
+                key="connected"
+                to="connectedusers"
+                style={({ isActive }) => {
+                  return isActive ? { color: "var(--qua-c)" } : {};
+                }}
+              >
                 <FaUsers />
                 {/* Connected Users */}
                 {/* <FontAwesomeIcon icon="fa-solid fa-users" /> */}
-              </Link>
+              </NavLink>
             </div>
             <div className="test">
-              <Link key="settings" to="/settings">
+              <NavLink
+                key="settings"
+                to="/settings/config"
+                style={({ isActive }) => {
+                  return isActive ? { color: "var(--qua-c)" } : {};
+                }}
+              >
                 <FaToolbox />
                 {/* Settings */}
                 {/* <FontAwesomeIcon icon="fa-solid fa-gear" /> */}
-              </Link>
+              </NavLink>
             </div>
           </li>
           <li className="nav-list bottom">
             <div className="test test1">
-              <Link key="signout" to="/signin" onClick={handleClick}>
+              <NavLink key="signout" to="/auth/signin" onClick={handleClick}>
                 <FaSignOutAlt />
-              </Link>
+              </NavLink>
             </div>
           </li>
         </ul>

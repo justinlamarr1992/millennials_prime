@@ -2,30 +2,33 @@ import React, { useState, useEffect } from "react";
 
 const useFetch = (url) => {
   const [data, setData] = useState(null);
-  const [isPending, setIsPending] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
     const abortCont = new AbortController();
 
     setTimeout(() => {
+      // this is ususally the locahost blah blah but server has the first part
+      // but now it is an url that can be dynamically changed
+
       fetch(url, { signal: abortCont.signal })
         .then((res) => {
           if (!res.ok) {
-            throw Error("could not fetch the data for that resource");
+            throw Error("Could not fetch the Data.");
           }
           return res.json();
         })
         .then((data) => {
           setData(data);
-          setIsPending(false);
+          setIsLoading(false);
           setError(null);
         })
         .catch((err) => {
           if (err.name === "AbortError") {
             console.log("fetch aborted");
           } else {
-            setIsPending(false);
+            setIsLoading(false);
             setError(err.message);
           }
         });
@@ -34,6 +37,6 @@ const useFetch = (url) => {
     return () => abortCont.abort();
   }, [url]);
 
-  return { data, isPending, error };
+  return { data, isLoading, error };
 };
 export default useFetch;

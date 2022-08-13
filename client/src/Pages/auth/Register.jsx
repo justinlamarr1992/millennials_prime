@@ -116,7 +116,7 @@ const Register = () => {
           <div className="content">
             <h5 className="center-item">Already Have An Account?</h5>
 
-            <Link className="auth-link center-item" to="/signin">
+            <Link className="auth-link center-item" to="/auth/signin">
               <button className="auth-button other-button center-item">
                 Login
               </button>

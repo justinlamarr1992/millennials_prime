@@ -203,7 +203,7 @@ a:link {
 
 /* visited link */
 a:visited {
-  color: white;
+  color: var(--qui-c);
 }
 
 /* mouse over link */
@@ -331,6 +331,15 @@ position: relative;
 position: absolute;
   width: 100%;
   height: 100%;
+  border-radius: var(--s-brad);
+}
+.classLink-user h1,
+.classLink-user h2
+.classLink-user h3
+.classLink-user h4
+.classLink-user h5
+.classLink-user h6{
+    color: var(--pri-c);
 }
 
 

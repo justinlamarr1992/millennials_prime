@@ -136,7 +136,7 @@ const Questionaire = () => {
               />
             </div>
             {allowed == true ? (
-              <Link className="" key="questionaire" to="/questionaire2">
+              <Link className="" key="questionaire" to="/auth/questionaire2">
                 <button className="auth-button login">Next</button>
               </Link>
             ) : (

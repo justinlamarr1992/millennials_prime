@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter, Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { useAuthContext } from "./Hooks/useAuthContext";
 import "./App.css";
 
@@ -25,87 +25,103 @@ import User from "./Pages/User/User";
 import TestUser from "./Pages/User/TestUser";
 import Verified from "./Pages/User/Verified";
 
+import { NotFound } from "./Pages/NotFound/NotFound";
+
 function App(props, state) {
   const { user } = useAuthContext();
   return (
+    // <BrowserRouter>
     <div className="App">
-      <BrowserRouter>
-        <NavBar name="Justin" />
-        <Routes className="container-comp">
-          {/* MAy have found a way to change the sidenav... We will see */}
-          {/* Main */}
-          <Route
-            path="/"
-            element={user ? <Home /> : <Navigate to="/signin" />}
-          />
-          <Route
-            path="/messages"
-            element={user ? <Messages /> : <Navigate to="/signin" />}
-          />
-          <Route
-            path="/connectedusers"
-            element={user ? <ConnectedUsers /> : <Navigate to="/signin" />}
-          />
-          <Route
-            path="/settings"
-            element={user ? <Settings /> : <Navigate to="/signin" />}
-          />
-          <Route
-            path="/notifications"
-            element={user ? <Notifications /> : <Navigate to="/signin" />}
-          />
-          <Route
-            path="/privacy-policy"
-            element={user ? <PrivacyPolicy /> : <Navigate to="/signin" />}
-          />
-          <Route
-            path="/contact-us"
-            element={user ? <ContactUs /> : <Navigate to="/signin" />}
-          />
+      <NavBar name="Justin" />
+      <Routes className="container-comp">
+        {/* MAy have found a way to change the sidenav... We will see */}
+        {/* Main */}
+        <Route
+          path="/"
+          element={user ? <Home /> : <Navigate to="/auth/signin" />}
+        />
+        <Route
+          path="/messages"
+          element={user ? <Messages /> : <Navigate to="/auth/signin" />}
+        />
+        <Route
+          path="/connectedusers"
+          element={user ? <ConnectedUsers /> : <Navigate to="/auth/signin" />}
+        />
 
-          {/* Auth */}
+        {/* Settings */}
+        <Route path="/settings">
           <Route
-            path="/register"
+            path="config"
+            element={user ? <Settings /> : <Navigate to="/auth/signin" />}
+          />
+          <Route
+            path="notifications"
+            element={user ? <Notifications /> : <Navigate to="/auth/signin" />}
+          />
+          <Route
+            path="privacy-policy"
+            element={user ? <PrivacyPolicy /> : <Navigate to="/auth/signin" />}
+          />
+          <Route
+            path="contact-us"
+            element={user ? <ContactUs /> : <Navigate to="/auth/signin" />}
+          />
+        </Route>
+
+        {/* Auth */}
+        <Route path="/auth">
+          <Route
+            path="register"
             element={!user ? <Register /> : <Navigate to="/" />}
           />
           <Route
-            path="/signout"
+            path="signout"
             element={!user ? <SignOut /> : <Navigate to="/" />}
           />
           <Route
-            path="/signin"
+            path="signin"
             element={!user ? <SignIn /> : <Navigate to="/" />}
           />
           <Route
-            path="/passwordrecovery"
+            path="passwordrecovery"
             element={!user ? <PasswordRecovery /> : <Navigate to="/" />}
           />
           <Route
-            path="/questionaire"
+            path="questionaire"
             element={!user ? <Questionaire /> : <Navigate to="/" />}
           />
           <Route
-            path="/questionaire2"
+            path="questionaire2"
             element={!user ? <Questionaire2 /> : <Navigate to="/" />}
           />
           <Route
-            path="/questionaire3"
+            path="questionaire3"
             element={!user ? <Questionaire3 /> : <Navigate to="/" />}
           />
+        </Route>
 
-          {/* Users */}
+        {/* Users */}
+        <Route path="/user">
           <Route
-            path="/user"
-            element={user ? <User /> : <Navigate to="/signin" />}
+            path="profile"
+            element={<User />}
+            // element={user ? <User /> : <Navigate to="/signin" />}
           />
-          <Route path="/testuser/:id" element={<TestUser />} />
           <Route
-            path="/verified"
-            element={user ? <Verified /> : <Navigate to="/signin" />}
+            path="users/:id"
+            element={<User />}
+            // element={user ? <User /> : <Navigate to="/signin" />}
           />
-        </Routes>
-      </BrowserRouter>
+          <Route path="testuser/:id" element={<TestUser />} />
+          <Route path="verified/:userid" element={<Verified />} />
+        </Route>
+
+        {/* 404 */}
+        <Route path="*" element={<NotFound />} />
+      </Routes>
     </div>
+    // </BrowserRouter>
   );
 }
 

@@ -148,7 +148,7 @@ const Questionaire2 = () => {
                 <option value="other">Other</option>
               </select>
             </div>
-            <Link className="" key="questionaire" to="/questionaire3">
+            <Link className="" key="questionaire" to="/auth/questionaire3">
               <button className="auth-button login">Next</button>
             </Link>
           </form>

@@ -1,4 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useParams } from "react-router-dom";
+
 import NavBar from "../../Components/nav/NavBar";
 import FeedEpisode from "../../Components/reusuables/post/FeedEpisode";
 import FeedMusic from "../../Components/reusuables/post/FeedMusic";
@@ -13,7 +15,6 @@ import ProfileModal from "../../Components/user/ProfileModal";
 
 import "../../Components/user/user.css";
 import FeedPost from "../../Components/reusuables/post/FeedPost";
-import { useParams } from "react-router-dom";
 import useFetch from "../../Hooks/useFetch";
 
 import { textData } from "../../Components/reusuables/post/data";

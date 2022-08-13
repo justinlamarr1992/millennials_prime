@@ -61,7 +61,7 @@ const ProfileModal = () => {
             {textData.slice(0, 16).map((data) => (
               <Link
                 className="prof-connected-users-img-container square-container "
-                to={`/testuser/${data.id}`}
+                to={`/user/users/${data.id}`}
               >
                 <img
                   className="square-container-contents prof-connected-users-img item-shade clickable"

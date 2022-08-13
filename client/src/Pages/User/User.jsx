@@ -1,4 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
+
+import { usePostsContext } from "../../Hooks/usePostsContext";
+import { useAuthContext } from "../../Hooks/useAuthContext";
+
 import NavBar from "../../Components/nav/NavBar";
 import FeedEpisode from "../../Components/reusuables/post/FeedEpisode";
 import FeedMusic from "../../Components/reusuables/post/FeedMusic";
@@ -19,12 +23,34 @@ const User = () => {
   const [pageWidth, setPageWidth] = useState("var(--home-per)");
   const widthRef = useRef(null);
 
+  const { posts, dispatch } = usePostsContext();
+  const { user } = useAuthContext();
+
   useEffect(() => {
     console.log(
       "the width of the user container is ",
       widthRef.current.offsetWidth
     );
   }, []);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      const response = await fetch("/api/post/profile", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      const json = await response.json();
+
+      if (response.ok) {
+        dispatch({ type: "SET_POSTS", payload: json });
+      }
+    };
+
+    if (user) {
+      fetchPosts();
+    }
+  }, [dispatch, user]);
 
   const onClick = () => {
     setModal(!modal);
@@ -63,12 +89,14 @@ const User = () => {
           <div
             className={modal ? "feed-section-no-wrap" : "feed-section-wrapped"}
           >
-            <FeedText modal={modal} setModal={setModal} />
+            {posts &&
+              posts.map((post) => <FeedText post={post} key={post._id} />)}
+            {/* <FeedText modal={modal} setModal={setModal} />
             <FeedPhoto modal={modal} setModal={setModal} />
             <FeedVideo modal={modal} setModal={setModal} />
             <FeedEpisode modal={modal} setModal={setModal} />
             <FeedMusic modal={modal} setModal={setModal} />
-            <FeedStore modal={modal} setModal={setModal} />
+            <FeedStore modal={modal} setModal={setModal} /> */}
           </div>
         </div>
 

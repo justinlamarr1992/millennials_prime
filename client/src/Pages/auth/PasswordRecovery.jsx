@@ -13,7 +13,7 @@ const PasswordRecovery = () => {
         <div className="pic-container">
           <div className="content">
             <h5 className="center-item">Remember Your Password?</h5>
-            <Link className="auth-link center-item" to="/signin">
+            <Link className="auth-link center-item" to="/auth/signin">
               <button className="auth-button other-button center-item">
                 Login
               </button>

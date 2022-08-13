@@ -148,6 +148,7 @@ input[type="range"]::-moz-range-progress {
 }
 
 .info-options{
+  width: 100%;
   grid-area: 1/3/3/4;
   align-self: center;
   justify-self: center;
@@ -155,4 +156,9 @@ input[type="range"]::-moz-range-progress {
 
 .pr-user-info h4, .pr-user-info h6 {
   margin: 0;
+}
+
+.options-dropdown{
+  border: 1px solid var(--tri-t);
+  width: 100%;
 }
