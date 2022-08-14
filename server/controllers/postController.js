@@ -45,7 +45,7 @@ const getPost = async (req, res) => {
 
 // create new post
 const createPost = async (req, res) => {
-  const { title, status } = req.body;
+  const { title, status, name } = req.body;
   const user_id = req.user._id;
 
   // const user = await User.findOne({ _id: _id });
@@ -61,6 +61,9 @@ const createPost = async (req, res) => {
   if (!status) {
     emptyFields.push("status");
   }
+  if (!name) {
+    emptyFields.push("name");
+  }
   if (emptyFields.length > 0) {
     return res
       .status(400)
@@ -71,12 +74,15 @@ const createPost = async (req, res) => {
   try {
     const user_id = req.user._id;
     // These are all the things that will be saved for a post
-    const post = await Post.create({ title, status, user_id });
+    const post = await Post.create({ title, status, user_id, name });
     res.status(200).json(post);
   } catch (error) {
     res.status(400).json({ error: error.message });
   }
 };
+// ADD To DATABASE NOTES
+// in order to save to database you need to add object here ...{title,status, name} =req.body this is whats sent in the front end
+
 // create new post
 const testPost = async (req, res) => {
   const { title, status } = req.body;

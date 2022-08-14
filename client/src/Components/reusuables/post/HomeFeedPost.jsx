@@ -12,6 +12,7 @@ const HomeFeedPost = () => {
   const { dispatch } = usePostsContext();
   const { user } = useAuthContext();
 
+  const [name, setName] = useState(user.name);
   const [title, setTitle] = useState("");
   const [status, setStatus] = useState("");
   const [picture, setPicture] = useState("");
@@ -33,6 +34,12 @@ const HomeFeedPost = () => {
     setItems([...items]);
     console.log("clicked");
   };
+  // const testHover = async (e) => {
+  //   e.preventDefault();
+  //   console.log("hovered");
+  //   const post = { title, status, name };
+  //   console.log(post);
+  // };
   const noChange = async (e) => {
     e.preventDefault();
     console.log("Clicked");
@@ -41,12 +48,16 @@ const HomeFeedPost = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    setName(user.name);
+
     if (!user) {
       setError("You Need to be Logged In");
       return;
     }
 
-    const post = { title, status };
+    const post = { title, status, name };
+    // ADD To DATABASE NOTES
+    // in order to save to database you need to add object here {...name} this is the value saved in whatever method uptop
 
     const response = await fetch("/api/post", {
       method: "POST",
@@ -99,6 +110,7 @@ const HomeFeedPost = () => {
         </form>
         <h3>Test here</h3>
         <pre>{JSON.stringify(item, null, "\t")}</pre>
+        {/* <form onSubmit={testSubmit} onMouseEnter={testHover}> */}
         <form onSubmit={testSubmit}>
           <input
             type="text"

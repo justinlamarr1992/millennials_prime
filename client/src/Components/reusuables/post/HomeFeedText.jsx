@@ -37,9 +37,9 @@ const HomeFeedText = ({ pic, postedDate, post, modal }) => {
       }
     >
       <ItemUserInfo
-        user="Test User"
+        user={post.name}
         pic={test}
-        postedDate="2022-06-12"
+        postedDate={post.createdAt}
         className="pr-user-info item-user-info"
       />
       <h3 className="item-user-content">{post.title}</h3>
