@@ -1,13 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 // import { usePostsContext } from "../Hooks/usePostsContext";
+import useFetch from "../Hooks/useFetch";
 
-import Video from "../Components/video/Video";
 import HotItems from "../Components/home/HotItems";
 import Newsfeed from "../Components/home/Newsfeed";
-import UserPostInfo from "../Components/reusuables/UserPostInfo";
 
 import "../Components/home/home.css";
-import NavBar from "../Components/nav/NavBar";
 import PrimeNews from "../Components/home/PrimeNews";
 import SearchBar from "../Components/reusuables/SearchBar";
 import FeatPrimes from "../Components/newsfeed/FeatPrimes";
@@ -15,18 +13,24 @@ import PostList from "../Components/reusuables/post/PostList";
 import HomeFeedPost from "../Components/reusuables/post/HomeFeedPost";
 
 import MainModal from "../Components/reusuables/modals/MainModal";
-import HomeFeedPhoto from "../Components/reusuables/post/HomeFeedPhoto";
-import HomeFeedVideo from "../Components/reusuables/post/HomeFeedVideo";
-import HomeFeedEpisode from "../Components/reusuables/post/HomeFeedEpisode";
-import HomeFeedMusic from "../Components/reusuables/post/HomeFeedMusic";
-import HomeFeedStore from "../Components/reusuables/post/HomeFeedStore";
 
 const Home = () => {
   const [modal, setModal] = useState(true);
 
+  const [userInfo, setUserInfo] = useState({});
+
+  const {
+    data: user,
+    isLoading,
+    error,
+  } = useFetch("api/user/62f8fa602e766718268c6d32");
+
+  // const { data: users, isLoading, error } = useFetch("api/user");
+
   const [pageWidth, setPageWidth] = useState("var(--home-per)");
   const widthRef = useRef(null);
   // const { posts, dispatch } = usePostsContext();
+  const getUser = () => {};
 
   // useEffect(() => {
   //   const fetchPosts = async () => {
@@ -40,6 +44,31 @@ const Home = () => {
 
   //   fetchPosts();
   // }, [dispatch]);
+  // useEffect(() => {
+  //   setTimeout(() => {
+  //     setUserInfo(user);
+  //     console.log(userInfo);
+  //   }, 1000);
+  // }, []);
+  useEffect(() => {
+    const fetchUser = async () => {
+      const response = await fetch("api/user/62f8fa602e766718268c6d32", {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      });
+      const json = await response.json();
+
+      if (response.ok) {
+        setUserInfo(user);
+        console.log(userInfo);
+      }
+    };
+
+    if (user) {
+      fetchUser();
+    }
+  }, [user]);
 
   const onClick = () => {
     setModal(!modal);
@@ -73,11 +102,6 @@ const Home = () => {
         <HotItems />
         <FeatPrimes />
         <HomeFeedPost />
-        {/* <HomeFeedPhoto />
-        <HomeFeedVideo />
-        <HomeFeedEpisode />
-        <HomeFeedMusic />
-        <HomeFeedStore /> */}
         <PostList modal={modal} setModal={setModal} widthRef={widthRef} />
         <button className="test-modal-button" onClick={onClick}>
           Modal Test Button

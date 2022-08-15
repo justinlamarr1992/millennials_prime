@@ -18,6 +18,8 @@ import ProfileModal from "../../Components/user/ProfileModal";
 import "../../Components/user/user.css";
 import FeedPost from "../../Components/reusuables/post/FeedPost";
 
+import useFetch from "../../Hooks/useFetch";
+
 const User = () => {
   const [modal, setModal] = useState(true);
   const [pageWidth, setPageWidth] = useState("var(--home-per)");
@@ -25,6 +27,9 @@ const User = () => {
 
   const { posts, dispatch } = usePostsContext();
   const { user } = useAuthContext();
+
+  // test
+  const [pageStuff, setPageStuff] = useState({});
 
   useEffect(() => {
     console.log(

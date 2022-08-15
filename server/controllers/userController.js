@@ -10,9 +10,10 @@ const getUsers = async (req, res) => {
 
   res.status(200).json(users);
 };
+
 const getUser = async (req, res) => {
   // const id = req.user._id;
-  const user = await User.findOne({ slug: req.params.slug }).sort({
+  const user = await User.findOne({ _id: req.params.slug }).sort({
     createdAt: -1,
   });
 
