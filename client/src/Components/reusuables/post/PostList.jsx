@@ -48,10 +48,10 @@ const PostList = ({ modal, setModal, widthRef }) => {
       {error && <div>{error}</div>}
       {isLoading && <div>Loading...</div>}
       {/* {users && <pre>{JSON.stringify(users)}</pre>} */}
-      {users &&
+      {/* {users &&
         users.map((logs) =>
           logs.email == user.email ? <h4>true</h4> : <h4>false</h4>
-        )}
+        )} */}
       {/* {users &&
         users.map((logs) => (
           <div on key={logs._id}>

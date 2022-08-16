@@ -7,6 +7,7 @@ import MessageBox from "../../messaging/MessageBox";
 import { useState } from "react";
 import { useAuthContext } from "../../../Hooks/useAuthContext";
 import ItemUserInfo from "../ItemUserInfo";
+import FileUpload from "./FileUpload";
 
 const HomeFeedPost = () => {
   const { dispatch } = usePostsContext();
@@ -111,18 +112,7 @@ const HomeFeedPost = () => {
         <h3>Test here</h3>
         <pre>{JSON.stringify(item, null, "\t")}</pre>
         {/* <form onSubmit={testSubmit} onMouseEnter={testHover}> */}
-        <form onSubmit={testSubmit}>
-          <input
-            type="text"
-            onChange={(e) => setItem({ ...item, title: e.target.value })}
-          />
-          <FileBase64
-            type="file"
-            multiple={false}
-            onDone={({ base64 }) => setItem({ ...item, image: base64 })}
-          />
-          <button className="btn">submit</button>
-        </form>
+        <FileUpload user={user} />
         {items?.map((item) => (
           <div key={item._id}>
             <div>

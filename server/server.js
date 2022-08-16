@@ -1,6 +1,7 @@
 require("dotenv").config();
 
 const express = require("express");
+const fileUpload = require("express-fileupload");
 const mongoose = require("mongoose");
 const cors = require("cors");
 
@@ -9,6 +10,8 @@ const postRoutes = require("./routes/post");
 
 // express app
 const app = express();
+
+app.use(fileUpload());
 
 //middleware
 app.use(express.json({ limit: "30mb", extended: true }));
@@ -31,7 +34,6 @@ app.use(
 // app.use('/api/post',postRoutes)
 app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
-
 
 // connect to db
 mongoose

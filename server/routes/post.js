@@ -2,6 +2,7 @@ const express = require("express");
 
 const {
   createPost,
+  createPicPost,
   testPost,
   getPosts,
   getProfilePosts,
@@ -30,6 +31,8 @@ router.get("/:id", getPost);
 router.post("/", createPost);
 // POST a Test Post
 router.post("/test", testPost);
+// POST PICTURE POST
+router.post("/photo", createPicPost);
 
 // Delete a Post
 router.delete("/:id", deletePost);

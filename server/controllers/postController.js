@@ -118,6 +118,24 @@ const testPost = async (req, res) => {
   }
 };
 
+// create post for pictures
+const createPicPost = async (req, res) => {
+  if (req.files === null) {
+    return res.status(400).json({ msg: "No File Uplaoded" });
+  }
+  console.log("req.files.file: ", req.files.file);
+
+  const file = req.files.file;
+  file.mv(`../client/public/uploads/${file.name}`, (err) => {
+    if (err) {
+      console.error(err);
+      console.log("Error in back end");
+      return res.status(500).send(err);
+    }
+    res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
+  });
+};
+
 // delete a post
 const deletePost = async (req, res) => {
   const { id } = req.params;
@@ -159,6 +177,7 @@ const updatePost = async (req, res) => {
 
 module.exports = {
   createPost,
+  createPicPost,
   getPosts,
   getProfilePosts,
   getPost,
