@@ -4,6 +4,7 @@ import Image from "../../Assets/Images/user.jpeg";
 import { textData } from "../reusuables/post/data";
 
 const HotItems = () => {
+  // TODO: Make Link to the Hot Items User page, and the individual post
   return (
     <section className="pr-hot-items norm-container con-shade">
       <h3 className="ht-item-title title-space">Hot Items</h3>

@@ -324,33 +324,38 @@ opacity: 0;
 .modal-home-follows-comp{
   display: grid;
   grid-template-columns: 25% 50% 25%;
-  grid-template-rows: 50% 50%;
+  /* grid-template-rows: 50% 50%; */
+  grid-template-rows: auto auto;
   padding: 5px;
   margin-top: 5px;
   margin-bottom: 5px;
 }
-.modal-home-follows-pic{
-  width:90%;
-  height:90%;
-  align-self: center;
-  justify-self: start;
-  border-radius: var(--s-brad);
-
-  grid-column: 1/2;
+.modal-home-follows-comp-pic{
+    grid-column: 1/2;
   grid-row: 1/3;
-
+  width: 90%;
+  align-self: center;
+  justify-self: center;
+}
+.modal-home-follows-pic{
+  width:100%;
+  border-radius: var(--s-brad);
 }
 .modal-home-follows-name{
   grid-column: 2/3;
   grid-row: 1/2;
   align-self: center;
   font-weight: bold;
+  padding-left: 10px;
 }
 .modal-home-follows-industry{ 
   grid-column: 2/3;
   grid-row: 2/3;
+  padding-left: 10px;
+
   align-self: center;
 }
+
 
 .modal-home-follows-add{
   width:90%;

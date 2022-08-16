@@ -38,6 +38,10 @@ const loginUser = async (req, res) => {
 
 // sign up user
 const signupUser = async (req, res) => {
+  // TODO: Make unique user handle from the name submitted
+  // ideals on this would be i.e. justinwilliams, justinwilliams1
+  // this way the database would have a method of fetch all the users information from that and be abled to redirect
+  // users to the user/users/justinwilliams1 and everything else related to the user
   const { email, password, name } = req.body;
   try {
     const user = await User.signup(email, password, name);

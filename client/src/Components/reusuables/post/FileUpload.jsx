@@ -4,6 +4,8 @@ import Progress from "./Progress";
 import axios from "axios";
 
 export const FileUpload = ({ user }) => {
+  // TODO: Design or progress bar and the upload browse buttons/ inputs/ buttons
+
   const [file, setFile] = useState("");
   const [fileName, setFileName] = useState("Choose File");
   const [uploadedFile, setUploadedFile] = useState({});
