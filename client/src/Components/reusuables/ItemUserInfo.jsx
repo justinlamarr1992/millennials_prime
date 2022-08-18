@@ -15,7 +15,7 @@ const ItemUserInfo = ({ user, pic, postedDate }) => {
 
       <div className="info-name">
         {/* for now */}
-        <Link className="classLink-User" to="/user/${user}">
+        <Link className="classLink-User" to={`/user/users/${user}`}>
           <h4>{user}</h4>
         </Link>
       </div>

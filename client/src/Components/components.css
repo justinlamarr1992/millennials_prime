@@ -126,12 +126,10 @@ input[type="range"]::-moz-range-progress {
 }
 .info-pic{
   grid-area: 1/1/3/2;
-  /* width: 82.5px;
-  height: 82.5px; */
+  width: 100%;
   border-radius: var(--brad);
   place-self: center start;
   object-fit: fill;
-  /* border: 1px solid white; */
 }
 .info-name{
     grid-area: 1/2/2/3;

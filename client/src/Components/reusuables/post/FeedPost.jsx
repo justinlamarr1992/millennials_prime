@@ -2,16 +2,12 @@ import React, { useState } from "react";
 import { FaPlus } from "react-icons/fa";
 import MessageBox from "../../messaging/MessageBox";
 
-const FeedPost = () => {
+const FeedPost = ({ name }) => {
   return (
     <section className="post-reply-container norm-container con-shade">
-      <h3 className="feed-reply-heading">
-        Connect with (Insert User Name Here)
-      </h3>
+      <h3 className="feed-reply-heading">Connect with {name}</h3>
       <div className="feed-reply-text">
-        <MessageBox
-          placeHolder={"Tell (Insert User Name Here) something nice"}
-        />
+        <MessageBox placeHolder={`Tell ${name} something nice`} />
       </div>
 
       <button className="reply-button feed-reply-attachment">

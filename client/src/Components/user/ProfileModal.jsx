@@ -2,11 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import User from "../../Assets/Images/user.jpeg";
 import { FaEnvelope } from "react-icons/fa";
+
+// hard coded data implement dynamic
 import { textData } from "../reusuables/post/data.js";
 import ModalTop from "../reusuables/modals/ModalTop";
 import { useParams } from "react-router-dom";
 
-const ProfileModal = () => {
+const ProfileModal = ({ name }) => {
   const params = useParams();
   return (
     <div className="modal con-shade verified-modal">
@@ -19,8 +21,9 @@ const ProfileModal = () => {
             src={User}
             alt="User Image here"
           />
-          {/* <h3 className="prof-info-text">Justin Williams</h3> */}
-          <h4 className="prof-info-text">Justin Williams</h4>
+          <h4 className="prof-info-text">{name}</h4>
+          {/* <h4 className="prof-info-text">{user.name}</h4> */}
+          {/* TODO: add the nameid here */}
           <h5 className="text-gray prof-info-text">@justinWilliams</h5>
           <div className="prof-info-numbers">
             <h5>
@@ -58,10 +61,12 @@ const ProfileModal = () => {
         <div className="prof-connected">
           <h5 className="work-with-title">Connections</h5>
           <div className="prof-connected-users">
+            {/* hard coded data */}
+            {/* TODO: change to dynamic mongo data */}
             {textData.slice(0, 16).map((data) => (
               <Link
                 className="prof-connected-users-img-container square-container "
-                to={`/user/users/${data.id}`}
+                to={`/user/users/${data.user}`}
               >
                 <img
                   className="square-container-contents prof-connected-users-img item-shade clickable"

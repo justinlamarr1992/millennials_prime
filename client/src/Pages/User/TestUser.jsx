@@ -8,7 +8,6 @@ import FeedPhoto from "../../Components/reusuables/post/FeedPhoto";
 import FeedStore from "../../Components/reusuables/post/FeedStore";
 import FeedText from "../../Components/reusuables/post/FeedText";
 import FeedVideo from "../../Components/reusuables/post/FeedVideo";
-import PostLikeDisLike from "../../Components/reusuables/post/PostLikeDislike";
 import PrimeUpdateVideo from "../../Components/reusuables/post/PrimeUpdateVideo";
 import SearchBar from "../../Components/reusuables/SearchBar";
 import ProfileModal from "../../Components/user/ProfileModal";
@@ -72,7 +71,7 @@ const TestUser = () => {
             <PrimeUpdateVideo />
             <FeedPost />
             <h1>Toggle Feed Selections</h1>
-            <div
+            {/* <div
               className={
                 modal ? "feed-section-no-wrap" : "feed-section-wrapped"
               }
@@ -83,7 +82,7 @@ const TestUser = () => {
               <FeedEpisode modal={modal} setModal={setModal} />
               <FeedMusic modal={modal} setModal={setModal} />
               <FeedStore modal={modal} setModal={setModal} />
-            </div>
+            </div> */}
           </div>
           <button className="test-modal-button" onClick={onClick}>
             Modal Test Button

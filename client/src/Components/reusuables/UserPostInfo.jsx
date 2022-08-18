@@ -1,12 +1,30 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import User from "../../Assets/Images/user.jpeg";
 import TimeCalc from "./TimeCalc";
 const UserPostInfo = ({ user, pic, postedDate }) => {
   return (
     <div className="pr-user-info">
-      <img className="info-pic" src={pic} alt="User Image here" />
+      <div className=" info-pic square-container">
+        <img
+          className="square-container-contents p-con-shade"
+          src={pic}
+          alt="User Image here"
+        />
+      </div>
+
       <div className="info-name">
-        <h4>{user}</h4>
+        <h4 className="prime-m-text">
+          <Link className="" to={`/user/users/${user}`}>
+            {user}
+          </Link>
+        </h4>
+        {/* <h4>
+          <Link
+            className="prof-connected-users-img-container square-container "
+            to={`/user/users/${data.id}`}
+          ></Link>
+        </h4> */}
       </div>
       <div className="info-time">
         <h6>

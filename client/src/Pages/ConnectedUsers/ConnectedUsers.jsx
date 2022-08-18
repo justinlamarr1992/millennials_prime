@@ -22,8 +22,9 @@ const ConnectedUsers = () => {
         <h1>Connected Users</h1>
         {textData.map((data) => (
           <Link
-            // className="prof-connected-users-img-container square-container "
-            to={`/testuser/${data.id}`}
+            // this is the hardcoded data file
+            // TODO: Change to dynamic mongo info
+            to={`/user/users/${data.user}`}
           >
             <ConnectUserBox
               data={data}

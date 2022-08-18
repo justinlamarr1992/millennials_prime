@@ -198,12 +198,12 @@ button[type="submit"] {
 }
 /* unvisited link */
 a:link {
-  color:white;
+  color:var(--sec-t);
 }
 
 /* visited link */
 a:visited {
-  color: var(--qui-c);
+  color: var(--sec-t);
 }
 
 /* mouse over link */
@@ -213,7 +213,7 @@ a:visited {
 
 /* selected link */
 a:active {
-  color: yellow;
+  color: var(--qui-c);
 }
 textarea{
     border: none;
@@ -294,6 +294,9 @@ button:active {
 }
 .con-shade{
     box-shadow: var(--bshade);
+}
+.prime-m-text{
+    color: var(--sec-t);
 }
 .connected-btn-shade{
     box-shadow: var(--gl-red);

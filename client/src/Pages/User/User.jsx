@@ -1,18 +1,14 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import { usePostsContext } from "../../Hooks/usePostsContext";
 import { useAuthContext } from "../../Hooks/useAuthContext";
 
-import NavBar from "../../Components/nav/NavBar";
-import FeedEpisode from "../../Components/reusuables/post/FeedEpisode";
-import FeedMusic from "../../Components/reusuables/post/FeedMusic";
-import FeedPhoto from "../../Components/reusuables/post/FeedPhoto";
-import FeedStore from "../../Components/reusuables/post/FeedStore";
 import FeedText from "../../Components/reusuables/post/FeedText";
-import FeedVideo from "../../Components/reusuables/post/FeedVideo";
-import PostLikeDisLike from "../../Components/reusuables/post/PostLikeDislike";
+
 import PrimeUpdateVideo from "../../Components/reusuables/post/PrimeUpdateVideo";
 import SearchBar from "../../Components/reusuables/SearchBar";
+
 import ProfileModal from "../../Components/user/ProfileModal";
 
 import "../../Components/user/user.css";
@@ -27,6 +23,10 @@ const User = () => {
 
   const { posts, dispatch } = usePostsContext();
   const { user } = useAuthContext();
+
+  const { id } = useParams();
+  // TODO: change later and figure way for this to be the actual name and not id
+  const name = id;
 
   // test
   const [pageStuff, setPageStuff] = useState({});
@@ -88,9 +88,11 @@ const User = () => {
           {/* change name from just prime video to folder container stuff */}
           <SearchBar />
           <PrimeUpdateVideo />
-          <FeedPost />
+          {/* TODO: This with the other todo */}
+          <FeedPost name={name} />
 
           <h1>Toggle Feed Selections</h1>
+
           <div
             className={modal ? "feed-section-no-wrap" : "feed-section-wrapped"}
           >
@@ -108,8 +110,9 @@ const User = () => {
         <button className="test-modal-button" onClick={onClick}>
           Modal Test Button
         </button>
+        {/* {user && <h1>{user}</h1>} */}
         {/* <section>Users Post</section> */}
-        {modal && <ProfileModal />}
+        {modal && <ProfileModal name={name} />}
       </div>
     </div>
   );
