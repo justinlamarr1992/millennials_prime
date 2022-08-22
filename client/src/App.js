@@ -6,6 +6,9 @@ import "./App.css";
 import NavBar from "./Components/nav/NavBar";
 
 import Home from "./Pages/Home";
+
+import PrimeShow from "./Pages/ShowView/PrimeShow";
+
 import Messages from "./Pages/Messaging/Messages";
 import ConnectedUsers from "./Pages/ConnectedUsers/ConnectedUsers";
 import Settings from "./Pages/Settings/Settings";
@@ -26,6 +29,7 @@ import TestUser from "./Pages/User/TestUser";
 import Verified from "./Pages/User/Verified";
 
 import { NotFound } from "./Pages/NotFound/NotFound";
+import UploadContent from "./Pages/Uploads/UploadContent";
 
 function App(props, state) {
   const { user } = useAuthContext();
@@ -48,6 +52,9 @@ function App(props, state) {
           path="/connectedusers"
           element={user ? <ConnectedUsers /> : <Navigate to="/auth/signin" />}
         />
+        <Route path="/primeshow" element={<PrimeShow />} />
+        {/* TODO: Make sure this as admin middleware rout */}
+        <Route path="/upload-content" element={<UploadContent />} />
 
         {/* Settings */}
         <Route path="/settings">

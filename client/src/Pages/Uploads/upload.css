@@ -1,0 +1,17 @@
+.upload-container{
+     height: auto;
+    width: 100%;
+           display: flex;
+        justify-content: center;
+}
+
+.upload-content{
+    width: 75%;
+    /* height: auto; */
+    padding: 3rem;
+
+}
+.testing-form {
+    border: 1px solid black;
+    
+}

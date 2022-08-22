@@ -1,0 +1,16 @@
+.view-container{
+    height: 100%;
+    width: 100%;
+    /* background: var(--pri-t); */
+    background: #140f00;
+    /* background: #2D0A0F; */
+        color: var(--sec-t);
+
+        display: flex;
+        justify-content: center;
+
+}
+.view-content{
+    margin: auto;
+  width: 75%;
+}
