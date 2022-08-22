@@ -96,7 +96,6 @@ const UploadContent = () => {
     >
       <div className="upload-container">
         <section className="upload-content norm-container con-shade">
-          {/* <Video /> */}
           <h2 className="view-container-heading">
             Millennials Prime News Upload
           </h2>
