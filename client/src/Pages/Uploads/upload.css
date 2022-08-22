@@ -1,13 +1,14 @@
 .upload-container{
-     height: auto;
+     height: 100vh;
     width: 100%;
            display: flex;
+           flex-direction: column;
         justify-content: center;
+        align-items: center;
 }
 
 .upload-content{
     width: 75%;
-    /* height: auto; */
     padding: 3rem;
 
 }

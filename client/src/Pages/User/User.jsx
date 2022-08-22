@@ -14,6 +14,12 @@ import ProfileModal from "../../Components/user/ProfileModal";
 import "../../Components/user/user.css";
 import FeedPost from "../../Components/reusuables/post/FeedPost";
 
+import FeedPhoto from "../../Components/reusuables/post/FeedPhoto";
+import FeedVideo from "../../Components/reusuables/post/FeedVideo";
+import FeedEpisode from "../../Components/reusuables/post/FeedEpisode";
+import FeedMusic from "../../Components/reusuables/post/FeedMusic";
+import FeedStore from "../../Components/reusuables/post/FeedStore";
+
 import useFetch from "../../Hooks/useFetch";
 
 const User = () => {
@@ -98,12 +104,12 @@ const User = () => {
           >
             {posts &&
               posts.map((post) => <FeedText post={post} key={post._id} />)}
-            {/* <FeedText modal={modal} setModal={setModal} />
+            <FeedText modal={modal} setModal={setModal} />
             <FeedPhoto modal={modal} setModal={setModal} />
             <FeedVideo modal={modal} setModal={setModal} />
             <FeedEpisode modal={modal} setModal={setModal} />
             <FeedMusic modal={modal} setModal={setModal} />
-            <FeedStore modal={modal} setModal={setModal} /> */}
+            <FeedStore modal={modal} setModal={setModal} />
           </div>
         </div>
 

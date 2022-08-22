@@ -30,6 +30,7 @@ import Verified from "./Pages/User/Verified";
 
 import { NotFound } from "./Pages/NotFound/NotFound";
 import UploadContent from "./Pages/Uploads/UploadContent";
+import Catalog from "./Pages/ShowView/Catalog";
 
 function App(props, state) {
   const { user } = useAuthContext();
@@ -44,17 +45,26 @@ function App(props, state) {
           path="/"
           element={user ? <Home /> : <Navigate to="/auth/signin" />}
         />
+
         <Route
           path="/messages"
           element={user ? <Messages /> : <Navigate to="/auth/signin" />}
         />
+
         <Route
           path="/connectedusers"
           element={user ? <ConnectedUsers /> : <Navigate to="/auth/signin" />}
         />
-        <Route path="/primeshow" element={<PrimeShow />} />
-        {/* TODO: Make sure this as admin middleware rout */}
-        <Route path="/upload-content" element={<UploadContent />} />
+
+        <Route path="/prime-news">
+          {/* TODO: add params here so all videos will have ability to vien in full screen */}
+          <Route path="viewer" element={<PrimeShow />} />
+
+          {/* TODO: Make sure this as admin middleware rout */}
+          <Route path="upload-content" element={<UploadContent />} />
+
+          <Route path="catalog" element={<Catalog />} />
+        </Route>
 
         {/* Settings */}
         <Route path="/settings">
