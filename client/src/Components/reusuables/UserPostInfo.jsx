@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import User from "../../Assets/Images/user.jpeg";
 import TimeCalc from "./TimeCalc";
+import { primePostData } from "./post/data";
 const UserPostInfo = ({ user, pic, postedDate }) => {
   return (
     <div className="pr-user-info">

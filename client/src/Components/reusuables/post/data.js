@@ -550,6 +550,8 @@ export const videoData = [
         uploadedVid: {
           video: require("../../../Assets/Videos/video2.mp4"),
           title: "Vid1",
+          description:
+            "This is a description of the fake video file that we have here",
           number: 1,
         },
       },
@@ -557,7 +559,63 @@ export const videoData = [
         uploadedVid: {
           video: require("../../../Assets/Videos/video.mp4"),
           title: "Vid2",
+          description:
+            "This is a description of the fake video file that we have here",
           number: 2,
+        },
+      },
+      {
+        uploadedVid: {
+          video: require("../../../Assets/Videos/video2.mp4"),
+          title: "Vid3",
+          description:
+            "This is a description of the fake video file that we have here",
+          number: 3,
+        },
+      },
+      {
+        uploadedVid: {
+          video: require("../../../Assets/Videos/video.mp4"),
+          title: "Vid4",
+          description:
+            "This is a description of the fake video file that we have here",
+          number: 4,
+        },
+      },
+      {
+        uploadedVid: {
+          video: require("../../../Assets/Videos/video2.mp4"),
+          title: "Vid5",
+          description:
+            "This is a description of the fake video file that we have here",
+          number: 5,
+        },
+      },
+      {
+        uploadedVid: {
+          video: require("../../../Assets/Videos/video.mp4"),
+          title: "Vid6",
+          description:
+            "This is a description of the fake video file that we have here",
+          number: 6,
+        },
+      },
+      {
+        uploadedVid: {
+          video: require("../../../Assets/Videos/video2.mp4"),
+          title: "Vid7",
+          description:
+            "This is a description of the fake video file that we have here",
+          number: 7,
+        },
+      },
+      {
+        uploadedVid: {
+          video: require("../../../Assets/Videos/video.mp4"),
+          title: "Vid8",
+          description:
+            "This is a description of the fake video file that we have here",
+          number: 8,
         },
       },
     ],
@@ -703,5 +761,128 @@ export const storeData = [
         },
       },
     ],
+  },
+];
+export const videoData2 = [
+  // figure way to have multiple pictures from adding
+  {
+    user: {
+      name: "Jackson Tucker",
+      pic: require("../../../Assets/Images/testUsers/User1.jpeg"),
+      id: 1,
+    },
+    uploadedVid: {
+      video: require("../../../Assets/Videos/video2.mp4"),
+      title: "Vid1",
+      description:
+        "This is a description of the fake video file that we have here",
+      number: 1,
+      postedDate: "2022-03-12",
+    },
+  },
+  {
+    user: {
+      name: "Tomas Dillard",
+      pic: require("../../../Assets/Images/testUsers/User2.jpeg"),
+      id: 1,
+    },
+    uploadedVid: {
+      video: require("../../../Assets/Videos/video.mp4"),
+      title: "Vid2",
+      description:
+        "This is a description of the fake video file that we have here",
+      number: 2,
+      postedDate: "2022-01-04",
+    },
+  },
+  {
+    user: {
+      name: "Annie Frank",
+      pic: require("../../../Assets/Images/testUsers/User3.jpeg"),
+      id: 1,
+    },
+    uploadedVid: {
+      video: require("../../../Assets/Videos/video2.mp4"),
+      title: "Vid3",
+      description:
+        "This is a description of the fake video file that we have here",
+      number: 3,
+      postedDate: "2012-07-04",
+    },
+  },
+  {
+    user: {
+      name: "Cedric Langley",
+      pic: require("../../../Assets/Images/testUsers/User4.jpeg"),
+      id: 1,
+    },
+    uploadedVid: {
+      video: require("../../../Assets/Videos/video.mp4"),
+      title: "Vid4",
+      description:
+        "This is a description of the fake video file that we have here",
+      number: 4,
+      postedDate: "2022-02-04",
+    },
+  },
+  {
+    user: {
+      name: "Addie Moore",
+      pic: require("../../../Assets/Images/testUsers/User5.jpeg"),
+      id: 1,
+    },
+    uploadedVid: {
+      video: require("../../../Assets/Videos/video2.mp4"),
+      title: "Vid5",
+      description:
+        "This is a description of the fake video file that we have here",
+      number: 5,
+      postedDate: "2022-07-06",
+    },
+  },
+  {
+    user: {
+      name: "Meredith Black",
+      pic: require("../../../Assets/Images/testUsers/User6.jpeg"),
+      id: 1,
+    },
+    uploadedVid: {
+      video: require("../../../Assets/Videos/video.mp4"),
+      title: "Vid6",
+      description:
+        "This is a description of the fake video file that we have here",
+      number: 6,
+      postedDate: "2021-11-04",
+    },
+  },
+  {
+    user: {
+      name: "Adam West",
+      pic: require("../../../Assets/Images/testUsers/User1.jpeg"),
+      id: 1,
+    },
+    uploadedVid: {
+      video: require("../../../Assets/Videos/video2.mp4"),
+      title: "Vid7",
+      description:
+        "This is a description of the fake video file that we have here",
+      number: 7,
+      postedDate: "2022-06-01",
+    },
+  },
+  {
+    user: {
+      name: "Goku Myoshie",
+      pic: require("../../../Assets/Images/testUsers/User7.jpeg"),
+      id: 1,
+    },
+    uploadedVid: {
+      video: require("../../../Assets/Videos/video.mp4"),
+      title: "Vid8",
+      description:
+        "This is a description of the fake video file that we have here",
+      number: 8,
+      postedDate: "2022-05-04",
+    },
   },
 ];

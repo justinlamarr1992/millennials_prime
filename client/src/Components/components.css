@@ -28,7 +28,7 @@ video {
   transform: translateY(0%);
 }
 
-.controls {
+/* .controls {
   display: flex;
   align-items: center;
   justify-content: space-evenly;
@@ -46,7 +46,7 @@ video {
   border: 1px solid rgba(255, 255, 255, 0.18);
   transform: translateY(150%);
   transition: all 0.3s ease-in-out;
-}
+} */
 
 .actions button {
   background: none;

@@ -3,7 +3,7 @@ import { FaHeart, FaSkull, FaRegCommentAlt, FaShare } from "react-icons/fa";
 import CommentBox from "../CommentBox";
 import ShareBox from "../ShareBox";
 
-const PostLikeDisLike = () => {
+const PostLikeDisLikeLight = () => {
   const [comments, setComments] = useState(false);
   const [share, setShare] = useState(false);
   const [heart, setHeart] = useState(true);
@@ -46,7 +46,7 @@ const PostLikeDisLike = () => {
         <div className="post-like-dislike-left">
           {heart == true && (
             <button className="post-like-btn" id="heart" onClick={heartClick}>
-              <FaHeart className="heart" />
+              {/* <FaHeart className="heart" /> */}
             </button>
           )}
           {skull == true && (
@@ -66,8 +66,8 @@ const PostLikeDisLike = () => {
         <div className="post-like-dislike-right">
           <button className="post-like-btn" onClick={shareClick}>
             <div className="post-share">
-              <h5 className="post-btn-space post-light">Share</h5>
-              <FaShare className="post-light" />
+              <h5 className="post-btn-space">Share</h5>
+              <FaShare />
             </div>
           </button>
         </div>
@@ -78,11 +78,11 @@ const PostLikeDisLike = () => {
         </div>
       )}
       {share && (
-        <div className="post-comment">
+        <div className="post-comment-light">
           <ShareBox />
         </div>
       )}
     </div>
   );
 };
-export default PostLikeDisLike;
+export default PostLikeDisLikeLight;

@@ -1,5 +1,49 @@
 import React from "react";
+import VideoBlock from "../../Components/reusuables/catalog/VideoBlock";
+import TimeCalc from "../../Components/reusuables/TimeCalc";
+
+import "./primeshow.css";
+
+// for now
+import Thumbnail from "../../Assets/Images/VideoThumbNail.png";
+
+import { videoData2 } from "../../Components/reusuables/post/data";
 const Catalog = () => {
-  return <h1>Name</h1>;
+  // const uploadedVids = videos;
+  // console.log(uploadedVids);
+  return (
+    <div className="page">
+      <div className="catalog-container">
+        {/* <pre>{JSON.stringify(videoData2)}</pre> */}
+        <h1>Prime News Videos</h1>
+        <div className="catalog-shows">
+          {/* TODO: Fimd out why VideoBlock doesnt work */}
+          {videoData2.map((data) => (
+            <VideoBlock key={data.uploadedVid.number} {...data} />
+          ))}
+
+          {/* <VideoBlock />
+          <VideoBlock />
+          <VideoBlock />
+          <VideoBlock />
+          <VideoBlock />
+          <VideoBlock />
+          <VideoBlock />
+          <VideoBlock />
+          <VideoBlock />
+          <VideoBlock />
+          <VideoBlock />
+          <VideoBlock />
+          <VideoBlock />
+          <VideoBlock />
+          <VideoBlock />
+          <VideoBlock />
+          <VideoBlock />
+          <VideoBlock />
+          <VideoBlock /> */}
+        </div>
+      </div>
+    </div>
+  );
 };
 export default Catalog;

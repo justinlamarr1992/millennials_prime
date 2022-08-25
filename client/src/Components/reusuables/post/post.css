@@ -97,6 +97,14 @@ justify-content: flex-end;
 justify-content: center;
 color: var(--pri-t);
 }
+.post-comment-light{
+     width: 100%;
+    display: flex;
+    align-items: center;
+justify-content: center;
+/* color: var(--sec-t); */
+color: var(--sec-t);
+}
 .post-share{
     display: flex;
     align-items: center;
@@ -122,8 +130,14 @@ justify-content: center;
 .comment-icon{
     color:var(--pri-t)
 }
+.comment-icon-light{
+    color:var(--sec-t)
+}
 .post-btn-space {
     padding-right: 10px;
+}
+.post-light {
+    color: var(--sec-t)
 }
 
 .share-text{
