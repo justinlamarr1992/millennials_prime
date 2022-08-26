@@ -17,7 +17,7 @@ const PrimeShow = () => {
         <div className="view-content">
           {/* TODO: Decide between first video and web devs */}
           {/* componenets.css line 30 is where i commented out controls for first video */}
-          <Video video={primePostData[0].uploadedVid.video} />
+          {/* <Video video={primePostData[0].uploadedVid.video} /> */}
           <Video2 />
           <UserPostInfo
             user={primePostData[0].user}

@@ -8,21 +8,35 @@ body {
 }
 
 .video-container {
+    position: relative;
     width: 90%;
     max-width: 1000px;
     display: flex;
     justify-content: center;
     margin-inline: auto;
+    background-color: black;
 }
+
+.video-container.theater, 
+.video-container.full-screen {
+    max-width: initial;
+    width: 100%;
+}
+.video-container.theater {
+    max-height: 90vh;
+}
+.video-container.full-screen {
+
+    max-height: 100vh;
+}
+
 
 video {
     width: 100%;
 }
 
 .video-controls-container {
-    /* this is his code but relative works */
-    /* position: absolute; */
-    /* position: relative; */
+    position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
@@ -30,6 +44,19 @@ video {
     z-index: 100;
     opacity: 0;
     transition: opacity 150ms ease-in-out;
+}
+
+.video-controls-container::before {
+content: "";
+position: absolute;
+bottom: 0;
+/* background: linear-gradient(to top, rgba(0,0,0, .75), transparent); */
+background: linear-gradient(to top, var(--pri-c), transparent);
+background: linear-gradient(to top, var(--qua-c), transparent);
+width: 100%;
+aspect-ratio: 6/1;
+z-index: -1;
+pointer-events: none;
 }
 
 .video-container:hover .video-controls-container, 
@@ -45,6 +72,7 @@ video {
     padding: .25rem;
     align-items: center;
 color: var(--qua-c);
+color: var(--tri-c);
 }
 
 .video-controls-container .controls button{
@@ -69,5 +97,21 @@ opacity: 1;
 }
 
 .video-container:not(.paused) .play-icon{
+    display: none;
+}
+
+.video-container.theater .tall {
+    display: none;
+}
+
+.video-container:not(.theater) .wide{
+    display: none;
+}
+
+.video-container.full-screen .open {
+    display: none;
+}
+
+.video-container:not(.full-screen) .close{
     display: none;
 }
