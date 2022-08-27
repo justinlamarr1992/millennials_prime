@@ -1,11 +1,19 @@
 import React, { useRef, useState } from "react";
-import video from "../../Assets/Videos/video3.mp4";
+import video from "../../Assets/Videos/video2.mp4";
 
 import "./video.css";
 const Video2 = () => {
   const [fullScreen, setFullScreen] = useState(false);
   const vidRef = useRef(null);
+  const vid = vidRef.current;
   const vidContainerRef = useRef(null);
+  const vidContain = vidContainerRef.current;
+  const volumeSliderRef = useRef(null);
+  const volSlider = volumeSliderRef.current;
+  const currentTimeRef = useRef(null);
+  const currentTime = currentTimeRef.current;
+  const totalTimeRef = useRef(null);
+  const totalTime = totalTimeRef.current;
 
   // Play / Pause
   const togglePlay = () => {
@@ -19,26 +27,7 @@ const Video2 = () => {
     console.log("Playing");
     vidContainerRef.current.classList.remove("paused");
   };
-
-  // TODO: Work out kinks with even listener in react
-  // Key Down play pause
-  // document.addEventListener("keydown", (e) => {
-  //   switch (e.key.toLowerCase()) {
-  //     case " ":
-  //     case "k":
-  //       togglePlay();
-  //       break;
-  //     case "f":
-  //       toggleFullScreen();
-  //       break;
-  //     case "t":
-  //       toggleTheater();
-  //       break;
-  //     case "i":
-  //       toggleMiniPlayer();
-  //       break;
-  //   }
-  // });
+  // KeyDown
   const keyDown = (e) => {
     const tagName = document.activeElement.tagName.toLowerCase();
     if (tagName === "input") return;
@@ -57,8 +46,100 @@ const Video2 = () => {
       case "i":
         toggleMiniPlayer();
         break;
+      case "m":
+        toggleMute();
+        break;
+      case "arrowleft":
+      case "j":
+        skip(-5);
+        break;
+      case "arrowright":
+      case "l":
+        skip(5);
+        break;
+      case "c":
+        toggleCaptions();
+        break;
     }
+
+    // TODO: Work out kinks with even listener in react
+    // Key Down play pause
+    // document.addEventListener("keydown", (e) => {
+    //   switch (e.key.toLowerCase()) {
+    //     case " ":
+    //     case "k":
+    //       togglePlay();
+    //       break;
+    //     case "f":
+    //       toggleFullScreen();
+    //       break;
+    //     case "t":
+    //       toggleTheater();
+    //       break;
+    //     case "i":
+    //       toggleMiniPlayer();
+    //       break;
+    //   }
+    // });
   };
+
+  // Volume
+  const toggleMute = () => {
+    vid.muted = !vid.muted;
+    console.log("video muted");
+  };
+  const sliderChange = (e) => {
+    vid.volume = e.target.value;
+    vid.muted = e.target.value === 0;
+  };
+  const volumeChange = () => {
+    volSlider.value = vid.volume;
+    let volumeLevel;
+    if (vid.muted || vid.volume === 0) {
+      volSlider.value = 0;
+      volumeLevel = "muted";
+    } else if (vid.volume >= 0.5) {
+      volumeLevel = "high";
+    } else {
+      volumeLevel = "low";
+    }
+    vidContain.dataset.volumeLevel = volumeLevel;
+  };
+
+  // Captions
+  const captions = vid.textTracks[0];
+  captions.mode = "hidden";
+  const toggleCaptions = () => {
+    const isHidden = captions.mode === "hidden";
+    captions.mode = isHidden ? "showing" : "hidden";
+    vidContain.classList.toggle("captions", isHidden);
+  };
+
+  // Duration
+  const loadedData = () => {
+    totalTime.textContent = formatDuration(vid.duration);
+  };
+  const timeUpdate = () => {
+    currentTime.textContent = formatDuration(vid.currentTime);
+  };
+  const leadingZeroFormatter = new Intl.NumberFormat(undefined, {
+    minimumIntegerDigits: 2,
+  });
+  function formatDuration(time) {
+    const seconds = Math.floor(time % 60);
+    const minutes = Math.floor(time / 60) % 60;
+    const hours = Math.floor(time / 3600);
+    if (hours === 0) {
+      return `${minutes}:${leadingZeroFormatter.format(seconds)}`;
+    } else {
+      return `${hours}:${leadingZeroFormatter.format(
+        minutes
+      )}:${leadingZeroFormatter.format(seconds)}`;
+    }
+  }
+  function skip(duration) {
+    vid.currentTime += duration;
+  }
 
   // Theater Mode
   const toggleTheater = () => {
@@ -88,7 +169,6 @@ const Video2 = () => {
   };
   const toggleMiniPlayer = () => {
     // const elem = vidContainerRef.current;
-    const vid = vidRef.current;
     // if (!document.mozFullScreen && !document.webkitIsFullScreen) {
     if (vidContainerRef.current.classList.contains("mini-player")) {
       document.exitPictureInPicture();
@@ -119,7 +199,8 @@ const Video2 = () => {
   };
   return (
     <div
-      className="video-container paused"
+      className="video-container paused "
+      data-volume-level="high"
       ref={vidContainerRef}
       onKeyDown={keyDown}
     >
@@ -134,26 +215,53 @@ const Video2 = () => {
               <path fill="currentColor" d="M14,19H18V5H14M6,19H10V5H6V19Z" />
             </svg>
           </button>
-          <button className="mute-btn">
-            <svg class="volume-high-icon" viewBox="0 0 24 24">
+          <div className="volume-container">
+            <button className="mute-btn" onClick={toggleMute}>
+              <svg class="volume-high-icon" viewBox="0 0 24 24">
+                <path
+                  fill="currentColor"
+                  d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z"
+                />
+              </svg>
+              <svg class="volume-low-icon" viewBox="0 0 24 24">
+                <path
+                  fill="currentColor"
+                  d="M5,9V15H9L14,20V4L9,9M18.5,12C18.5,10.23 17.5,8.71 16,7.97V16C17.5,15.29 18.5,13.76 18.5,12Z"
+                />
+              </svg>
+              <svg class="volume-muted-icon" viewBox="0 0 24 24">
+                <path
+                  fill="currentColor"
+                  d="M12,4L9.91,6.09L12,8.18M4.27,3L3,4.27L7.73,9H3V15H7L12,20V13.27L16.25,17.53C15.58,18.04 14.83,18.46 14,18.7V20.77C15.38,20.45 16.63,19.82 17.68,18.96L19.73,21L21,19.73L12,10.73M19,12C19,12.94 18.8,13.82 18.46,14.64L19.97,16.15C20.62,14.91 21,13.5 21,12C21,7.72 18,4.14 14,3.23V5.29C16.89,6.15 19,8.83 19,12M16.5,12C16.5,10.23 15.5,8.71 14,7.97V10.18L16.45,12.63C16.5,12.43 16.5,12.21 16.5,12Z"
+                />
+              </svg>
+            </button>
+            <input
+              type="range"
+              className="volume-slider"
+              min="0"
+              max="1"
+              step="any"
+              value="1"
+              onChange={sliderChange}
+              ref={volumeSliderRef}
+            />
+          </div>
+          <div className="duration-container">
+            <div className="current-time" ref={currentTimeRef}>
+              0:00
+            </div>
+            /<div className="total-time" ref={totalTimeRef}></div>
+          </div>
+          <button className="captions-btn" onClick={toggleCaptions}>
+            <svg viewBox="0 0 24 24">
               <path
                 fill="currentColor"
-                d="M14,3.23V5.29C16.89,6.15 19,8.83 19,12C19,15.17 16.89,17.84 14,18.7V20.77C18,19.86 21,16.28 21,12C21,7.72 18,4.14 14,3.23M16.5,12C16.5,10.23 15.5,8.71 14,7.97V16C15.5,15.29 16.5,13.76 16.5,12M3,9V15H7L12,20V4L7,9H3Z"
-              />
-            </svg>
-            <svg class="volume-low-icon" viewBox="0 0 24 24">
-              <path
-                fill="currentColor"
-                d="M5,9V15H9L14,20V4L9,9M18.5,12C18.5,10.23 17.5,8.71 16,7.97V16C17.5,15.29 18.5,13.76 18.5,12Z"
-              />
-            </svg>
-            <svg class="volume-muted-icon" viewBox="0 0 24 24">
-              <path
-                fill="currentColor"
-                d="M12,4L9.91,6.09L12,8.18M4.27,3L3,4.27L7.73,9H3V15H7L12,20V13.27L16.25,17.53C15.58,18.04 14.83,18.46 14,18.7V20.77C15.38,20.45 16.63,19.82 17.68,18.96L19.73,21L21,19.73L12,10.73M19,12C19,12.94 18.8,13.82 18.46,14.64L19.97,16.15C20.62,14.91 21,13.5 21,12C21,7.72 18,4.14 14,3.23V5.29C16.89,6.15 19,8.83 19,12M16.5,12C16.5,10.23 15.5,8.71 14,7.97V10.18L16.45,12.63C16.5,12.43 16.5,12.21 16.5,12Z"
+                d="M18,11H16.5V10.5H14.5V13.5H16.5V13H18V14A1,1 0 0,1 17,15H14A1,1 0 0,1 13,14V10A1,1 0 0,1 14,9H17A1,1 0 0,1 18,10M11,11H9.5V10.5H7.5V13.5H9.5V13H11V14A1,1 0 0,1 10,15H7A1,1 0 0,1 6,14V10A1,1 0 0,1 7,9H10A1,1 0 0,1 11,10M19,4H5C3.89,4 3,4.89 3,6V18A2,2 0 0,0 5,20H19A2,2 0 0,0 21,18V6C21,4.89 20.1,4 19,4Z"
               />
             </svg>
           </button>
+          button
           <button className="mini-player-btn" onClick={toggleMiniPlayer}>
             <svg viewBox="0 0 24 24">
               <path
@@ -198,8 +306,14 @@ const Video2 = () => {
         onPlay={videoPlay}
         onPause={videoPause}
         onClick={togglePlay}
-        on
-      ></video>
+        onVolumeChange={volumeChange}
+        onLoadedData={loadedData}
+        onTimeUpdate={timeUpdate}
+      >
+        {/* For now */}
+        {/* TODO: make place in the assets folder for captions files and for place in backend */}
+        <track kind="captions" srclang="en" src="assets/subtitles.vtt"></track>
+      </video>
     </div>
   );
 };
