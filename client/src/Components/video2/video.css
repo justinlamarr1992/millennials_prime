@@ -115,3 +115,9 @@ opacity: 1;
 .video-container:not(.full-screen) .close{
     display: none;
 }
+
+.volume-high-icon,
+.volume-low-icon,
+.volume-muted-icon {
+    display: none;
+}
