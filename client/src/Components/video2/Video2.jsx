@@ -1,9 +1,8 @@
-import React, { useRef, useState } from "react";
+import React, { useRef } from "react";
 import video from "../../Assets/Videos/video2.mp4";
 
 import "./video.css";
 const Video2 = () => {
-  const [fullScreen, setFullScreen] = useState(false);
   const vidRef = useRef(null);
   const vid = vidRef.current;
   const vidContainerRef = useRef(null);
@@ -14,6 +13,8 @@ const Video2 = () => {
   const currentTime = currentTimeRef.current;
   const totalTimeRef = useRef(null);
   const totalTime = totalTimeRef.current;
+  const speedBtnRef = useRef(null);
+  const speedBtn = speedBtnRef.current;
 
   // Play / Pause
   const togglePlay = () => {
@@ -34,6 +35,7 @@ const Video2 = () => {
     switch (e.key.toLowerCase()) {
       case " ":
         if (tagName === "button") return;
+        break;
       case "k":
         togglePlay();
         break;
@@ -57,9 +59,10 @@ const Video2 = () => {
       case "l":
         skip(5);
         break;
-      case "c":
-        toggleCaptions();
-        break;
+      // case "c":
+      //   toggleCaptions();
+      //   break;
+      // default:
     }
 
     // TODO: Work out kinks with even listener in react
@@ -81,6 +84,14 @@ const Video2 = () => {
     //       break;
     //   }
     // });
+  };
+
+  // Playback Speed
+  const changePlaybackSpeed = () => {
+    let newPlaybackRate = vid.playbackRate + 0.25;
+    if (newPlaybackRate > 2) newPlaybackRate = 0.25;
+    vid.playbackRate = newPlaybackRate;
+    speedBtn.textContent = `${newPlaybackRate}x`;
   };
 
   // Volume
@@ -107,13 +118,13 @@ const Video2 = () => {
   };
 
   // Captions
-  const captions = vid.textTracks[0];
-  captions.mode = "hidden";
-  const toggleCaptions = () => {
-    const isHidden = captions.mode === "hidden";
-    captions.mode = isHidden ? "showing" : "hidden";
-    vidContain.classList.toggle("captions", isHidden);
-  };
+  // const captions = vid.textTracks[0];
+  // captions.mode = "hidden";
+  // const toggleCaptions = () => {
+  //   const isHidden = captions.mode === "hidden";
+  //   captions.mode = isHidden ? "showing" : "hidden";
+  //   vidContain.classList.toggle("captions", isHidden);
+  // };
 
   // Duration
   const loadedData = () => {
@@ -204,8 +215,14 @@ const Video2 = () => {
       ref={vidContainerRef}
       onKeyDown={keyDown}
     >
+      <img className="thumbnail-img" />
       <div className="video-controls-container">
-        <div className="timeline-container"></div>
+        <div className="timeline-container">
+          <div className="timeline">
+            <img className="preview-img" />
+            <div className="thumb-indicator"></div>
+          </div>
+        </div>
         <div className="controls">
           <button className="play-pause-btn" onClick={togglePlay}>
             <svg class="play-icon" viewBox="0 0 24 24">
@@ -253,7 +270,10 @@ const Video2 = () => {
             </div>
             /<div className="total-time" ref={totalTimeRef}></div>
           </div>
-          <button className="captions-btn" onClick={toggleCaptions}>
+          <button
+            className="captions-btn"
+            // onClick={toggleCaptions}
+          >
             <svg viewBox="0 0 24 24">
               <path
                 fill="currentColor"
@@ -261,7 +281,9 @@ const Video2 = () => {
               />
             </svg>
           </button>
-          button
+          <button className="speed-btn wide-btn" onClick={changePlaybackSpeed}>
+            1x
+          </button>
           <button className="mini-player-btn" onClick={toggleMiniPlayer}>
             <svg viewBox="0 0 24 24">
               <path
