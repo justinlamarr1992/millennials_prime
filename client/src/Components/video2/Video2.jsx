@@ -15,6 +15,10 @@ const Video2 = () => {
   const totalTime = totalTimeRef.current;
   const speedBtnRef = useRef(null);
   const speedBtn = speedBtnRef.current;
+  const timeLineContainRef = useRef(null);
+  const timeLineContain = timeLineContainRef.current;
+  const previewImgRef = useRef(null);
+  const previewImg = previewImgRef.current;
 
   // Play / Pause
   const togglePlay = () => {
@@ -208,6 +212,22 @@ const Video2 = () => {
     //   document.exitFullscreen();
     //   console.log("exiting full screen");}
   };
+
+  // Timeline
+  function handleTimelineUpdate(e) {
+    const rect = timeLineContain.getBoundingClientRect();
+    const percent =
+      Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width;
+    const previewImgNumber = Math.max(
+      1,
+      Math.floor((percent * vid.duration) / 10)
+    );
+    // I am HERE Trying to figure out why the client cant GET the images via this route
+    const previewImgSrc = `../../Assets/Images/previewImages/preview${previewImgNumber}.jpg`;
+    previewImg.src = previewImgSrc;
+    timeLineContain.style.setProperty("--preview-position", percent);
+  }
+
   return (
     <div
       className="video-container paused "
@@ -217,9 +237,13 @@ const Video2 = () => {
     >
       <img className="thumbnail-img" />
       <div className="video-controls-container">
-        <div className="timeline-container">
+        <div
+          className="timeline-container"
+          onMouseMove={handleTimelineUpdate}
+          ref={timeLineContainRef}
+        >
           <div className="timeline">
-            <img className="preview-img" />
+            <img className="preview-img" ref={previewImgRef} />
             <div className="thumb-indicator"></div>
           </div>
         </div>
