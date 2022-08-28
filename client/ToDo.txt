@@ -124,5 +124,5 @@ Share Box
     THEN I WOULD CHANGE THE WAY THE USERS CONNECTED USER DISPLAY WOULD LOOK
 
 
-    Doing Web Dev Simplifeds Youtube Video Player 57:06 is where i stopped
+    Doing Web Dev Simplifeds Youtube Video Player 1:17:42 is where i stopped
     Need Video2/ Primeshow/ video.css

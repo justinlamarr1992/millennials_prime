@@ -3,22 +3,24 @@ import video from "../../Assets/Videos/video2.mp4";
 
 import "./video.css";
 const Video2 = () => {
+  const currentTimeRef = useRef(null);
+  const currentTime = currentTimeRef.current;
+  const previewImgRef = useRef(null);
+  const previewImg = previewImgRef.current;
+  const speedBtnRef = useRef(null);
+  const speedBtn = speedBtnRef.current;
+  const thumbnailImgRef = useRef(null);
+  const thumbnailImg = thumbnailImgRef.current;
+  const timeLineContainRef = useRef(null);
+  const timeLineContain = timeLineContainRef.current;
+  const totalTimeRef = useRef(null);
+  const totalTime = totalTimeRef.current;
   const vidRef = useRef(null);
   const vid = vidRef.current;
   const vidContainerRef = useRef(null);
   const vidContain = vidContainerRef.current;
   const volumeSliderRef = useRef(null);
   const volSlider = volumeSliderRef.current;
-  const currentTimeRef = useRef(null);
-  const currentTime = currentTimeRef.current;
-  const totalTimeRef = useRef(null);
-  const totalTime = totalTimeRef.current;
-  const speedBtnRef = useRef(null);
-  const speedBtn = speedBtnRef.current;
-  const timeLineContainRef = useRef(null);
-  const timeLineContain = timeLineContainRef.current;
-  const previewImgRef = useRef(null);
-  const previewImg = previewImgRef.current;
 
   // Play / Pause
   const togglePlay = () => {
@@ -136,6 +138,8 @@ const Video2 = () => {
   };
   const timeUpdate = () => {
     currentTime.textContent = formatDuration(vid.currentTime);
+    const percent = vid.currentTime / vid.duration;
+    timeLineContain.style.setProperty("--progress-position", percent);
   };
   const leadingZeroFormatter = new Intl.NumberFormat(undefined, {
     minimumIntegerDigits: 2,
@@ -214,18 +218,62 @@ const Video2 = () => {
   };
 
   // Timeline
+
+  let isScrubbing = false;
+  let wasPaused;
+  function toggleScrubbing(e) {
+    const rect = timeLineContain.getBoundingClientRect();
+    const percent =
+      Math.min(Math.max(0, e.clientX - rect.x), rect.width) / rect.width;
+    isScrubbing = (e.buttons & 1) === 1;
+    vidContain.classList.toggle("scrubbing", isScrubbing);
+    if (isScrubbing) {
+      wasPaused = vid.paused;
+      vid.pause();
+    } else {
+      vid.currentTime = percent * vid.duration;
+      if (!wasPaused) vid.play();
+    }
+    handleTimelineUpdate();
+  }
   function handleTimelineUpdate(e) {
     const rect = timeLineContain.getBoundingClientRect();
     const percent =
-      Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width;
+      Math.min(Math.max(0, e.clientX - rect.x), rect.width) / rect.width;
     const previewImgNumber = Math.max(
       1,
-      Math.floor((percent * vid.duration) / 10)
+      Math.floor((percent * vid.duration) / 3)
     );
+    // Original because should be divided by 10 secs with 10 second images instead of 3
     // I am HERE Trying to figure out why the client cant GET the images via this route
     const previewImgSrc = `../../Assets/Images/previewImages/preview${previewImgNumber}.jpg`;
     previewImg.src = previewImgSrc;
     timeLineContain.style.setProperty("--preview-position", percent);
+
+    // WebDevs Version becayse of e.x This maybe wrong
+    // const percent =
+    //   Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width;
+    // console.log(e);
+    // console.log(e.clientX);
+    // console.log(rect.x);
+    // console.log(rect.width);
+    // const percent =
+    //   Math.min(Math.max(0, e.x - rect.x), rect.width) / rect.width;
+    // console.log(percent);
+    // const previewImgNumber = Math.max(
+    //   1,
+    //   Math.floor((percent * vid.duration) / 10)
+    // );
+    // // I am HERE Trying to figure out why the client cant GET the images via this route
+    // const previewImgSrc = `../../Assets/Images/previewImages/preview${previewImgNumber}.jpg`;
+    // previewImg.src = previewImgSrc;
+    // timeLineContain.style.setProperty("--preview-position", percent);
+
+    if (isScrubbing) {
+      e.preventDefault();
+      thumbnailImg.src = previewImgSrc;
+      timeLineContain.style.setProperty("--progress-position", percent);
+    }
   }
 
   return (
@@ -234,12 +282,19 @@ const Video2 = () => {
       data-volume-level="high"
       ref={vidContainerRef}
       onKeyDown={keyDown}
+      onMouseUp={(e) => {
+        if (isScrubbing) toggleScrubbing(e);
+      }}
+      onMouseMove={(e) => {
+        if (isScrubbing) handleTimelineUpdate(e);
+      }}
     >
-      <img className="thumbnail-img" />
+      <img className="thumbnail-img" ref={thumbnailImgRef} />
       <div className="video-controls-container">
         <div
           className="timeline-container"
           onMouseMove={handleTimelineUpdate}
+          onMouseDown={toggleScrubbing}
           ref={timeLineContainRef}
         >
           <div className="timeline">
