@@ -124,5 +124,4 @@ Share Box
     THEN I WOULD CHANGE THE WAY THE USERS CONNECTED USER DISPLAY WOULD LOOK
 
 
-    Doing Web Dev Simplifeds Youtube Video Player 1:17:42 is where i stopped
-    Need Video2/ Primeshow/ video.css
+Video backend data need to have link from Catalog > VideoBlock(link) > PrimeShow(Video2, UserPost) could be done using params of props Not sure

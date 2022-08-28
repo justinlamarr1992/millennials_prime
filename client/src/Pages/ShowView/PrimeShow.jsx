@@ -7,7 +7,7 @@ import { primePostData } from "../../Components/reusuables/post/data";
 
 import "./primeshow.css";
 import Video2 from "../../Components/video2/Video2";
-const PrimeShow = () => {
+const PrimeShow = ({ videofile }) => {
   return (
     <div
       className="page"
@@ -18,7 +18,7 @@ const PrimeShow = () => {
           {/* componenets.css line 30 is where i commented out controls for first video */}
           {/* <Video video={primePostData[0].uploadedVid.video} /> */}
 
-          <Video2 />
+          <Video2 video={videofile} />
 
           <UserPostInfo
             user={primePostData[0].user}

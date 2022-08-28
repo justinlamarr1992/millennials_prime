@@ -8,6 +8,7 @@ import "./primeshow.css";
 import Thumbnail from "../../Assets/Images/VideoThumbNail.png";
 
 import { videoData2 } from "../../Components/reusuables/post/data";
+import { Link } from "react-router-dom";
 const Catalog = () => {
   // const uploadedVids = videos;
   // console.log(uploadedVids);
@@ -18,8 +19,11 @@ const Catalog = () => {
         <h1>Prime News Videos</h1>
         <div className="catalog-shows">
           {/* TODO: Fimd out why VideoBlock doesnt work */}
+          {/* <Link to={`/user/users/${data.user}`}> */}
           {videoData2.map((data) => (
-            <VideoBlock key={data.uploadedVid.number} {...data} />
+            <Link to={`/prime-news/viewer`}>
+              <VideoBlock key={data.uploadedVid.number} {...data} />
+            </Link>
           ))}
 
           {/* <VideoBlock />

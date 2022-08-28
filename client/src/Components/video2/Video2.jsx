@@ -2,7 +2,7 @@ import React, { useRef } from "react";
 import video from "../../Assets/Videos/video2.mp4";
 
 import "./video.css";
-const Video2 = () => {
+const Video2 = ({ videofile }) => {
   const currentTimeRef = useRef(null);
   const currentTime = currentTimeRef.current;
   const previewImgRef = useRef(null);
@@ -218,7 +218,6 @@ const Video2 = () => {
   };
 
   // Timeline
-
   let isScrubbing = false;
   let wasPaused;
   function toggleScrubbing(e) {
