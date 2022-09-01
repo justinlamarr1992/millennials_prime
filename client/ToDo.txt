@@ -128,6 +128,4 @@ Share Box
     Need Video2/ Primeshow/ video.css
 
 
-    useLocation maybe the way i pass info through Link and url FURTHER investigae
-    Catalog line 16, 17 and 26
-    Prime show line 13, 14, 16
+Uploadcontent videocontroller figuring out why authorization token is not working

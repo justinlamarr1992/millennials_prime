@@ -7,6 +7,7 @@ const cors = require("cors");
 
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
+const videoRoutes = require("./routes/video");
 
 // express app
 const app = express();
@@ -34,6 +35,7 @@ app.use(
 // app.use('/api/post',postRoutes)
 app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
+app.use("/api/video", videoRoutes);
 
 // connect to db
 mongoose

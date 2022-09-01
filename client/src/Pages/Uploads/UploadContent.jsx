@@ -1,5 +1,5 @@
-import React, { useRef, useState } from "react";
-
+import React, { useRef, useState, useEffect } from "react";
+import { useAuthContext } from "../../Hooks/useAuthContext";
 import {
   textUpload,
   imagesUpload,
@@ -8,13 +8,23 @@ import {
   episodeUpload,
   eCommUpload,
 } from "../../Components/forms/UploadForms";
-import { useEffect } from "react";
 import FileUpload from "../../Components/reusuables/post/FileUpload";
+import Dropzone from "react-dropzone";
+import axios from "axios";
 
 import "./upload.css";
+
 const UploadContent = () => {
+  const { user } = useAuthContext();
   const [upload, setUpload] = useState("");
   const [artwork, setArtwork] = useState(false);
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  // This equals his privacy
+  const [prime, setPrime] = useState(0);
+  // Will think of changing later
+  const [category, setCategory] = useState("News");
+
   const uploadRef = useRef(false);
   const artworkRef = useRef(false);
 
@@ -89,6 +99,45 @@ const UploadContent = () => {
     console.log(artwork);
   };
 
+  const handleChangeTitle = (e) => {
+    // console.log(e.currentTarget.value);
+    setTitle(e.currentTarget.value);
+  };
+  const handleChangeDescription = (e) => {
+    // console.log(e.currentTarget.value);
+    setDescription(e.currentTarget.value);
+  };
+  const handleWhoChange = (e) => {
+    console.log(e.currentTarget.value);
+    setPrime(e.currentTarget.value);
+  };
+  const handleCategoryChange = (e) => {
+    console.log(e.currentTarget.value);
+    setPrime(e.currentTarget.value);
+  };
+
+  const onSubmit = () => {};
+  const onDrop = (files) => {
+    let formData = new FormData();
+    const config = {
+      header: {
+        "content-type": "multipart/form-data",
+        Authorization: `Bearer ${user.token}`,
+      },
+    };
+    console.log(files);
+    formData.append("file", files[0]);
+
+    // i may be able to replicate this the same for pictures music and all that lets see if it works
+    axios.post("/api/video/uploadfiles", formData, config).then((response) => {
+      if (response.data.success) {
+        console.log(response);
+      } else {
+        alert("failed to save the video in server");
+      }
+    });
+  };
+
   return (
     <div
       className="page"
@@ -100,7 +149,7 @@ const UploadContent = () => {
             Millennials Prime News Upload
           </h2>
           {/* TODO: make sure the dynamioc changes allow to upload to different post */}
-          <form>
+          <form onSubmit={onSubmit}>
             <div className="label-input">
               <label htmlFor="">What type of Upload is this?</label>
               <select
@@ -150,12 +199,78 @@ const UploadContent = () => {
             )}
             {upload == "videos" && (
               <>
+                {/* TODO: Make this its own function so multiple uploads can use it */}
+                <h6 className="text-gray">Import Video Here</h6>
+                <Dropzone
+                  // onDrop={(acceptedFiles) => console.log(acceptedFiles)}
+                  onDrop={onDrop}
+                >
+                  {({ getRootProps, getInputProps }) => (
+                    <section>
+                      <div {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        {/*  */}
+                        <p>
+                          Drag 'n' drop some files here, or click to select
+                          files (The box with plus should go here)
+                        </p>
+                      </div>
+                    </section>
+                  )}
+                </Dropzone>
                 <div className="label-input">
                   <label htmlFor="">Title of the Video</label>
-                  <input type="text" />
+                  <input
+                    type="text"
+                    value={title}
+                    onChange={handleChangeTitle}
+                  />
                 </div>
-                <h6 className="text-gray">Import Video Here</h6>
-                {/* TODO: Import Video */}
+                <div className="label-input">
+                  <label htmlFor="">Description of the Video</label>
+                  <input
+                    type="text"
+                    value={description}
+                    onChange={handleChangeDescription}
+                  />
+                </div>
+                <div className="label-input">
+                  <label htmlFor="">Who is the video for?</label>
+                  <select onChange={handleWhoChange}>
+                    <option key={0} value={0}>
+                      Millennial's
+                    </option>
+                    <option key={1} value={1}>
+                      Primes
+                    </option>
+                  </select>
+                </div>
+                <div className="label-input">
+                  <label htmlFor="">What's the Category for the Video?</label>
+                  <select onChange={handleCategoryChange}>
+                    <option value="" disabled selected>
+                      Select your option
+                    </option>
+                    <option key={1} value={"All News"}>
+                      All News
+                    </option>
+                    <option key={2} value={"Music"}>
+                      Music
+                    </option>
+                    <option key={3} value={"Movie's"}>
+                      Movie's
+                    </option>
+                    <option key={4} value={"Politics"}>
+                      Politics
+                    </option>
+                    <option key={5} value={"Good Stuff"}>
+                      Good Stuff
+                    </option>
+                    <option key={6} value={"Prime Stuff"}>
+                      Prime Stuff
+                    </option>
+                  </select>
+                </div>
               </>
             )}
             {upload == "music" && (
