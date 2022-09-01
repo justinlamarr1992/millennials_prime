@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import VideoBlock from "../../Components/reusuables/catalog/VideoBlock";
 import TimeCalc from "../../Components/reusuables/TimeCalc";
 
@@ -7,44 +7,29 @@ import "./primeshow.css";
 // for now
 import Thumbnail from "../../Assets/Images/VideoThumbNail.png";
 
-import { videoData2 } from "../../Components/reusuables/post/data";
+import {
+  videoData2,
+  primePostData,
+} from "../../Components/reusuables/post/data";
 import { Link } from "react-router-dom";
 const Catalog = () => {
-  // const uploadedVids = videos;
-  // console.log(uploadedVids);
+  const stateInfo = () => {
+    /* <Link to={`/user/users/${data.user}`}> */
+  };
   return (
     <div className="page">
       <div className="catalog-container">
-        {/* <pre>{JSON.stringify(videoData2)}</pre> */}
         <h1>Prime News Videos</h1>
         <div className="catalog-shows">
-          {/* TODO: Fimd out why VideoBlock doesnt work */}
-          {/* <Link to={`/user/users/${data.user}`}> */}
-          {videoData2.map((data) => (
-            <Link to={`/prime-news/viewer`}>
-              <VideoBlock key={data.uploadedVid.number} {...data} />
-            </Link>
-          ))}
-
-          {/* <VideoBlock />
-          <VideoBlock />
-          <VideoBlock />
-          <VideoBlock />
-          <VideoBlock />
-          <VideoBlock />
-          <VideoBlock />
-          <VideoBlock />
-          <VideoBlock />
-          <VideoBlock />
-          <VideoBlock />
-          <VideoBlock />
-          <VideoBlock />
-          <VideoBlock />
-          <VideoBlock />
-          <VideoBlock />
-          <VideoBlock />
-          <VideoBlock />
-          <VideoBlock /> */}
+          {primePostData.map((data) => {
+            const videoData = { ...data };
+            console.log(videoData);
+            return (
+              <Link to={`/prime-news/viewer`} state={videoData}>
+                <VideoBlock key={data.uploadedVid.number} {...data} />
+              </Link>
+            );
+          })}
         </div>
       </div>
     </div>

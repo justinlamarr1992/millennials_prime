@@ -105,6 +105,9 @@ justify-content: center;
 /* color: var(--sec-t); */
 color: var(--sec-t);
 }
+.comment-number-light{
+    margin-left: 20px;
+}
 .post-share{
     display: flex;
     align-items: center;

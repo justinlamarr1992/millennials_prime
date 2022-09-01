@@ -11,15 +11,13 @@ import { primePostData } from "./post/data";
 
 const INITIAL_HEIGHT = 46;
 
-const CommentBox = () => {
+const CommentBox = ({ userComments }) => {
   const [isExpanded, setIsExpanded] = useState(true);
 
   const [userValue, setUserValue] = useState("");
   const [userPicValue, setUserPicValue] = useState("");
   const [timeValue, setTimeValue] = useState("");
-  const [iDValue, setIDValue] = useState(
-    primePostData[0].uploadedVid.comments.length
-  );
+  const [iDValue, setIDValue] = useState(userComments.length);
   const [commentValue, setCommentValue] = useState("");
   const [likeValue, setLikeValue] = useState(false);
 
@@ -124,9 +122,16 @@ const CommentBox = () => {
       </div>
       <div className="prev-comment text-gray">
         <div className="prev-comment-comments">
-          {primePostData[0].uploadedVid.comments.map((data) => (
+          {userComments.map((data) => (
             <div className="comment-box-user">
-              <img className="comment-box-user-pic" src={data.pic} alt="" />
+              <div className="comment-box-user-pic square-container">
+                <img
+                  className="square-container-contents"
+                  src={data.pic}
+                  alt=""
+                />
+              </div>
+
               <h4 className="comment-box-user-name">{data.user}</h4>
               <h6 className="comment-box-user-date">
                 <TimeCalc postDate={new Date(data.postedDate)} />

@@ -124,4 +124,10 @@ Share Box
     THEN I WOULD CHANGE THE WAY THE USERS CONNECTED USER DISPLAY WOULD LOOK
 
 
-Video backend data need to have link from Catalog > VideoBlock(link) > PrimeShow(Video2, UserPost) could be done using params of props Not sure
+
+    Need Video2/ Primeshow/ video.css
+
+
+    useLocation maybe the way i pass info through Link and url FURTHER investigae
+    Catalog line 16, 17 and 26
+    Prime show line 13, 14, 16

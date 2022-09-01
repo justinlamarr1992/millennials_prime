@@ -1,4 +1,5 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import PostLikeDisLikeLight from "../../Components/reusuables/post/PostLikeDislike";
 import UserPostInfo from "../../Components/reusuables/UserPostInfo";
 // import Video from "../../Components/video/Video";
@@ -6,8 +7,12 @@ import UserPostInfo from "../../Components/reusuables/UserPostInfo";
 import { primePostData } from "../../Components/reusuables/post/data";
 
 import "./primeshow.css";
-import Video2 from "../../Components/video2/Video2";
+import Video from "../../Components/video/Video";
+
 const PrimeShow = ({ videofile }) => {
+  const { state } = useLocation();
+
+  console.log("Pasted user Info is ", state.user);
   return (
     <div
       className="page"
@@ -18,22 +23,21 @@ const PrimeShow = ({ videofile }) => {
           {/* componenets.css line 30 is where i commented out controls for first video */}
           {/* <Video video={primePostData[0].uploadedVid.video} /> */}
 
-          <Video2 video={videofile} />
+          {/* <Video2 video={videofile} /> */}
+          <Video video={state.uploadedVid.video} />
 
           <UserPostInfo
-            user={primePostData[0].user}
-            pic={primePostData[0].pic}
-            postedDate={primePostData[0].postedDate}
+            user={state.user}
+            pic={state.pic}
+            postedDate={state.postedDate}
             className="pr-user-info"
           />
 
           <div className="pr-video-info view-container-heading">
-            <h3>{primePostData[0].uploadedVid.title}</h3>
-            <h5 className="text-gray">
-              {primePostData[0].uploadedVid.description}
-            </h5>
+            <h3>{state.uploadedVid.title}</h3>
+            <h5 className="text-gray">{state.uploadedVid.description}</h5>
           </div>
-          <PostLikeDisLikeLight />
+          <PostLikeDisLikeLight userComments={state.uploadedVid.comments} />
         </div>
       </div>
     </div>

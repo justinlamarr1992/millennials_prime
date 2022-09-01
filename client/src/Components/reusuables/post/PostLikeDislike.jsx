@@ -3,11 +3,15 @@ import { FaHeart, FaSkull, FaRegCommentAlt, FaShare } from "react-icons/fa";
 import CommentBox from "../CommentBox";
 import ShareBox from "../ShareBox";
 
-const PostLikeDisLike = () => {
+const PostLikeDisLike = ({ userComments }) => {
   const [comments, setComments] = useState(false);
   const [share, setShare] = useState(false);
   const [heart, setHeart] = useState(true);
   const [skull, setSkull] = useState(true);
+  const amount = userComments.length;
+
+  console.log("The number of comments are ", amount);
+  console.log(userComments);
 
   const onClick = () => {
     setComments(!comments);
@@ -59,7 +63,7 @@ const PostLikeDisLike = () => {
             <div className="post-comment-light">
               {/* Figure a way to expand the comments by pressing this */}
               <FaRegCommentAlt className="comment-icon-light" />
-              <h5>100</h5>
+              <h5 className="comment-number-light">{amount}</h5>
             </div>
           </button>
         </div>
@@ -74,9 +78,10 @@ const PostLikeDisLike = () => {
       </div>
       {comments && (
         <div className="post-comment-light">
-          <CommentBox />
+          <CommentBox userComments={userComments} />
         </div>
       )}
+      {/* TODO: perfect square the user profile pics for comments */}
       {share && (
         <div className="post-comment">
           <ShareBox />

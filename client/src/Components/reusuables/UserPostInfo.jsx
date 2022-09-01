@@ -2,7 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import User from "../../Assets/Images/user.jpeg";
 import TimeCalc from "./TimeCalc";
+
 import { primePostData } from "./post/data";
+import PostLikeDisLike from "./post/PostLikeDislike";
 const UserPostInfo = ({ user, pic, postedDate }) => {
   return (
     <div className="pr-user-info">
@@ -32,6 +34,7 @@ const UserPostInfo = ({ user, pic, postedDate }) => {
           <TimeCalc postDate={new Date(postedDate)} />
         </h6>
       </div>
+      {/* <PostLikeDisLike /> */}
     </div>
   );
 };
