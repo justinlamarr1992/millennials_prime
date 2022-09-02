@@ -127,6 +127,5 @@ Share Box
 
     Need Video2/ Primeshow/ video.css
 
-
-Uploadcontent videocontroller figuring out why authorization token is not working
-https://www.youtube.com/watch?v=Kn8rENew3SQ
+TODO: IMPORTANT Change previous user information into New through https://github.com/jaewonhimnae/react-youtube-clone/tree/afe071e9d6145824659572bf2ad3b3cd3aef741e
+This has the ability to use useSelector with react redux.... Maybe better mechanism than my own because I cant get name only token when i log in

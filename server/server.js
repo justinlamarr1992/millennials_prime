@@ -1,9 +1,10 @@
 require("dotenv").config();
 
 const express = require("express");
-const fileUpload = require("express-fileupload");
+// const fileUpload = require("express-fileupload");
 const mongoose = require("mongoose");
 const cors = require("cors");
+var bodyParser = require("body-parser");
 
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
@@ -11,8 +12,9 @@ const videoRoutes = require("./routes/video");
 
 // express app
 const app = express();
+app.use("/uploads", express.static("uploads"));
 
-app.use(fileUpload());
+// app.use(fileUpload());
 
 //middleware
 app.use(express.json({ limit: "30mb", extended: true }));

@@ -15,6 +15,9 @@ const userSchema = new Schema(
     //   last: { type: String },
     // },
     image: { type: String },
+    role: { type: Number, default: 0 },
+    token: { type: String },
+    tokenExp: { type: Number },
   },
   { timestamps: true }
 );

@@ -1,4 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
+import {useSelector} from "react-redux"
 import { useAuthContext } from "../../Hooks/useAuthContext";
 import {
   textUpload,
@@ -15,6 +16,7 @@ import axios from "axios";
 import "./upload.css";
 
 const UploadContent = () => {
+  const user = useSelector(state => state.user)
   const { user } = useAuthContext();
   const [upload, setUpload] = useState("");
   const [artwork, setArtwork] = useState(false);
@@ -24,9 +26,14 @@ const UploadContent = () => {
   const [prime, setPrime] = useState(0);
   // Will think of changing later
   const [category, setCategory] = useState("News");
+  const [filePath, setFilePath] = useState("");
+  const [duration, setDuration] = useState("");
+  const [thumbnail, setThumbnail] = useState("");
 
   const uploadRef = useRef(false);
   const artworkRef = useRef(false);
+
+  const Authorization = `Bearer ${user.token}`;
 
   function uploadCheck(e) {
     if (uploadRef.current.selectedIndex == 0) {
@@ -116,22 +123,55 @@ const UploadContent = () => {
     setPrime(e.currentTarget.value);
   };
 
-  const onSubmit = () => {};
+  const onSubmit = (e) => {
+    e.preventDefault()
+
+    const variables = {
+      userPosting:,
+      title:,
+      description:,
+      prime:,
+      filePath:,
+      category:,
+      duration:,
+      thumbnail:
+    }
+
+
+    axios.post('/api/video/uploadVideo', variables)
+  };
   const onDrop = (files) => {
     let formData = new FormData();
     const config = {
-      header: {
+      headers: {
         "content-type": "multipart/form-data",
-        Authorization: `Bearer ${user.token}`,
       },
+      // api: {
+      //   bodyParser: false,
+      // },
     };
     console.log(files);
     formData.append("file", files[0]);
 
     // i may be able to replicate this the same for pictures music and all that lets see if it works
     axios.post("/api/video/uploadfiles", formData, config).then((response) => {
+      console.log(response.data);
       if (response.data.success) {
         console.log(response);
+        let variable = {
+          filePath: response.data.filePath,
+          fileName: response.data.fileName,
+        };
+        setFilePath(response.data.filePath);
+        //generate thumbnail with this file path
+        axios.post("/api/video/thumbnail", variable).then((response) => {
+          if (response.data.success) {
+            setDuration(response.data.fileDuration);
+            setThumbnail(response.data.thumbsFilePath);
+          } else {
+            alert("Failed to make the thumbnails");
+          }
+        });
       } else {
         alert("failed to save the video in server");
       }
@@ -208,7 +248,7 @@ const UploadContent = () => {
                   {({ getRootProps, getInputProps }) => (
                     <section>
                       <div {...getRootProps()}>
-                        <input {...getInputProps()} />
+                        <input type="file" name="" {...getInputProps()} />
                         {/*  */}
                         <p>
                           Drag 'n' drop some files here, or click to select
@@ -218,6 +258,15 @@ const UploadContent = () => {
                     </section>
                   )}
                 </Dropzone>
+                {/* TODO: Figure out why its no apperaing Youtube clone #5 */}
+                {thumbnail !== "" && (
+                  <div>
+                    <img
+                      src={`http://localhost:4000/${thumbnail}`}
+                      alt="Lets see"
+                    />
+                  </div>
+                )}
                 <div className="label-input">
                   <label htmlFor="">Title of the Video</label>
                   <input
@@ -339,6 +388,7 @@ const UploadContent = () => {
                 <h6 className="text-gray">FUTURE Import item here </h6>
               </>
             )}
+            {/* may have to add a different submit button because the submit but now is tied to from that only accepts mp4.s */}
             <button class="feed-reply-post page-button connect-btn clickable con-shade">
               Upload
             </button>
