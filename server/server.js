@@ -5,6 +5,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 var bodyParser = require("body-parser");
+const cookieParser = require("cookie-parser");
 
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
@@ -12,13 +13,14 @@ const videoRoutes = require("./routes/video");
 
 // express app
 const app = express();
-app.use("/uploads", express.static("uploads"));
 
-// app.use(fileUpload());
+// app.use("/uploads", express.static("uploads"));
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
+app.use(cookieParser());
 
 //middleware
 app.use(express.json({ limit: "30mb", extended: true }));
-
 app.use((req, res, next) => {
   console.log(req.path, req.method);
   next();

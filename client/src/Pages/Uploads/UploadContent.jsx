@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect } from "react";
-import {useSelector} from "react-redux"
+import { useSelector } from "react-redux";
 import { useAuthContext } from "../../Hooks/useAuthContext";
 import {
   textUpload,
@@ -16,7 +16,7 @@ import axios from "axios";
 import "./upload.css";
 
 const UploadContent = () => {
-  const user = useSelector(state => state.user)
+  // const user = useSelector(state => state.user)
   const { user } = useAuthContext();
   const [upload, setUpload] = useState("");
   const [artwork, setArtwork] = useState(false);
@@ -124,21 +124,21 @@ const UploadContent = () => {
   };
 
   const onSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
-    const variables = {
-      userPosting:,
-      title:,
-      description:,
-      prime:,
-      filePath:,
-      category:,
-      duration:,
-      thumbnail:
-    }
+    // const variables = {
+    //   userPosting:,
+    //   title:,
+    //   description:,
+    //   prime:,
+    //   filePath:,
+    //   category:,
+    //   duration:,
+    //   thumbnail:
+    // }
 
-
-    axios.post('/api/video/uploadVideo', variables)
+    // axios.post("/api/video/uploadVideo", variables);
+    axios.post("/api/video/uploadVideo");
   };
   const onDrop = (files) => {
     let formData = new FormData();
