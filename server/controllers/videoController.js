@@ -1,6 +1,7 @@
 const multer = require("multer");
 var ffmpeg = require("fluent-ffmpeg");
 const User = require("../models/userModel");
+const { Video } = require("../models/VideoModel");
 
 const createVideo = async (req, res) => {
   var storage = multer.diskStorage({
@@ -71,4 +72,12 @@ const createThumbnail = async (req, res) => {
     });
 };
 
-module.exports = { createVideo, createThumbnail };
+const uploadVideo = async (req, res) => {
+  const video = new Video(req.body);
+  video.save((err, video) => {
+    if (err) return res.status(400).json({ success: false, err });
+    return res.status(200).json({ success: true });
+  });
+};
+
+module.exports = { createVideo, createThumbnail, uploadVideo };

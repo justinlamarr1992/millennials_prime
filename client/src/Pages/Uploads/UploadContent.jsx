@@ -16,8 +16,8 @@ import axios from "axios";
 import "./upload.css";
 
 const UploadContent = () => {
-  // const user = useSelector(state => state.user)
-  const { user } = useAuthContext();
+  const user = useSelector((state) => state.user);
+  // const { user } = useAuthContext();
   const [upload, setUpload] = useState("");
   const [artwork, setArtwork] = useState(false);
   const [title, setTitle] = useState("");
@@ -126,19 +126,24 @@ const UploadContent = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    // const variables = {
-    //   userPosting:,
-    //   title:,
-    //   description:,
-    //   prime:,
-    //   filePath:,
-    //   category:,
-    //   duration:,
-    //   thumbnail:
-    // }
+    const variables = {
+      userPosting: user.userData._id,
+      title: title,
+      description: description,
+      prime: prime,
+      filePath: filePath,
+      category: category,
+      duration: duration,
+      thumbnail: thumbnail,
+    };
 
-    // axios.post("/api/video/uploadVideo", variables);
-    axios.post("/api/video/uploadVideo");
+    axios.post("/api/video/uploadVideo", variables).then((response) => {
+      if (response.data.success) {
+        alert("Video Uploaded Successfully");
+      } else {
+        alert("Failed to upload Video");
+      }
+    });
   };
   const onDrop = (files) => {
     let formData = new FormData();

@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 const videoSchema = mongoose.Schema(
   {
-    writer: { type: Schema.Types.ObjectId, ref: "User" },
+    userPosting: { type: Schema.Types.ObjectId, ref: "User" },
     title: { type: String, maxlength: 50 },
     description: { type: String },
     // replaces his privacy
