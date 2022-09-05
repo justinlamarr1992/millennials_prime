@@ -1,8 +1,12 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 
-import { useLogout } from "../../Hooks/useLogout";
-import { useAuthContext } from "../../Hooks/useAuthContext";
+import axios from "axios";
+import { USER_SERVER } from "../config";
+import { useSelector } from "react-redux";
+
+// import { useLogout } from "../../Hooks/useLogout";
+// import { useAuthContext } from "../../Hooks/useAuthContext";
 
 import Logo from "../../Assets/Images/MillennialsPrimeLogoNB.png";
 import {
@@ -16,11 +20,19 @@ import {
 import "./navBar.css";
 
 const NavBar = (props) => {
-  const { logout } = useLogout();
-  const { user } = useAuthContext();
+  const user = useSelector((state) => state.user);
+  // const { logout } = useLogout();
+  // const { user } = useAuthContext();
 
   const handleClick = () => {
-    logout();
+    // logout();
+    axios.get(`${USER_SERVER}/logout`).then((response) => {
+      if (response.status === 200) {
+        <NavLink to="/auth/signin" />;
+      } else {
+        alert("Log Out Failed");
+      }
+    });
   };
   return (
     <nav className="nav-container p-con-shade">

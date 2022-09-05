@@ -1,5 +1,6 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
+import Auth from "./HigherOrderComponents/auth";
 import { useAuthContext } from "./Hooks/useAuthContext";
 import "./App.css";
 
@@ -35,109 +36,206 @@ import Catalog from "./Pages/ShowView/Catalog";
 function App(props, state) {
   const { user } = useAuthContext();
   return (
-    // <BrowserRouter>
-    <div className="App">
-      <NavBar name="Justin" />
-      <Routes className="container-comp">
-        {/* MAy have found a way to change the sidenav... We will see */}
-        {/* Main */}
-        <Route
-          path="/"
-          element={user ? <Home /> : <Navigate to="/auth/signin" />}
-        />
+    <Suspense>
+      <div className="App">
+        <NavBar name="Justin" />
+        {/* <Routes className="container-comp">
+          Main
+          <Route
+            path="/"
+            element={user ? <Home /> : <Navigate to="/auth/signin" />}
+          />
 
-        <Route
-          path="/messages"
-          element={user ? <Messages /> : <Navigate to="/auth/signin" />}
-        />
+          <Route
+            path="/messages"
+            element={user ? <Messages /> : <Navigate to="/auth/signin" />}
+          />
 
-        <Route
-          path="/connectedusers"
-          element={user ? <ConnectedUsers /> : <Navigate to="/auth/signin" />}
-        />
+          <Route
+            path="/connectedusers"
+            element={user ? <ConnectedUsers /> : <Navigate to="/auth/signin" />}
+          />
 
-        <Route path="/prime-news">
-          {/* TODO: add params here so all videos will have ability to vien in full screen */}
-          <Route path="viewer" element={<PrimeShow />} />
+          <Route path="/prime-news">
+            TODO: add params here so all videos will have ability to vien in full screen
+            <Route path="viewer" element={<PrimeShow />} />
 
-          {/* TODO: Make sure this as admin middleware rout */}
-          <Route path="upload-content" element={<UploadContent />} />
+            TODO: Make sure this as admin middleware rout
+            <Route path="upload-content" element={<UploadContent />} />
 
-          <Route path="catalog" element={<Catalog />} />
-        </Route>
+            <Route path="catalog" element={<Catalog />} />
+          </Route>
 
-        {/* Settings */}
-        <Route path="/settings">
-          <Route
-            path="config"
-            element={user ? <Settings /> : <Navigate to="/auth/signin" />}
-          />
-          <Route
-            path="notifications"
-            element={user ? <Notifications /> : <Navigate to="/auth/signin" />}
-          />
-          <Route
-            path="privacy-policy"
-            element={user ? <PrivacyPolicy /> : <Navigate to="/auth/signin" />}
-          />
-          <Route
-            path="contact-us"
-            element={user ? <ContactUs /> : <Navigate to="/auth/signin" />}
-          />
-        </Route>
+          Settings
+          <Route path="/settings">
+            <Route
+              path="config"
+              element={user ? <Settings /> : <Navigate to="/auth/signin" />}
+            />
+            <Route
+              path="notifications"
+              element={
+                user ? <Notifications /> : <Navigate to="/auth/signin" />
+              }
+            />
+            <Route
+              path="privacy-policy"
+              element={
+                user ? <PrivacyPolicy /> : <Navigate to="/auth/signin" />
+              }
+            />
+            <Route
+              path="contact-us"
+              element={user ? <ContactUs /> : <Navigate to="/auth/signin" />}
+            />
+          </Route>
 
-        {/* Auth */}
-        <Route path="/auth">
-          <Route
-            path="register"
-            element={!user ? <Register /> : <Navigate to="/" />}
-          />
-          <Route
-            path="signout"
-            element={!user ? <SignOut /> : <Navigate to="/" />}
-          />
-          <Route
-            path="signin"
-            element={!user ? <SignIn /> : <Navigate to="/" />}
-          />
-          <Route
-            path="passwordrecovery"
-            element={!user ? <PasswordRecovery /> : <Navigate to="/" />}
-          />
-          <Route
-            path="questionaire"
-            element={!user ? <Questionaire /> : <Navigate to="/" />}
-          />
-          <Route
-            path="questionaire2"
-            element={!user ? <Questionaire2 /> : <Navigate to="/" />}
-          />
-          <Route
-            path="questionaire3"
-            element={!user ? <Questionaire3 /> : <Navigate to="/" />}
-          />
-        </Route>
+          Auth
+          <Route path="/auth">
+            <Route
+              path="register"
+              element={!user ? <Register /> : <Navigate to="/" />}
+            />
+            <Route
+              path="signout"
+              element={!user ? <SignOut /> : <Navigate to="/" />}
+            />
+            <Route
+              path="signin"
+              element={!user ? <SignIn /> : <Navigate to="/" />}
+            />
+            <Route
+              path="passwordrecovery"
+              element={!user ? <PasswordRecovery /> : <Navigate to="/" />}
+            />
+            <Route
+              path="questionaire"
+              element={!user ? <Questionaire /> : <Navigate to="/" />}
+            />
+            <Route
+              path="questionaire2"
+              element={!user ? <Questionaire2 /> : <Navigate to="/" />}
+            />
+            <Route
+              path="questionaire3"
+              element={!user ? <Questionaire3 /> : <Navigate to="/" />}
+            />
+          </Route>
 
-        {/* Users */}
-        <Route path="/user">
-          <Route
-            path="profile"
-            element={<User />}
-            // element={user ? <User /> : <Navigate to="/signin" />}
-          />
-          <Route
-            path="users/:id"
-            element={<User />}
-            // element={user ? <User /> : <Navigate to="/signin" />}
-          />
-          <Route path="testuser/:id" element={<TestUser />} />
-          <Route path="verified/:userid" element={<Verified />} />
-        </Route>
+          Users
+          <Route path="/user">
+            <Route
+              path="profile"
+              element={<User />}
+              element={user ? <User /> : <Navigate to="/signin" />}
+            />
+            <Route
+              path="users/:id"
+              element={<User />}
+              element={user ? <User /> : <Navigate to="/signin" />}
+            />
+            <Route path="testuser/:id" element={<TestUser />} />
+            <Route path="verified/:userid" element={<Verified />} />
+          </Route>
 
-        {/* 404 */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </div>
+          404
+          <Route path="*" element={<NotFound />} />
+        </Routes> */}
+        <Routes className="container-comp">
+          {/* Main */}
+          <Route path="/" element={Auth(<Home />, null)} />
+          <Route
+            path="/messages"
+            element={user ? <Messages /> : <Navigate to="/auth/signin" />}
+          />
+          <Route
+            path="/connectedusers"
+            element={user ? <ConnectedUsers /> : <Navigate to="/auth/signin" />}
+          />
+          <Route path="/prime-news">
+            {/* TODO: add params here so all videos will have ability to vien in full screen */}
+            <Route path="viewer" element={<PrimeShow />} />
+
+            {/* TODO: Make sure this as admin middleware rout */}
+            <Route path="upload-content" element={<UploadContent />} />
+
+            <Route path="catalog" element={<Catalog />} />
+          </Route>
+          {/* Settings */}
+          <Route path="/settings">
+            <Route
+              path="config"
+              element={user ? <Settings /> : <Navigate to="/auth/signin" />}
+            />
+            <Route
+              path="notifications"
+              element={
+                user ? <Notifications /> : <Navigate to="/auth/signin" />
+              }
+            />
+            <Route
+              path="privacy-policy"
+              element={
+                user ? <PrivacyPolicy /> : <Navigate to="/auth/signin" />
+              }
+            />
+            <Route
+              path="contact-us"
+              element={user ? <ContactUs /> : <Navigate to="/auth/signin" />}
+            />
+          </Route>
+          {/* Auth */}
+          <Route path="/auth">
+            <Route
+              path="register"
+              element={!user ? <Register /> : <Navigate to="/" />}
+            />
+            <Route
+              path="signout"
+              element={!user ? <SignOut /> : <Navigate to="/" />}
+            />
+            <Route
+              path="signin"
+              element={!user ? <SignIn /> : <Navigate to="/" />}
+            />
+            <Route
+              path="passwordrecovery"
+              element={!user ? <PasswordRecovery /> : <Navigate to="/" />}
+            />
+            <Route
+              path="questionaire"
+              element={!user ? <Questionaire /> : <Navigate to="/" />}
+            />
+            <Route
+              path="questionaire2"
+              element={!user ? <Questionaire2 /> : <Navigate to="/" />}
+            />
+            <Route
+              path="questionaire3"
+              element={!user ? <Questionaire3 /> : <Navigate to="/" />}
+            />
+          </Route>
+          {/* Users */}
+          <Route path="/user">
+            <Route
+              path="profile"
+              // element={<User />}
+              element={user ? <User /> : <Navigate to="/signin" />}
+            />
+            <Route
+              path="users/:id"
+              // element={<User />}
+              element={user ? <User /> : <Navigate to="/signin" />}
+            />
+            <Route path="testuser/:id" element={<TestUser />} />
+            <Route path="verified/:userid" element={<Verified />} />
+          </Route>
+          {/* 404 */}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </div>
+    </Suspense>
+
     // </BrowserRouter>
   );
 }

@@ -8,9 +8,9 @@ const PostLikeDisLike = ({ userComments }) => {
   const [share, setShare] = useState(false);
   const [heart, setHeart] = useState(true);
   const [skull, setSkull] = useState(true);
-  const amount = userComments.length;
+  // const amount = userComments.length;
 
-  console.log("The number of comments are ", amount);
+  // console.log("The number of comments are ", amount);
   console.log(userComments);
 
   const onClick = () => {
@@ -63,7 +63,7 @@ const PostLikeDisLike = ({ userComments }) => {
             <div className="post-comment-light">
               {/* Figure a way to expand the comments by pressing this */}
               <FaRegCommentAlt className="comment-icon-light" />
-              <h5 className="comment-number-light">{amount}</h5>
+              {/* <h5 className="comment-number-light">{amount}</h5> */}
             </div>
           </button>
         </div>
