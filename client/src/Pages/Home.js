@@ -19,11 +19,11 @@ const Home = () => {
 
   const [userInfo, setUserInfo] = useState({});
 
-  const {
-    data: user,
-    isLoading,
-    error,
-  } = useFetch("api/user/62f8fa602e766718268c6d32");
+  // const {
+  //   data: user,
+  //   isLoading,
+  //   error,
+  // } = useFetch("api/user/62f8fa602e766718268c6d32");
 
   // const { data: users, isLoading, error } = useFetch("api/user");
 
@@ -50,25 +50,25 @@ const Home = () => {
   //     console.log(userInfo);
   //   }, 1000);
   // }, []);
-  useEffect(() => {
-    const fetchUser = async () => {
-      const response = await fetch("api/user/62f8fa602e766718268c6d32", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const json = await response.json();
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     const response = await fetch("api/user/62f8fa602e766718268c6d32", {
+  //       headers: {
+  //         Authorization: `Bearer ${user.token}`,
+  //       },
+  //     });
+  //     const json = await response.json();
 
-      if (response.ok) {
-        setUserInfo(user);
-        console.log(userInfo);
-      }
-    };
+  //     if (response.ok) {
+  //       setUserInfo(user);
+  //       console.log(userInfo);
+  //     }
+  //   };
 
-    if (user) {
-      fetchUser();
-    }
-  }, [user]);
+  //   if (user) {
+  //     fetchUser();
+  //   }
+  // }, [user]);
 
   const onClick = () => {
     setModal(!modal);
@@ -101,12 +101,12 @@ const Home = () => {
         <PrimeNews />
         <HotItems />
         <FeatPrimes />
-        <HomeFeedPost />
-        <PostList modal={modal} setModal={setModal} widthRef={widthRef} />
-        <button className="test-modal-button" onClick={onClick}>
+        {/* <HomeFeedPost /> */}
+        {/* <PostList modal={modal} setModal={setModal} widthRef={widthRef} /> */}
+        {/* <button className="test-modal-button" onClick={onClick}>
           Modal Test Button
         </button>
-        {modal && <MainModal />}
+        {modal && <MainModal />} */}
       </div>
     </div>
   );

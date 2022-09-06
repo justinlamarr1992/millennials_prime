@@ -29,7 +29,7 @@ const loginUser = async (req, res) => {
     if (!user)
       return res.json({
         loginSuccess: false,
-        message: "Auth failed, email not found",
+        message: "Auth failed, email not found, but the message is hardcoded",
       });
 
     user.comparePassword(req.body.password, (err, isMatch) => {

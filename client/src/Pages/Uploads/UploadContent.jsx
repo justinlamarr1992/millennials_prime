@@ -126,7 +126,24 @@ const UploadContent = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
+    if (user.userData && !user.userData.isAuth) {
+      return alert("Please Login First");
+    }
+
+    if (
+      title === "" ||
+      description === "" ||
+      category === "" ||
+      filePath === "" ||
+      duration === "" ||
+      thumbnail === ""
+    ) {
+      return alert("Fill all of the fields");
+    }
+
     const variables = {
+      // TODO: Comeback later to solve the user problem
+      // userPosting: "TEst User HArd Coded",
       userPosting: user.userData._id,
       title: title,
       description: description,

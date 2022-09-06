@@ -23,23 +23,23 @@ const createStoreWithMiddleware = applyMiddleware(
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <Provider
-    store={createStoreWithMiddleware(
-      Reducer,
-      window.__REDUX_DEVTOOLS_EXTENSION__ &&
-        window.__REDUX_DEVTOOLS_EXTENSION__()
-    )}
-  >
-    <React.StrictMode>
+  <React.StrictMode>
+    <Provider
+      store={createStoreWithMiddleware(
+        Reducer,
+        window.__REDUX_DEVTOOLS_EXTENSION__ &&
+          window.__REDUX_DEVTOOLS_EXTENSION__()
+      )}
+    >
       <BrowserRouter>
-        <AuthContextProvider>
-          <PostsContextProvider>
-            <App />
-          </PostsContextProvider>
-        </AuthContextProvider>
+        {/* <AuthContextProvider> */}
+        {/* <PostsContextProvider> */}
+        <App />
+        {/* </PostsContextProvider> */}
+        {/* </AuthContextProvider> */}
       </BrowserRouter>
-    </React.StrictMode>
-  </Provider>
+    </Provider>
+  </React.StrictMode>
 );
 
 // If you want to start measuring performance in your app, pass a function

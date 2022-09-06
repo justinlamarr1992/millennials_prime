@@ -1,5 +1,9 @@
 import React, { useRef, useState } from "react";
-import { useLogin } from "../../Hooks/useLogin";
+import { Link, Navigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+
+import { loginUser } from "../../Actions/userActions";
+// import { useLogin } from "../../Hooks/useLogin";
 
 import Company1 from "../../Assets/Images/Companies/Company1.jpeg";
 import Company2 from "../../Assets/Images/Companies/Company2.jpeg";
@@ -8,18 +12,49 @@ import Company3 from "../../Assets/Images/Companies/Company3.jpg";
 import "./auth.css";
 import Logo from "../../Assets/Images/MillennialsPrimeLogo.png";
 
-import { Link } from "react-router-dom";
-
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, error, isLoading } = useLogin();
+  const dispatch = useDispatch();
+  const rememberMeChecked = localStorage.getItem("rememberMe") ? true : false;
+  const [rememberMe, setRememberMe] = useState(rememberMeChecked);
+
+  // const { login, error, isLoading } = useLogin();
   const ref = useRef(null);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    await login(email, password);
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   setTimeout(() => {
+  //     let dataToSubmit = {
+  //       email: e.email,
+  //       password: e.password,
+  //     };
+  //     dispatch(loginUser(dataToSubmit))
+  //       .then((response) => {
+  //         if (response.payload.loginSuccess) {
+  //           window.localStorage.setItem("userId", response.payload.userId);
+  //           if (rememberMe === true) {
+  //             window.localStorage.setItem("rememberMe", e.id);
+  //           } else {
+  //             localStorage.removeItem("rememberMe");
+  //           }
+  //           <Navigate to="/" />;
+  //         } else {
+  //           alert("Wrong email of Password");
+  //         }
+  //       })
+  //       .catch((err) => {
+  //         alert(err);
+  //       });
+  //   }, 500);
+  //   // await login(email, password);
+  // };
+  const handleRememberMe = () => {
+    setRememberMe(!rememberMe);
   };
+  const initialEmail = localStorage.getItem("rememberMe")
+    ? localStorage.getItem("rememberMe")
+    : "";
 
   return (
     <div className="page">
@@ -53,7 +88,42 @@ const SignIn = () => {
             </div>
           </div>
 
-          <form className="auth-form" action="">
+          <form
+            className="auth-form"
+            // action=""
+            // onSubmit={handleSubmit}
+            onSubmit={(e) => {
+              e.preventDefault();
+              setTimeout(() => {
+                let dataToSubmit = {
+                  email: email,
+                  password: password,
+                };
+                dispatch(loginUser(dataToSubmit))
+                  .then((response) => {
+                    console.log(email);
+                    if (response.payload.loginSuccess) {
+                      window.localStorage.setItem(
+                        "userId",
+                        response.payload.userId
+                      );
+                      if (rememberMe === true) {
+                        window.localStorage.setItem("rememberMe", e.id);
+                      } else {
+                        localStorage.removeItem("rememberMe");
+                      }
+                      <Navigate to="/" />;
+                    } else {
+                      console.log(response);
+                      alert("Something went wrong here");
+                    }
+                  })
+                  .catch((err) => {
+                    alert(err);
+                  });
+              }, 500);
+            }}
+          >
             <div className="label-input">
               <label htmlFor="">Email</label>
               <input
@@ -80,13 +150,13 @@ const SignIn = () => {
               <h6 className="text-gray">Forgot Password</h6>
             </Link>
             <button
-              onClick={handleSubmit}
               className="auth-button login"
-              disabled={isLoading}
+              // onSubmit={handleSubmit}
+              // disabled={isLoading}
             >
               Login
             </button>
-            {error && <div>{error}</div>}
+            {/* {error && <div>{error}</div>} */}
           </form>
           <h6 className="social-text center-item text-gray">
             Connect With Socials
