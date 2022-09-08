@@ -42,3 +42,13 @@
   width: 100%;
   border-radius: var(--brad);
 }
+.video-block-title{}
+.video-block-description{}
+.video-block-numbers{
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+.video-block-numbers-date{}
+.video-block-numbers-view{}
+

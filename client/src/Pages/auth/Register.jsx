@@ -1,9 +1,11 @@
 import React, { useRef, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-import { useSignup } from "../../Hooks/useSignup";
+import { registerUser } from "../../Actions/userActions";
+// import { useSignup } from "../../Hooks/useSignup";
 
 import "./auth.css";
-import { Link } from "react-router-dom";
 import Logo from "../../Assets/Images/MillennialsPrimeLogo.png";
 import Company1 from "../../Assets/Images/Companies/Company1.jpeg";
 import Company2 from "../../Assets/Images/Companies/Company2.jpeg";
@@ -14,10 +16,12 @@ const Register = () => {
   // getting info for signing up
   const [email, setEmail] = useState("Williams@fff.com");
   const [password, setPassword] = useState("ABcd1234!@");
-  const [first, setFirst] = useState("");
-  const [last, setLast] = useState("");
+  const [name, setName] = useState("");
+  const [lastname, setLastname] = useState("");
+
+  const dispatch = useDispatch();
   // const name = "";
-  const { signup, error, isLoading } = useSignup();
+  // const { signup, error, isLoading } = useSignup();
 
   const ref = useRef(null);
   // const [locked, setLocked] = useState(true);
@@ -47,28 +51,28 @@ const Register = () => {
     console.log(el);
   }, []);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const name = first + " " + last;
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   // const name = first + " " + last;
 
-    await signup(email, password, name);
-  };
+  //   // await signup(email, password, name);
+  // };
 
-  function handlePassInput(e) {
-    if (passInput.value.length === 0) {
-      passLabel.innerHTML = "Strength";
-      addClass();
-    } else if (passInput.value.length < 4) {
-      passLabel.innerHTML = "weak";
-      addClass("weak");
-    } else if (passInput.value.length < 7) {
-      passLabel.innerHTML = "Not Bad";
-      addClass("average");
-    } else {
-      passLabel.innerHTML = "Strong";
-      addClass("strong");
-    }
-  }
+  // function handlePassInput(e) {
+  //   if (passInput.value.length === 0) {
+  //     passLabel.innerHTML = "Strength";
+  //     addClass();
+  //   } else if (passInput.value.length < 4) {
+  //     passLabel.innerHTML = "weak";
+  //     addClass("weak");
+  //   } else if (passInput.value.length < 7) {
+  //     passLabel.innerHTML = "Not Bad";
+  //     addClass("average");
+  //   } else {
+  //     passLabel.innerHTML = "Strong";
+  //     addClass("strong");
+  //   }
+  // }
   function togglePassInput(e) {
     const type = passInput.getAttribute("type");
     if (type === "password") {
@@ -99,14 +103,14 @@ const Register = () => {
       passInput.style.background = "#112d37";
     }
   }
-  function addClass(className) {
-    percentBar.classList.remove("weak");
-    percentBar.classList.remove("average");
-    percentBar.classList.remove("strong");
-    if (className) {
-      percentBar.classList.add(className);
-    }
-  }
+  // function addClass(className) {
+  //   percentBar.classList.remove("weak");
+  //   percentBar.classList.remove("average");
+  //   percentBar.classList.remove("strong");
+  //   if (className) {
+  //     percentBar.classList.add(className);
+  //   }
+  // }
 
   return (
     <div className="page">
@@ -141,7 +145,29 @@ const Register = () => {
             </div>
           </div>
 
-          <form className="auth-form" action="">
+          <form
+            className="auth-form"
+            action=""
+            onSubmit={(e) => {
+              e.preventDefault();
+              let dataToSubmit = {
+                email: email,
+                password: password,
+                name: name,
+                lastname: lastname,
+              };
+
+              dispatch(registerUser(dataToSubmit)).then((response) => {
+                console.log(email, password, name, lastname);
+                if (response.payload.success) {
+                  // NAVAGAT CODE
+                } else {
+                  alert("register went wrong");
+                  console.log(response.payload.err.errmsg);
+                }
+              });
+            }}
+          >
             <div className="label-input">
               <label htmlFor="">Full Name</label>
               <div className="validation-wrapper">
@@ -149,16 +175,16 @@ const Register = () => {
                   className="fname names"
                   type="text"
                   placeholder="First Name"
-                  onChange={(e) => setFirst(e.target.value)}
-                  value={first}
+                  onChange={(e) => setName(e.target.value)}
+                  value={name}
                   required
                 />
                 <input
                   type="text"
                   className="lname names"
                   placeholder="Last Name"
-                  onChange={(e) => setLast(e.target.value)}
-                  value={last}
+                  onChange={(e) => setLastname(e.target.value)}
+                  value={lastname}
                   required
                 />
                 <div className="validation">*</div>
@@ -202,13 +228,13 @@ const Register = () => {
               <button className="auth-button login">Create an Account</button>
             </Link> */}
             <button
-              onClick={handleSubmit}
+              // onClick={handleSubmit}
               className="auth-button login"
-              disabled={isLoading}
+              // disabled={isLoading}
             >
               Create an Account
             </button>
-            {error && <div>{error}</div>}
+            {/* {error && <div>{error}</div>} */}
           </form>
           <h6 className="center-item text-gray">Connect With Socials</h6>
           <div className="social-buttons">

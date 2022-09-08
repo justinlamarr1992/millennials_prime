@@ -1,6 +1,6 @@
 import React, { useRef, useState } from "react";
 import { Link, Navigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import { loginUser } from "../../Actions/userActions";
 // import { useLogin } from "../../Hooks/useLogin";
@@ -18,6 +18,8 @@ const SignIn = () => {
   const dispatch = useDispatch();
   const rememberMeChecked = localStorage.getItem("rememberMe") ? true : false;
   const [rememberMe, setRememberMe] = useState(rememberMeChecked);
+
+  const { user } = useSelector((state) => ({ ...state }));
 
   // const { login, error, isLoading } = useLogin();
   const ref = useRef(null);
@@ -112,7 +114,7 @@ const SignIn = () => {
                       } else {
                         localStorage.removeItem("rememberMe");
                       }
-                      <Navigate to="/" />;
+                      // <Navigate to="/" />;
                     } else {
                       console.log(response);
                       alert("Something went wrong here");

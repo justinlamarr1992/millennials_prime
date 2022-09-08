@@ -1,9 +1,9 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 
 import axios from "axios";
-import { USER_SERVER } from "../config";
-import { useSelector } from "react-redux";
+import { logoutUser } from "../../Actions/userActions";
 
 // import { useLogout } from "../../Hooks/useLogout";
 // import { useAuthContext } from "../../Hooks/useAuthContext";
@@ -21,14 +21,23 @@ import "./navBar.css";
 
 const NavBar = (props) => {
   const user = useSelector((state) => state.user);
+  const dispatch = useDispatch();
   // const { logout } = useLogout();
   // const { user } = useAuthContext();
 
   const handleClick = () => {
     // logout();
-    axios.get(`${USER_SERVER}/logout`).then((response) => {
+    // axios.get(`${USER_SERVER}/logout`).then((response) => {
+    //   if (response.status === 200) {
+    //     <NavLink to="/auth/signin" />;
+    //   } else {
+    //     alert("Log Out Failed");
+    //   }
+    // });
+
+    dispatch(logoutUser).then((response) => {
       if (response.status === 200) {
-        <NavLink to="/auth/signin" />;
+        // <NavLink to="/auth/signin" />;
       } else {
         alert("Log Out Failed");
       }
@@ -113,7 +122,22 @@ const NavBar = (props) => {
           </li>
           <li className="nav-list bottom">
             <div className="test test1">
-              <NavLink key="signout" to="/auth/signin" onClick={handleClick}>
+              <NavLink
+                key="signout"
+                to="/auth/signin"
+                onClick={handleClick}
+                // onClick={(e) => {
+                //   e.preventDefault();
+                //   dispatch(logoutUser).then((response) => {
+                //     if (response.payload.success) {
+                //       // NAVAGAT CODE
+                //     } else {
+                //       alert("register went wrong");
+                //       console.log(response.payload.err.errmsg);
+                //     }
+                //   });
+                // }}
+              >
                 <FaSignOutAlt />
               </NavLink>
             </div>

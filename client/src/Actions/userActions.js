@@ -29,7 +29,7 @@ export function auth() {
     payload: request,
   };
 }
-export function logoutUSer() {
+export function logoutUser() {
   const request = axios
     .get(`${USER_SERVER}/logout`)
     .then((response) => response.data);

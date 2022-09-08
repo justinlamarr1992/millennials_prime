@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import VideoBlock from "../../Components/reusuables/catalog/VideoBlock";
-import TimeCalc from "../../Components/reusuables/TimeCalc";
+
+import axios from "axios";
 
 import "./primeshow.css";
 
@@ -12,16 +13,46 @@ import {
   primePostData,
 } from "../../Components/reusuables/post/data";
 import { Link } from "react-router-dom";
+
 const Catalog = () => {
+  const [videos, setVideos] = useState([]);
+
+  useEffect(() => {
+    axios.get("/api/video/getVideos").then((response) => {
+      console.log(response);
+      if (response.data.success) {
+        console.log(response.data.videos);
+        setVideos(response.data.videos);
+      } else {
+        alert("Failed to get Videos");
+      }
+    });
+  }, []);
+
   const stateInfo = () => {
     /* <Link to={`/user/users/${data.user}`}> */
   };
+
+  const renderVideoBlock = videos.map((video, index) => {
+    const videoData = { ...video };
+    // console.log(videoData);
+    return (
+      <Link
+        to={`/prime-news/viewer/${video._id}`}
+        // state={videoData}
+      >
+        <VideoBlock key={index} {...video} />
+      </Link>
+    );
+    // return <h1>{videoData.title}</h1>;
+  });
   return (
     <div className="page">
       <div className="catalog-container">
         <h1>Prime News Videos</h1>
         <div className="catalog-shows">
-          {primePostData.map((data) => {
+          {renderVideoBlock}
+          {/* {videos.map((data) => {
             const videoData = { ...data };
             console.log(videoData);
             return (
@@ -29,7 +60,7 @@ const Catalog = () => {
                 <VideoBlock key={data.uploadedVid.number} {...data} />
               </Link>
             );
-          })}
+          })} */}
         </div>
       </div>
     </div>

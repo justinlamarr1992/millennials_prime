@@ -54,7 +54,7 @@ function App(props, state) {
           </Route>
           {/* Prime Shows */}
           <Route path="/prime-news">
-            <Route path="viewer" element={<PrimeShow />} />
+            <Route path="viewer/:videoId" element={<PrimeShow />} />
             <Route path="upload-content" element={<UploadContent />} />
             <Route path="catalog" element={<Catalog />} />
           </Route>

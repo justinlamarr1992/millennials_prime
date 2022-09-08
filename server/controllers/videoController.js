@@ -80,4 +80,31 @@ const uploadVideo = async (req, res) => {
   });
 };
 
-module.exports = { createVideo, createThumbnail, uploadVideo };
+const getVideos = async (req, res) => {
+  Video.find()
+    // .populate("userPosting") THIS WILL BE LATER
+    // FOR NOW JUST USE PRIME VIEWS VS REGULAR
+    .populate("prime")
+    .exec((err, videos) => {
+      if (err) return res.status(400).send(err);
+      res.status(200).json({ success: true, videos });
+    });
+};
+
+const getSingleVideo = async (req, res) => {
+  Video.findOne({ _id: req.body.videoId })
+    // .populate("userPosting") THIS WILL BE LATER
+    // FOR NOW JUST USE PRIME VIEWS VS REGULAR
+    .exec((err, video) => {
+      if (err) return res.status(400).send(err);
+      res.status(200).json({ success: true, video });
+    });
+};
+
+module.exports = {
+  createVideo,
+  createThumbnail,
+  uploadVideo,
+  getVideos,
+  getSingleVideo,
+};

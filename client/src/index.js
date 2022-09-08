@@ -14,6 +14,8 @@ import ReduxThunk from "redux-thunk";
 import reportWebVitals from "./reportWebVitals";
 import { AuthContextProvider } from "./Context/AuthContext";
 import { PostsContextProvider } from "./Context/PostsContext";
+import { composeWithDevTools } from "redux-devtools-extension";
+import rootReducer from "./Reducers";
 
 // This too
 const createStoreWithMiddleware = applyMiddleware(
@@ -21,15 +23,14 @@ const createStoreWithMiddleware = applyMiddleware(
   ReduxThunk
 )(createStore);
 
+const store = createStore(rootReducer, composeWithDevTools());
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     <Provider
-      store={createStoreWithMiddleware(
-        Reducer,
-        window.__REDUX_DEVTOOLS_EXTENSION__ &&
-          window.__REDUX_DEVTOOLS_EXTENSION__()
-      )}
+      // store={createStoreWithMiddleware(Reducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())}
+      store={store}
     >
       <BrowserRouter>
         {/* <AuthContextProvider> */}

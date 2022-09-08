@@ -33,7 +33,7 @@ const UploadContent = () => {
   const uploadRef = useRef(false);
   const artworkRef = useRef(false);
 
-  const Authorization = `Bearer ${user.token}`;
+  // const Authorization = `Bearer ${user.token}`;
 
   function uploadCheck(e) {
     if (uploadRef.current.selectedIndex == 0) {
@@ -126,9 +126,9 @@ const UploadContent = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    if (user.userData && !user.userData.isAuth) {
-      return alert("Please Login First");
-    }
+    // if (user.userData && !user.userData.isAuth) {
+    //   return alert("Please Login First");
+    // }
 
     if (
       title === "" ||
@@ -144,7 +144,7 @@ const UploadContent = () => {
     const variables = {
       // TODO: Comeback later to solve the user problem
       // userPosting: "TEst User HArd Coded",
-      userPosting: user.userData._id,
+      // userPosting: user.userData._id,
       title: title,
       description: description,
       prime: prime,
@@ -308,10 +308,13 @@ const UploadContent = () => {
                 <div className="label-input">
                   <label htmlFor="">Who is the video for?</label>
                   <select onChange={handleWhoChange}>
-                    <option key={0} value={0}>
-                      Millennial's
+                    <option value="" disabled selected>
+                      Select your option
                     </option>
                     <option key={1} value={1}>
+                      Millennial's
+                    </option>
+                    <option key={2} value={2}>
                       Primes
                     </option>
                   </select>

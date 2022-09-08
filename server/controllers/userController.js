@@ -44,12 +44,14 @@ const loginUser = async (req, res) => {
           .json({ loginSuccess: true, userId: user._id });
       });
     });
+
+    console.log(user);
   });
 };
 
 const logoutUser = async (req, res) => {
   User.findOneAndUpdate(
-    { _id: req.user._id },
+    { _id: req.userId },
     { token: "", tokenExp: "" },
     (err, doc) => {
       if (err) return res.json({ success: false, err });
