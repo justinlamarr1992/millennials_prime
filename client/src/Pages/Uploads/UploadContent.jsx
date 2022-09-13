@@ -143,7 +143,7 @@ const UploadContent = () => {
 
     const variables = {
       // TODO: Comeback later to solve the user problem
-      // userPosting: "TEst User HArd Coded",
+      userPosting: "TEst User HArd Coded",
       // userPosting: user.userData._id,
       title: title,
       description: description,
@@ -186,6 +186,7 @@ const UploadContent = () => {
         };
         setFilePath(response.data.filePath);
         //generate thumbnail with this file path
+        console.log("Starting Thumbnail front end");
         axios.post("/api/video/thumbnail", variable).then((response) => {
           if (response.data.success) {
             setDuration(response.data.fileDuration);

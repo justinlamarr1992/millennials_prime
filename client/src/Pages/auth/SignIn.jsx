@@ -24,6 +24,28 @@ const SignIn = () => {
   // const { login, error, isLoading } = useLogin();
   const ref = useRef(null);
 
+  // const loginUser(dataToSubmit) => {
+
+  // }
+  //   .then((response) => {
+  //     console.log(email);
+  //     if (response.payload.loginSuccess) {
+  //       window.localStorage.setItem("userId", response.payload.userId);
+  //       if (rememberMe === true) {
+  //         window.localStorage.setItem("rememberMe", e.id);
+  //       } else {
+  //         localStorage.removeItem("rememberMe");
+  //       }
+  //       // <Navigate to="/" />;
+  //     } else {
+  //       console.log(response);
+  //       alert("Something went wrong here");
+  //     }
+  //   })
+  //   .catch((err) => {
+  //     alert(err);
+  //   });
+
   // const handleSubmit = (e) => {
   //   e.preventDefault();
   //   setTimeout(() => {
@@ -96,34 +118,34 @@ const SignIn = () => {
             // onSubmit={handleSubmit}
             onSubmit={(e) => {
               e.preventDefault();
-              setTimeout(() => {
-                let dataToSubmit = {
-                  email: email,
-                  password: password,
-                };
-                dispatch(loginUser(dataToSubmit))
-                  .then((response) => {
-                    console.log(email);
-                    if (response.payload.loginSuccess) {
-                      window.localStorage.setItem(
-                        "userId",
-                        response.payload.userId
-                      );
-                      if (rememberMe === true) {
-                        window.localStorage.setItem("rememberMe", e.id);
-                      } else {
-                        localStorage.removeItem("rememberMe");
-                      }
-                      // <Navigate to="/" />;
-                    } else {
-                      console.log(response);
-                      alert("Something went wrong here");
-                    }
-                  })
-                  .catch((err) => {
-                    alert(err);
-                  });
-              }, 500);
+              // setTimeout(() => {
+              let dataToSubmit = {
+                email: email,
+                password: password,
+              };
+              dispatch(loginUser(dataToSubmit));
+              // .then((response) => {
+              //   console.log(email);
+              //   if (response.payload.loginSuccess) {
+              //     window.localStorage.setItem(
+              //       "userId",
+              //       response.payload.userId
+              //     );
+              //     if (rememberMe === true) {
+              //       window.localStorage.setItem("rememberMe", e.id);
+              //     } else {
+              //       localStorage.removeItem("rememberMe");
+              //     }
+              //     // <Navigate to="/" />;
+              //   } else {
+              //     console.log(response);
+              //     alert("Something went wrong here");
+              //   }
+              // })
+              // .catch((err) => {
+              //   alert(err);
+              // });
+              // }, 500);
             }}
           >
             <div className="label-input">

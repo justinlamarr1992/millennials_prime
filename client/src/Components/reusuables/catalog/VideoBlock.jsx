@@ -21,7 +21,8 @@ const VideoBlock = ({
       {/* <img className="video-block-thumbnail con-shade" src={Thumbnail} alt="" /> */}
       <img
         className="video-block-thumbnail con-shade"
-        src={`http://localhost:4000/${thumbnail}`}
+        src={thumbnail}
+        // src={`http://localhost:4000/${thumbnail}`}
         alt=""
       />
       <h4 className="video-block-title">{title}</h4>
@@ -32,8 +33,8 @@ const VideoBlock = ({
           <TimeCalc postDate={new Date(createdAt)} />
         </h5>
         <h5 className="video-block-numbers-view text-gray">{views} Views</h5>
-        <h1>{mins}</h1>
-        <h1>{secs}</h1>
+        {/* <h1>{mins}</h1>
+        <h1>{secs}</h1> */}
       </div>
     </section>
   );

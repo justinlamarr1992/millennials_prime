@@ -8,7 +8,35 @@
 
         display: flex;
         justify-content: center;
+}
+.side-video-content{
+  margin-top: 1rem;
+  padding:0 2rem;
+  display: flex;
+  flex-direction: row;
+  /* TODO: Add the scroll stuff here */
+}
+.side-view-container{
+   height: 100%;
+    width: 20%;
+    /* background: var(--pri-t); */
+    background: #140f00;
+    /* background: #2D0A0F; */
+        color: var(--sec-t);
 
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        /* TODO: MAke dynamic for mobile */
+}
+
+.side-video-content-thumbnail{
+  width: 40%;
+  color: var(--tri-t);
+}
+.side-video-content-info{
+  color: var(--tri-t);
+  width: 50%;
 }
 .view-content{
     margin: auto;
@@ -16,6 +44,10 @@
   display: flex;
   flex-direction: column;
   color: var(--sec-t);
+}
+.view-content-info{
+  display: flex;
+  justify-content: space-between;
 }
 
 .catalog-container{
@@ -39,7 +71,10 @@
 }
 
 .video-block-thumbnail{
+  min-height: 200px;
   width: 100%;
+  /* height: ; */
+background-color: gray;
   border-radius: var(--brad);
 }
 .video-block-title{}
@@ -52,3 +87,7 @@
 .video-block-numbers-date{}
 .video-block-numbers-view{}
 
+.subscribe-button{
+  background-color: var(--tri-c);
+  color: var(--sec-t);
+}

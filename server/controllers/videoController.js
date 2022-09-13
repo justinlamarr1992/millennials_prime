@@ -39,6 +39,7 @@ const createVideo = async (req, res) => {
 };
 
 const createThumbnail = async (req, res) => {
+  console.log("Starting Thumbnail back end");
   let thumbsFilePath = "";
   let fileDuration = "";
 
