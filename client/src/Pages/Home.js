@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useSelector } from "react-redux";
 // import { usePostsContext } from "../Hooks/usePostsContext";
 import useFetch from "../Hooks/useFetch";
 
@@ -16,6 +17,8 @@ import MainModal from "../Components/reusuables/modals/MainModal";
 
 const Home = () => {
   const [modal, setModal] = useState(true);
+  // testing useSelectpr
+  // const user = useSelector((state) => state.user);
 
   const [userInfo, setUserInfo] = useState({});
 
@@ -97,8 +100,8 @@ const Home = () => {
         ref={widthRef}
       >
         <SearchBar />
-
         <PrimeNews />
+
         <HotItems />
         <FeatPrimes />
         {/* <HomeFeedPost /> */}

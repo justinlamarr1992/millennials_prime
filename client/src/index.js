@@ -25,6 +25,19 @@ const createStoreWithMiddleware = applyMiddleware(
 
 const store = createStore(rootReducer, composeWithDevTools());
 
+// Testing Store
+// const store = createStore(
+//   () => ({
+//     user: [
+//       {
+//         name: "robin",
+//         views: 1,
+//       },
+//     ],
+//   }),
+//   composeWithDevTools()
+// );
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>

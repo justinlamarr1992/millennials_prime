@@ -1,5 +1,6 @@
-import React, { Suspense } from "react";
+import React, { Suspense, useEffect } from "react";
 import { Route, Routes, Navigate, BrowserRouter } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Auth from "./HigherOrderComponents/auth";
 // import { useAuthContext } from "./Hooks/useAuthContext";
 import "./App.css";
@@ -34,8 +35,29 @@ import UploadContent from "./Pages/Uploads/UploadContent";
 import Catalog from "./Pages/ShowView/Catalog";
 
 import { NotFound } from "./Pages/NotFound/NotFound";
+import { loginUser } from "./Actions/userActions";
+// import { unsubscribe } from "../../server/routes/video";
 
-function App(props, state) {
+const App = (props, state) => {
+  const dispatch = useDispatch();
+
+  // useEffect(() => {
+  //   const unsubscribe = loginUser(async (user) => {
+  //     if (user) {
+  //       const token = await user.token;
+  //       console.log("user", user);
+  //       dispatch({
+  //         type: "LOGIN_USER",
+  //         payload: {
+  //           name: "Justin",
+  //         },
+  //       });
+  //     }
+  //   });
+  //   return () => unsubscribe();
+  // }, []);
+  // to check auth statte with
+
   return (
     <Suspense fallback={<div>Loading...</div>}>
       <div className="App">
@@ -62,6 +84,6 @@ function App(props, state) {
       </div>
     </Suspense>
   );
-}
+};
 
 export default App;
