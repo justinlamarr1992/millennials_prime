@@ -16,3 +16,5 @@ const verifyJWT = (req, res, next) => {
 };
 
 module.exports = verifyJWT;
+
+// FIGURE OUT WHEE THE HEADERS ARE
