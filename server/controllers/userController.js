@@ -1,5 +1,8 @@
 const { User } = require("../models/userModel");
 
+// Users Controller
+// Employees Controllers Later Primes
+
 const getUser = async (req, res) => {
   res.status(200).json({
     _id: req.user._id,

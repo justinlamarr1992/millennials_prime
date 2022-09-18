@@ -1,11 +1,15 @@
 import React, { Suspense, useEffect } from "react";
-import { Route, Routes, Navigate, BrowserRouter } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
+
+import RequireAuth from "./Features/auth/RequireAuth";
 import Auth from "./HigherOrderComponents/auth";
 // import { useAuthContext } from "./Hooks/useAuthContext";
 import "./App.css";
 
 import Text from "./Pages/TestPage/Text";
+
+import Layout from "./Components/Layout";
 
 import NavBar from "./Components/nav/NavBar";
 
@@ -36,53 +40,48 @@ import Catalog from "./Pages/ShowView/Catalog";
 
 import { NotFound } from "./Pages/NotFound/NotFound";
 import { loginUser } from "./Actions/userActions";
+import SuccessSignIn from "./Pages/auth/SuccessSignIn";
 // import { unsubscribe } from "../../server/routes/video";
 
 const App = (props, state) => {
   const dispatch = useDispatch();
 
-  // useEffect(() => {
-  //   const unsubscribe = loginUser(async (user) => {
-  //     if (user) {
-  //       const token = await user.token;
-  //       console.log("user", user);
-  //       dispatch({
-  //         type: "LOGIN_USER",
-  //         payload: {
-  //           name: "Justin",
-  //         },
-  //       });
-  //     }
-  //   });
-  //   return () => unsubscribe();
-  // }, []);
-  // to check auth statte with
-
   return (
-    <Suspense fallback={<div>Loading...</div>}>
-      <div className="App">
-        <NavBar />
-        <Routes className="container-comp">
-          <Route path="/" element={<Home />} />
-          {/* Auth */}
-          <Route path="/auth">
-            <Route path="register" element={<Register />} />
-            <Route path="signout" element={<SignOut />} />
-            <Route path="signin" element={<SignIn />} />
-            <Route path="passwordrecovery" element={<PasswordRecovery />} />
-            <Route path="questionaire" element={<Questionaire />} />
-            <Route path="questionaire2" element={<Questionaire2 />} />
-            <Route path="questionaire3" element={<Questionaire3 />} />
-          </Route>
-          {/* Prime Shows */}
-          <Route path="/prime-news">
-            <Route path="viewer/:videoId" element={<PrimeShow />} />
-            <Route path="upload-content" element={<UploadContent />} />
-            <Route path="catalog" element={<Catalog />} />
-          </Route>
-        </Routes>
-      </div>
-    </Suspense>
+    // <Suspense fallback={<div>Loading...</div>}>
+    <div className="App">
+      <NavBar />
+      <Routes className="container-comp">
+        <Route path="/" element={<Home />} />
+
+        {/* Public Routes */}
+        <Route path="/" element={<Layout />}>
+          <Route index element={<ContactUs />} />
+        </Route>
+
+        {/* Protected Routes */}
+        <Route element={<RequireAuth />}>
+          <Route path="yourin" element={<SuccessSignIn />} />
+        </Route>
+
+        {/* Auth */}
+        <Route path="/auth">
+          <Route path="register" element={<Register />} />
+          <Route path="signout" element={<SignOut />} />
+          <Route path="signin" element={<SignIn />} />
+          <Route path="passwordrecovery" element={<PasswordRecovery />} />
+          <Route path="questionaire" element={<Questionaire />} />
+          <Route path="questionaire2" element={<Questionaire2 />} />
+          <Route path="questionaire3" element={<Questionaire3 />} />
+        </Route>
+        {/* Prime Shows */}
+        <Route path="/prime-news">
+          <Route path="viewer/:videoId" element={<PrimeShow />} />
+          <Route path="upload-content" element={<UploadContent />} />
+          <Route path="catalog" element={<Catalog />} />
+        </Route>
+      </Routes>
+    </div>
+    // </Suspense>
   );
 };
 

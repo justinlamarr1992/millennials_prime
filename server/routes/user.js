@@ -11,10 +11,10 @@ const router = express.Router();
 
 const { auth } = require("../middleware/auth");
 
-router.get("/auth", getUser);
-router.post("/signup", signupUser);
-router.post("/login", loginUser);
-router.get("/logout", logoutUser);
+// router.get("/auth", getUser);
+// router.post("/signup", signupUser);
+// router.post("/login", loginUser);
+// router.get("/logout", logoutUser);
 
 module.exports = router;
 

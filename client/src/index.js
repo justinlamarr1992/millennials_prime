@@ -1,12 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 
 // May need to delete lets see
 import Reducer from "./Reducers";
 import { Provider } from "react-redux";
+
+import { store } from "./App/store";
+
 import { createStore, applyMiddleware } from "redux";
 import promiseMiddleware from "redux-promise";
 import ReduxThunk from "redux-thunk";
@@ -23,34 +26,16 @@ const createStoreWithMiddleware = applyMiddleware(
   ReduxThunk
 )(createStore);
 
-const store = createStore(rootReducer, composeWithDevTools());
-
-// Testing Store
-// const store = createStore(
-//   () => ({
-//     user: [
-//       {
-//         name: "robin",
-//         views: 1,
-//       },
-//     ],
-//   }),
-//   composeWithDevTools()
-// );
+// const store = createStore(rootReducer, composeWithDevTools());
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Provider
-      // store={createStoreWithMiddleware(Reducer,window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__())}
-      store={store}
-    >
+    <Provider store={store}>
       <BrowserRouter>
-        {/* <AuthContextProvider> */}
-        {/* <PostsContextProvider> */}
-        <App />
-        {/* </PostsContextProvider> */}
-        {/* </AuthContextProvider> */}
+        <Routes>
+          <Route path="/*" element={<App />} />
+        </Routes>
       </BrowserRouter>
     </Provider>
   </React.StrictMode>

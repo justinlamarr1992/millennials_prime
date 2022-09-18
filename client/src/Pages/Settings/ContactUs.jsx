@@ -5,6 +5,7 @@ const ContactUs = () => {
     <div className="page">
       <div className="settings-container">
         <h2 className="settings-page-title">Contact Us</h2>
+        <h1>oiaushfdoiasdgfiausdfiuasdifuggaosdiugfoasidygfoiaygsdfoaiyg</h1>
 
         <SettingsModal />
       </div>

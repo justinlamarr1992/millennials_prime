@@ -1,5 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useSelector } from "react-redux";
+import {
+  selectCurrentUser,
+  selectCurrentToken,
+} from "../Features/auth/authSlice";
+import { Link } from "react-router-dom";
+
 // import { usePostsContext } from "../Hooks/usePostsContext";
 import useFetch from "../Hooks/useFetch";
 
@@ -18,9 +24,26 @@ import MainModal from "../Components/reusuables/modals/MainModal";
 const Home = () => {
   const [modal, setModal] = useState(true);
   // testing useSelectpr
-  // const user = useSelector((state) => state.user);
 
-  const [userInfo, setUserInfo] = useState({});
+  const content = (
+    <div className="page">
+      <div
+        className={"home-container " + (modal ? "user-true" : "user-false")}
+        ref={widthRef}
+      >
+        {/* <SearchBar /> */}
+        <PrimeNews />
+        {/* <HotItems />
+        <FeatPrimes /> */}
+        {/* <HomeFeedPost /> */}
+        {/* <PostList modal={modal} setModal={setModal} widthRef={widthRef} /> */}
+        {/* <button className="test-modal-button" onClick={onClick}>
+          Modal Test Button
+        </button>
+        {modal && <MainModal />} */}
+      </div>
+    </div>
+  );
 
   // const {
   //   data: user,
@@ -91,28 +114,28 @@ const Home = () => {
       // console.log(pageWidth);
     }
   };
+  return content;
+  // return (
+  //   <div className="page">
+  //     {/* <NavBar name="Justin" /> */}
+  //     <div
+  //       className={"home-container " + (modal ? "user-true" : "user-false")}
+  //       ref={widthRef}
+  //     >
+  //       <SearchBar />
+  //       <PrimeNews />
 
-  return (
-    <div className="page">
-      {/* <NavBar name="Justin" /> */}
-      <div
-        className={"home-container " + (modal ? "user-true" : "user-false")}
-        ref={widthRef}
-      >
-        <SearchBar />
-        <PrimeNews />
-
-        <HotItems />
-        <FeatPrimes />
-        {/* <HomeFeedPost /> */}
-        {/* <PostList modal={modal} setModal={setModal} widthRef={widthRef} /> */}
-        {/* <button className="test-modal-button" onClick={onClick}>
-          Modal Test Button
-        </button>
-        {modal && <MainModal />} */}
-      </div>
-    </div>
-  );
+  //       <HotItems />
+  //       <FeatPrimes />
+  //       {/* <HomeFeedPost /> */}
+  //       {/* <PostList modal={modal} setModal={setModal} widthRef={widthRef} /> */}
+  //       {/* <button className="test-modal-button" onClick={onClick}>
+  //         Modal Test Button
+  //       </button>
+  //       {modal && <MainModal />} */}
+  //     </div>
+  //   </div>
+  // );
 };
 
 export default Home;
