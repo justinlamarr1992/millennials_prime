@@ -27,6 +27,15 @@ app.use(credentials);
 
 // Cross Origin Resource Sharing
 app.use(cors(corsOptions));
+// app.use(
+//   cors({
+//     // Specific to orgin
+//     // origin: "http://127.0.0.1:4000",
+//     // origin: "http://localhost:4000",
+//     // Everything
+//     // origin: "*",
+//   })
+// );
 
 // Bulit-in middleware to handle urlencoded formdata
 app.use(express.urlencoded({ extended: false }));

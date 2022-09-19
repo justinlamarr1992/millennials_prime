@@ -58,6 +58,7 @@ const SignIn = () => {
       } else if (err.originalStatus === 400) {
         setErrMsg("Missing Username or Password");
       } else if (err.originalStatus === 401) {
+        console.log(err);
         setErrMsg("Unauthorized but its here");
       } else {
         setErrMsg("Login Failed");

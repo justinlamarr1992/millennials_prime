@@ -84,10 +84,35 @@ const login = async (req, res) => {
   }
 };
 
+const register = async (req, res) => {
+  const { email, password } = req.body;
+  if (!email || !password)
+    return res.status(400).json({ message: "Email and Password required" });
+
+  // check for duplicates usernames in the db
+  const duplicate = await User.findOne({ username: email }).exec();
+  if (duplicate) return res.sendStatus(409); //conflict
+  try {
+    //encrypt the password
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    //create and store the new user
+    const result = await User.create({
+      username: email,
+      password: hashedPassword,
+    });
+    console.log(result);
+    res.status(201).json({ success: `New user ${email} created` });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
+
 // Auth Controller
 // Logout Controller
 // Register Controller
 
 module.exports = {
   login,
+  register,
 };
