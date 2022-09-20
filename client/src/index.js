@@ -5,26 +5,26 @@ import "./index.css";
 import App from "./App";
 
 // May need to delete lets see
-import Reducer from "./Reducers";
+// import Reducer from "./Reducers";
 import { Provider } from "react-redux";
 
 import { store } from "./App/store";
 
-import { createStore, applyMiddleware } from "redux";
-import promiseMiddleware from "redux-promise";
-import ReduxThunk from "redux-thunk";
+// import { createStore, applyMiddleware } from "redux";
+// import promiseMiddleware from "redux-promise";
+// import ReduxThunk from "redux-thunk";
 
 import reportWebVitals from "./reportWebVitals";
-import { AuthContextProvider } from "./Context/AuthContext";
-import { PostsContextProvider } from "./Context/PostsContext";
-import { composeWithDevTools } from "redux-devtools-extension";
-import rootReducer from "./Reducers";
+// import { AuthContextProvider } from "./Context/AuthContext";
+// import { PostsContextProvider } from "./Context/PostsContext";
+// import { composeWithDevTools } from "redux-devtools-extension";
+// import rootReducer from "./Reducers";
 
 // This too
-const createStoreWithMiddleware = applyMiddleware(
-  promiseMiddleware,
-  ReduxThunk
-)(createStore);
+// const createStoreWithMiddleware = applyMiddleware(
+//   promiseMiddleware,
+//   ReduxThunk
+// )(createStore);
 
 // const store = createStore(rootReducer, composeWithDevTools());
 

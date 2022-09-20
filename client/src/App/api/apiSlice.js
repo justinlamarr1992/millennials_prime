@@ -9,10 +9,14 @@ const baseQuery = fetchBaseQuery({
   prepareHeaders: (headers, { getState }) => {
     const authtest = getState().auth;
     const token = getState().auth.token;
+    const getstate = getState();
+    console.log(getstate);
     if (token) {
       // TODO: bug fixing
       console.log(authtest);
-      headers.set("authorization", `Bearer ${token}`);
+      console.log(token);
+      headers.set("Authorization", `Bearer ${token}`);
+      // headers: { Authorization: `Bearer ${user.token}` }, past form of headers
     }
     return headers;
   },

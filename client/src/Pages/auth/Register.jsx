@@ -2,6 +2,8 @@ import React, { useRef, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
+import axios from "axios";
+
 import { registerUser } from "../../Actions/userActions";
 // import { useSignup } from "../../Hooks/useSignup";
 
@@ -37,9 +39,6 @@ const Register = () => {
   const percentBar = document.querySelector(".strength-percent span");
   const passLabel = document.querySelector(".strength-label");
 
-  // passInput.addEventListener("input", handlePassInput);
-  // toggleIcon.addEventListener("click", togglePassInput);
-
   useEffect(() => {
     const el2 = ref.current;
     console.log(el2);
@@ -51,28 +50,6 @@ const Register = () => {
     console.log(el);
   }, []);
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   // const name = first + " " + last;
-
-  //   // await signup(email, password, name);
-  // };
-
-  // function handlePassInput(e) {
-  //   if (passInput.value.length === 0) {
-  //     passLabel.innerHTML = "Strength";
-  //     addClass();
-  //   } else if (passInput.value.length < 4) {
-  //     passLabel.innerHTML = "weak";
-  //     addClass("weak");
-  //   } else if (passInput.value.length < 7) {
-  //     passLabel.innerHTML = "Not Bad";
-  //     addClass("average");
-  //   } else {
-  //     passLabel.innerHTML = "Strong";
-  //     addClass("strong");
-  //   }
-  // }
   function togglePassInput(e) {
     const type = passInput.getAttribute("type");
     if (type === "password") {
@@ -103,14 +80,20 @@ const Register = () => {
       passInput.style.background = "#112d37";
     }
   }
-  // function addClass(className) {
-  //   percentBar.classList.remove("weak");
-  //   percentBar.classList.remove("average");
-  //   percentBar.classList.remove("strong");
-  //   if (className) {
-  //     percentBar.classList.add(className);
-  //   }
-  // }
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    axios.get("/api/video/getVideos").then((response) => {
+      console.log(response);
+      if (response.data.success) {
+        console.log(response.data.videos);
+        // setVideos(response.data.videos);
+      } else {
+        alert("Failed to get Videos");
+      }
+    });
+    console.log("Works");
+  };
 
   return (
     <div className="page">
@@ -148,25 +131,26 @@ const Register = () => {
           <form
             className="auth-form"
             action=""
-            onSubmit={(e) => {
-              e.preventDefault();
-              let dataToSubmit = {
-                email: email,
-                password: password,
-                name: name,
-                lastname: lastname,
-              };
+            // onSubmit={(e) => {
+            //   e.preventDefault();
+            //   let dataToSubmit = {
+            //     email: email,
+            //     password: password,
+            //     name: name,
+            //     lastname: lastname,
+            //   };
 
-              dispatch(registerUser(dataToSubmit)).then((response) => {
-                console.log(email, password, name, lastname);
-                if (response.payload.success) {
-                  // NAVAGAT CODE
-                } else {
-                  alert("register went wrong");
-                  console.log(response.payload.err.errmsg);
-                }
-              });
-            }}
+            //   dispatch(registerUser(dataToSubmit)).then((response) => {
+            //     console.log(email, password, name, lastname);
+            //     if (response.payload.success) {
+            //       // NAVAGAT CODE
+            //     } else {
+            //       alert("register went wrong");
+            //       console.log(response.payload.err.errmsg);
+            //     }
+            //   });
+            // }}
+            onSubmit={handleSubmit}
           >
             <div className="label-input">
               <label htmlFor="">Full Name</label>
@@ -247,3 +231,97 @@ const Register = () => {
   );
 };
 export default Register;
+
+// ORGINAL
+
+// <form
+//   className="auth-form"
+//   action=""
+//   onSubmit={(e) => {
+//     e.preventDefault();
+//     let dataToSubmit = {
+//       email: email,
+//       password: password,
+//       name: name,
+//       lastname: lastname,
+//     };
+
+//     dispatch(registerUser(dataToSubmit)).then((response) => {
+//       console.log(email, password, name, lastname);
+//       if (response.payload.success) {
+//         // NAVAGAT CODE
+//       } else {
+//         alert("register went wrong");
+//         console.log(response.payload.err.errmsg);
+//       }
+//     });
+//   }}
+// >
+//   <div className="label-input">
+//     <label htmlFor="">Full Name</label>
+//     <div className="validation-wrapper">
+//       <input
+//         className="fname names"
+//         type="text"
+//         placeholder="First Name"
+//         onChange={(e) => setName(e.target.value)}
+//         value={name}
+//         required
+//       />
+//       <input
+//         type="text"
+//         className="lname names"
+//         placeholder="Last Name"
+//         onChange={(e) => setLastname(e.target.value)}
+//         value={lastname}
+//         required
+//       />
+//       <div className="validation">*</div>
+//     </div>
+//   </div>
+
+//   <div className="label-input">
+//     <label htmlFor="">Email</label>
+//     <input
+//       type="email"
+//       onChange={(e) => setEmail(e.target.value)}
+//       value={email}
+//     />
+//   </div>
+
+//   <div className="label-input">
+//     <label htmlFor="">Password</label>
+//     <div className="input-group">
+//       <input
+//         type="password"
+//         placeholder="Enter password"
+//         // onChange={handlePassInput}
+//         onChange={(e) => setPassword(e.target.value)}
+//         value={password}
+//       />
+
+//       <span className="toggle" onClick={togglePassInput}>
+//         <FaEyeSlash className="eye-slash" />
+//       </span>
+//       <span className="ripple"></span>
+//     </div>
+//     <div className="pass-strength">
+//       <div className="strength-percentage">
+//         <span></span>
+//       </div>
+//       <span className="password-label">Strength</span>
+//     </div>
+//   </div>
+
+//   {/* <Link className="" key="questionaire" to="/questionaire">
+//     <button className="auth-button login">Create an Account</button>
+//   </Link> */}
+//   <button
+//     // onClick={handleSubmit}
+//     className="auth-button login"
+//     // disabled={isLoading}
+//   >
+//     Create an Account
+//   </button>
+//   {/* {error && <div>{error}</div>} */}
+// </form>;

@@ -26,16 +26,16 @@ app.use(logger);
 app.use(credentials);
 
 // Cross Origin Resource Sharing
-app.use(cors(corsOptions));
-// app.use(
-//   cors({
-//     // Specific to orgin
-//     // origin: "http://127.0.0.1:4000",
-//     // origin: "http://localhost:4000",
-//     // Everything
-//     // origin: "*",
-//   })
-// );
+// app.use(cors(corsOptions));
+app.use(
+  cors({
+    // Specific to orgin
+    // origin: "http://127.0.0.1:4000",
+    origin: "http://localhost:4000",
+    // Everything
+    // origin: "*",
+  })
+);
 
 // Bulit-in middleware to handle urlencoded formdata
 app.use(express.urlencoded({ extended: false }));
@@ -64,10 +64,11 @@ app.use(verifyJWT);
 
 // Routes
 const authRoutes = require("./routes/auth");
-const userRoutes = require("./routes/user");
+// const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
 const videoRoutes = require("./routes/video");
 app.use("/api/auth", authRoutes);
+// app.use("/api/auth", require("./routes/auth"));
 // app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/video", videoRoutes);
@@ -85,15 +86,15 @@ app.all("*", (req, res) => {
 
 app.use(errorHandler);
 
-if (process.env.NODE_ENV === "production") {
-  // Set static folder
-  app.use(express.static("client/build"));
+// if (process.env.NODE_ENV === "production") {
+//   // Set static folder
+//   app.use(express.static("client/build"));
 
-  // index.html for all page routes
-  app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-  });
-}
+//   // index.html for all page routes
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+//   });
+// }
 
 mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB");

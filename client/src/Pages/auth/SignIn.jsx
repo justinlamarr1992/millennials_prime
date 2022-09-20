@@ -20,7 +20,7 @@ const SignIn = () => {
   const errRef = useRef();
   const ref = useRef(null);
 
-  const [email, setEmail] = useState("");
+  const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
@@ -32,25 +32,26 @@ const SignIn = () => {
   useEffect(() => {
     emailRef.current.focus();
   }, []);
+
   useEffect(() => {
     setErrMsg("");
-  }, [email, password]);
+  }, [user, password]);
 
-  const rememberMeChecked = localStorage.getItem("rememberMe") ? true : false;
-  const [rememberMe, setRememberMe] = useState(rememberMeChecked);
+  // const rememberMeChecked = localStorage.getItem("rememberMe") ? true : false;
+  // const [rememberMe, setRememberMe] = useState(rememberMeChecked);
 
-  const { user } = useSelector((state) => ({ ...state }));
+  // const { user } = useSelector((state) => ({ ...state }));
 
   // Dave GraYS
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const userData = await login({ email, password }).unwrap();
+      const userData = await login({ user, password }).unwrap();
       dispatch(setCredentials({ ...userData, user }));
-      setEmail("");
+      setUser("");
       setPassword("");
-      navigate("/");
+      navigate("/yourin");
     } catch (err) {
       if (!err?.originalStatus) {
         // isLoading: true until timeout occurs
@@ -159,8 +160,11 @@ const SignIn = () => {
               <label htmlFor="">Email</label>
               <input
                 type="email"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
+                onChange={(e) => {
+                  setUser(e.target.value);
+                  console.log(user);
+                }}
+                value={user}
                 id="email"
                 ref={emailRef}
                 required
@@ -206,12 +210,12 @@ const SignIn = () => {
     </div>
   );
 
-  const handleRememberMe = () => {
-    setRememberMe(!rememberMe);
-  };
-  const initialEmail = localStorage.getItem("rememberMe")
-    ? localStorage.getItem("rememberMe")
-    : "";
+  // const handleRememberMe = () => {
+  //   setRememberMe(!rememberMe);
+  // };
+  // const initialEmail = localStorage.getItem("rememberMe")
+  //   ? localStorage.getItem("rememberMe")
+  //   : "";
 
   return content;
 

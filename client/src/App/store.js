@@ -9,7 +9,6 @@ export const store = configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
-  // TODO: Production change
   devTools: true,
   //   in production this will be false
 });
