@@ -3,9 +3,8 @@ import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import axios from "axios";
-
-import { registerUser } from "../../Actions/userActions";
-// import { useSignup } from "../../Hooks/useSignup";
+import { registerUser } from "../../Actions/userActions"; //Trail 1
+// import { useSignup } from "../../Hooks/useSignup"; Trail 2
 
 import "./auth.css";
 import Logo from "../../Assets/Images/MillennialsPrimeLogo.png";
@@ -131,26 +130,25 @@ const Register = () => {
           <form
             className="auth-form"
             action=""
-            // onSubmit={(e) => {
-            //   e.preventDefault();
-            //   let dataToSubmit = {
-            //     email: email,
-            //     password: password,
-            //     name: name,
-            //     lastname: lastname,
-            //   };
+            onSubmit={(e) => {
+              e.preventDefault();
+              let dataToSubmit = {
+                email: email,
+                password: password,
+                name: name,
+                lastname: lastname,
+              };
 
-            //   dispatch(registerUser(dataToSubmit)).then((response) => {
-            //     console.log(email, password, name, lastname);
-            //     if (response.payload.success) {
-            //       // NAVAGAT CODE
-            //     } else {
-            //       alert("register went wrong");
-            //       console.log(response.payload.err.errmsg);
-            //     }
-            //   });
-            // }}
-            onSubmit={handleSubmit}
+              dispatch(registerUser(dataToSubmit)).then((response) => {
+                console.log(email, password, name, lastname);
+                if (response.payload.success) {
+                  // NAVAGAT CODE
+                } else {
+                  alert("register went wrong");
+                  console.log(response.payload.err.errmsg);
+                }
+              });
+            }}
           >
             <div className="label-input">
               <label htmlFor="">Full Name</label>
@@ -209,8 +207,8 @@ const Register = () => {
             </div>
 
             {/* <Link className="" key="questionaire" to="/questionaire">
-              <button className="auth-button login">Create an Account</button>
-            </Link> */}
+    <button className="auth-button login">Create an Account</button>
+  </Link> */}
             <button
               // onClick={handleSubmit}
               className="auth-button login"
@@ -220,6 +218,7 @@ const Register = () => {
             </button>
             {/* {error && <div>{error}</div>} */}
           </form>
+
           <h6 className="center-item text-gray">Connect With Socials</h6>
           <div className="social-buttons">
             <button className="auth-button google">Connect With Google</button>
@@ -233,95 +232,101 @@ const Register = () => {
 export default Register;
 
 // ORGINAL
+{
+  /* Current failure */
+}
+{
+  /* <form
+            className="auth-form"
+            action=""
+            onSubmit={(e) => {
+              e.preventDefault();
+              let dataToSubmit = {
+                email: email,
+                password: password,
+                name: name,
+                lastname: lastname,
+              };
 
-// <form
-//   className="auth-form"
-//   action=""
-//   onSubmit={(e) => {
-//     e.preventDefault();
-//     let dataToSubmit = {
-//       email: email,
-//       password: password,
-//       name: name,
-//       lastname: lastname,
-//     };
+              dispatch(registerUser(dataToSubmit)).then((response) => {
+                console.log(email, password, name, lastname);
+                if (response.payload.success) {
+                  NAVAGAT CODE
+                } else {
+                  alert("register went wrong");
+                  console.log(response.payload.err.errmsg);
+                }
+              });
+            }}
+            onSubmit={handleSubmit}
+          >
+            <div className="label-input">
+              <label htmlFor="">Full Name</label>
+              <div className="validation-wrapper">
+                <input
+                  className="fname names"
+                  type="text"
+                  placeholder="First Name"
+                  onChange={(e) => setName(e.target.value)}
+                  value={name}
+                  required
+                />
+                <input
+                  type="text"
+                  className="lname names"
+                  placeholder="Last Name"
+                  onChange={(e) => setLastname(e.target.value)}
+                  value={lastname}
+                  required
+                />
+                <div className="validation">*</div>
+              </div>
+            </div>
 
-//     dispatch(registerUser(dataToSubmit)).then((response) => {
-//       console.log(email, password, name, lastname);
-//       if (response.payload.success) {
-//         // NAVAGAT CODE
-//       } else {
-//         alert("register went wrong");
-//         console.log(response.payload.err.errmsg);
-//       }
-//     });
-//   }}
-// >
-//   <div className="label-input">
-//     <label htmlFor="">Full Name</label>
-//     <div className="validation-wrapper">
-//       <input
-//         className="fname names"
-//         type="text"
-//         placeholder="First Name"
-//         onChange={(e) => setName(e.target.value)}
-//         value={name}
-//         required
-//       />
-//       <input
-//         type="text"
-//         className="lname names"
-//         placeholder="Last Name"
-//         onChange={(e) => setLastname(e.target.value)}
-//         value={lastname}
-//         required
-//       />
-//       <div className="validation">*</div>
-//     </div>
-//   </div>
+            <div className="label-input">
+              <label htmlFor="">Email</label>
+              <input
+                type="email"
+                onChange={(e) => setEmail(e.target.value)}
+                value={email}
+              />
+            </div>
 
-//   <div className="label-input">
-//     <label htmlFor="">Email</label>
-//     <input
-//       type="email"
-//       onChange={(e) => setEmail(e.target.value)}
-//       value={email}
-//     />
-//   </div>
+            <div className="label-input">
+              <label htmlFor="">Password</label>
+              <div className="input-group">
+                <input
+                  type="password"
+                  placeholder="Enter password"
+                  onChange={handlePassInput}
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                />
 
-//   <div className="label-input">
-//     <label htmlFor="">Password</label>
-//     <div className="input-group">
-//       <input
-//         type="password"
-//         placeholder="Enter password"
-//         // onChange={handlePassInput}
-//         onChange={(e) => setPassword(e.target.value)}
-//         value={password}
-//       />
+                <span className="toggle" onClick={togglePassInput}>
+                  <FaEyeSlash className="eye-slash" />
+                </span>
+                <span className="ripple"></span>
+              </div>
+              <div className="pass-strength">
+                <div className="strength-percentage">
+                  <span></span>
+                </div>
+                <span className="password-label">Strength</span>
+              </div>
+            </div>
 
-//       <span className="toggle" onClick={togglePassInput}>
-//         <FaEyeSlash className="eye-slash" />
-//       </span>
-//       <span className="ripple"></span>
-//     </div>
-//     <div className="pass-strength">
-//       <div className="strength-percentage">
-//         <span></span>
-//       </div>
-//       <span className="password-label">Strength</span>
-//     </div>
-//   </div>
-
-//   {/* <Link className="" key="questionaire" to="/questionaire">
-//     <button className="auth-button login">Create an Account</button>
-//   </Link> */}
-//   <button
-//     // onClick={handleSubmit}
-//     className="auth-button login"
-//     // disabled={isLoading}
-//   >
-//     Create an Account
-//   </button>
-//   {/* {error && <div>{error}</div>} */}
-// </form>;
+            <Link className="" key="questionaire" to="/questionaire">
+              <button className="auth-button login">Create an Account</button>
+            </Link>
+            <button
+              onClick={handleSubmit}
+              className="auth-button login"
+              disabled={isLoading}
+            >
+              Create an Account
+            </button>
+            {error && <div>{error}</div>}
+          </form>
+          First but works */
+}

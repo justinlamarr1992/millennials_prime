@@ -136,3 +136,12 @@ coupling with the udemy store notes to see if it works as well
 
 Now focus on transfering the user state to differetn pages until you sign out 
 manually
+
+
+
+Change to only have following pages
+Primeshow
+Catalog
+uploads
+Sign in
+This will be phase 1 for simplicity

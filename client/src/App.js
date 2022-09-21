@@ -54,28 +54,38 @@ const App = (props, state) => {
         {/* <Route path="/" element={<Home />} /> */}
         {/* Public Routes */}
         <Route path="/" element={<Layout />}>
-          <Route index element={<ContactUs />} />
+          {/* <Route  element={<ContactUs />} /> */}
+          <Route index element={<PrimeShow />} />
           {/* Change this to the advertisement home page  */}
+          <Route path="/prime-news">
+            {/* <Route path="viewer/:videoId" element={<PrimeShow />} /> */}
+            {/* <Route path="upload-content" element={<UploadContent />} /> */}
+            <Route path="catalog" element={<Catalog />} />
+          </Route>
 
           {/* Auth */}
           <Route path="/auth">
-            <Route path="register" element={<Register />} />
+            {/* <Route path="register" element={<Register />} /> */}
             <Route path="signin" element={<SignIn />} />
-            <Route path="signout" element={<SignOut />} />
+            {/* <Route path="signout" element={<SignOut />} />
             <Route path="passwordrecovery" element={<PasswordRecovery />} />
             <Route path="questionaire" element={<Questionaire />} />
             <Route path="questionaire2" element={<Questionaire2 />} />
-            <Route path="questionaire3" element={<Questionaire3 />} />
+            <Route path="questionaire3" element={<Questionaire3 />} /> */}
           </Route>
           {/* Protected Routes */}
           <Route element={<RequireAuth />}>
             <Route path="yourin" element={<SuccessSignIn />} />
+            <Route
+              path="prime-news/upload-content"
+              element={<UploadContent />}
+            />
             {/* Prime Shows */}
-            <Route path="/prime-news">
-              <Route path="viewer/:videoId" element={<PrimeShow />} />
-              <Route path="upload-content" element={<UploadContent />} />
-              <Route path="catalog" element={<Catalog />} />
-            </Route>
+            {/* <Route path="/prime-news"> */}
+            {/* <Route path="viewer/:videoId" element={<PrimeShow />} /> */}
+            {/* <Route path="upload-content" element={<UploadContent />} /> */}
+            {/* <Route path="catalog" element={<Catalog />} /> */}
+            {/* </Route> */}
           </Route>
         </Route>
       </Routes>
