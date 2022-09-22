@@ -3,114 +3,102 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
 const login = async (req, res) => {
-  const user = User.find({ username: req.body.username });
-  console.log(user);
+  const cookies = req.cookies;
 
-  // if (user) {
-  //   const userInfo = [user];
-  //   console.log(userInfo);
-  //   res.status(400).json({
-  //     message: "this user is already registered",
-  //     data: {},
-  //   });
-  // }
-  // res.status(200).json({
-  //   message: "login successful",
-  //   data: user,
-  // });
-
-  // const cookies = req.cookies;
-  // const { user, password } = req.body;
+  const { user, password } = req.body;
+  console.log(req.body);
   // console.log(user, password);
-  // if (!user || !password)
-  //   return res
-  //     .status(400)
-  //     .json({ message: "Both Email and Password required" });
-  // const foundUser = await User.findOne({ username: user }).exec();
-  // console.log("It ran here");
-  // if (!foundUser) return res.sendStatus(401); //Unauthrized
-  // //   evealuate password
-  // const match = await bcrypt.compare(password, foundUser.password);
-  // if (match) {
-  //   const roles = Object.values(foundUser.roles).filter(Boolean);
-  //   console.log("It ran here");
-  //   // create JWT
-  //   const accessToken = jwt.sign(
-  //     {
-  //       UserInfo: {
-  //         username: foundUser.username,
-  //         roles: roles,
-  //       },
-  //     },
-  //     process.env.SECRET,
-  //     // TODO: SUPER SHORT CHANGE THIS
-  //     { expiresIn: "10s" }
-  //   );
-  //   const newRefreshToken = jwt.sign(
-  //     { username: foundUser.username },
-  //     process.env.SECRET,
-  //     // TODO: SUPER SHORT CHANGE THIS
-  //     { expiresIn: "15s" }
-  //   );
-  //   let newRefreshTokenArray = !cookies?.jwt
-  //     ? foundUser.refreshToken
-  //     : foundUser.refreshToken.filter((rt) => rt !== cookies.jwt);
-  //   if (cookies?.jwt) {
-  //     /*
-  //           Scenario added here:
-  //               1) User logs in but never uses RT and does not logout
-  //               2) RT is stolen
-  //               3) If 1 & 2, reuse detection is needed to clear all RTs when user logs in
-  //           */
-  //     const refreshToken = cookies.jwt;
-  //     const foundToken = await User.findOne({ refreshToken }).exec();
-  //     // detected refreshtoken reuse
-  //     if (!foundToken) {
-  //       // clearout all other tokens
-  //       newRefreshTokenArray = [];
-  //     }
-  //     res.clearCookie("jwt", {
-  //       httpOnly: true,
-  //       sameSite: "None",
-  //       secure: true,
-  //     });
-  //   }
-  //   // saving refresh token for current user
-  //   foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken];
-  //   const result = await foundUser.save();
-  //   // create Secure Cookie with current user
-  //   res.cookie("jwt", newRefreshToken, {
-  //     httpOnly: true,
-  //     secure: true,
-  //     sameSite: "None",
-  //     maxAge: 24 * 60 * 60 * 1000,
-  //   });
-  //   // send authorization roles and access token to user
-  //   res.json({ accessToken });
-  // } else {
-  //   res.sendStatus(401);
-  // }
+  if (!user || !password)
+    return res
+      .status(400)
+      .json({ message: "Both Email and Password required" });
+
+  const foundUser = await User.findOne({ username: user }).exec();
+  console.log("It ran here");
+  if (!foundUser) return res.sendStatus(401); //Unauthrized
+  //   evealuate password
+  const match = await bcrypt.compare(password, foundUser.password);
+  if (match) {
+    const roles = Object.values(foundUser.roles).filter(Boolean);
+    console.log("It ran here");
+    // create JWT
+    const accessToken = jwt.sign(
+      {
+        UserInfo: {
+          username: foundUser.username,
+          roles: roles,
+        },
+      },
+      process.env.SECRET,
+      // TODO: SUPER SHORT CHANGE THIS
+      { expiresIn: "10s" }
+    );
+    const newRefreshToken = jwt.sign(
+      { username: foundUser.username },
+      process.env.SECRET,
+      // TODO: SUPER SHORT CHANGE THIS
+      { expiresIn: "15s" }
+    );
+    let newRefreshTokenArray = !cookies?.jwt
+      ? foundUser.refreshToken
+      : foundUser.refreshToken.filter((rt) => rt !== cookies.jwt);
+    if (cookies?.jwt) {
+      /*
+            Scenario added here:
+                1) User logs in but never uses RT and does not logout
+                2) RT is stolen
+                3) If 1 & 2, reuse detection is needed to clear all RTs when user logs in
+            */
+      const refreshToken = cookies.jwt;
+      const foundToken = await User.findOne({ refreshToken }).exec();
+      // detected refreshtoken reuse
+      if (!foundToken) {
+        // clearout all other tokens
+        newRefreshTokenArray = [];
+      }
+      res.clearCookie("jwt", {
+        httpOnly: true,
+        sameSite: "None",
+        secure: true,
+      });
+    }
+    // saving refresh token for current user
+    foundUser.refreshToken = [...newRefreshTokenArray, newRefreshToken];
+    const result = await foundUser.save();
+    // create Secure Cookie with current user
+    res.cookie("jwt", newRefreshToken, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "None",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
+    // send authorization roles and access token to user
+    res.json({ accessToken });
+  } else {
+    res.sendStatus(401);
+  }
 };
 
 const register = async (req, res) => {
-  const { email, password } = req.body;
-  if (!email || !password)
+  const { username, password } = req.body;
+  if (!username || !password)
     return res.status(400).json({ message: "Email and Password required" });
 
   // check for duplicates usernames in the db
-  const duplicate = await User.findOne({ username: email }).exec();
+  const duplicate = await User.findOne({ username: username }).exec();
   if (duplicate) return res.sendStatus(409); //conflict
+
   try {
     //encrypt the password
     const hashedPassword = await bcrypt.hash(password, 10);
 
     //create and store the new user
     const result = await User.create({
-      username: email,
+      username: username,
       password: hashedPassword,
     });
     console.log(result);
-    res.status(201).json({ success: `New user ${email} created` });
+    res.status(201).json({ success: `New user ${username} created` });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }

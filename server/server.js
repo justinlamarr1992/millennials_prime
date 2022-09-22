@@ -31,7 +31,7 @@ app.use(
   cors({
     // Specific to orgin
     // origin: "http://127.0.0.1:4000",
-    origin: "http://localhost:4000/",
+    origin: "http://localhost:3000",
     // Everything
     // origin: "*",
   })
@@ -76,7 +76,6 @@ const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
 const videoRoutes = require("./routes/video");
 app.use("/api/auth", authRoutes);
-// app.use("/api/auth", require("./routes/auth"));
 app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/video", videoRoutes);

@@ -11,10 +11,10 @@ const User = () => {
     const getUsers = async () => {
       try {
         //Connect this with backend later
-        const response = await axios.get("/api/user/getUser", {
-          headers: {
-            "Content-Type": undefined,
-          },
+        const response = await axios.get("/api/user/getuser", {
+          // headers: {
+          //   "Content-Type": undefined,
+          // },
           signal: controller.signal,
         });
         console.log(response.data);

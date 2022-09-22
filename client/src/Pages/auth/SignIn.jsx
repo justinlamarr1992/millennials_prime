@@ -14,6 +14,7 @@ import Company3 from "../../Assets/Images/Companies/Company3.jpg";
 
 import "./auth.css";
 import Logo from "../../Assets/Images/MillennialsPrimeLogo.png";
+import axios from "../../API/axios";
 
 const SignIn = () => {
   const emailRef = useRef();
@@ -45,10 +46,20 @@ const SignIn = () => {
   // Dave GraYS
   const handleSubmit = async (e) => {
     e.preventDefault();
+    let dataToSubmit = {
+      user: user,
+      password: password,
+    };
 
     try {
-      // const userData = await login({ user, password }).unwrap();
-      // dispatch(setCredentials({ ...userData, user }));
+      const response = await axios.post(
+        "http://localhost:4000/api/auth/login",
+        dataToSubmit
+        // {
+        //   headers: { "Content-Type": "application/json" },
+        //   withCredentials: true,
+        // }
+      );
       setUser("");
       setPassword("");
       navigate("/yourin");

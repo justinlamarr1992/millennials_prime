@@ -3,91 +3,120 @@ const { User } = require("../models/userModel");
 // Users Controller
 // Employees Controllers Later Primes
 
+const getAllUsers = async (req, res) => {
+  const users = await User.find();
+  if (!users) return res.status(204).json({ message: "No users found" });
+  res.json(users);
+};
+
+const deleteUser = async (req, res) => {
+  if (!req?.body?.id)
+    return res.status(400).json({ message: "User ID required" });
+  const user = await User.findOne({ _id: req.body.id }).exec();
+  if (!user) {
+    return res
+      .status(204)
+      .json({ message: `User ID ${req.body.id} not found` });
+  }
+  const result = await user.deleteOne({ _id: req.body.id });
+  res.json(result);
+};
+
 const getUser = async (req, res) => {
-  console.log("firing");
-  const users = await User.find().exec();
-  return res.status(200).send({
-    works: true,
-  });
-  // const users = await User.find();
-  // if (!users) return res.status(204).json({ message: "No users found" });
-  // res.json(users);
-  // res.status(200).json({
-  //   _id: req.user._id,
-  //   isAdmin: req.user.role === 0 ? false : true,
-  //   isAuth: true,
-  //   email: req.user.email,
-  //   name: req.user.name,
-  //   lastname: req.user.lastname,
-  //   role: req.user.role,
-  //   image: req.user.image,
-  // });
+  console.log(req.params.id);
+  if (!req?.params?.id)
+    return res.status(400).json({ message: "User ID required" });
+  const user = await User.findOne({ _id: req.params.id }).exec();
+  if (!user) {
+    return res
+      .status(204)
+      .json({ message: `User ID ${req.params.id} not found` });
+  }
+  res.json(user);
 };
 
-const signupUser = async (req, res) => {
-  const user = new User(req.body);
+// const users = await User.find();
+// if (!users) return res.status(204).json({ message: "No users found" });
+// res.json(users);
+// res.status(200).json({
+//   _id: req.user._id,
+//   isAdmin: req.user.role === 0 ? false : true,
+//   isAuth: true,
+//   email: req.user.email,
+//   name: req.user.name,
+//   lastname: req.user.lastname,
+//   role: req.user.role,
+//   image: req.user.image,
+// });
 
-  user.save((err, doc) => {
-    if (err) return res.json({ success: false, err });
-    return res.status(200).json({
-      success: true,
-    });
-  });
+// const signupUser = async (req, res) => {
+//   const user = new User(req.body);
+
+//   user.save((err, doc) => {
+//     if (err) return res.json({ success: false, err });
+//     return res.status(200).json({
+//       success: true,
+//     });
+//   });
+// };
+
+// const loginUser = async (req, res) => {
+//   console.log("Third Secion is UserController.js");
+
+//   // const user = await User.findOne({
+//   //   email: req.body.dataToSubmit.email,
+//   // }).exec();
+//   // console.log(user);
+
+//   User.findOne({ email: req.body.dataToSubmit.email }, (err, user) => {
+//     if (!user)
+//       return res.json({
+//         loginSuccess: false,
+//         message: "Auth failed, email not found, but the message is hardcoded",
+//       });
+//     console.log(err);
+
+//     user.comparePassword(req.body.dataToSubmit.password, (err, isMatch) => {
+//       if (!isMatch)
+//         return res.json({ loginSuccess: false, message: "Wrong password" });
+
+//       user.generateToken((err, user) => {
+//         if (err) return res.status(400).send(err);
+//         res.cookie("w_authExp", user.token).status(200).json({
+//           loginSuccess: true,
+//           userId: user._id,
+//           name: user.name,
+//           email: user.email,
+//           token: user.token,
+//           role: user.role,
+//           _id: user._id,
+//           timeNow: new Date(),
+//         });
+//       });
+//     });
+
+//     console.log(user);
+//   });
+// };
+
+// const logoutUser = async (req, res) => {
+//   User.findOneAndUpdate(
+//     { _id: req.userId },
+//     { token: "", tokenExp: "" },
+//     (err, doc) => {
+//       if (err) return res.json({ success: false, err });
+//       return res.status(200).send({
+//         success: true,
+//       });
+//     }
+//   );
+// };
+
+module.exports = {
+  getAllUsers,
+  deleteUser,
+  getUser,
 };
-
-const loginUser = async (req, res) => {
-  console.log("Third Secion is UserController.js");
-
-  // const user = await User.findOne({
-  //   email: req.body.dataToSubmit.email,
-  // }).exec();
-  // console.log(user);
-
-  User.findOne({ email: req.body.dataToSubmit.email }, (err, user) => {
-    if (!user)
-      return res.json({
-        loginSuccess: false,
-        message: "Auth failed, email not found, but the message is hardcoded",
-      });
-    console.log(err);
-
-    user.comparePassword(req.body.dataToSubmit.password, (err, isMatch) => {
-      if (!isMatch)
-        return res.json({ loginSuccess: false, message: "Wrong password" });
-
-      user.generateToken((err, user) => {
-        if (err) return res.status(400).send(err);
-        res.cookie("w_authExp", user.token).status(200).json({
-          loginSuccess: true,
-          userId: user._id,
-          name: user.name,
-          email: user.email,
-          token: user.token,
-          role: user.role,
-          _id: user._id,
-          timeNow: new Date(),
-        });
-      });
-    });
-
-    console.log(user);
-  });
-};
-
-const logoutUser = async (req, res) => {
-  User.findOneAndUpdate(
-    { _id: req.userId },
-    { token: "", tokenExp: "" },
-    (err, doc) => {
-      if (err) return res.json({ success: false, err });
-      return res.status(200).send({
-        success: true,
-      });
-    }
-  );
-};
-
-module.exports = { getUser, signupUser, loginUser, logoutUser };
 
 // const jwt = require("jsonwebtoken");
 
