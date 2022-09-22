@@ -6,9 +6,9 @@ import App from "./App";
 
 // May need to delete lets see
 // import Reducer from "./Reducers";
-import { Provider } from "react-redux";
+// import { Provider } from "react-redux";
 
-import { store } from "./App/store";
+// import { store } from "./App/store";
 
 // import { createStore, applyMiddleware } from "redux";
 // import promiseMiddleware from "redux-promise";
@@ -31,13 +31,13 @@ import reportWebVitals from "./reportWebVitals";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/*" element={<App />} />
-        </Routes>
-      </BrowserRouter>
-    </Provider>
+    {/* <Provider store={store}> */}
+    <BrowserRouter>
+      <Routes>
+        <Route path="/*" element={<App />} />
+      </Routes>
+    </BrowserRouter>
+    {/* </Provider> */}
   </React.StrictMode>
 );
 

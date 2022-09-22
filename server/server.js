@@ -1,17 +1,17 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const path = require("path");
+// const path = require("path");
 // const fileUpload = require("express-fileupload");
 const mongoose = require("mongoose");
 const cors = require("cors");
-const corsOptions = require("./config/corsOptions");
-const { logger } = require("./middleware/logEvents");
-const errorHandler = require("./middleware/errorHandler");
-const verifyJWT = require("./middleware/verifyJWT");
+// const corsOptions = require("./config/corsOptions");
+// const { logger } = require("./middleware/logEvents");
+// const errorHandler = require("./middleware/errorHandler");
+// const verifyJWT = require("./middleware/verifyJWT");
 const cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
-const credentials = require("./middleware/credentials");
+// const credentials = require("./middleware/credentials");
 const connectDB = require("./config/dbConn");
 const PORT = process.env.PORT || 4000;
 
@@ -19,11 +19,11 @@ const PORT = process.env.PORT || 4000;
 connectDB();
 
 // Custom middlewar logger
-app.use(logger);
+// app.use(logger);
 
 // HAndle options credential check - BEFORE CORS!!!
 // and fetch cookies credentials requirement
-app.use(credentials);
+// app.use(credentials);
 
 // Cross Origin Resource Sharing
 // app.use(cors(corsOptions));
@@ -31,11 +31,19 @@ app.use(
   cors({
     // Specific to orgin
     // origin: "http://127.0.0.1:4000",
-    origin: "http://localhost:4000",
+    origin: "http://localhost:4000/",
     // Everything
     // origin: "*",
   })
 );
+
+// app.use(function (req, res, next) {
+//   res.setHeader("Access-Control-Allow-Origin", "*");
+//   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+//   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+//   res.setHeader("Access-Control-Allow-Credentials", true);
+//   next();
+// });
 
 // Bulit-in middleware to handle urlencoded formdata
 app.use(express.urlencoded({ extended: false }));
@@ -47,8 +55,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 // erve static files
-app.use("/", express.static(path.join(__dirname, "/public")));
-app.use("/uploads", express.static("uploads"));
+// app.use("/", express.static(path.join(__dirname, "/public")));
+// app.use("/uploads", express.static("uploads"));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -60,31 +68,31 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(verifyJWT);
+// app.use(verifyJWT);
 
 // Routes
 const authRoutes = require("./routes/auth");
-// const userRoutes = require("./routes/user");
+const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
 const videoRoutes = require("./routes/video");
 app.use("/api/auth", authRoutes);
 // app.use("/api/auth", require("./routes/auth"));
-// app.use("/api/user", userRoutes);
+app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/video", videoRoutes);
 
-app.all("*", (req, res) => {
-  res.status(404);
-  if (req.accepts("html")) {
-    res.sendFile(path.join(__dirname, "views", "404.html"));
-  } else if (req.accepts("json")) {
-    res.json({ error: "404 Not Found" });
-  } else {
-    res.type("txt").send("404 Not Found");
-  }
-});
+// app.all("*", (req, res) => {
+//   res.status(404);
+//   if (req.accepts("html")) {
+//     res.sendFile(path.join(__dirname, "views", "404.html"));
+//   } else if (req.accepts("json")) {
+//     res.json({ error: "404 Not Found" });
+//   } else {
+//     res.type("txt").send("404 Not Found");
+//   }
+// });
 
-app.use(errorHandler);
+// app.use(errorHandler);
 
 // if (process.env.NODE_ENV === "production") {
 //   // Set static folder

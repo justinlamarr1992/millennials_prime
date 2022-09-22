@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
+// import { useDispatch, useSelector } from "react-redux";
 
 // import { loginUser } from "../../Actions/userActions";
 import { setCredentials } from "../../Features/auth/authSlice";
@@ -26,8 +26,8 @@ const SignIn = () => {
 
   const navigate = useNavigate();
 
-  const [login, { isLoading }] = useLoginMutation();
-  const dispatch = useDispatch();
+  // const [login, { isLoading }] = useLoginMutation();
+  // const dispatch = useDispatch();
 
   useEffect(() => {
     emailRef.current.focus();
@@ -47,8 +47,8 @@ const SignIn = () => {
     e.preventDefault();
 
     try {
-      const userData = await login({ user, password }).unwrap();
-      dispatch(setCredentials({ ...userData, user }));
+      // const userData = await login({ user, password }).unwrap();
+      // dispatch(setCredentials({ ...userData, user }));
       setUser("");
       setPassword("");
       navigate("/yourin");
@@ -109,9 +109,11 @@ const SignIn = () => {
   //     });
   // };
 
-  const content = isLoading ? (
-    <h1>Loading...</h1>
-  ) : (
+  // FOR NOW WITH THE isLoading commented Out
+  const content = (
+    // const content = isLoading ? (
+    //   <h1>Loading...</h1>
+    // ) : (
     <div className="page">
       <div className="pic" ref={ref} id="container">
         <div className="pic-container">

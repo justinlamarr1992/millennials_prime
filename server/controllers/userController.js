@@ -4,16 +4,24 @@ const { User } = require("../models/userModel");
 // Employees Controllers Later Primes
 
 const getUser = async (req, res) => {
-  res.status(200).json({
-    _id: req.user._id,
-    isAdmin: req.user.role === 0 ? false : true,
-    isAuth: true,
-    email: req.user.email,
-    name: req.user.name,
-    lastname: req.user.lastname,
-    role: req.user.role,
-    image: req.user.image,
+  console.log("firing");
+  const users = await User.find().exec();
+  return res.status(200).send({
+    works: true,
   });
+  // const users = await User.find();
+  // if (!users) return res.status(204).json({ message: "No users found" });
+  // res.json(users);
+  // res.status(200).json({
+  //   _id: req.user._id,
+  //   isAdmin: req.user.role === 0 ? false : true,
+  //   isAuth: true,
+  //   email: req.user.email,
+  //   name: req.user.name,
+  //   lastname: req.user.lastname,
+  //   role: req.user.role,
+  //   image: req.user.image,
+  // });
 };
 
 const signupUser = async (req, res) => {

@@ -1,22 +1,17 @@
-// const express = require("express");
+const express = require("express");
 
-// const {
-//   getUser,
-//   signupUser,
-//   loginUser,
-//   logoutUser,
-// } = require("../controllers/userController");
+const { getUser } = require("../controllers/userController");
 
-// const router = express.Router();
+const router = express.Router();
 
-// const { auth } = require("../middleware/auth");
+const { auth } = require("../middleware/auth");
 
-// router.get("/auth", getUser);
+router.get("/getUser", getUser);
 // router.post("/signup", signupUser);
 // router.post("/login", loginUser);
 // router.get("/logout", logoutUser);
 
-// module.exports = router;
+module.exports = router;
 
 // // controller functions
 // const {
