@@ -1,12 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
-import { Link, useNavigate } from "react-router-dom";
-// import { useDispatch, useSelector } from "react-redux";
-
-// import { loginUser } from "../../Actions/userActions";
-import { setCredentials } from "../../Features/auth/authSlice";
-import { useLoginMutation } from "../../Features/auth/authApiSlice";
-
-// import { useLogin } from "../../Hooks/useLogin";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+// import useAuth from "../../Hooks/useAuth";
 
 import Company1 from "../../Assets/Images/Companies/Company1.jpeg";
 import Company2 from "../../Assets/Images/Companies/Company2.jpeg";
@@ -25,10 +19,10 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
+  // const { setAuth } = useAuth();
   const navigate = useNavigate();
-
-  // const [login, { isLoading }] = useLoginMutation();
-  // const dispatch = useDispatch();
+  const location = useLocation();
+  const from = location.state?.from?.pathname || "/";
 
   useEffect(() => {
     emailRef.current.focus();
@@ -60,9 +54,12 @@ const SignIn = () => {
         //   withCredentials: true,
         // }
       );
+      console.log(JSON.stringify(response?.data));
+      const accessToken = response?.data?.accessToken;
+      const roles = response?.data?.roles;
+      // setAuth({ user, password, roles, accessToken });
       setUser("");
       setPassword("");
-      // navigate("/yourin");
     } catch (err) {
       if (!err?.originalStatus) {
         // isLoading: true until timeout occurs
