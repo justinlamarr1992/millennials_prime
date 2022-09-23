@@ -29,6 +29,7 @@ import SignIn from "./Pages/auth/SignIn";
 // import Questionaire2 from "./Pages/auth/Questionaire2";
 // import Questionaire3 from "./Pages/auth/Questionaire3";
 // import PasswordRecovery from "./Pages/auth/PasswordRecovery";
+import Unauthorized from "./Pages/auth/Unauthorized";
 
 // import User from "./Pages/User/User";
 // import TestUser from "./Pages/User/TestUser";
@@ -44,6 +45,13 @@ import SuccessSignIn from "./Pages/auth/SuccessSignIn";
 import Admin from "./Components/DaveGrayTest/Admin";
 // import { unsubscribe } from "../../server/routes/video";
 
+const ROLES = {
+  User: 2001,
+  Editor: 1984,
+  Admin: 5150,
+  // TODO:Change these
+};
+
 const App = (props, state) => {
   // const dispatch = useDispatch();
 
@@ -58,6 +66,7 @@ const App = (props, state) => {
           {/* Test Pages */}
           <Route path="yourin" element={<SuccessSignIn />} />
           <Route path="admin" element={<Admin />} />
+          <Route path="unauthorized" element={<Unauthorized />} />
 
           {/* <Route  element={<ContactUs />} /> */}
           <Route index element={<PrimeShow />} />

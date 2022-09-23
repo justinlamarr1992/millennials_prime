@@ -1,4 +1,4 @@
-const { User } = require("../models/userModel");
+const User = require("../models/userModel");
 
 // Users Controller
 // Employees Controllers Later Primes
@@ -22,18 +22,18 @@ const deleteUser = async (req, res) => {
   res.json(result);
 };
 
-const getUser = async (req, res) => {
-  console.log(req.params.id);
-  if (!req?.params?.id)
-    return res.status(400).json({ message: "User ID required" });
-  const user = await User.findOne({ _id: req.params.id }).exec();
-  if (!user) {
-    return res
-      .status(204)
-      .json({ message: `User ID ${req.params.id} not found` });
-  }
-  res.json(user);
-};
+// const getUser = async (req, res) => {
+//   console.log(req.params.id);
+//   if (!req?.params?.id)
+//     return res.status(400).json({ message: "User ID required" });
+//   const user = await User.findOne({ _id: req.params.id }).exec();
+//   if (!user) {
+//     return res
+//       .status(204)
+//       .json({ message: `User ID ${req.params.id} not found` });
+//   }
+//   res.json(user);
+// };
 
 // const users = await User.find();
 // if (!users) return res.status(204).json({ message: "No users found" });
@@ -115,7 +115,7 @@ const getUser = async (req, res) => {
 module.exports = {
   getAllUsers,
   deleteUser,
-  getUser,
+  // getUser,
 };
 
 // const jwt = require("jsonwebtoken");

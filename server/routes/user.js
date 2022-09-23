@@ -4,14 +4,14 @@ const router = express.Router();
 const {
   getAllUsers,
   deleteUser,
-  getUser,
+  //   getUser,
 } = require("../controllers/userController");
 
 // const { auth } = require("../middleware/auth");
 
-router.get("/all", getAllUsers);
+router.get("/getuser", getAllUsers);
 router.delete("/delete", deleteUser);
-router.get("/one/:id", getUser);
+// router.get("/one/:id", getUser);
 // router.post("/signup", signupUser);
 // router.post("/login", loginUser);
 // router.get("/logout", logoutUser);

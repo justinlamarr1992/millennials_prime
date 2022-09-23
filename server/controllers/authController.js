@@ -14,7 +14,6 @@ const login = async (req, res) => {
       .json({ message: "Both Email and Password required" });
 
   const foundUser = await User.findOne({ username: user }).exec();
-  console.log("It ran here");
   if (!foundUser) return res.sendStatus(401); //Unauthrized
   //   evealuate password
   const match = await bcrypt.compare(password, foundUser.password);
@@ -73,7 +72,7 @@ const login = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
     });
     // send authorization roles and access token to user
-    res.json({ accessToken });
+    res.json({ accessToken, roles });
   } else {
     res.sendStatus(401);
   }

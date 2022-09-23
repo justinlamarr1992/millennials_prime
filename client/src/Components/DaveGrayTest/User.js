@@ -1,8 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "../../API/axios";
+import { useNavigate, useLocation } from "react-router-dom";
+// Testing it out
+import useRefreshToken from "../../Hooks/useRefreshToken";
 
 const User = () => {
   const [users, setUsers] = useState();
+  const refresh = useRefreshToken();
+  const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
     let isMounted = true;
@@ -10,17 +16,20 @@ const User = () => {
 
     const getUsers = async () => {
       try {
-        //Connect this with backend later
-        const response = await axios.get("/api/user/getuser", {
-          // headers: {
-          //   "Content-Type": undefined,
-          // },
-          signal: controller.signal,
-        });
+        const response = await axios.get(
+          "http://localhost:4000/api/user/getuser",
+          {
+            // headers: {
+            //   "Content-Type": "application/json",
+            // },
+            signal: controller.signal,
+          }
+        );
         console.log(response.data);
         isMounted && setUsers(response.data);
       } catch (err) {
         console.error(err);
+        // navigate("/auth/signin", { state: { from: location }, replace: true });
       }
     };
     getUsers();
@@ -42,6 +51,7 @@ const User = () => {
       ) : (
         <p>No Users to display</p>
       )}
+      <button onClick={() => refresh()}>Refresh</button>
     </article>
   );
 };
