@@ -62,7 +62,7 @@ const SignIn = () => {
       );
       setUser("");
       setPassword("");
-      navigate("/yourin");
+      // navigate("/yourin");
     } catch (err) {
       if (!err?.originalStatus) {
         // isLoading: true until timeout occurs

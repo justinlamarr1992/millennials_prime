@@ -80,12 +80,12 @@ const login = async (req, res) => {
 };
 
 const register = async (req, res) => {
-  const { username, password } = req.body;
-  if (!username || !password)
+  const { user, password } = req.body;
+  if (!user || !password)
     return res.status(400).json({ message: "Email and Password required" });
 
   // check for duplicates usernames in the db
-  const duplicate = await User.findOne({ username: username }).exec();
+  const duplicate = await User.findOne({ username: user }).exec();
   if (duplicate) return res.sendStatus(409); //conflict
 
   try {
@@ -94,11 +94,11 @@ const register = async (req, res) => {
 
     //create and store the new user
     const result = await User.create({
-      username: username,
+      username: user,
       password: hashedPassword,
     });
     console.log(result);
-    res.status(201).json({ success: `New user ${username} created` });
+    res.status(201).json({ success: `New user ${user} created` });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
