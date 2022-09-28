@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
-import axios from "../../API/axios";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
 // Testing it out
 import useRefreshToken from "../../Hooks/useRefreshToken";
 
 const User = () => {
   const [users, setUsers] = useState();
+  const axiosPrivate = useAxiosPrivate();
+
   const refresh = useRefreshToken();
   const navigate = useNavigate();
   const location = useLocation();
@@ -16,12 +18,9 @@ const User = () => {
 
     const getUsers = async () => {
       try {
-        const response = await axios.get(
+        const response = await axiosPrivate.get(
           "http://localhost:4000/api/user/getuser",
           {
-            // headers: {
-            //   "Content-Type": "application/json",
-            // },
             signal: controller.signal,
           }
         );
