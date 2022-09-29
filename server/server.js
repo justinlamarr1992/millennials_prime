@@ -1,58 +1,60 @@
 require("dotenv").config();
 const express = require("express");
-const app = express();
-// const path = require("path");
+const path = require("path");
 // const fileUpload = require("express-fileupload");
 const mongoose = require("mongoose");
 const cors = require("cors");
-// const corsOptions = require("./config/corsOptions");
-// const { logger } = require("./middleware/logEvents");
-// const errorHandler = require("./middleware/errorHandler");
-// const verifyJWT = require("./middleware/verifyJWT");
+const corsOptions = require("./config/corsOptions");
+const { logger } = require("./middleware/logEvents");
+const errorHandler = require("./middleware/errorHandler");
+const verifyJWT = require("./middleware/verifyJWT");
 const cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
-// const credentials = require("./middleware/credentials");
+const credentials = require("./middleware/credentials");
 const connectDB = require("./config/dbConn");
 const PORT = process.env.PORT || 4000;
+
+const app = express();
+
+// middleware for cookies
+app.use(cookieParser());
 
 // Connect to the DB
 connectDB();
 
 // Custom middlewar logger
-// app.use(logger);
+app.use(logger);
 
 // HAndle options credential check - BEFORE CORS!!!
 // and fetch cookies credentials requirement
-// app.use(credentials);
+app.use(credentials);
 
 // Cross Origin Resource Sharing
-// app.use(cors(corsOptions));
-app.use(
-  cors({
-    // Specific to orgin
-    // origin: "http://127.0.0.1:4000",
-    origin: "http://localhost:3000",
-    // Everything
-    // origin: "*",
-  })
-);
-
-app.use(function (req, res, next) {
-  // res.setHeader("Access-clearControl-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-  res.setHeader("Access-Control-Allow-Credentials", true);
-  next();
-});
+app.use(cors(corsOptions));
+// app.use(
+//   cors({
+//     // Specific to orgin
+//     // origin: "http://127.0.0.1:4000",
+//     origin: "http://localhost:3000",
+//     credentials: true,
+//     // Everything
+//     // origin: "*",
+//   })
+// );
 
 // Bulit-in middleware to handle urlencoded formdata
 app.use(express.urlencoded({ extended: false }));
 
+// app.use(function (req, res, next) {
+// res.setHeader("Access-clearControl-Allow-Origin", "*");
+//   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+//   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+//   res.setHeader("Access-Control-Allow-Credentials", true);
+//   next();
+// });
+
 // builtin middleware fro json
 app.use(express.json());
-
-// middleware for cookies
-app.use(cookieParser());
 
 // erve static files
 // app.use("/", express.static(path.join(__dirname, "/public")));
@@ -68,7 +70,7 @@ app.use((req, res, next) => {
   next();
 });
 
-// app.use(verifyJWT);
+app.use(verifyJWT);
 
 // Routes
 const authRoutes = require("./routes/auth");
@@ -102,6 +104,18 @@ app.use("/api/video", videoRoutes);
 //     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 //   });
 // }
+
+// MESSING AROUND
+// function validateCookie(req, res, next) {
+//   const { cookies } = req;
+//   console.log(cookies);
+//   next();
+// }
+
+// app.get("/cookie", validateCookie, (req, res) => {
+//   res.cookie("session_id", "123456");
+//   res.status(200).json({ msg: "COOKIES" });
+// });
 
 mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB");

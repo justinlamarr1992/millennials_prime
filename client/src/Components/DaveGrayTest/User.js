@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import axios from "../../API/axios";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { useNavigate, useLocation } from "react-router-dom";
 // Testing it out
@@ -18,10 +19,13 @@ const User = () => {
 
     const getUsers = async () => {
       try {
+        // const response = await axios.get(
         const response = await axiosPrivate.get(
           "http://localhost:4000/api/user/getuser",
           {
             signal: controller.signal,
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true,
           }
         );
         console.log(response.data);

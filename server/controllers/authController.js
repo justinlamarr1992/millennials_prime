@@ -4,7 +4,11 @@ const jwt = require("jsonwebtoken");
 
 const login = async (req, res) => {
   const cookies = req.cookies;
-
+  if (!cookies) {
+    console.log("We have No Beginning Cookies");
+  } else {
+    console.log("The Beginning cookies are", cookies);
+  }
   const { user, password } = req.body;
   console.log(req.body);
   // console.log(user, password);
@@ -30,13 +34,13 @@ const login = async (req, res) => {
       },
       process.env.SECRET,
       // TODO: SUPER SHORT CHANGE THIS
-      { expiresIn: "10s" }
+      { expiresIn: "24h" }
     );
     const newRefreshToken = jwt.sign(
       { username: foundUser.username },
       process.env.SECRET,
       // TODO: SUPER SHORT CHANGE THIS
-      { expiresIn: "15s" }
+      { expiresIn: "1d" }
     );
     let newRefreshTokenArray = !cookies?.jwt
       ? foundUser.refreshToken
@@ -76,6 +80,11 @@ const login = async (req, res) => {
   } else {
     res.sendStatus(401);
   }
+  if (!cookies) {
+    console.log("We have No End Cookies");
+  } else {
+    console.log("The End cookies are", cookies);
+  }
 };
 
 const register = async (req, res) => {
@@ -111,7 +120,7 @@ const logout = async (req, res) => {
   const refreshToken = cookies.jwt;
 
   // Is refreshtoken in db?
-  const foundUser = await findOne({ refreshToken }).exec();
+  const foundUser = await User.findOne({ refreshToken }).exec();
   if (!foundUser) {
     res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
     return res.sendStatus(204);
@@ -130,8 +139,12 @@ const logout = async (req, res) => {
 
 const refreshToken = async (req, res) => {
   const cookies = req.cookies;
+  console.log("The cookies are", cookies);
+
   if (!cookies?.jwt) return res.sendStatus(401);
+
   const refreshToken = cookies.jwt;
+
   res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
 
   const foundUser = await User.findOne({ refreshToken }).exec();

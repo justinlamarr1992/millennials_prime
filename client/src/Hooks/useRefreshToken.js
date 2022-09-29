@@ -5,9 +5,10 @@ const useRefreshToken = () => {
   const { setAuth } = useAuth();
 
   const refresh = async () => {
-    const response = await axios.get("/api/auth/refresh", {
+    const response = await axios.get("http://localhost:4000/api/auth/refresh", {
       withCredentials: true,
     });
+    console.log("response");
     setAuth((prev) => {
       console.log(JSON.stringify(prev));
       console.log(response.data.accessToken);

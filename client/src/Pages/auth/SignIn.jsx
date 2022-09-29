@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Link, useNavigate, useLocation } from "react-router-dom";
-// import useAuth from "../../Hooks/useAuth";
+import useAuth from "../../Hooks/useAuth";
 
 import Company1 from "../../Assets/Images/Companies/Company1.jpeg";
 import Company2 from "../../Assets/Images/Companies/Company2.jpeg";
@@ -11,6 +11,8 @@ import Logo from "../../Assets/Images/MillennialsPrimeLogo.png";
 import axios from "../../API/axios";
 
 const SignIn = () => {
+  const { setAuth } = useAuth();
+
   const emailRef = useRef();
   const errRef = useRef();
   const ref = useRef(null);
@@ -48,18 +50,20 @@ const SignIn = () => {
     try {
       const response = await axios.post(
         "http://localhost:4000/api/auth/login",
-        dataToSubmit
-        // {
-        //   headers: { "Content-Type": "application/json" },
-        //   withCredentials: true,
-        // }
+        dataToSubmit,
+
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
       );
       console.log(JSON.stringify(response?.data));
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
-      // setAuth({ user, password, roles, accessToken });
+      setAuth({ user, password, roles, accessToken });
       setUser("");
       setPassword("");
+      navigate(from, { replace: true });
     } catch (err) {
       if (!err?.originalStatus) {
         // isLoading: true until timeout occurs

@@ -8,6 +8,7 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider value={{ auth, setAuth }}>
       {children}
+      This is the text inside of AuthContext
     </AuthContext.Provider>
   );
 };

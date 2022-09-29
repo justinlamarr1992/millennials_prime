@@ -7,6 +7,8 @@ import {
 import { Link } from "react-router-dom";
 import axios from "../../API/axios";
 
+import useAuth from "../../Hooks/useAuth";
+
 const SuccessSignIn = () => {
   // const user = useSelector(selectCurrentUser);
   // const token = useSelector(selectCurrentToken);
@@ -18,6 +20,7 @@ const SuccessSignIn = () => {
     <section className="welcome">
       {/* <h1>{welcome}</h1>
       <p>Token: {tokenAbbr}</p> */}
+      <h1>You have Logged in</h1>
 
       <p>
         <Link to="/">Home</Link>

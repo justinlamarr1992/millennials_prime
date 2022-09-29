@@ -13,7 +13,7 @@ import Layout from "./Components/Layout";
 
 import NavBar from "./Components/nav/NavBar";
 
-// import Home from "./Pages/Home";
+import Home from "./Pages/Home";
 
 // import Messages from "./Pages/Messaging/Messages";
 // import ConnectedUsers from "./Pages/ConnectedUsers/ConnectedUsers";
@@ -35,7 +35,7 @@ import Unauthorized from "./Pages/auth/Unauthorized";
 // import TestUser from "./Pages/User/TestUser";
 // import Verified from "./Pages/User/Verified";
 
-import PrimeShow from "./Pages/ShowView/PrimeShow";
+// import PrimeShow from "./Pages/ShowView/PrimeShow";
 import UploadContent from "./Pages/Uploads/UploadContent";
 import Catalog from "./Pages/ShowView/Catalog";
 
@@ -60,6 +60,7 @@ const App = (props, state) => {
     <div className="App">
       {/* <NavBar /> */}
       <Routes className="container-comp">
+        <Route path="/" element={<Home />} />
         {/* <Route path="/" element={<Home />} /> */}
         {/* Public Routes */}
         <Route path="/" element={<Layout />}>
@@ -69,7 +70,7 @@ const App = (props, state) => {
           <Route path="unauthorized" element={<Unauthorized />} />
 
           {/* <Route  element={<ContactUs />} /> */}
-          <Route index element={<PrimeShow />} />
+          {/* <Route index element={<PrimeShow />} /> */}
           {/* Change this to the advertisement home page  */}
           <Route path="/prime-news">
             {/* <Route path="viewer/:videoId" element={<PrimeShow />} /> */}
