@@ -1,5 +1,6 @@
 require("dotenv").config();
 const express = require("express");
+const app = express();
 const path = require("path");
 // const fileUpload = require("express-fileupload");
 const mongoose = require("mongoose");
@@ -13,11 +14,6 @@ var bodyParser = require("body-parser");
 const credentials = require("./middleware/credentials");
 const connectDB = require("./config/dbConn");
 const PORT = process.env.PORT || 4000;
-
-const app = express();
-
-// middleware for cookies
-app.use(cookieParser());
 
 // Connect to the DB
 connectDB();
@@ -56,8 +52,11 @@ app.use(express.urlencoded({ extended: false }));
 // builtin middleware fro json
 app.use(express.json());
 
-// erve static files
-// app.use("/", express.static(path.join(__dirname, "/public")));
+// middleware for cookies
+app.use(cookieParser());
+
+// serve static files
+app.use("/", express.static(path.join(__dirname, "/public")));
 // app.use("/uploads", express.static("uploads"));
 
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -70,17 +69,17 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(verifyJWT);
-
 // Routes
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
-const postRoutes = require("./routes/post");
+// const postRoutes = require("./routes/post");
 const videoRoutes = require("./routes/video");
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
-app.use("/api/post", postRoutes);
+// app.use("/api/post", postRoutes);
 app.use("/api/video", videoRoutes);
+
+app.use(verifyJWT);
 
 // app.all("*", (req, res) => {
 //   res.status(404);
@@ -93,7 +92,7 @@ app.use("/api/video", videoRoutes);
 //   }
 // });
 
-// app.use(errorHandler);
+app.use(errorHandler);
 
 // if (process.env.NODE_ENV === "production") {
 //   // Set static folder
