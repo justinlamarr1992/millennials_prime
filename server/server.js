@@ -70,9 +70,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(verifyJWT);
+// app.use(verifyJWT);
 
 // Routes
+app.use("/employees", require("./routes/api/employees"));
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const postRoutes = require("./routes/post");
@@ -82,18 +83,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/post", postRoutes);
 app.use("/api/video", videoRoutes);
 
-// app.all("*", (req, res) => {
-//   res.status(404);
-//   if (req.accepts("html")) {
-//     res.sendFile(path.join(__dirname, "views", "404.html"));
-//   } else if (req.accepts("json")) {
-//     res.json({ error: "404 Not Found" });
-//   } else {
-//     res.type("txt").send("404 Not Found");
-//   }
-// });
-
-// app.use(errorHandler);
+app.use(errorHandler);
 
 // if (process.env.NODE_ENV === "production") {
 //   // Set static folder
@@ -104,18 +94,6 @@ app.use("/api/video", videoRoutes);
 //     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
 //   });
 // }
-
-// MESSING AROUND
-// function validateCookie(req, res, next) {
-//   const { cookies } = req;
-//   console.log(cookies);
-//   next();
-// }
-
-// app.get("/cookie", validateCookie, (req, res) => {
-//   res.cookie("session_id", "123456");
-//   res.status(200).json({ msg: "COOKIES" });
-// });
 
 mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB");
