@@ -27,27 +27,9 @@ app.use(credentials);
 
 // Cross Origin Resource Sharing
 app.use(cors(corsOptions));
-// app.use(
-//   cors({
-//     // Specific to orgin
-//     // origin: "http://127.0.0.1:4000",
-//     origin: "http://localhost:3000",
-//     credentials: true,
-//     // Everything
-//     // origin: "*",
-//   })
-// );
 
 // Bulit-in middleware to handle urlencoded formdata
 app.use(express.urlencoded({ extended: false }));
-
-// app.use(function (req, res, next) {
-// res.setHeader("Access-clearControl-Allow-Origin", "*");
-//   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-//   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
-//   res.setHeader("Access-Control-Allow-Credentials", true);
-//   next();
-// });
 
 // builtin middleware fro json
 app.use(express.json());
@@ -70,6 +52,7 @@ app.use((req, res, next) => {
 });
 
 // Routes
+app.use("/employees", require("./routes/api/employees"));
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 // const postRoutes = require("./routes/post");
@@ -79,42 +62,18 @@ app.use("/api/user", userRoutes);
 // app.use("/api/post", postRoutes);
 app.use("/api/video", videoRoutes);
 
-app.use(verifyJWT);
-
-// app.all("*", (req, res) => {
-//   res.status(404);
-//   if (req.accepts("html")) {
-//     res.sendFile(path.join(__dirname, "views", "404.html"));
-//   } else if (req.accepts("json")) {
-//     res.json({ error: "404 Not Found" });
-//   } else {
-//     res.type("txt").send("404 Not Found");
-//   }
-// });
+app.all("*", (req, res) => {
+  res.status(404);
+  if (req.accepts("html")) {
+    res.sendFile(path.join(__dirname, "views", "404.html"));
+  } else if (req.accepts("json")) {
+    res.json({ error: "404 Not Found" });
+  } else {
+    res.type("txt").send("404 Not Found");
+  }
+});
 
 app.use(errorHandler);
-
-// if (process.env.NODE_ENV === "production") {
-//   // Set static folder
-//   app.use(express.static("client/build"));
-
-//   // index.html for all page routes
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
-//   });
-// }
-
-// MESSING AROUND
-// function validateCookie(req, res, next) {
-//   const { cookies } = req;
-//   console.log(cookies);
-//   next();
-// }
-
-// app.get("/cookie", validateCookie, (req, res) => {
-//   res.cookie("session_id", "123456");
-//   res.status(200).json({ msg: "COOKIES" });
-// });
 
 mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB");
