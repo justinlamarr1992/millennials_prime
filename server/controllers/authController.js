@@ -111,6 +111,7 @@ const handleLogin = async (req, res) => {
     );
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
+      sameSite: "None",
       maxAge: 24 * 60 * 60 * 1000,
     });
     res.json({ accessToken });
@@ -233,28 +234,24 @@ const register = async (req, res) => {
 };
 
 const logout = async (req, res) => {
-  // on Client also delete accessToken
-
-  const cookies = req.cookies;
-  if (!cookies?.jwt) return res.sendStatus(204); //No content
-  const refreshToken = cookies.jwt;
-
-  // Is refreshtoken in db?
-  const foundUser = await User.findOne({ refreshToken }).exec();
-  if (!foundUser) {
-    res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
-    return res.sendStatus(204);
-  }
-
-  //   Delete refreshToken in db
-  foundUser.refreshToken = foundUser.refreshToken.filter(
-    (rt) => rt !== refreshToken
-  );
-  const result = await foundUser.save();
-  console.log(result);
-
-  res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
-  res.sendStatus(204);
+  // // on Client also delete accessToken
+  // const cookies = req.cookies;
+  // if (!cookies?.jwt) return res.sendStatus(204); //No content
+  // const refreshToken = cookies.jwt;
+  // // Is refreshtoken in db?
+  // const foundUser = await User.findOne({ refreshToken }).exec();
+  // if (!foundUser) {
+  //   res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+  //   return res.sendStatus(204);
+  // }
+  // //   Delete refreshToken in db
+  // foundUser.refreshToken = foundUser.refreshToken.filter(
+  //   (rt) => rt !== refreshToken
+  // );
+  // const result = await foundUser.save();
+  // console.log(result);
+  // res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
+  // res.sendStatus(204);
 };
 
 const refreshToken = async (req, res) => {

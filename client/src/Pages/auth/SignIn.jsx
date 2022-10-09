@@ -49,7 +49,7 @@ const SignIn = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/api/auth/login",
+        "http://localhost:4000/auth",
         dataToSubmit,
 
         {

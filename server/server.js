@@ -55,6 +55,8 @@ app.use((req, res, next) => {
 app.use("/", require("./routes/root"));
 app.use("/register", require("./routes/register"));
 app.use("/auth", require("./routes/auth"));
+app.use("/refresh", require("./routes/refresh"));
+app.use("/logout", require("./routes/logout"));
 
 // Any route that doesnt need verifications needs to be ABOVE THIS LINE
 app.use(verifyJWT);
