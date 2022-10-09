@@ -52,15 +52,23 @@ app.use((req, res, next) => {
 });
 
 // Routes
+app.use("/", require("./routes/root"));
+app.use("/register", require("./routes/register"));
+app.use("/auth", require("./routes/auth"));
+
+// Any route that doesnt need verifications needs to be ABOVE THIS LINE
+app.use(verifyJWT);
+
 app.use("/employees", require("./routes/api/employees"));
-const authRoutes = require("./routes/auth");
-const userRoutes = require("./routes/user");
+
+// const authRoutes = require("./routes/auth");
+// const userRoutes = require("./routes/user");
 // const postRoutes = require("./routes/post");
-const videoRoutes = require("./routes/video");
-app.use("/api/auth", authRoutes);
-app.use("/api/user", userRoutes);
+// const videoRoutes = require("./routes/video");
+// app.use("/api/auth", authRoutes);
+// app.use("/api/user", userRoutes);
 // app.use("/api/post", postRoutes);
-app.use("/api/video", videoRoutes);
+// app.use("/api/video", videoRoutes);
 
 app.all("*", (req, res) => {
   res.status(404);
