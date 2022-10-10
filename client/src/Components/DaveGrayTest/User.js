@@ -21,7 +21,7 @@ const User = () => {
       try {
         // const response = await axios.get(
         const response = await axiosPrivate.get(
-          "http://localhost:4000/api/user/getuser",
+          "http://localhost:4000/users/",
           {
             signal: controller.signal,
             headers: { "Content-Type": "application/json" },

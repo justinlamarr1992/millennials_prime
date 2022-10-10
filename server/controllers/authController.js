@@ -1,5 +1,5 @@
-const UserTest = require("../models/User");
-const User = require("../models/userModel");
+// const UserTest = require("../models/User");
+const User = require("../models/MillPrimeUser");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
@@ -13,7 +13,7 @@ const handleLogin = async (req, res) => {
       .status(400)
       .json({ message: "Both Email and Password required" });
 
-  const foundUser = await UserTest.findOne({ username: user }).exec();
+  const foundUser = await User.findOne({ username: user }).exec();
   if (!foundUser) return res.sendStatus(401); //Unauthrized
   //   evealuate password
   const match = await bcrypt.compare(password, foundUser.password);
