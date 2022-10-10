@@ -3,7 +3,6 @@ const express = require("express");
 const app = express();
 const path = require("path");
 // const fileUpload = require("express-fileupload");
-const mongoose = require("mongoose");
 const cors = require("cors");
 const corsOptions = require("./config/corsOptions");
 const { logger } = require("./middleware/logEvents");
@@ -12,6 +11,7 @@ const verifyJWT = require("./middleware/verifyJWT");
 const cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 const credentials = require("./middleware/credentials");
+const mongoose = require("mongoose");
 const connectDB = require("./config/dbConn");
 const PORT = process.env.PORT || 4000;
 
@@ -89,19 +89,3 @@ mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB");
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
-
-// old way
-// mongoose
-//   .connect(process.env.MONGO_URI, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   })
-//   .then(() => {
-//     // listen for requests
-//     app.listen(process.env.PORT, () => {
-//       console.log("connected to db & listening on port", process.env.PORT);
-//     });
-//   })
-//   .catch((error) => {
-//     console.log(error);
-//   });
