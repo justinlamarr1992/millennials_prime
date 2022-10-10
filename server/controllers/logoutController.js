@@ -1,5 +1,5 @@
 // const User = require("../models/userModel");
-const UserTest = require("../models/User");
+const User = require("../models/MillPrimeUser");
 
 const handleLogout = async (req, res) => {
   // on Client, also delete the access Token in memeory of client application
@@ -9,7 +9,7 @@ const handleLogout = async (req, res) => {
   const refreshToken = cookies.jwt;
 
   //   is Refreshtoken in db
-  const foundUser = await UserTest.findOne({ refreshToken }).exec();
+  const foundUser = await User.findOne({ refreshToken }).exec();
   if (!foundUser) {
     res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
     return res.sendStatus(204);

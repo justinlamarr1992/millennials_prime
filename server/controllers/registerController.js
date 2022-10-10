@@ -1,4 +1,5 @@
-const UserTest = require("../models/User");
+// const UserTest = require("../models/User");
+const User = require("../models/MillPrimeUser");
 const bcrypt = require("bcrypt");
 // const usersDb = {
 //   users: require("../models/users.json"),
@@ -15,7 +16,7 @@ const handleNewUser = async (req, res) => {
     return res.status(400).json({ message: "Email and Password required" });
 
   // check for duplicates usernames in the db
-  const duplicate = await UserTest.findOne({ username: user }).exec();
+  const duplicate = await User.findOne({ username: user }).exec();
 
   // const duplicate = await usersDb.users.find(
   //   (person) => person.username === user
@@ -27,7 +28,7 @@ const handleNewUser = async (req, res) => {
     const hashedPassword = await bcrypt.hash(password, 10);
 
     // //create and store the new user
-    const result = await UserTest.create({
+    const result = await User.create({
       username: user,
       password: hashedPassword,
     });

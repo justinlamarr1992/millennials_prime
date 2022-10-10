@@ -7,8 +7,8 @@ const verifyRoles = require("../../middleware/verifyRoles");
 router
   // MAy need to change to the updated route
   .route("/")
-  .get(userController.getAllUsers)
-  //   .get(verifyRoles(ROLES_LIST.Admin), userController.getAllUsers)
+  // .get(userController.getAllUsers)
+  .get(verifyRoles(ROLES_LIST.Admin), userController.getAllUsers)
   .delete(verifyRoles(ROLES_LIST.Admin), userController.deleteUser);
 
 router.route("/:id").get(verifyRoles(ROLES_LIST.Admin), userController.getUser);

@@ -9,7 +9,7 @@ const userSchema = new Schema(
     },
     firstname: { type: String, maxlength: 50 },
     lastname: { type: String, maxlength: 50 },
-    email: { type: String, unique: 1 },
+    email: { type: String },
     password: { type: String, minlength: 6 },
     roles: {
       User: {

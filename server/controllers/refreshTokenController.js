@@ -1,4 +1,4 @@
-const UserTest = require("../models/User");
+const User = require("../models/MillPrimeUser");
 const bcrypt = require("bcrypt");
 
 // const User = require("../models/userModel");
@@ -11,7 +11,7 @@ const handleRefreshToken = async (req, res) => {
   console.log(cookies.jwt);
   const refreshToken = cookies.jwt;
   //   res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true });
-  const foundUser = await UserTest.findOne({ refreshToken }).exec();
+  const foundUser = await User.findOne({ refreshToken }).exec();
   if (!foundUser) return res.sendStatus(403);
 
   //   evaluate jwt
