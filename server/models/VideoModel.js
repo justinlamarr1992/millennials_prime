@@ -3,10 +3,10 @@ const Schema = mongoose.Schema;
 
 // other models have new schema this may be an error
 
-const videoSchema = mongoose.Schema(
+const videoSchema = new Schema(
   {
     // TODO: LAter change this back so the rela info can be related to user
-    userPosting: { type: Schema.Types.ObjectId, ref: "User" },
+    userPosting: { type: Schema.Types.ObjectId, ref: "MillPrimeUser" },
     // userPosting: { type: String },
     // Change this above for testing
     title: { type: String, maxlength: 50 },
@@ -22,6 +22,4 @@ const videoSchema = mongoose.Schema(
   { timestamps: true }
 );
 
-const Video = mongoose.model("Video", videoSchema);
-
-module.exports = { Video };
+module.exports = mongoose.model("Video", videoSchema);

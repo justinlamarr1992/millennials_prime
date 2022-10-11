@@ -35,7 +35,7 @@ import Unauthorized from "./Pages/auth/Unauthorized";
 // import TestUser from "./Pages/User/TestUser";
 // import Verified from "./Pages/User/Verified";
 
-// import PrimeShow from "./Pages/ShowView/PrimeShow";
+import PrimeShow from "./Pages/ShowView/PrimeShow";
 import UploadContent from "./Pages/Uploads/UploadContent";
 import Catalog from "./Pages/ShowView/Catalog";
 
@@ -73,8 +73,8 @@ const App = (props, state) => {
           {/* <Route index element={<PrimeShow />} /> */}
           {/* Change this to the advertisement home page  */}
           <Route path="/prime-news">
-            {/* <Route path="viewer/:videoId" element={<PrimeShow />} /> */}
-            {/* <Route path="upload-content" element={<UploadContent />} /> */}
+            <Route path="viewer/:videoId" element={<PrimeShow />} />
+            <Route path="upload-content" element={<UploadContent />} />
             <Route path="catalog" element={<Catalog />} />
           </Route>
 
@@ -92,7 +92,7 @@ const App = (props, state) => {
           {/* <Route element={<RequireAuth />}> */}
           {/* FORNOW COMMENGT OUT BUT WHEN I FIGURE OUT CODE KEEP IT IN AUTH */}
           {/* <Route path="yourin" element={<SuccessSignIn />} /> */}
-          <Route path="prime-news/upload-content" element={<UploadContent />} />
+          {/* <Route path="prime-news/upload-content" element={<UploadContent />} /> */}
           {/* Prime Shows */}
           {/* <Route path="/prime-news"> */}
           {/* <Route path="viewer/:videoId" element={<PrimeShow />} /> */}

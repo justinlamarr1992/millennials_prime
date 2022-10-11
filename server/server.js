@@ -63,6 +63,7 @@ app.use(verifyJWT);
 
 app.use("/employees", require("./routes/api/employees"));
 app.use("/users", require("./routes/api/users"));
+app.use("/videos", require("./routes/api/video"));
 
 // const authRoutes = require("./routes/auth");
 // const userRoutes = require("./routes/user");

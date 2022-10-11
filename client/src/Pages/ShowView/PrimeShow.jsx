@@ -59,7 +59,7 @@ const PrimeShow = () => {
     >
       <div className="view-container">
         <div className="view-content">
-          <Video video={`http://localhost:5000/${video.filePath}`} />
+          <Video video={`http://localhost:4000/${video.filePath}`} />
           <div className="view-content-info">
             {/* <UserPostInfo
             user={video.userPosting}

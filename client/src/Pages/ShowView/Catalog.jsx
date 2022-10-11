@@ -18,7 +18,7 @@ const Catalog = () => {
   const [videos, setVideos] = useState([]);
 
   useEffect(() => {
-    axios.get("/api/video/getVideos").then((response) => {
+    axios.get("/videos/").then((response) => {
       console.log(response);
       if (response.data.success) {
         console.log(response.data.videos);

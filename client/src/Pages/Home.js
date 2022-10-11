@@ -79,7 +79,11 @@ const Home = () => {
       >
         <h1>This is the Home Page</h1>
         <Users />
+
         <button onClick={logout}>Sign Out</button>
+        <Link to={`/prime-news/upload-content`}>
+          <button>Upload Content</button>
+        </Link>
         <h4
           ref={errRef}
           className={errMsg ? "errmsg" : "offscreen"}

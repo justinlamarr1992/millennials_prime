@@ -1,9 +1,11 @@
 const multer = require("multer");
 var ffmpeg = require("fluent-ffmpeg");
-const User = require("../models/userModel");
-const { Video } = require("../models/VideoModel");
+const User = require("../models/MillPrimeUser");
+const Video = require("../models/VideoModel");
 
 const createVideo = async (req, res) => {
+  console.log("starting in controller");
+
   var storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, "../uploads/");
@@ -82,24 +84,29 @@ const uploadVideo = async (req, res) => {
 };
 
 const getVideos = async (req, res) => {
-  Video.find()
-    // .populate("userPosting") THIS WILL BE LATER
-    // FOR NOW JUST USE PRIME VIEWS VS REGULAR
-    .populate("prime")
-    .exec((err, videos) => {
-      if (err) return res.status(400).send(err);
-      res.status(200).json({ success: true, videos });
-    });
+  const videos = await Video.find().populate("prime");
+  if (!videos) return res.status(204).json({ message: `No Videos ` });
+  res.status(200).json({ success: true, videos });
 };
 
 const getSingleVideo = async (req, res) => {
-  Video.findOne({ _id: req.body.videoId })
-    // .populate("userPosting") THIS WILL BE LATER
-    // FOR NOW JUST USE PRIME VIEWS VS REGULAR
-    .exec((err, video) => {
-      if (err) return res.status(400).send(err);
-      res.status(200).json({ success: true, video });
-    });
+  if (!req?.params?.id)
+    return res.status(400).json({ message: "Video ID required" });
+  const video = await Video.findOne({ _id: req.params.id }).exec();
+  if (!video) {
+    return res
+      .status(204)
+      .json({ message: `No Video matches ID ${req.params.id}` });
+  }
+  res.status(200).json({ success: true, video });
+
+  // Video.findOne({ _id: req.body.videoId })
+  //   // .populate("userPosting") THIS WILL BE LATER
+  //   // FOR NOW JUST USE PRIME VIEWS VS REGULAR
+  //   .exec((err, video) => {
+  //     if (err) return res.status(400).send(err);
+  //     res.status(200).json({ success: true, video });
+  //   });
 };
 
 module.exports = {
