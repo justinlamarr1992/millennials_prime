@@ -1,3 +1,4 @@
+const express = require("express");
 const multer = require("multer");
 var ffmpeg = require("fluent-ffmpeg");
 const User = require("../models/MillPrimeUser");
@@ -46,7 +47,6 @@ const createThumbnail = async (req, res) => {
   let fileDuration = "";
 
   ffmpeg.ffprobe(req.body.filePath, function (err, metadata) {
-    console.dir(metadata);
     console.log(metadata.format.duration);
 
     fileDuration = metadata.format.duration;

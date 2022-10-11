@@ -12,6 +12,7 @@ import {
 import FileUpload from "../../Components/reusuables/post/FileUpload";
 import Dropzone from "react-dropzone";
 import axios from "axios";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
 import "./upload.css";
 
@@ -32,6 +33,8 @@ const UploadContent = () => {
 
   const uploadRef = useRef(false);
   const artworkRef = useRef(false);
+
+  const axiosPrivate = useAxiosPrivate();
 
   // const Authorization = `Bearer ${user.token}`;
 
@@ -143,7 +146,7 @@ const UploadContent = () => {
 
     const variables = {
       // TODO: Comeback later to solve the user problem
-      userPosting: "TEst User HArd Coded",
+      userPosting: "User Hard Coded For Now",
       // userPosting: user.userData._id,
       title: title,
       description: description,
@@ -154,7 +157,7 @@ const UploadContent = () => {
       thumbnail: thumbnail,
     };
 
-    axios.post("/videos/uploadVideo", variables).then((response) => {
+    axiosPrivate.post("/videos/", variables).then((response) => {
       if (response.data.success) {
         alert("Video Uploaded Successfully");
       } else {
@@ -165,84 +168,39 @@ const UploadContent = () => {
 
   const onDrop = (files) => {
     let formData = new FormData();
-    const config = {
-      headers: {
-        "content-type": "multipart/form-data",
-      },
-      // api: {
-      //   bodyParser: false,
-      // },
-    };
     console.log(files);
     formData.append("file", files[0]);
-    console.log("starting try here");
-    try {
-      console.log("started");
-    } catch (err) {}
 
     // i may be able to replicate this the same for pictures music and all that lets see if it works
-    axios.post("/videos/uploadFiles", formData, config).then((response) => {
-      console.log(response.data);
-      if (response.data.success) {
-        console.log(response);
-        let variable = {
-          filePath: response.data.filePath,
-          fileName: response.data.fileName,
-        };
-        setFilePath(response.data.filePath);
-        //generate thumbnail with this file path
-        console.log("Starting Thumbnail front end");
-        axios.post("/videos/thumbnail", variable).then((response) => {
-          if (response.data.success) {
-            setDuration(response.data.fileDuration);
-            setThumbnail(response.data.thumbsFilePath);
-          } else {
-            alert("Failed to make the thumbnails");
-          }
-        });
-      } else {
-        alert("failed to save the video in server");
-      }
-    });
+    axiosPrivate
+      .post("http://localhost:4000/videos/uploadFiles", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true,
+      })
+      .then((response) => {
+        console.log(response.data);
+        if (response.data.success) {
+          console.log(response);
+          let variable = {
+            filePath: response.data.filePath,
+            fileName: response.data.fileName,
+          };
+          setFilePath(response.data.filePath);
+          //generate thumbnail with this file path
+          console.log("Starting Thumbnail front end");
+          axiosPrivate.post("/videos/thumbnail", variable).then((response) => {
+            if (response.data.success) {
+              setDuration(response.data.fileDuration);
+              setThumbnail(response.data.thumbsFilePath);
+            } else {
+              alert("Failed to make the thumbnails");
+            }
+          });
+        } else {
+          alert("failed to save the video in server");
+        }
+      });
   };
-  // const onDrop = (files) => {
-  //   let formData = new FormData();
-  //   const config = {
-  //     headers: {
-  //       "content-type": "multipart/form-data",
-  //     },
-  //     // api: {
-  //     //   bodyParser: false,
-  //     // },
-  //   };
-  //   console.log(files);
-  //   formData.append("file", files[0]);
-
-  //   // i may be able to replicate this the same for pictures music and all that lets see if it works
-  //   axios.post("/videos/uploadFiles", formData, config).then((response) => {
-  //     console.log(response.data);
-  //     if (response.data.success) {
-  //       console.log(response);
-  //       let variable = {
-  //         filePath: response.data.filePath,
-  //         fileName: response.data.fileName,
-  //       };
-  //       setFilePath(response.data.filePath);
-  //       //generate thumbnail with this file path
-  //       console.log("Starting Thumbnail front end");
-  //       axios.post("/videos/thumbnail", variable).then((response) => {
-  //         if (response.data.success) {
-  //           setDuration(response.data.fileDuration);
-  //           setThumbnail(response.data.thumbsFilePath);
-  //         } else {
-  //           alert("Failed to make the thumbnails");
-  //         }
-  //       });
-  //     } else {
-  //       alert("failed to save the video in server");
-  //     }
-  //   });
-  // };
 
   return (
     <div

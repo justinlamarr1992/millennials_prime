@@ -6,13 +6,13 @@ const Schema = mongoose.Schema;
 const videoSchema = new Schema(
   {
     // TODO: LAter change this back so the rela info can be related to user
-    userPosting: { type: Schema.Types.ObjectId, ref: "MillPrimeUser" },
-    // userPosting: { type: String },
+    // userPosting: { type: Schema.Types.ObjectId, ref: "MillPrimeUser" },
+    userPosting: { type: String },
     // Change this above for testing
     title: { type: String, maxlength: 50 },
     description: { type: String },
     // replaces his privacy
-    prime: { type: Number },
+    prime: { type: String },
     filePath: { type: String },
     category: String,
     views: { type: Number, default: 0 },
