@@ -173,7 +173,7 @@ const UploadContent = () => {
 
     // i may be able to replicate this the same for pictures music and all that lets see if it works
     axiosPrivate
-      .post("http://localhost:4000/videos/uploadFiles", formData, {
+      .post("/videos/uploadFiles", formData, {
         headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       })

@@ -37,8 +37,9 @@ app.use(express.json());
 // middleware for cookies
 app.use(cookieParser());
 
-// serve static files
-app.use("/", express.static(path.join(__dirname, "/public")));
+// serve static files MEANING THE FILES SAVED FOR TESTING
+// FIND WAY FOR PRODUCTION
+app.use("/uploads", express.static(path.join(__dirname, "..", "/uploads")));
 // app.use("/uploads", express.static("uploads"));
 
 app.use(bodyParser.urlencoded({ extended: true }));

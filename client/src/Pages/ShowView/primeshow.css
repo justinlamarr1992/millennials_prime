@@ -10,10 +10,10 @@
         justify-content: center;
 }
 .side-video-content{
-  margin-top: 1rem;
-  padding:0 2rem;
+  margin-top: 3rem;
+  padding:0 1rem;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   /* TODO: Add the scroll stuff here */
 }
 .side-view-container{
@@ -33,6 +33,9 @@
 .side-video-content-thumbnail{
   width: 40%;
   color: var(--tri-t);
+}
+.side-video-content-thumbnail-img{
+  width: 100%;
 }
 .side-video-content-info{
   color: var(--tri-t);

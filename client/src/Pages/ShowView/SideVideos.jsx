@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import { Link } from "react-router-dom";
 
 function SideVideos() {
   const [sideVideos, setSideVideos] = useState([]);
+  const axiosPrivate = useAxiosPrivate();
+
   useEffect(() => {
-    axios.get("/api/video/getVideos").then((response) => {
+    axiosPrivate.get("/videos/").then((response) => {
       console.log(response);
       if (response.data.success) {
         console.log(response.data.videos);
@@ -24,6 +27,7 @@ function SideVideos() {
         <div className="side-video-content-thumbnail">
           <Link to={`/prime-news/viewer/${video._id}`}>
             <img
+              className="side-video-content-thumbnail-img"
               src={`http://localhost:4000/${video.thumbnail}`}
               alt="Thumbnail"
             />
@@ -50,9 +54,7 @@ function SideVideos() {
 
   return (
     <div className="side-view-container">
-      This is the side view
-      {/* {renderVideoBlock} */}
-      {/* testing before putting in js */}
+      <h3>Prime Videos</h3>
       {sideVideoItem}
     </div>
   );

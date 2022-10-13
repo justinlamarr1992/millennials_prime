@@ -84,6 +84,9 @@ const Home = () => {
         <Link to={`/prime-news/upload-content`}>
           <button>Upload Content</button>
         </Link>
+        <Link to={`/prime-news/catalog`}>
+          <button>Catalog</button>
+        </Link>
         <h4
           ref={errRef}
           className={errMsg ? "errmsg" : "offscreen"}

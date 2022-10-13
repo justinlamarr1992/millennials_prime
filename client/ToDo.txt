@@ -145,3 +145,5 @@ Catalog
 uploads
 Sign in
 This will be phase 1 for simplicity
+
+Go back to the video where he uploads data from video and find out how to save user

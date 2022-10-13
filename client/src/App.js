@@ -58,7 +58,7 @@ const App = (props, state) => {
   return (
     // <Suspense fallback={<div>Loading...</div>}>
     <div className="App">
-      {/* <NavBar /> */}
+      <NavBar />
       <Routes className="container-comp">
         <Route path="/" element={<Home />} />
         {/* <Route path="/" element={<Home />} /> */}

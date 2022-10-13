@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import VideoBlock from "../../Components/reusuables/catalog/VideoBlock";
 
 import axios from "axios";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
 import "./primeshow.css";
 
@@ -16,9 +17,10 @@ import { Link } from "react-router-dom";
 
 const Catalog = () => {
   const [videos, setVideos] = useState([]);
+  const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
-    axios.get("/videos/").then((response) => {
+    axiosPrivate.get("/videos/").then((response) => {
       console.log(response);
       if (response.data.success) {
         console.log(response.data.videos);
@@ -37,10 +39,7 @@ const Catalog = () => {
     const videoData = { ...video };
     // console.log(videoData);
     return (
-      <Link
-        to={`/prime-news/viewer/${video._id}`}
-        // state={videoData}
-      >
+      <Link to={`/prime-news/viewer/${video._id}`} state={videoData}>
         <VideoBlock key={index} {...video} />
       </Link>
     );

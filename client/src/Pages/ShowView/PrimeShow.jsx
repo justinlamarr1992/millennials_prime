@@ -13,22 +13,29 @@ import Video from "../../Components/video/Video";
 import SideVideos from "./SideVideos";
 import VideoBlock from "../../Components/reusuables/catalog/VideoBlock";
 import Subscriber from "./Subscriber";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
 const PrimeShow = () => {
+  const axiosPrivate = useAxiosPrivate();
   const params = useParams();
   const videoId = params.videoId;
 
   const [video, setVideo] = useState("");
+  const [videoFile, setVideoFile] = useState("");
+  let videoFileString;
 
   const videoVariable = {
     videoId,
   };
 
   useEffect(() => {
-    axios.post("/api/video/getSingleVideo", videoVariable).then((response) => {
+    axiosPrivate.post(`/videos/${videoId}`).then((response) => {
       if (response.data.success) {
         console.log(response.data.video);
         setVideo(response.data.video);
+        videoFileString = response.data.video.filePath;
+        console.log(videoFileString);
+        console.log(response.data.video.filePath);
       } else {
         alert("Failed to get Video Info");
       }
@@ -60,6 +67,7 @@ const PrimeShow = () => {
       <div className="view-container">
         <div className="view-content">
           <Video video={`http://localhost:4000/${video.filePath}`} />
+          {/* <Video video={videoFileString} /> */}
           <div className="view-content-info">
             {/* <UserPostInfo
             user={video.userPosting}
@@ -69,10 +77,10 @@ const PrimeShow = () => {
           /> */}
             <div className="view-content-info-user">User Info here</div>
             <div className="view-content-info-user-interactions">
-              <Subscriber
+              {/* <Subscriber
                 userTo={video.userPosting._id}
                 // userFrom={}
-              />
+              /> */}
             </div>
           </div>
 

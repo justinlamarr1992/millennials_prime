@@ -3,6 +3,7 @@ const multer = require("multer");
 var ffmpeg = require("fluent-ffmpeg");
 const User = require("../models/MillPrimeUser");
 const Video = require("../models/VideoModel");
+var mongoose = require("mongoose");
 
 const createVideo = async (req, res) => {
   console.log("starting in controller");
@@ -84,7 +85,7 @@ const uploadVideo = async (req, res) => {
 };
 
 const getVideos = async (req, res) => {
-  const videos = await Video.find().populate("prime");
+  const videos = await Video.find().populate("title");
   if (!videos) return res.status(204).json({ message: `No Videos ` });
   res.status(200).json({ success: true, videos });
 };
@@ -92,7 +93,9 @@ const getVideos = async (req, res) => {
 const getSingleVideo = async (req, res) => {
   if (!req?.params?.id)
     return res.status(400).json({ message: "Video ID required" });
+
   const video = await Video.findOne({ _id: req.params.id }).exec();
+  // mongoose.Types.ObjectId.isValid("your id here");
   if (!video) {
     return res
       .status(204)
