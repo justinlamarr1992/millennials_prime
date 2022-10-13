@@ -5,8 +5,43 @@ const User = require("../models/MillPrimeUser");
 const Video = require("../models/VideoModel");
 var mongoose = require("mongoose");
 
+const getVideos = async (req, res) => {
+  const videos = await Video.find().populate("title");
+  if (!videos) return res.status(204).json({ message: `No Videos ` });
+  res.status(200).json({ success: true, videos });
+};
+
+const getSingleVideo = async (req, res) => {
+  if (!req?.params?.id)
+    return res.status(400).json({ message: "Video ID required" });
+
+  var ObjectID = require("mongodb").ObjectID;
+  console.log("THIS IS THE OBJECT ID", new ObjectID(req.params.id));
+  // console.log("BELOW TELLS IF ITS VALID OR NOT");
+  // // This eturns true becasue it is a valid objectID
+  // console.log(mongoose.Types.ObjectId.isValid(new ObjectID(req.params.id)));
+  // const video = await Video.findOne({
+  //   _id: new ObjectID(req.params.id),
+  // }).exec();
+  const video = await Video.findOne({ _id: req.params.id }).exec();
+  if (!video) {
+    return res
+      .status(204)
+      .json({ message: `No Video matches ID ${req.params.id}` });
+  }
+  res.status(200).json({ success: true, video });
+
+  // Video.findOne({ _id: req.body.videoId })
+  //   // .populate("userPosting") THIS WILL BE LATER
+  //   // FOR NOW JUST USE PRIME VIEWS VS REGULAR
+  //   .exec((err, video) => {
+  //     if (err) return res.status(400).send(err);
+  //     res.status(200).json({ success: true, video });
+  //   });
+};
+
 const createVideo = async (req, res) => {
-  console.log("starting in controller");
+  console.log("I START HERE LOOK AT ME!!!!!!!!!!!!!!!");
 
   var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -77,39 +112,12 @@ const createThumbnail = async (req, res) => {
 };
 
 const uploadVideo = async (req, res) => {
+  console.log("Starting in uploadVideo");
   const video = new Video(req.body);
   video.save((err, video) => {
     if (err) return res.status(400).json({ success: false, err });
     return res.status(200).json({ success: true });
   });
-};
-
-const getVideos = async (req, res) => {
-  const videos = await Video.find().populate("title");
-  if (!videos) return res.status(204).json({ message: `No Videos ` });
-  res.status(200).json({ success: true, videos });
-};
-
-const getSingleVideo = async (req, res) => {
-  if (!req?.params?.id)
-    return res.status(400).json({ message: "Video ID required" });
-
-  const video = await Video.findOne({ _id: req.params.id }).exec();
-  // mongoose.Types.ObjectId.isValid("your id here");
-  if (!video) {
-    return res
-      .status(204)
-      .json({ message: `No Video matches ID ${req.params.id}` });
-  }
-  res.status(200).json({ success: true, video });
-
-  // Video.findOne({ _id: req.body.videoId })
-  //   // .populate("userPosting") THIS WILL BE LATER
-  //   // FOR NOW JUST USE PRIME VIEWS VS REGULAR
-  //   .exec((err, video) => {
-  //     if (err) return res.status(400).send(err);
-  //     res.status(200).json({ success: true, video });
-  //   });
 };
 
 module.exports = {

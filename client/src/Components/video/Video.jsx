@@ -244,7 +244,9 @@ const Video2 = ({ video }) => {
     );
     // Original because should be divided by 10 secs with 10 second images instead of 3
     // I am HERE Trying to figure out why the client cant GET the images via this route
+    // const previewImgSrc = `../../Assets/Images/previewImages/preview${previewImgNumber}.jpg`;
     const previewImgSrc = `../../Assets/Images/previewImages/preview${previewImgNumber}.jpg`;
+
     previewImg.src = previewImgSrc;
     timeLineContain.style.setProperty("--preview-position", percent);
 

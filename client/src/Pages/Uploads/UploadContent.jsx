@@ -173,11 +173,17 @@ const UploadContent = () => {
 
     // i may be able to replicate this the same for pictures music and all that lets see if it works
     axiosPrivate
-      .post("/videos/uploadFiles", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-        withCredentials: true,
-      })
+      .post(
+        "/videos/uploadFiles",
+        formData
+        // {
+        //   headers: { "Content-Type": "multipart/form-data" },
+        //   withCredentials: true,
+        // }
+      )
       .then((response) => {
+        console.log("The Bug is here2");
+
         console.log(response.data);
         if (response.data.success) {
           console.log(response);
@@ -274,10 +280,7 @@ const UploadContent = () => {
                       <div {...getRootProps()}>
                         <input type="file" name="" {...getInputProps()} />
                         {/*  */}
-                        <p>
-                          Drag 'n' drop some files here, or click to select
-                          files (The box with plus should go here)
-                        </p>
+                        <h1>Drag HEre</h1>
                       </div>
                     </section>
                   )}
