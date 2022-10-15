@@ -20,7 +20,6 @@ const PrimeShow = () => {
   const params = useParams();
   const videoId = params.videoId;
 
-  console.log(params);
   console.log(videoId);
 
   const [video, setVideo] = useState("");

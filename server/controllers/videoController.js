@@ -6,20 +6,22 @@ const Video = require("../models/VideoModel");
 var mongoose = require("mongoose");
 
 const getVideos = async (req, res) => {
-  const videos = await Video.find().populate("title");
+  const videos = await Video.find().sort({ createdAt: -1 });
   if (!videos) return res.status(204).json({ message: `No Videos ` });
   res.status(200).json({ success: true, videos });
 };
 
 const getSingleVideo = async (req, res) => {
   const videoId = req.params.id;
-  console.log("THIS IS THE PARAMS", videoId);
+  console.log("PARAMS", videoId);
   if (!req?.params?.id) {
     return res.status(400).json({ message: "Video ID required" });
   }
-  const video = await Video.findOne({ id: req.params.id }).exec();
-  if (!videoId == video._id) console.log("Something is wrong here");
-  console.log("The ids", videoId, video._id);
+  const test = mongoose.Types.ObjectId(videoId);
+  console.log("MKING AN OBJECTID", test);
+  // const video = await Video.findOne({ id: req.params.id }).exec();
+  const video = await Video.findOne({ _id: test });
+  console.log("The ids", test, video._id);
   if (!video) {
     return res
       .status(204)
@@ -29,7 +31,6 @@ const getSingleVideo = async (req, res) => {
 };
 
 const createVideo = (req, res) => {
-  console.log("I START HERE LOOK AT ME!!!!!!!!!!!!!!!");
   var storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, "../uploads/");
@@ -63,7 +64,7 @@ const createVideo = (req, res) => {
 };
 
 const createThumbnail = async (req, res) => {
-  console.log("Starting Thumbnail back end");
+  console.log("I RAN HAHAHAH");
   let thumbsFilePath = "";
   let fileDuration = "";
   ffmpeg.ffprobe(req.body.filePath, function (err, metadata) {

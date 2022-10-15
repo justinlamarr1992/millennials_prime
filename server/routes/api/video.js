@@ -10,9 +10,9 @@ router
   .get(videoController.getVideos)
   .post(videoController.uploadVideo);
 
+router.route("/createVideoFiles").post(videoController.createVideo);
+router.route("/createThumbnail").post(videoController.createThumbnail);
 router.route("/:id").post(videoController.getSingleVideo); //original tut had this as a post... revisit
-router.route("/uploadFiles").post(videoController.createVideo);
-router.route("/thumbnail").post(videoController.createThumbnail);
 
 // router.post("/uploadFiles", videoController.createVideo);
 // router.post("/:id", videoController.getSingleVideo);

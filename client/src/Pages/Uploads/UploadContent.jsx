@@ -173,32 +173,35 @@ const UploadContent = () => {
 
     // i may be able to replicate this the same for pictures music and all that lets see if it works
     axiosPrivate
-      .post("http://localhost:4000/videos/uploadFiles", formData, {
+      .post("http://localhost:4000/videos/createVideoFiles", formData, {
         headers: { "Content-Type": "multipart/form-data" },
         withCredentials: true,
       })
       .then((response) => {
-        console.log("The Bug is here2");
-
-        console.log(response.data);
         if (response.data.success) {
           console.log(response);
           let variable = {
             filePath: response.data.filePath,
             fileName: response.data.fileName,
           };
+          console.log(response.data);
+
           setFilePath(response.data.filePath);
           //generate thumbnail with this file path
-          console.log("Starting Thumbnail front end");
-          axiosPrivate.post("/videos/thumbnail", variable).then((response) => {
-            console.log(response);
-            if (response.data.success) {
-              setDuration(response.data.duration);
-              setThumbnail(response.data.thumbnail);
-            } else {
-              alert("Failed to make the thumbnails");
-            }
-          });
+          axiosPrivate
+            .post("http://localhost:4000/videos/createThumbnail", variable, {
+              withCredentials: true,
+            })
+            .then((response) => {
+              // console.log(response);
+              if (response.data.success) {
+                setDuration(response.data.fileDuration);
+                setThumbnail(response.data.thumbsFilePath);
+                console.log("Thumbnail post ran");
+              } else {
+                alert("Failed to make the thumbnails");
+              }
+            });
         } else {
           alert("failed to save the video in server");
         }

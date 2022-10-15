@@ -17,6 +17,7 @@
   /* TODO: Add the scroll stuff here */
 }
 .side-view-container{
+  padding: 5rem 0;
    height: 100%;
     width: 20%;
     /* background: var(--pri-t); */
@@ -29,9 +30,14 @@
         justify-content: center;
         /* TODO: MAke dynamic for mobile */
 }
+.side-view-container-content{
+  overflow: scroll;
+  overflow-y: scroll;
+}
 
 .side-video-content-thumbnail{
-  width: 40%;
+  width: 90%;
+  max-width: 10vw;
   color: var(--tri-t);
 }
 .side-video-content-thumbnail-img{
