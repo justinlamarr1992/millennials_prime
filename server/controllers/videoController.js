@@ -12,37 +12,24 @@ const getVideos = async (req, res) => {
 };
 
 const getSingleVideo = async (req, res) => {
-  if (!req?.params?.id)
+  const videoId = req.params.id;
+  console.log("THIS IS THE PARAMS", videoId);
+  if (!req?.params?.id) {
     return res.status(400).json({ message: "Video ID required" });
-
-  var ObjectID = require("mongodb").ObjectID;
-  console.log("THIS IS THE OBJECT ID", new ObjectID(req.params.id));
-  // console.log("BELOW TELLS IF ITS VALID OR NOT");
-  // // This eturns true becasue it is a valid objectID
-  // console.log(mongoose.Types.ObjectId.isValid(new ObjectID(req.params.id)));
-  // const video = await Video.findOne({
-  //   _id: new ObjectID(req.params.id),
-  // }).exec();
-  const video = await Video.findOne({ _id: req.params.id }).exec();
+  }
+  const video = await Video.findOne({ id: req.params.id }).exec();
+  if (!videoId == video._id) console.log("Something is wrong here");
+  console.log("The ids", videoId, video._id);
   if (!video) {
     return res
       .status(204)
       .json({ message: `No Video matches ID ${req.params.id}` });
   }
   res.status(200).json({ success: true, video });
-
-  // Video.findOne({ _id: req.body.videoId })
-  //   // .populate("userPosting") THIS WILL BE LATER
-  //   // FOR NOW JUST USE PRIME VIEWS VS REGULAR
-  //   .exec((err, video) => {
-  //     if (err) return res.status(400).send(err);
-  //     res.status(200).json({ success: true, video });
-  //   });
 };
 
-const createVideo = async (req, res) => {
+const createVideo = (req, res) => {
   console.log("I START HERE LOOK AT ME!!!!!!!!!!!!!!!");
-
   var storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, "../uploads/");
@@ -61,9 +48,7 @@ const createVideo = async (req, res) => {
       cb(null, true);
     },
   });
-
   var upload = multer({ storage: storage }).single("file");
-
   upload(req, res, (err) => {
     if (err) {
       console.log(err);
@@ -81,13 +66,10 @@ const createThumbnail = async (req, res) => {
   console.log("Starting Thumbnail back end");
   let thumbsFilePath = "";
   let fileDuration = "";
-
   ffmpeg.ffprobe(req.body.filePath, function (err, metadata) {
     console.log(metadata.format.duration);
-
     fileDuration = metadata.format.duration;
   });
-
   ffmpeg(req.body.filePath)
     .on("filenames", function (filenames) {
       console.log("Will generate " + filenames.join(", "));

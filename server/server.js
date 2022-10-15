@@ -66,15 +66,6 @@ app.use("/employees", require("./routes/api/employees"));
 app.use("/users", require("./routes/api/users"));
 app.use("/videos", require("./routes/api/video"));
 
-// const authRoutes = require("./routes/auth");
-// const userRoutes = require("./routes/user");
-// const postRoutes = require("./routes/post");
-// const videoRoutes = require("./routes/video");
-// app.use("/api/auth", authRoutes);
-// app.use("/api/user", userRoutes);
-// app.use("/api/post", postRoutes);
-// app.use("/api/video", videoRoutes);
-
 app.all("*", (req, res) => {
   res.status(404);
   if (req.accepts("html")) {

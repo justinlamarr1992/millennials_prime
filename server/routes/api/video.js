@@ -5,10 +5,17 @@ const ROLES_LIST = require("../../config/roles_list");
 const verifyRoles = require("../../middleware/verifyRoles");
 
 // POST a video
-router.get("/", videoController.getVideos);
-router.post("/:id", videoController.getSingleVideo); //original tut had this as a post... revisit
-router.post("/uploadFiles", videoController.createVideo);
-router.post("/thumbnail", videoController.createThumbnail);
-router.post("/", videoController.uploadVideo);
+router
+  .route("/")
+  .get(videoController.getVideos)
+  .post(videoController.uploadVideo);
+
+router.route("/:id").post(videoController.getSingleVideo); //original tut had this as a post... revisit
+router.route("/uploadFiles").post(videoController.createVideo);
+router.route("/thumbnail").post(videoController.createThumbnail);
+
+// router.post("/uploadFiles", videoController.createVideo);
+// router.post("/:id", videoController.getSingleVideo);
+// router.post("/thumbnail", videoController.createThumbnail);
 
 module.exports = router;

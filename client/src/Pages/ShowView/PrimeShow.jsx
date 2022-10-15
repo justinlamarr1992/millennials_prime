@@ -20,6 +20,9 @@ const PrimeShow = () => {
   const params = useParams();
   const videoId = params.videoId;
 
+  console.log(params);
+  console.log(videoId);
+
   const [video, setVideo] = useState("");
   const [videoFile, setVideoFile] = useState("");
   let videoFileString;
@@ -29,17 +32,22 @@ const PrimeShow = () => {
   };
 
   useEffect(() => {
-    axiosPrivate.post(`/videos/${videoId}`).then((response) => {
-      if (response.data.success) {
-        console.log(response.data.video);
-        setVideo(response.data.video);
-        videoFileString = response.data.video.filePath;
-        console.log(videoFileString);
-        console.log(response.data.video.filePath);
-      } else {
-        alert("Failed to get Video Info");
-      }
-    });
+    axiosPrivate
+      .post(`/videos/${videoId}`, {
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true,
+      })
+      .then((response) => {
+        if (response.data.success) {
+          console.log(response.data.video);
+          setVideo(response.data.video);
+          videoFileString = response.data.video.filePath;
+          console.log(videoFileString);
+          console.log(response.data.video.filePath);
+        } else {
+          alert("Failed to get Video Info");
+        }
+      });
   }, [params]);
   // console.log(<TimeCalc postDate={new Date(video.createdAt)} />);
 

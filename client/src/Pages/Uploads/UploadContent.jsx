@@ -173,14 +173,10 @@ const UploadContent = () => {
 
     // i may be able to replicate this the same for pictures music and all that lets see if it works
     axiosPrivate
-      .post(
-        "/videos/uploadFiles",
-        formData
-        // {
-        //   headers: { "Content-Type": "multipart/form-data" },
-        //   withCredentials: true,
-        // }
-      )
+      .post("http://localhost:4000/videos/uploadFiles", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+        withCredentials: true,
+      })
       .then((response) => {
         console.log("The Bug is here2");
 
@@ -195,9 +191,10 @@ const UploadContent = () => {
           //generate thumbnail with this file path
           console.log("Starting Thumbnail front end");
           axiosPrivate.post("/videos/thumbnail", variable).then((response) => {
+            console.log(response);
             if (response.data.success) {
-              setDuration(response.data.fileDuration);
-              setThumbnail(response.data.thumbsFilePath);
+              setDuration(response.data.duration);
+              setThumbnail(response.data.thumbnail);
             } else {
               alert("Failed to make the thumbnails");
             }
