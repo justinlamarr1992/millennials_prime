@@ -55,11 +55,7 @@ function SideVideos() {
   return (
     <div className="side-view-container">
       <h3>Prime Videos</h3>
-      <div className="side-view-container-content">
-        {" "}
-        {sideVideoItem}
-        {sideVideoItem}
-      </div>
+      <div className="side-view-container-content">{sideVideoItem}</div>
     </div>
   );
 }

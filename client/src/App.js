@@ -25,7 +25,7 @@ import Home from "./Pages/Home";
 import SignOut from "./Pages/auth/SignOut.jsx";
 import SignIn from "./Pages/auth/SignIn";
 import Register from "./Pages/auth/Register";
-// import Questionaire from "./Pages/auth/Questionaire";
+import Questionaire from "./Pages/auth/Questionaire";
 // import Questionaire2 from "./Pages/auth/Questionaire2";
 // import Questionaire3 from "./Pages/auth/Questionaire3";
 // import PasswordRecovery from "./Pages/auth/PasswordRecovery";
@@ -82,9 +82,10 @@ const App = (props, state) => {
           <Route path="/auth">
             <Route path="register" element={<Register />} />
             <Route path="signin" element={<SignIn />} />
+            <Route path="questionaire" element={<Questionaire />} />
+
             {/* <Route path="signout" element={<SignOut />} />
             <Route path="passwordrecovery" element={<PasswordRecovery />} />
-            <Route path="questionaire" element={<Questionaire />} />
             <Route path="questionaire2" element={<Questionaire2 />} />
             <Route path="questionaire3" element={<Questionaire3 />} /> */}
           </Route>

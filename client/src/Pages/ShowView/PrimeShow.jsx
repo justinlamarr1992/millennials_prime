@@ -19,11 +19,9 @@ const PrimeShow = () => {
   const axiosPrivate = useAxiosPrivate();
   const params = useParams();
   const videoId = params.videoId;
-
-  console.log(videoId);
-
   const [video, setVideo] = useState("");
   const [videoFile, setVideoFile] = useState("");
+  const [userInfo, setUserInfo] = useState({});
   let videoFileString;
 
   const videoVariable = {
@@ -38,16 +36,18 @@ const PrimeShow = () => {
       })
       .then((response) => {
         if (response.data.success) {
-          console.log(response.data.video);
+          // console.log(response.data);
+          setUserInfo(response.data.video.userPosting);
           setVideo(response.data.video);
           videoFileString = response.data.video.filePath;
-          console.log(videoFileString);
-          console.log(response.data.video.filePath);
         } else {
           alert("Failed to get Video Info");
         }
       });
   }, [params]);
+  console.log(video.createdAt);
+  console.log(userInfo.username);
+
   // console.log(<TimeCalc postDate={new Date(video.createdAt)} />);
 
   // const renderVideoBlock = videos.map((video, index) => {
@@ -76,12 +76,13 @@ const PrimeShow = () => {
           <Video video={`http://localhost:4000/${video.filePath}`} />
           {/* <Video video={videoFileString} /> */}
           <div className="view-content-info">
-            {/* <UserPostInfo
-            user={video.userPosting}
-            // pic={video.userPosting && video.userPosting.avatar} Need ti implement this into model
-            // postedDate={<TimeCalc postDate={new Date(video.createdAt)} />}
-            className="pr-user-info"
-          /> */}
+            <UserPostInfo
+              // user={userInfo.username}
+              user={userInfo.username}
+              // pic={video.userPosting && video.userPosting.avatar} Need ti implement this into model
+              postedDate={<TimeCalc postDate={new Date(video.createdAt)} />}
+              className="pr-user-info"
+            />
             <div className="view-content-info-user">User Info here</div>
             <div className="view-content-info-user-interactions">
               {/* <Subscriber

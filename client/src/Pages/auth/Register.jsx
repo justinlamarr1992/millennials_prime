@@ -1,10 +1,10 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import useAuth from "../../Hooks/useAuth";
+
+// import { useDispatch } from "react-redux";
 
 import axios from "axios";
-import { registerUser } from "../../Actions/userActions"; //Trail 1
-// import { useSignup } from "../../Hooks/useSignup"; Trail 2
 
 import "./auth.css";
 import Logo from "../../Assets/Images/MillennialsPrimeLogo.png";
@@ -14,15 +14,22 @@ import Company3 from "../../Assets/Images/Companies/Company3.jpg";
 import { FaEyeSlash, FaEye } from "react-icons/fa";
 
 const Register = () => {
-  // getting info for signing up
-  const [email, setEmail] = useState("Williams@fff.com");
-  const [password, setPassword] = useState("ABcd1234!@");
-  const [name, setName] = useState("");
-  const [lastname, setLastname] = useState("");
+  const { setAuth } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const dispatch = useDispatch();
-  // const name = "";
-  // const { signup, error, isLoading } = useSignup();
+  const from = location.state?.from?.pathname || "/auth/signin";
+
+  // getting info for signing up
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  const [user, setUser] = useState("");
+  const [errMsg, setErrMsg] = useState("");
+
+  // const dispatch = useDispatch();
 
   const ref = useRef(null);
   // const [locked, setLocked] = useState(true);
@@ -48,6 +55,9 @@ const Register = () => {
     const el = document.querySelector("#container");
     console.log(el);
   }, []);
+  useEffect(() => {
+    setErrMsg("");
+  }, [user, password]);
 
   function togglePassInput(e) {
     const type = passInput.getAttribute("type");
@@ -80,20 +90,50 @@ const Register = () => {
     }
   }
 
+  // Dave GraYS
   const handleSubmit = async (e) => {
     e.preventDefault();
-    axios.get("/api/video/getVideos").then((response) => {
-      console.log(response);
-      if (response.data.success) {
-        console.log(response.data.videos);
-        // setVideos(response.data.videos);
-      } else {
-        alert("Failed to get Videos");
-      }
-    });
-    console.log("Works");
-  };
+    let dataToSubmit = {
+      user,
+      password,
+      firstName,
+      lastName,
+    };
 
+    try {
+      const response = await axios.post(
+        "http://localhost:4000/register",
+        dataToSubmit,
+
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
+      console.log(JSON.stringify(response?.data));
+      const accessToken = response?.data?.accessToken;
+      const roles = response?.data?.roles;
+      setAuth({ user, password, roles, accessToken });
+      // setUser("");
+      // setPassword("");
+      navigate(from, { replace: true });
+    } catch (err) {
+      console.log("Nope");
+
+      if (!err?.originalStatus) {
+        // isLoading: true until timeout occurs
+        setErrMsg("No Server Response");
+      } else if (err.originalStatus === 400) {
+        setErrMsg("Missing Info");
+      } else if (err.originalStatus === 401) {
+        console.log(err);
+        setErrMsg("Unauthorized but its here");
+      } else {
+        setErrMsg("Login Failed");
+      }
+      // errRef.current.focus();
+    }
+  };
   return (
     <div className="page">
       {/* Think about using these settings with the div below commented out */}
@@ -130,25 +170,26 @@ const Register = () => {
           <form
             className="auth-form"
             action=""
-            onSubmit={(e) => {
-              e.preventDefault();
-              let dataToSubmit = {
-                email: email,
-                password: password,
-                name: name,
-                lastname: lastname,
-              };
+            // onSubmit={(e) => {
+            //   e.preventDefault();
+            //   let dataToSubmit = {
+            //     email: email,
+            //     password: password,
+            //     name: name,
+            //     lastname: lastname,
+            //   };
 
-              dispatch(registerUser(dataToSubmit)).then((response) => {
-                console.log(email, password, name, lastname);
-                if (response.payload.success) {
-                  // NAVAGAT CODE
-                } else {
-                  alert("register went wrong");
-                  console.log(response.payload.err.errmsg);
-                }
-              });
-            }}
+            //   dispatch(registerUser(dataToSubmit)).then((response) => {
+            //     console.log(email, password, name, lastname);
+            //     if (response.payload.success) {
+            //       // NAVAGAT CODE
+            //     } else {
+            //       alert("register went wrong");
+            //       console.log(response.payload.err.errmsg);
+            //     }
+            //   });
+            // }}
+            onSubmit={handleSubmit}
           >
             <div className="label-input">
               <label htmlFor="">Full Name</label>
@@ -157,16 +198,16 @@ const Register = () => {
                   className="fname names"
                   type="text"
                   placeholder="First Name"
-                  onChange={(e) => setName(e.target.value)}
-                  value={name}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  value={firstName}
                   required
                 />
                 <input
                   type="text"
                   className="lname names"
                   placeholder="Last Name"
-                  onChange={(e) => setLastname(e.target.value)}
-                  value={lastname}
+                  onChange={(e) => setLastName(e.target.value)}
+                  value={lastName}
                   required
                 />
                 <div className="validation">*</div>
@@ -177,8 +218,8 @@ const Register = () => {
               <label htmlFor="">Email</label>
               <input
                 type="email"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
+                onChange={(e) => setUser(e.target.value)}
+                value={user}
               />
             </div>
 

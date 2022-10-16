@@ -5,15 +5,21 @@ import TimeCalc from "./TimeCalc";
 
 import { primePostData } from "./post/data";
 import PostLikeDisLike from "./post/PostLikeDislike";
-const UserPostInfo = ({ user, pic, postedDate }) => {
+const UserPostInfo = ({
+  user,
+  // pic,
+  postedDate,
+}) => {
+  console.log(postedDate);
+  console.log(user);
   return (
     <div className="pr-user-info">
       <div className=" info-pic square-container">
-        <img
+        {/* <img
           className="square-container-contents p-con-shade"
           src={pic}
           alt="User Image here"
-        />
+        /> */}
       </div>
 
       <div className="info-name">
@@ -30,9 +36,10 @@ const UserPostInfo = ({ user, pic, postedDate }) => {
         </h4> */}
       </div>
       <div className="info-time">
-        <h6>
+        <h1>
+          SHOULD BE HERE
           <TimeCalc postDate={new Date(postedDate)} />
-        </h6>
+        </h1>
       </div>
       {/* <PostLikeDisLike /> */}
     </div>

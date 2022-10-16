@@ -21,6 +21,9 @@ const UploadContent = () => {
   // const { user } = useAuthContext();
   const [upload, setUpload] = useState("");
   const [artwork, setArtwork] = useState(false);
+
+  const [userForNow, setUserForNow] = useState({});
+
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   // This equals his privacy
@@ -144,10 +147,25 @@ const UploadContent = () => {
       return alert("Fill all of the fields");
     }
 
+    // Get user who added the video here
+    axiosPrivate
+      .get("/users/63443462575cbf86c3b630f4", {
+        withCredentials: true,
+      })
+      .then((response) => {
+        if (response.data) {
+          setUserForNow(response.data);
+          alert(userForNow);
+        } else {
+          alert("Didnt get the user stuff");
+        }
+      });
+
     const variables = {
-      // TODO: Comeback later to solve the user problem
-      userPosting: "User Hard Coded For Now",
-      // userPosting: user.userData._id,
+      // TODO: Comeback later to solve the user problem for here from above
+      userPosting: userForNow,
+
+      // userPosting: "Do taking this out change anything",
       title: title,
       description: description,
       prime: prime,
@@ -156,14 +174,20 @@ const UploadContent = () => {
       duration: duration,
       thumbnail: thumbnail,
     };
+    console.log(variables.userPosting);
 
-    axiosPrivate.post("/videos/", variables).then((response) => {
-      if (response.data.success) {
-        alert("Video Uploaded Successfully");
-      } else {
-        alert("Failed to upload Video");
-      }
-    });
+    axiosPrivate
+      .post("/videos/", variables, {
+        headers: { "Content-Type": "application/json" },
+        withCredentials: true,
+      })
+      .then((response) => {
+        if (response.data.success) {
+          alert("Video Uploaded Successfully");
+        } else {
+          alert("Failed to upload Video");
+        }
+      });
   };
 
   const onDrop = (files) => {

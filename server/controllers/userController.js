@@ -33,8 +33,27 @@ const getUser = async (req, res) => {
   res.json(user);
 };
 
+const updateUserInfo = async (req, res) => {
+  const { DOB, location, businessOwner } = req.body;
+  if (!req?.params?.id)
+    return res.status(400).json({ message: "User ID required" });
+  const user = await User.findOneAndUpdate({
+    _id: req.params.id,
+    DOB,
+    location,
+    businessOwner,
+  }).exec();
+  if (!user) {
+    return res
+      .status(204)
+      .json({ message: `No User matches ID ${req.params.id}` });
+  }
+  res.json(user);
+};
+
 module.exports = {
   getAllUsers,
   deleteUser,
   getUser,
+  updateUserInfo,
 };

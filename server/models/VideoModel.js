@@ -6,8 +6,8 @@ const Schema = mongoose.Schema;
 const videoSchema = new Schema(
   {
     // TODO: LAter change this back so the rela info can be related to user
-    // userPosting: { type: Schema.Types.ObjectId, ref: "MillPrimeUser" },
-    userPosting: { type: String },
+    userPosting: { type: Object },
+    // userPosting: { type: String },
     // Change this above for testing
     title: { type: String, maxlength: 50 },
     description: { type: String },
