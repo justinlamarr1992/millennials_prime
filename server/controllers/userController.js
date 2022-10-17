@@ -35,6 +35,7 @@ const getUser = async (req, res) => {
 
 const updateUserInfo = async (req, res) => {
   const { DOB, location, businessOwner } = req.body;
+  console.log(DOB, location, businessOwner);
   if (!req?.params?.id)
     return res.status(400).json({ message: "User ID required" });
   const user = await User.findOneAndUpdate({

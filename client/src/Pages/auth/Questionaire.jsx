@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 
 import "./auth.css";
 import Logo from "../../Assets/Images/MillennialsPrimeLogo.png";
@@ -8,56 +8,101 @@ import Company2 from "../../Assets/Images/Companies/Company2.jpeg";
 import Company3 from "../../Assets/Images/Companies/Company3.jpg";
 
 import axios from "axios";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
 const Questionaire = () => {
   const [allowed, setAllowed] = useState(false);
   const [DOB, setDOB] = useState("");
-  const [location, setLocation] = useState({});
-  const [businessOwner, setBusinessOwner] = useState({});
+  const [location, setLocation] = useState({
+    country: String,
+    city: String,
+    state: String,
+    zip: Number,
+  });
+  const [business, setBusiness] = useState(false);
+  const [industry, setIndustry] = useState("");
+  const [open, setOpen] = useState(false);
+
+  const [businessOwner, setBusinessOwner] = useState({
+    entrepreneur: Boolean,
+    industry: String,
+    open: Boolean,
+  });
+
+  const navigate = useNavigate();
 
   const [errMsg, setErrMsg] = useState("");
 
+  const axiosPrivate = useAxiosPrivate();
+
+  const questionaire1Info = () => {
+    location.country = document.getElementById("country").value;
+    location.city = document.getElementById("city").value;
+    location.state = document.getElementById("state").value;
+    location.zip = document.getElementById("zip").value;
+
+    console.log(location.country, location.city, location.state, location.zip);
+  };
+
+  const bossCheck = (e) => {
+    console.log(business);
+    const inputBusiness = document.getElementById("business").value;
+
+    if (inputBusiness === "yes") {
+      setBusiness(true);
+    } else {
+      setBusiness(false);
+    }
+    console.log(inputBusiness);
+  };
+  const industryCheck = (e) => {
+    setIndustry(document.getElementById("country").value);
+  };
+  const openCheck = (e) => {
+    const inputOpen = document.getElementById("open").value;
+
+    if (inputOpen === "yes") {
+      setOpen(true);
+    } else {
+      setOpen(false);
+      console.log(open);
+    }
+  };
   const ageCheck = (e) => {
     e.preventDefault();
     const inputDate = document.getElementById("dateofbirth").value;
     var birthDate = new Date(inputDate);
     var birthYear = birthDate.getFullYear();
     console.log(birthYear);
+    console.log(birthDate);
     if (birthYear < 1996 && birthYear > 1981) {
       setAllowed(true);
       questionaire1Info();
+      setDOB(birthDate);
     } else {
       // alert("You are not a Millennial");
     }
   };
-  const bossCheck = (e) => {
-    console.log(businessOwner);
-    const inputBusiness = document.getElementById("business").value;
-    if (inputBusiness === "yes") {
-      setBusinessOwner(true);
-    } else {
-      setBusinessOwner(false);
-    }
-    console.log(inputBusiness);
-  };
-  const questionaire1Info = () => {
-    const inputCountry = document.getElementById("country").value;
-    const inputCity = document.getElementById("city").value;
-    const inputState = document.getElementById("state").value;
-    const inputZip = document.getElementById("zip").value;
 
-    console.log(inputCountry, inputCity, inputState, inputZip);
-  };
-
-  const handleSubmit = async (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     let dataToSubmit = {
       DOB,
-      businessOwner,
-      location,
+      businessOwner: {
+        entrepreneur: business,
+        industry: industry,
+        open: open,
+      },
+      location: {
+        country: location.country,
+        city: location.city,
+        state: location.state,
+        zip: location.zip,
+      },
     };
+    // TODO: Figure way to get the active user to update
     try {
-      const response = await axios.patch(
+      const response = await axiosPrivate.patch(
         "http://localhost:4000/users/63443462575cbf86c3b630f4",
         dataToSubmit,
 
@@ -89,6 +134,7 @@ const Questionaire = () => {
       }
       // errRef.current.focus();
     }
+    navigate("/auth/questionaire2");
   };
 
   return (
@@ -114,7 +160,7 @@ const Questionaire = () => {
             </div>
           </div>
 
-          <form className="auth-form" action="" onSubmit={handleSubmit}>
+          <form className="auth-form" onSubmit={onSubmit}>
             <div className="label-input location">
               <label className="location-label" htmlFor="">
                 Where are you From?
@@ -148,8 +194,8 @@ const Questionaire = () => {
             <div className="label-input">
               <label htmlFor="">Do you have a business?</label>
               <select
-                name="businessOwner"
-                id="businessOwner"
+                name="business"
+                id="business"
                 onChange={bossCheck}
                 placeholder="Select Answer"
               >
@@ -160,18 +206,36 @@ const Questionaire = () => {
                 <option value="no">No</option>
               </select>
             </div>
-            {businessOwner == true && (
+            {business == true && (
               <div className="label-input">
                 <label htmlFor="">What is the Industry Your Operate in?</label>
-                <input type="email" />
+                <input
+                  type="text"
+                  onChange={industryCheck}
+                  placeholder="State"
+                  id="industry"
+                  // ref={emailRef}
+                  // required
+                />
               </div>
             )}
-            {businessOwner == true && (
+            {business == true && (
               <div className="label-input">
                 <label htmlFor="">
                   Are you Open to Business with Users here.
                 </label>
-                <input type="email" />
+                <select
+                  name="open"
+                  id="open"
+                  onChange={openCheck}
+                  placeholder="Select Answer"
+                >
+                  <option value="" disabled selected>
+                    Select your option
+                  </option>
+                  <option value="yes">Yes</option>
+                  <option value="no">No</option>
+                </select>
               </div>
             )}
 
@@ -185,9 +249,7 @@ const Questionaire = () => {
               />
             </div>
             {allowed == true ? (
-              <Link className="" key="questionaire" to="/auth/questionaire2">
-                <button className="auth-button login">Next</button>
-              </Link>
+              <button className="auth-button login">Next</button>
             ) : (
               <button className="auth-button login" disabled>
                 Next
