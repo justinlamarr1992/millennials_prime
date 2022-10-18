@@ -21,7 +21,6 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
 
-  // const { setAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const from = location.state?.from?.pathname || "/";
@@ -60,7 +59,8 @@ const SignIn = () => {
       console.log(JSON.stringify(response?.data));
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
-      setAuth({ user, password, roles, accessToken });
+      const _id = response?.data._id;
+      setAuth({ user, password, roles, accessToken, _id });
       setUser("");
       setPassword("");
       navigate(from, { replace: true });

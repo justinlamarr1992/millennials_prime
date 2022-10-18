@@ -6,7 +6,7 @@ require("dotenv").config();
 
 const handleLogin = async (req, res) => {
   const { user, password } = req.body;
-  console.log(req.body);
+  // console.log(req.body);
   // console.log(user, password);
   if (!user || !password)
     return res
@@ -30,11 +30,13 @@ const handleLogin = async (req, res) => {
       process.env.REFRESH_SECRET,
       { expiresIn: "1d" }
     );
+    const _id = foundUser._id;
+    console.log(_id);
 
     // save refreshtoken with current user
     foundUser.refreshToken = refreshToken;
     const result = await foundUser.save();
-    console.log(result);
+    // console.log(result);
 
     res.cookie("jwt", refreshToken, {
       httpOnly: true,
@@ -43,7 +45,7 @@ const handleLogin = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
     });
     // TODO: uncomment secure for production
-    res.json({ accessToken });
+    res.json({ accessToken, _id });
   } else {
     res.sendStatus(401);
   }

@@ -9,8 +9,12 @@ import Company3 from "../../Assets/Images/Companies/Company3.jpg";
 
 import axios from "axios";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import useAuth from "../../Hooks/useAuth";
 
 const Questionaire = () => {
+  const { auth } = useAuth();
+  console.log("THISIS THE AUTH PROVIDER", auth);
+
   const [allowed, setAllowed] = useState(false);
   const [DOB, setDOB] = useState("");
   const [location, setLocation] = useState({
