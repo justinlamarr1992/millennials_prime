@@ -24,9 +24,9 @@ const handleRefreshToken = async (req, res) => {
         UserInfo: { username: decoded.username, roles: roles },
       },
       process.env.SECRET,
-      { expiresIn: "30s" }
+      { expiresIn: "24h" }
     );
-    res.json({ accessToken });
+    res.json({ roles, accessToken });
   });
 };
 

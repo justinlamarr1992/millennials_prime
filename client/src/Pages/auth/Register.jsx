@@ -11,88 +11,76 @@ import Logo from "../../Assets/Images/MillennialsPrimeLogo.png";
 import Company1 from "../../Assets/Images/Companies/Company1.jpeg";
 import Company2 from "../../Assets/Images/Companies/Company2.jpeg";
 import Company3 from "../../Assets/Images/Companies/Company3.jpg";
-import { FaEyeSlash, FaEye } from "react-icons/fa";
+import {
+  FaEyeSlash,
+  FaEye,
+  FaInfoCircle,
+  FaCheck,
+  FaTimes,
+} from "react-icons/fa";
+
+const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const PASSWORD_REGEX =
+  /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
+const REGISTER_URL = "/register";
 
 const Register = () => {
+  const ref = useRef(null);
+  const userRef = useRef();
+  const errRef = useRef();
+
+  const [user, setUser] = useState("");
+  const [validName, setValidName] = useState(false);
+  const [userFocus, setUserFocus] = useState(false);
+
+  const [password, setPassword] = useState("");
+  const [validPassword, setValidPassword] = useState(false);
+  const [passwordFocus, setPasswordFocus] = useState(false);
+
+  const [matchPassword, setMatchPassword] = useState("");
+  const [validMatch, setValidMatch] = useState(false);
+  const [matchFocus, setMatchFocus] = useState(false);
+
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+
+  const [errMsg, setErrMsg] = useState("");
+  const [success, setSuccess] = useState(false);
+
   const { setAuth } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
 
   const from = location.state?.from?.pathname || "/auth/signin";
 
-  // getting info for signing up
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
-
-  const [user, setUser] = useState("");
-  const [errMsg, setErrMsg] = useState("");
-
-  // const dispatch = useDispatch();
-
-  const ref = useRef(null);
-  // const [locked, setLocked] = useState(true);
-
-  const input = document.querySelector(".pwd input");
-  const eye = document.querySelector(".pwd .eye-slash");
-  // const lock = document.querySelector(".pwd fa-lock");
-  const overlay = document.querySelector(".pwd .overlay");
-
-  const passInput = document.querySelector(".input-group input");
-  const toggleIcon = document.querySelector(".input-group .toggle");
-  const ripple = document.querySelector(".input-group .ripple");
-  const percentBar = document.querySelector(".strength-percent span");
-  const passLabel = document.querySelector(".strength-label");
+  useEffect(() => {
+    userRef.current.focus();
+  }, []);
 
   useEffect(() => {
-    const el2 = ref.current;
-    console.log(el2);
+    setValidName(USER_REGEX.test(user));
+  }, [user]);
 
-    // 👇️ use document.querySelector()
-    // should only be used when you can't set a ref prop on the element
-    // (you don't have access to the element)
-    const el = document.querySelector("#container");
-    console.log(el);
-  }, []);
+  useEffect(() => {
+    setValidPassword(PASSWORD_REGEX.test(password));
+    setValidMatch(password === matchPassword);
+  }, [password, matchPassword]);
+
   useEffect(() => {
     setErrMsg("");
-  }, [user, password]);
-
-  function togglePassInput(e) {
-    const type = passInput.getAttribute("type");
-    if (type === "password") {
-      passInput.setAttribute("type", "text");
-      toggleIcon.innerHTML = <FaEye className="eye" />;
-      ripple.getElementsByClassName.cssText = `
-      border-radius: 4px;
-      width: 100%;
-      height: 100%;
-      right: 0;
-      z-index: -1;
-      `;
-      passInput.style.color = "#000";
-      passInput.style.background = "transparent";
-      toggleIcon.style.fontSize = "27px";
-    } else {
-      passInput.setAttribute("type", "password");
-      toggleIcon.innerHTML = <FaEyeSlash className="eye-slash" />;
-      toggleIcon.style.fontSize = "25px";
-      ripple.getElementsByClassName.cssText = `
-      border-radius: 50%;
-      width: 35px;
-      height: 35px;
-      right: 10px;
-      z-index: 1;
-      `;
-      passInput.style.color = "#fff";
-      passInput.style.background = "#112d37";
-    }
-  }
+  }, [user, password, matchPassword]);
 
   // Dave GraYS
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const v1 = USER_REGEX.test(user);
+    const v2 = PASSWORD_REGEX.test(password);
+
+    if (!v1 || !v2) {
+      setErrMsg("Invalid Entry");
+      return;
+    }
+
     let dataToSubmit = {
       user,
       password,
@@ -113,25 +101,26 @@ const Register = () => {
       console.log(JSON.stringify(response?.data));
       const accessToken = response?.data?.accessToken;
       const roles = response?.data?.roles;
+      setSuccess(true);
       setAuth({ user, password, roles, accessToken });
-      // setUser("");
-      // setPassword("");
+      setUser("");
+      setPassword("");
+      setMatchPassword("");
       navigate(from, { replace: true });
     } catch (err) {
-      console.log("Nope");
-
       if (!err?.originalStatus) {
         // isLoading: true until timeout occurs
         setErrMsg("No Server Response");
       } else if (err.originalStatus === 400) {
         setErrMsg("Missing Info");
       } else if (err.originalStatus === 401) {
-        console.log(err);
         setErrMsg("Unauthorized but its here");
+      } else if (err.originalStatus === 409) {
+        setErrMsg("Username Taken");
       } else {
         setErrMsg("Login Failed");
       }
-      // errRef.current.focus();
+      errRef.current.focus();
     }
   };
   return (
@@ -163,34 +152,19 @@ const Register = () => {
 
             <div className="form-text">
               <h4>Create an Account</h4>
+              {/* Change these out with error */}
+              <h4
+                ref={errRef}
+                className={errMsg ? "errmsg" : "offscreen"}
+                aria-live="assertive"
+              >
+                {errMsg}
+              </h4>
               <h6 className="text-gray">Sign Up to Continue</h6>
             </div>
           </div>
 
-          <form
-            className="auth-form"
-            action=""
-            // onSubmit={(e) => {
-            //   e.preventDefault();
-            //   let dataToSubmit = {
-            //     email: email,
-            //     password: password,
-            //     name: name,
-            //     lastname: lastname,
-            //   };
-
-            //   dispatch(registerUser(dataToSubmit)).then((response) => {
-            //     console.log(email, password, name, lastname);
-            //     if (response.payload.success) {
-            //       // NAVAGAT CODE
-            //     } else {
-            //       alert("register went wrong");
-            //       console.log(response.payload.err.errmsg);
-            //     }
-            //   });
-            // }}
-            onSubmit={handleSubmit}
-          >
+          <form className="auth-form" action="" onSubmit={handleSubmit}>
             <div className="label-input">
               <label htmlFor="">Full Name</label>
               <div className="validation-wrapper">
@@ -215,45 +189,120 @@ const Register = () => {
             </div>
 
             <div className="label-input">
-              <label htmlFor="">Email</label>
+              <label htmlFor="email">
+                Email
+                <FaCheck className={validName ? "valid" : "hide"} />
+                <FaTimes className={validName || !user ? "hide" : "invalid"} />
+              </label>
               <input
-                type="email"
+                type="text"
+                id="username"
+                ref={userRef}
+                autoComplete="off"
                 onChange={(e) => setUser(e.target.value)}
                 value={user}
+                required
+                aria-invalid={validName ? "false" : "true"}
+                aria-describedby="uidnote"
+                onFocus={() => setUserFocus(true)}
+                onBlur={() => setUserFocus(false)}
               />
+              <p
+                id="uidnote"
+                className={
+                  userFocus && user && !validName ? "instructions" : "offscreen"
+                }
+              >
+                <FaInfoCircle className="eye-slash" />
+                4 to 24 characters.
+                <br />
+                Must begin with a letter.
+                <br />
+                Letters, numbers, underscores, hyphens allowed.
+              </p>
             </div>
 
             <div className="label-input">
-              <label htmlFor="">Password</label>
+              <label htmlFor="password">
+                Password{" "}
+                <FaCheck className={validPassword ? "valid" : "hide"} />
+                <FaTimes
+                  className={validPassword || !password ? "hide" : "invalid"}
+                />
+              </label>
               <div className="input-group">
                 <input
                   type="password"
                   placeholder="Enter password"
-                  // onChange={handlePassInput}
                   onChange={(e) => setPassword(e.target.value)}
                   value={password}
+                  id="password"
+                  required
+                  aria-invalid={validPassword ? "false" : "true"}
+                  aria-describedby="pwdnote"
+                  onFocus={() => setPasswordFocus(true)}
+                  onBlur={() => setPasswordFocus(false)}
                 />
-
-                <span className="toggle" onClick={togglePassInput}>
-                  <FaEyeSlash className="eye-slash" />
-                </span>
-                <span className="ripple"></span>
               </div>
-              <div className="pass-strength">
-                <div className="strength-percentage">
-                  <span></span>
-                </div>
-                <span className="password-label">Strength</span>
-              </div>
+              <p
+                id="pwdnote"
+                className={
+                  passwordFocus && !validPassword ? "instructions" : "offscreen"
+                }
+              >
+                <FaInfoCircle className="eye-slash" />
+                8 to 24 characters.
+                <br />
+                Must include uppercase and lowercase letters, a number and a
+                special character.
+                <br />
+                Allowed special characters:{" "}
+                <span aria-label="exclamation mark">!</span>{" "}
+                <span aria-label="at symbol">@</span>{" "}
+                <span aria-label="hashtag">#</span>{" "}
+                <span aria-label="dollar sign">$</span>{" "}
+                <span aria-label="percent">%</span>
+              </p>
             </div>
-
-            {/* <Link className="" key="questionaire" to="/questionaire">
-    <button className="auth-button login">Create an Account</button>
-  </Link> */}
+            <div className="label-input">
+              <label htmlFor="confirm_password">
+                Confirm Password
+                <FaCheck
+                  className={validMatch && matchPassword ? "valid" : "hide"}
+                />
+                <FaTimes
+                  className={validMatch || !matchPassword ? "hide" : "invalid"}
+                />
+              </label>
+              <div className="input-group">
+                <input
+                  type="password"
+                  placeholder="Confirm password"
+                  id="confirm_pwd"
+                  onChange={(e) => setMatchPassword(e.target.value)}
+                  value={matchPassword}
+                  required
+                  aria-invalid={validMatch ? "false" : "true"}
+                  aria-describedby="confirmnote"
+                  onFocus={() => setMatchFocus(true)}
+                  onBlur={() => setMatchFocus(false)}
+                />
+              </div>
+              <p
+                id="confirmnote"
+                className={
+                  matchFocus && !validMatch ? "instructions" : "offscreen"
+                }
+              >
+                <FaInfoCircle className="eye-slash" />
+                Must match the first password input field.
+              </p>
+            </div>
             <button
-              // onClick={handleSubmit}
               className="auth-button login"
-              // disabled={isLoading}
+              disabled={
+                !validName || !validPassword || !validMatch ? true : false
+              }
             >
               Create an Account
             </button>
@@ -271,103 +320,3 @@ const Register = () => {
   );
 };
 export default Register;
-
-// ORGINAL
-{
-  /* Current failure */
-}
-{
-  /* <form
-            className="auth-form"
-            action=""
-            onSubmit={(e) => {
-              e.preventDefault();
-              let dataToSubmit = {
-                email: email,
-                password: password,
-                name: name,
-                lastname: lastname,
-              };
-
-              dispatch(registerUser(dataToSubmit)).then((response) => {
-                console.log(email, password, name, lastname);
-                if (response.payload.success) {
-                  NAVAGAT CODE
-                } else {
-                  alert("register went wrong");
-                  console.log(response.payload.err.errmsg);
-                }
-              });
-            }}
-            onSubmit={handleSubmit}
-          >
-            <div className="label-input">
-              <label htmlFor="">Full Name</label>
-              <div className="validation-wrapper">
-                <input
-                  className="fname names"
-                  type="text"
-                  placeholder="First Name"
-                  onChange={(e) => setName(e.target.value)}
-                  value={name}
-                  required
-                />
-                <input
-                  type="text"
-                  className="lname names"
-                  placeholder="Last Name"
-                  onChange={(e) => setLastname(e.target.value)}
-                  value={lastname}
-                  required
-                />
-                <div className="validation">*</div>
-              </div>
-            </div>
-
-            <div className="label-input">
-              <label htmlFor="">Email</label>
-              <input
-                type="email"
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-              />
-            </div>
-
-            <div className="label-input">
-              <label htmlFor="">Password</label>
-              <div className="input-group">
-                <input
-                  type="password"
-                  placeholder="Enter password"
-                  onChange={handlePassInput}
-                  onChange={(e) => setPassword(e.target.value)}
-                  value={password}
-                />
-
-                <span className="toggle" onClick={togglePassInput}>
-                  <FaEyeSlash className="eye-slash" />
-                </span>
-                <span className="ripple"></span>
-              </div>
-              <div className="pass-strength">
-                <div className="strength-percentage">
-                  <span></span>
-                </div>
-                <span className="password-label">Strength</span>
-              </div>
-            </div>
-
-            <Link className="" key="questionaire" to="/questionaire">
-              <button className="auth-button login">Create an Account</button>
-            </Link>
-            <button
-              onClick={handleSubmit}
-              className="auth-button login"
-              disabled={isLoading}
-            >
-              Create an Account
-            </button>
-            {error && <div>{error}</div>}
-          </form>
-          First but works */
-}

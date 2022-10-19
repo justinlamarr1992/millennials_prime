@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect, useContext } from "react";
+import React, { useState, useRef, useEffect } from "react";
+import useLogout from "../Hooks/useLogout";
 import { useSelector } from "react-redux";
 import {
   selectCurrentUser,
   selectCurrentToken,
 } from "../Features/auth/authSlice";
 import { Link, useNavigate } from "react-router-dom";
-import AuthContext from "../Context/AuthProvider";
 
 // import { usePostsContext } from "../Hooks/usePostsContext";
 import useFetch from "../Hooks/useFetch";
@@ -34,40 +34,13 @@ const Home = () => {
 
   const [errMsg, setErrMsg] = useState("");
 
-  const { setAuth } = useContext(AuthContext);
   const navigate = useNavigate();
+  const logout = useLogout();
 
-  const logout = async () => {
+  const signOut = async () => {
     // if used in more components, this should be in context
+    await logout();
     // axios to /logout endpoint
-    try {
-      const response = await axios.get(
-        "http://localhost:4000/logout",
-
-        {
-          headers: { "Content-Type": "application/json" },
-          withCredentials: true,
-        }
-      );
-      console.log(JSON.stringify(response?.data));
-      const accessToken = response?.data?.accessToken;
-      const roles = response?.data?.roles;
-    } catch (err) {
-      if (!err?.originalStatus) {
-        // isLoading: true until timeout occurs
-        setErrMsg("No Server Response");
-      } else if (err.originalStatus === 400) {
-        setErrMsg("Missing Username or Password");
-      } else if (err.originalStatus === 401) {
-        console.log(err);
-        setErrMsg("Unauthorized but its here");
-      } else {
-        setErrMsg("Login Failed");
-      }
-      errRef.current.focus();
-    }
-    // axios to /logout endpoint
-    setAuth({});
     navigate("/auth/signin");
   };
 
@@ -78,14 +51,22 @@ const Home = () => {
         ref={widthRef}
       >
         <h1>This is the Home Page</h1>
-        <Users />
 
-        <button onClick={logout}>Sign Out</button>
+        <button onClick={signOut}>Sign Out</button>
         <Link to={`/prime-news/upload-content`}>
           <button>Upload Content</button>
         </Link>
         <Link to={`/prime-news/catalog`}>
           <button>Catalog</button>
+        </Link>
+        <Link to={`/admin`}>
+          <button>Admin</button>
+        </Link>
+        <Link to={`/editor`}>
+          <button>Editor</button>
+        </Link>
+        <Link to={`/user`}>
+          <button>User</button>
         </Link>
         <h4
           ref={errRef}

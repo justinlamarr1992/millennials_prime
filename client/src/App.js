@@ -1,8 +1,11 @@
 import React, { Suspense, useEffect } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
+
+import RequireAuth from "./Components/DaveGrayTest/RequireAuth";
+import PersistLogin from "./Components/PersistLogin";
+
 // import { useDispatch, useSelector } from "react-redux";
 
-import RequireAuth from "./Features/auth/RequireAuth";
 // import Auth from "./HigherOrderComponents/auth";
 // import { useAuthContext } from "./Hooks/useAuthContext";
 import "./App.css";
@@ -39,10 +42,12 @@ import PrimeShow from "./Pages/ShowView/PrimeShow";
 import UploadContent from "./Pages/Uploads/UploadContent";
 import Catalog from "./Pages/ShowView/Catalog";
 
-// import { NotFound } from "./Pages/NotFound/NotFound";
+import { NotFound } from "./Pages/NotFound/NotFound";
 // import { loginUser } from "./Actions/userActions";
 import SuccessSignIn from "./Pages/auth/SuccessSignIn";
-import Admin from "./Components/DaveGrayTest/Admin";
+import AdminPage from "./Components/DaveGrayTest/AdminPage";
+import EditorPage from "./Components/DaveGrayTest/EditorPage";
+import UserPage from "./Components/DaveGrayTest/UserPage";
 // import { unsubscribe } from "../../server/routes/video";
 
 const ROLES = {
@@ -58,26 +63,11 @@ const App = (props, state) => {
   return (
     // <Suspense fallback={<div>Loading...</div>}>
     <div className="App">
+      {/* <div> */}
       <NavBar />
       <Routes className="container-comp">
-        <Route path="/" element={<Home />} />
-        {/* <Route path="/" element={<Home />} /> */}
-        {/* Public Routes */}
         <Route path="/" element={<Layout />}>
-          {/* Test Pages */}
-          <Route path="yourin" element={<SuccessSignIn />} />
-          <Route path="admin" element={<Admin />} />
-          <Route path="unauthorized" element={<Unauthorized />} />
-
-          {/* <Route  element={<ContactUs />} /> */}
-          {/* <Route index element={<PrimeShow />} /> */}
-          {/* Change this to the advertisement home page  */}
-          <Route path="/prime-news">
-            <Route path="viewer/:videoId" element={<PrimeShow />} />
-            <Route path="upload-content" element={<UploadContent />} />
-            <Route path="catalog" element={<Catalog />} />
-          </Route>
-
+          {/* Public */}
           {/* Auth */}
           <Route path="/auth">
             <Route path="register" element={<Register />} />
@@ -89,19 +79,40 @@ const App = (props, state) => {
             {/* <Route path="signout" element={<SignOut />} /> */}
             {/* <Route path="passwordrecovery" element={<PasswordRecovery />} />  */}
           </Route>
+
+          <Route path="/prime-news">
+            <Route path="viewer/:videoId" element={<PrimeShow />} />
+            {/* need to protect this one */}
+          </Route>
+
+          <Route path="unauthorized" element={<Unauthorized />} />
+
           {/* Protected Routes */}
-          {/* <Route element={<RequireAuth />}> */}
-          {/* FORNOW COMMENGT OUT BUT WHEN I FIGURE OUT CODE KEEP IT IN AUTH */}
-          {/* <Route path="yourin" element={<SuccessSignIn />} /> */}
-          {/* <Route path="prime-news/upload-content" element={<UploadContent />} /> */}
-          {/* Prime Shows */}
-          {/* <Route path="/prime-news"> */}
-          {/* <Route path="viewer/:videoId" element={<PrimeShow />} /> */}
-          {/* <Route path="upload-content" element={<UploadContent />} /> */}
-          {/* <Route path="catalog" element={<Catalog />} /> */}
-          {/* </Route> */}
-          {/* </Route> */}
+          <Route element={<PersistLogin />}>
+            {/* More than one role can be in allowed roles  */}
+            <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              <Route path="/" element={<Home />} />
+              <Route path="user" element={<UserPage />} />
+              <Route path="prime-news/catalog" element={<Catalog />} />
+            </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES.Editor]} />}>
+              <Route path="editor" element={<EditorPage />} />
+              <Route
+                path="prime-news/upload-content"
+                element={<UploadContent />}
+              />
+            </Route>
+
+            <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
+              <Route path="admin" element={<AdminPage />} />
+            </Route>
+            <Route path="yourin" element={<SuccessSignIn />} />
+          </Route>
         </Route>
+
+        {/* Catch all */}
+        <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
     // </Suspense>

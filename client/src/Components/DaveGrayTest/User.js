@@ -20,14 +20,11 @@ const User = () => {
     const getUsers = async () => {
       try {
         // const response = await axios.get(
-        const response = await axiosPrivate.get(
-          "http://localhost:4000/users/",
-          {
-            signal: controller.signal,
-            headers: { "Content-Type": "application/json" },
-            withCredentials: true,
-          }
-        );
+        const response = await axiosPrivate.get("users/", {
+          signal: controller.signal,
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        });
         console.log(response.data);
         isMounted && setUsers(response.data);
       } catch (err) {
@@ -48,7 +45,9 @@ const User = () => {
       {users?.length ? (
         <ul>
           {users.map((user, i) => (
-            <li key={i}>{user?.username}</li>
+            <li key={i}>
+              {user?.username} ID {user?._id}
+            </li>
           ))}
         </ul>
       ) : (

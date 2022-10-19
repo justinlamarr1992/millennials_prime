@@ -1,6 +1,5 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState, useEffect, useContext } from "react";
 import { useSelector } from "react-redux";
-import { useAuthContext } from "../../Hooks/useAuthContext";
 import {
   textUpload,
   imagesUpload,
@@ -13,6 +12,7 @@ import FileUpload from "../../Components/reusuables/post/FileUpload";
 import Dropzone from "react-dropzone";
 import axios from "axios";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import AuthContext from "../../Context/AuthProvider";
 
 import "./upload.css";
 
@@ -38,6 +38,12 @@ const UploadContent = () => {
   const artworkRef = useRef(false);
 
   const axiosPrivate = useAxiosPrivate();
+
+  const { auth } = useContext(AuthContext);
+
+  console.log(auth);
+  const _id = auth._id;
+  console.log(_id);
 
   // const Authorization = `Bearer ${user.token}`;
 
