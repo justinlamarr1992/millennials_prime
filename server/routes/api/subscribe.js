@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const subscribeController = require("../../controllers/subscribeController");
+const subscribeController = require("../../controllers/subscribeController.js");
 const ROLES_LIST = require("../../config/roles_list");
 const verifyRoles = require("../../middleware/verifyRoles");
 
