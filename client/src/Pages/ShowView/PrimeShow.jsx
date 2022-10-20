@@ -46,7 +46,8 @@ const PrimeShow = () => {
       });
   }, [params]);
   console.log(video.createdAt);
-  console.log(userInfo.username);
+  console.log(video);
+  console.log(userInfo);
 
   // console.log(<TimeCalc postDate={new Date(video.createdAt)} />);
 
@@ -85,10 +86,10 @@ const PrimeShow = () => {
             />
             <div className="view-content-info-user">User Info here</div>
             <div className="view-content-info-user-interactions">
-              {/* <Subscriber
-                userTo={video.userPosting._id}
+              <Subscriber
+                userTo={userInfo._id}
                 // userFrom={}
-              /> */}
+              />
             </div>
           </div>
 

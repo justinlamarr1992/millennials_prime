@@ -1,5 +1,6 @@
 // const User = require("../models/userModel");
-const User = require("../models/PrimeUser");
+// const User = require("../models/PrimeUser");
+const User = require("../models/MillPrimeUser");
 
 const handleLogout = async (req, res) => {
   // on Client, also delete the access Token in memeory of client application

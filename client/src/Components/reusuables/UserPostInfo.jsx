@@ -14,13 +14,13 @@ const UserPostInfo = ({
   console.log(user);
   return (
     <div className="pr-user-info">
-      <div className=" info-pic square-container">
-        {/* <img
+      {/* <div className=" info-pic square-container"> */}
+      {/* <img
           className="square-container-contents p-con-shade"
           src={pic}
           alt="User Image here"
         /> */}
-      </div>
+      {/* </div> */}
 
       <div className="info-name">
         <h4 className="prime-m-text">
@@ -37,7 +37,6 @@ const UserPostInfo = ({
       </div>
       <div className="info-time">
         <h1>
-          SHOULD BE HERE
           <TimeCalc postDate={new Date(postedDate)} />
         </h1>
       </div>

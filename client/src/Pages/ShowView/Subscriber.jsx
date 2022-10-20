@@ -1,13 +1,16 @@
 import React, { useEffect } from "react";
-import axios from "axios";
-
+import { axiosPrivate } from "../../API/axios";
 function Subscriber(props) {
   const userTo = props.userTo;
   const userFrom = props.userFrom;
-  useEffect(() => {
-    // const subscribeNumberVariable = {userTo: };
-    // axios.post("/api/subscriber/subscribeNumber", subscribeNumberVariable);
-  }, []);
+
+  // useEffect(() => {
+  //   const subscribeNumberVariable = {userTo: };
+  //   axiosPrivate.post("/subscriber/subscribeNumber", subscribeNumberVariable, {
+  //       headers: { "Content-Type": "multipart/form-data" },
+  //       withCredentials: true,
+  //     })
+  //   }, [])
 
   return <button className="subscribe-button page-button">Subscribe</button>;
 }

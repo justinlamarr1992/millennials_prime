@@ -51,6 +51,7 @@ const Home = () => {
         ref={widthRef}
       >
         <h1>This is the Home Page</h1>
+        <h3>Lets see if i can pull the data at will</h3>
 
         <button onClick={signOut}>Sign Out</button>
         <Link to={`/prime-news/upload-content`}>
