@@ -339,6 +339,21 @@ width: 100%;
 align-self: center;
 /* height: 100%; */
 }
+.login-options{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+.persist-check-box{
+    height: 20px;
+    width: 20px;
+    margin: 0;
+}
+.persist-label{
+    margin: 0;
+    padding-left: 10px;
+}
 .password-recover-link{
     align-self: end;
 }

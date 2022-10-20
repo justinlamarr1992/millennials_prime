@@ -1,4 +1,5 @@
-const User = require("../models/MillPrimeUser");
+const User = require("../models/PrimeUser");
+
 // const User = require("../models/user");
 
 const getAllUsers = async (req, res) => {

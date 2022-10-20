@@ -1,5 +1,6 @@
 // const UserTest = require("../models/User");
-const User = require("../models/MillPrimeUser");
+const User = require("../models/PrimeUser");
+
 const bcrypt = require("bcrypt");
 // const usersDb = {
 //   users: require("../models/users.json"),

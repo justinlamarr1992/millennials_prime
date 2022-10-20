@@ -19,7 +19,8 @@ import {
   FaTimes,
 } from "react-icons/fa";
 
-const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
+const USER_REGEX = /^[a-z0-9.]{1,64}@[a-z0-9.]{1,64}$/i;
+// const USER_REGEX = /^[A-z][A-z0-9-_]{3,23}$/;
 const PASSWORD_REGEX =
   /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%]).{8,24}$/;
 const REGISTER_URL = "/register";
@@ -100,9 +101,8 @@ const Register = () => {
       );
       console.log(JSON.stringify(response?.data));
       const accessToken = response?.data?.accessToken;
-      const roles = response?.data?.roles;
       setSuccess(true);
-      setAuth({ user, password, roles, accessToken });
+      setAuth({ user, password, accessToken });
       setUser("");
       setPassword("");
       setMatchPassword("");

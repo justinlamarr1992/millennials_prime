@@ -1,6 +1,8 @@
 import React, { useRef, useState, useEffect } from "react";
 import useAuth from "../../Hooks/useAuth";
 import { Link, useNavigate, useLocation } from "react-router-dom";
+import useInput from "../../Hooks/useInput";
+import useToggle from "../../Hooks/useToggle";
 // import useAuth from "../../Hooks/useAuth";
 
 import Company1 from "../../Assets/Images/Companies/Company1.jpeg";
@@ -24,9 +26,11 @@ const SignIn = () => {
   const errRef = useRef();
   const ref = useRef(null);
 
-  const [user, setUser] = useState("");
+  const [user, resetUser, userAttribs] = useInput("user", ""); //useState("");
   const [password, setPassword] = useState("");
   const [errMsg, setErrMsg] = useState("");
+
+  const [check, toggleCheck] = useToggle("persist", false);
 
   useEffect(() => {
     userRef.current.focus();
@@ -57,10 +61,10 @@ const SignIn = () => {
       );
       console.log(JSON.stringify(response?.data));
       const accessToken = response?.data?.accessToken;
-      const roles = response?.data?.roles;
       const _id = response?.data._id;
-      setAuth({ user, password, roles, accessToken, _id });
-      setUser("");
+      setAuth({ user, accessToken, _id });
+      // setUser("");
+      resetUser();
       setPassword("");
       navigate(from, { replace: true });
     } catch (err) {
@@ -78,6 +82,14 @@ const SignIn = () => {
       errRef.current.focus();
     }
   };
+
+  // const togglePersist = () => {
+  //   setPersist((prev) => !prev);
+  // };
+
+  // useEffect(() => {
+  //   localStorage.setItem("persist", persist);
+  // }, [persist]);
 
   // FOR NOW WITH THE isLoading commented Out
   const content = (
@@ -129,14 +141,10 @@ const SignIn = () => {
               <label htmlFor="email">Email</label>
               <input
                 type="email"
-                onChange={(e) => {
-                  setUser(e.target.value);
-                  console.log(user);
-                }}
-                value={user}
                 id="email"
                 ref={userRef}
                 autoComplete="off"
+                {...userAttribs}
                 required
               />
             </div>
@@ -152,13 +160,28 @@ const SignIn = () => {
                 required
               />
             </div>
-            <Link
-              className="password-recover-link"
-              key="home"
-              to="/auth/passwordrecovery"
-            >
-              <h6 className="text-gray">Forgot Password</h6>
-            </Link>
+            <div className="login-options">
+              <div className="persistCheck">
+                <input
+                  type="checkbox"
+                  className="persist-check-box"
+                  id="persist"
+                  onChange={toggleCheck}
+                  checked={check}
+                />
+                <label className="persist-label text-gray" htmlFor="persist">
+                  Trust this Device
+                </label>
+              </div>
+              <Link
+                className="password-recover-link"
+                key="home"
+                to="/auth/passwordrecovery"
+              >
+                <h6 className="text-gray">Forgot Password</h6>
+              </Link>
+            </div>
+
             <button
               className="auth-button login"
               // onSubmit={handleSubmit}

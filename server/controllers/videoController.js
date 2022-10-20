@@ -1,7 +1,8 @@
 const express = require("express");
 const multer = require("multer");
 var ffmpeg = require("fluent-ffmpeg");
-const User = require("../models/MillPrimeUser");
+const User = require("../models/PrimeUser");
+
 const Video = require("../models/VideoModel");
 var mongoose = require("mongoose");
 

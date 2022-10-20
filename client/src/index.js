@@ -4,36 +4,17 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import App from "./App";
 
-// May need to delete lets see
-// import Reducer from "./Reducers";
-// import { Provider } from "react-redux";
-
-// import { store } from "./App/store";
-
-// import { createStore, applyMiddleware } from "redux";
-// import promiseMiddleware from "redux-promise";
-// import ReduxThunk from "redux-thunk";
-
 import reportWebVitals from "./reportWebVitals";
 import { AuthProvider } from "./Context/AuthProvider";
-// import { AuthContextProvider } from "./Context/AuthContext";
-// import { PostsContextProvider } from "./Context/PostsContext";
-// import { composeWithDevTools } from "redux-devtools-extension";
-// import rootReducer from "./Reducers";
+import { disableReactDevTools } from "@fvilers/disable-react-devtools";
 
-// This too
-// const createStoreWithMiddleware = applyMiddleware(
-//   promiseMiddleware,
-//   ReduxThunk
-// )(createStore);
-
-// const store = createStore(rootReducer, composeWithDevTools());
+if (process.env.NODE_ENV === "production") {
+  disableReactDevTools();
+}
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    {/* <Provider store={store}> */}
-
     <BrowserRouter>
       <AuthProvider>
         <Routes>
@@ -41,7 +22,6 @@ root.render(
         </Routes>
       </AuthProvider>
     </BrowserRouter>
-    {/* </Provider> */}
   </React.StrictMode>
 );
 

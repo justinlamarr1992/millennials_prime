@@ -25,8 +25,9 @@ const User = () => {
           headers: { "Content-Type": "application/json" },
           withCredentials: true,
         });
+        const userNames = response.data.map((user) => user.username);
         console.log(response.data);
-        isMounted && setUsers(response.data);
+        isMounted && setUsers(userNames);
       } catch (err) {
         console.error(err);
         // navigate("/auth/signin", { state: { from: location }, replace: true });
@@ -46,7 +47,7 @@ const User = () => {
         <ul>
           {users.map((user, i) => (
             <li key={i}>
-              {user?.username} ID {user?._id}
+              {user} ID {user?._id}
             </li>
           ))}
         </ul>
