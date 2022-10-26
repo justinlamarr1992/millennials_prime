@@ -17,4 +17,4 @@ const subscriberSchema = new Schema(
   { timestamps: true }
 );
 
-module.exports = mongoose.model("Video", videoSchema);
+module.exports = mongoose.model("Subscriber", subscriberSchema);

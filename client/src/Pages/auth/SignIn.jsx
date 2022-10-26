@@ -62,6 +62,7 @@ const SignIn = () => {
       console.log(JSON.stringify(response?.data));
       const accessToken = response?.data?.accessToken;
       const _id = response?.data._id;
+      console.log(_id);
       setAuth({ user, accessToken, _id });
       // setUser("");
       resetUser();

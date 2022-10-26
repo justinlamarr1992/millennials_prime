@@ -4,13 +4,7 @@ import { Route, Routes, Navigate } from "react-router-dom";
 import RequireAuth from "./Components/DaveGrayTest/RequireAuth";
 import PersistLogin from "./Components/PersistLogin";
 
-// import { useDispatch, useSelector } from "react-redux";
-
-// import Auth from "./HigherOrderComponents/auth";
-// import { useAuthContext } from "./Hooks/useAuthContext";
 import "./App.css";
-
-// import Text from "./Pages/TestPage/Text";
 
 import Layout from "./Components/Layout";
 
@@ -20,10 +14,10 @@ import Home from "./Pages/Home";
 
 // import Messages from "./Pages/Messaging/Messages";
 // import ConnectedUsers from "./Pages/ConnectedUsers/ConnectedUsers";
-// import Settings from "./Pages/Settings/Settings";
+import Settings from "./Pages/Settings/Settings";
 // import Notifications from "./Pages/Settings/Notifications";
-// import PrivacyPolicy from "./Pages/Settings/PrivacyPolicy";
-// import ContactUs from "./Pages/Settings/ContactUs";
+import PrivacyPolicy from "./Pages/Settings/PrivacyPolicy";
+import ContactUs from "./Pages/Settings/ContactUs";
 
 import SignOut from "./Pages/auth/SignOut.jsx";
 import SignIn from "./Pages/auth/SignIn";
@@ -69,6 +63,8 @@ const App = (props, state) => {
         <Route path="/" element={<Layout />}>
           {/* Public */}
           {/* Auth */}
+          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+          <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/auth">
             <Route path="register" element={<Register />} />
             <Route path="signin" element={<SignIn />} />
@@ -79,14 +75,11 @@ const App = (props, state) => {
             {/* <Route path="signout" element={<SignOut />} /> */}
             {/* <Route path="passwordrecovery" element={<PasswordRecovery />} />  */}
           </Route>
-
           <Route path="/prime-news">
             <Route path="viewer/:videoId" element={<PrimeShow />} />
             {/* need to protect this one */}
           </Route>
-
           <Route path="unauthorized" element={<Unauthorized />} />
-
           {/* Protected Routes */}
           <Route element={<PersistLogin />}>
             {/* More than one role can be in allowed roles  */}
@@ -94,6 +87,7 @@ const App = (props, state) => {
               <Route path="/" element={<Home />} />
               <Route path="user" element={<UserPage />} />
               <Route path="prime-news/catalog" element={<Catalog />} />
+              <Route path="settings" element={<Settings />} />
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES.Editor]} />}>

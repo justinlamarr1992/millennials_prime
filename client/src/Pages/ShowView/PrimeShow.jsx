@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
 
+import useAuth from "../../Hooks/useAuth";
+
 import PostLikeDisLikeLight from "../../Components/reusuables/post/PostLikeDislike";
 import UserPostInfo from "../../Components/reusuables/UserPostInfo";
 import TimeCalc from "../../Components/reusuables/TimeCalc";
@@ -16,6 +18,10 @@ import Subscriber from "./Subscriber";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
 const PrimeShow = () => {
+  const { auth } = useAuth();
+
+  console.log(auth);
+
   const axiosPrivate = useAxiosPrivate();
   const params = useParams();
   const videoId = params.videoId;
@@ -45,27 +51,8 @@ const PrimeShow = () => {
         }
       });
   }, [params]);
-  console.log(video.createdAt);
-  console.log(video);
-  console.log(userInfo);
-
-  // console.log(<TimeCalc postDate={new Date(video.createdAt)} />);
-
-  // const renderVideoBlock = videos.map((video, index) => {
-  //   const videoData = { ...video };
-  //   // console.log(videoData);
-  //   return (
-  //     <div className="side-video-container">
-  //       <Link
-  //         to={`/prime-news/viewer/${video._id}`}
-  //         // state={videoData}
-  //       >
-  //         <VideoBlock key={index} {...video} />
-  //       </Link>
-  //     </div>
-  //   );
-  //   // return <h1>{videoData.title}</h1>;
-  // });
+  // console.log(video.createdAt);
+  // console.log(video);
 
   return (
     <div
@@ -86,10 +73,7 @@ const PrimeShow = () => {
             />
             <div className="view-content-info-user">User Info here</div>
             <div className="view-content-info-user-interactions">
-              <Subscriber
-                userTo={userInfo._id}
-                // userFrom={}
-              />
+              <Subscriber userTo={userInfo._id} userFrom={auth._id} />
             </div>
           </div>
 
