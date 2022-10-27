@@ -10,8 +10,8 @@ const UserPostInfo = ({
   // pic,
   postedDate,
 }) => {
-  console.log(postedDate);
-  console.log(user);
+  // console.log(postedDate);
+  // console.log(user);
   return (
     <div className="pr-user-info">
       {/* <div className=" info-pic square-container"> */}

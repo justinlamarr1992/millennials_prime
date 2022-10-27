@@ -6,7 +6,9 @@ const verifyRoles = require("../../middleware/verifyRoles");
 
 // POST a video
 // router.post(subscribeController.getSubscribers).route("/");
-router.route("/").post(subscribeController.getSubscribers);
+router
+  .route("/")
+  .post(verifyRoles(ROLES_LIST.User), subscribeController.getSubscribers);
 //   .get(videoController.getVideos)
 
 module.exports = router;

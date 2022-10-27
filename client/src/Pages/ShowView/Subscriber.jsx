@@ -1,25 +1,50 @@
-import React, { useEffect } from "react";
-import { axiosPrivate } from "../../API/axios";
-function Subscriber({ userTo, userFrom }) {
-  const handleSubscribe = () => {
+import React, { useEffect, useState } from "react";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+
+const Subscriber = ({ userTo, userFrom }) => {
+  const axiosPrivate = useAxiosPrivate();
+
+  const subscribeNumberVariable = { userTo, userFrom };
+
+  const [subscriberNumber, setSubscriberNumber] = useState(0);
+
+  // const userTo = "Is this ist hardedcoded";
+  // const userFrom = "It Maybe";
+
+  const handleSubscribe = async () => {
     console.log(userTo);
     console.log(userFrom);
+    try {
+      const response = await axiosPrivate.post(
+        "http://localhost:4000/subscribe/",
+        subscribeNumberVariable
+      );
+      console.log(JSON.stringify(response?.data));
+      // TODO: Make this in the use State and not on click
+      setSubscriberNumber(response.data.subscriberNumber);
+      console.log(response.data.subscriberNumber);
+    } catch (err) {
+      console.log(err);
+      alert("Failed to Get Subscriber Numbers");
+    }
   };
 
   useEffect(() => {
-    const subscribeNumberVariable = { userTo, userFrom };
-    axiosPrivate
-      .post("/subscriber", subscribeNumberVariable, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      })
-      .then((response) => {
-        if (response.data.success) {
-          console.log(response.data.subscriberNumber);
-        } else {
-          alert("Failed to Get Subscriber Numbers");
-        }
-      });
+    console.log(userTo);
+    console.log(userFrom);
+
+    // axiosPrivate
+    //   // .post("http://localhost:4000/subscribe/", userTo, userFrom, {})
+    //   .post("http://localhost:4000/subscribe/", subscribeNumberVariable, {})
+    //   .then((response) => {
+    //     if (response.data.success) {
+    //       console.log(response.data);
+    //     } else {
+    //       alert("Failed to Get Subscriber Numbers");
+    //       // console.log(userTo, userFrom);
+    //       console.log(subscribeNumberVariable);
+    //     }
+    //   });
   }, []);
 
   return (
@@ -27,6 +52,6 @@ function Subscriber({ userTo, userFrom }) {
       Subscribe
     </button>
   );
-}
+};
 
 export default Subscriber;

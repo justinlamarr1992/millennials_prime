@@ -7,7 +7,7 @@ require("dotenv").config();
 
 const handleLogin = async (req, res) => {
   const cookies = req.cookies;
-  console.log(`cookie available at login: ${JSON.stringify(cookies)}`);
+  // console.log(`cookie available at login: ${JSON.stringify(cookies)}`);
   const { user, password } = req.body;
   // console.log(req.body);
   // console.log(user, password);
@@ -35,7 +35,7 @@ const handleLogin = async (req, res) => {
       { expiresIn: "1d" }
     );
     const _id = foundUser._id;
-    console.log(_id);
+    // console.log(_id);
 
     // save refreshtoken with current user
     foundUser.refreshToken = refreshToken;

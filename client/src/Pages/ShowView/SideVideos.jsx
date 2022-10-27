@@ -9,9 +9,9 @@ function SideVideos() {
 
   useEffect(() => {
     axiosPrivate.get("/videos/").then((response) => {
-      console.log(response);
+      // console.log(response);
       if (response.data.success) {
-        console.log(response.data.videos);
+        // console.log(response.data.videos);
         setSideVideos(response.data.videos);
       } else {
         alert("Failed to get Videos");

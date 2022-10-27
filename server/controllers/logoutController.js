@@ -19,7 +19,7 @@ const handleLogout = async (req, res) => {
   //   Delete refresh tokem in the db
   foundUser.refreshToken = "";
   const result = await foundUser.save();
-  console.log(result);
+  // console.log(result);
 
   // Old No DB
   // const otherUsers = usersDb.users.filter(

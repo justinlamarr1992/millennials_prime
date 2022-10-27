@@ -15,15 +15,15 @@ const getVideos = async (req, res) => {
 
 const getSingleVideo = async (req, res) => {
   const videoId = req.params.id;
-  console.log("PARAMS", videoId);
+  // console.log("PARAMS", videoId);
   if (!req?.params?.id) {
     return res.status(400).json({ message: "Video ID required" });
   }
   const test = mongoose.Types.ObjectId(videoId);
-  console.log("MKING AN OBJECTID", test);
+  // console.log("MKING AN OBJECTID", test);
   // const video = await Video.findOne({ id: req.params.id }).exec();
   const video = await Video.findOne({ _id: test });
-  console.log("The ids", test, video._id);
+  // console.log("The ids", test, video._id);
   if (!video) {
     return res
       .status(204)
@@ -42,7 +42,7 @@ const createVideo = (req, res) => {
     },
     //   This is for making sure they only upload MP4 Dont know if multer will accept of types
     fileFilter: (req, file, cb) => {
-      console.log("In File Filter");
+      // console.log("In File Filter");
       const ext = path.extname(file.originalname);
       // May have to use this in the pictures section later
       if (ext !== ".mp4") {
@@ -66,20 +66,20 @@ const createVideo = (req, res) => {
 };
 
 const createThumbnail = async (req, res) => {
-  console.log("I RAN HAHAHAH");
+  // console.log("I RAN HAHAHAH");
   let thumbsFilePath = "";
   let fileDuration = "";
   ffmpeg.ffprobe(req.body.filePath, function (err, metadata) {
-    console.log(metadata.format.duration);
+    // console.log(metadata.format.duration);
     fileDuration = metadata.format.duration;
   });
   ffmpeg(req.body.filePath)
     .on("filenames", function (filenames) {
-      console.log("Will generate " + filenames.join(", "));
+      // console.log("Will generate " + filenames.join(", "));
       thumbsFilePath = "../uploads/thumbnails/" + filenames[0];
     })
     .on("end", function () {
-      console.log("Screenshots taken");
+      // console.log("Screenshots taken");
       return res.json({
         success: true,
         thumbsFilePath: thumbsFilePath,
@@ -97,7 +97,7 @@ const createThumbnail = async (req, res) => {
 };
 
 const uploadVideo = async (req, res) => {
-  console.log("Starting in uploadVideo");
+  // console.log("Starting in uploadVideo");
   const video = new Video(req.body);
   video.save((err, video) => {
     if (err) return res.status(400).json({ success: false, err });
