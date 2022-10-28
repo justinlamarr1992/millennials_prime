@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Subscriber = require("../models/Subscriber");
 
-const getSubscribers = async (req, res) => {
+const getSubscribes = async (req, res) => {
   // console.log(subscribeNumberVariable);
   console.log(req.body);
   const userTo = req.body.userTo;
@@ -29,6 +29,9 @@ const getSubscribers = async (req, res) => {
   });
 };
 
+const getSubscribed = async (req, res) => {};
+
 module.exports = {
-  getSubscribers,
+  getSubscribes,
+  getSubscribed,
 };

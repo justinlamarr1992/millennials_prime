@@ -8,7 +8,11 @@ const verifyRoles = require("../../middleware/verifyRoles");
 // router.post(subscribeController.getSubscribers).route("/");
 router
   .route("/")
-  .post(verifyRoles(ROLES_LIST.User), subscribeController.getSubscribers);
+  .post(verifyRoles(ROLES_LIST.User), subscribeController.getSubscribes);
+
+router
+  .route("/subscribed")
+  .post(verifyRoles(ROLES_LIST.User), subscribeController.getSubscribed);
 //   .get(videoController.getVideos)
 
 module.exports = router;
