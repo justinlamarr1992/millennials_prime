@@ -7,26 +7,61 @@ const Subscriber = ({ userTo, userFrom }) => {
   const subscribeNumberVariable = { userTo, userFrom };
 
   const [subscriberNumber, setSubscriberNumber] = useState(0);
+  const [subscribed, setSubscribed] = useState(false);
 
   // const userTo = "Is this ist hardedcoded";
   // const userFrom = "It Maybe";
 
   const handleSubscribe = async () => {
-    console.log(userTo);
-    console.log(userFrom);
-    // try {
-    //   const response = await axiosPrivate.post(
-    //     "http://localhost:4000/subscribe/",
-    //     subscribeNumberVariable
-    //   );
-    //   console.log(JSON.stringify(response?.data));
-    //   // TODO: Make this in the use State and not on click
-    //   setSubscriberNumber(response.data.subscriberNumber);
-    //   console.log(response.data.subscriberNumber);
-    // } catch (err) {
-    //   console.log(err);
-    //   alert("Failed to Get Subscriber Numbers");
-    // }
+    if (subscribed) {
+      // when already subscribed
+      try {
+        const response = await axiosPrivate.post(
+          "/subscribe/unsubscribe",
+          { userTo, userFrom },
+          {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true,
+          }
+        );
+        setSubscriberNumber(subscriberNumber - 1);
+        setSubscribed(!subscribed);
+        console.log("NEW UNSUBSCRIBE REQUEST: ", response);
+      } catch (err) {
+        if (!err?.originalStatus) {
+          // isLoading: true until timeout occurs
+          alert("No Server Response");
+        } else if (err.originalStatus === 401) {
+          console.log(err);
+        } else {
+          alert("Unsubscribing Failed");
+        }
+      }
+    } else {
+      // when no subscribed
+      try {
+        const response = await axiosPrivate.post(
+          "/subscribe/subscribe",
+          { userTo, userFrom },
+          {
+            headers: { "Content-Type": "application/json" },
+            withCredentials: true,
+          }
+        );
+        setSubscriberNumber(subscriberNumber + 1);
+        setSubscribed(!subscribed);
+        console.log("NEW SUBSCRIBE REQUEST: ", response);
+      } catch (err) {
+        if (!err?.originalStatus) {
+          // isLoading: true until timeout occurs
+          alert("No Server Response");
+        } else if (err.originalStatus === 401) {
+          console.log(err);
+        } else {
+          alert("Subscribing failed Failed");
+        }
+      }
+    }
   };
 
   useEffect(() => {
@@ -37,41 +72,49 @@ const Subscriber = ({ userTo, userFrom }) => {
     console.log(userFrom);
 
     const getSubscribes = async () => {
+      // const varibles = { userTo, userFrom };
       try {
-        // const response = await axios.get(
         const response = await axiosPrivate.post(
           "http://localhost:4000/subscribe/",
+          { userTo, userFrom },
+          // subscribeNumberVariable,
           {
             signal: controller.signal,
             headers: { "Content-Type": "application/json" },
             withCredentials: true,
           }
         );
+        console.log(response);
         setSubscriberNumber(response.data.subscriberNumber);
         console.log(subscriberNumber);
         // isMounted && setUsers(userNames);
       } catch (err) {
-        alert("Failed to get The Subscriber Number");
+        // alert(err);
         console.error(err);
-        // navigate("/auth/signin", { state: { from: location }, replace: true });
       }
     };
     getSubscribes();
     const getSubscribed = async () => {
+      // const varibles = { userTo, userFrom };
+
       try {
-        // const response = await axios.get(
         const response = await axiosPrivate.post(
-          "http://localhost:4000/subscribed/",
+          "http://localhost:4000/subscribe/subscribed",
+          { userTo, userFrom },
+          // subscribeNumberVariable,
+
           {
             signal: controller.signal,
             headers: { "Content-Type": "application/json" },
             withCredentials: true,
           }
         );
+        setSubscribed(response.data.subscribed);
+        console.log(subscribed);
       } catch (err) {
-        alert("Failed to get The Subscribed Info");
+        // TODO: Findout how to solve this errro
+        // alert(err);
         console.error(err);
-        // navigate("/auth/signin", { state: { from: location }, replace: true });
       }
     };
     getSubscribed();
@@ -83,8 +126,14 @@ const Subscriber = ({ userTo, userFrom }) => {
   }, []);
 
   return (
-    <button onClick={handleSubscribe} className="subscribe-button page-button">
-      Subscribe
+    <button
+      onClick={handleSubscribe}
+      className={`page-button  ${
+        subscribed ? "subscribed-button" : "subscribe-button"
+      }
+      `}
+    >
+      {subscriberNumber} {subscribed ? "Subscribed" : "Subscribe"}
     </button>
   );
 };
