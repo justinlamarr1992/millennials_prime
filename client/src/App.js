@@ -35,6 +35,7 @@ import Unauthorized from "./Pages/auth/Unauthorized";
 import PrimeShow from "./Pages/ShowView/PrimeShow";
 import UploadContent from "./Pages/Uploads/UploadContent";
 import Catalog from "./Pages/ShowView/Catalog";
+import Subscriptions from "./Pages/ShowView/Subscriptions";
 
 import { NotFound } from "./Pages/NotFound/NotFound";
 // import { loginUser } from "./Actions/userActions";
@@ -87,6 +88,10 @@ const App = (props, state) => {
               <Route path="/" element={<Home />} />
               <Route path="user" element={<UserPage />} />
               <Route path="prime-news/catalog" element={<Catalog />} />
+              <Route
+                path="prime-news/subscriptions"
+                element={<Subscriptions />}
+              />
               <Route path="settings" element={<Settings />} />
             </Route>
 

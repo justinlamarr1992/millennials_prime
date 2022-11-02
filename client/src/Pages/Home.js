@@ -60,6 +60,9 @@ const Home = () => {
         <Link to={`/prime-news/catalog`}>
           <button>Catalog</button>
         </Link>
+        <Link to={`/prime-news/subscriptions`}>
+          <button>Subscriptions</button>
+        </Link>
         <Link to={`/admin`}>
           <button>Admin</button>
         </Link>

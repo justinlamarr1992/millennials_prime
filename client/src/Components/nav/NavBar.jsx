@@ -19,6 +19,9 @@ import {
 
 import "./navBar.css";
 
+// TODO: Make subscriptions tab and catalog tab
+// TODO: make uplaod Tab for admin and primers onlys
+
 const NavBar = (props) => {
   // const user = useSelector((state) => state.user);
   // const dispatch = useDispatch();

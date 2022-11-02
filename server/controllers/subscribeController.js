@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Subscriber = require("../models/Subscriber");
+const Video = require("../models/VideoModel");
 // const { subscribe } = require("../routes/root");
 
 // TODO: Test the format so the users hsvr subscibers withn their account or profile instead of subscribers by its self
@@ -18,7 +19,11 @@ const getSubscribes = async (req, res) => {
     return res
       .sendStatus(204)
       .json({ message: `No Subscribers for ID ${userTo}` });
-  res.json({ subscriberNumber: subscribers.length });
+  try {
+    res.json({ subscriberNumber: subscribers.length });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 const getSubscribed = async (req, res) => {
@@ -26,21 +31,35 @@ const getSubscribed = async (req, res) => {
   const userFrom = req.body.userFrom;
 
   const subscribed = await Subscriber.find({ userTo, userFrom }).exec();
-  let result = false;
-  if (subscribed.length !== 0) {
-    result = true;
+
+  try {
+    let result = false;
+    if (subscribed.length !== 0) {
+      result = true;
+    }
+    res.json({ subscribed: result });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
   }
-  res.json({ subscribed: result });
 };
 
 const postSubscribe = async (req, res) => {
   try {
     const subscribe = await Subscriber.create(req.body);
+    console.log(subscribe);
     res.status(201).json({ success: `New Subscriber` });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
+
+  // const subscribe = new Subscriber(req.body);
+
+  // subscribe.save((err, doc) => {
+  //   if (err) return res.json({ success: false, err });
+  //   return res.status(200).json({ success: true });
+  // });
 };
+
 const postUnsubscribe = async (req, res) => {
   const userTo = req.body.userTo;
   const userFrom = req.body.userFrom;

@@ -22,7 +22,7 @@ const UploadContent = () => {
   const [upload, setUpload] = useState("");
   const [artwork, setArtwork] = useState(false);
 
-  const [userForNow, setUserForNow] = useState({});
+  const [userPosting, setUserPosting] = useState({});
 
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -41,11 +41,31 @@ const UploadContent = () => {
 
   const { auth } = useContext(AuthContext);
 
-  console.log(auth);
   const _id = auth._id;
   console.log(_id);
 
   // const Authorization = `Bearer ${user.token}`;
+
+  useEffect(() => {
+    const getUserInfo = async () => {
+      try {
+        const response = await axiosPrivate.get(`/users/${_id}`, {
+          withCredentials: true,
+        });
+        console.log(response.data);
+        setUserPosting(response.data);
+      } catch (err) {
+        alert("Change this later because you have an err", err);
+      }
+    };
+    getUserInfo();
+
+    return () => {
+      // this now gets called when the component unmounts
+    };
+  }, []);
+
+  console.log(userPosting);
 
   function uploadCheck(e) {
     if (uploadRef.current.selectedIndex == 0) {
@@ -154,24 +174,11 @@ const UploadContent = () => {
     }
 
     // Get user who added the video here
-    axiosPrivate
-      .get("/users/63443462575cbf86c3b630f4", {
-        withCredentials: true,
-      })
-      .then((response) => {
-        if (response.data) {
-          setUserForNow(response.data);
-          alert(userForNow);
-        } else {
-          alert("Didnt get the user stuff");
-        }
-      });
 
     const variables = {
       // TODO: Comeback later to solve the user problem for here from above
-      userPosting: userForNow,
+      userPosting,
 
-      // userPosting: "Do taking this out change anything",
       title: title,
       description: description,
       prime: prime,
@@ -209,7 +216,6 @@ const UploadContent = () => {
       })
       .then((response) => {
         if (response.data.success) {
-          console.log(response);
           let variable = {
             filePath: response.data.filePath,
             fileName: response.data.fileName,

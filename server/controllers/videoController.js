@@ -2,7 +2,8 @@ const express = require("express");
 const multer = require("multer");
 var ffmpeg = require("fluent-ffmpeg");
 // const User = require("../models/PrimeUser");
-const User = require("../models/MillPrimeUser");
+// const User = require("../models/MillPrimeUser");
+const Subscriber = require("../models/Subscriber");
 
 const Video = require("../models/VideoModel");
 var mongoose = require("mongoose");
@@ -13,23 +14,85 @@ const getVideos = async (req, res) => {
   res.status(200).json({ success: true, videos });
 };
 
+const getSubscriptionVideos = async (req, res) => {
+  // const userFrom = req.body.userFrom;
+  // console.log(userFrom);
+
+  // // Need to find all of the users that i am subscribing from scribiption collectiom
+
+  // const subscriptions = await Subscriber.find({ userFrom }).exec();
+  // console.log("SUBSCRIPTIONS CONSOLE LOG", subscriptions);
+
+  // if (!subscriptions)
+  //   return res
+  //     .status(204)
+  //     .json({ message: "The User is not subscribed to Any Users" });
+  // try {
+  //   let subscribedUsers = [];
+  //   console.log("SUBSCRIBED USERS CONSOLE LOG", subscribedUsers);
+
+  //   subscriptions.map((subscriber, i) => {
+  //     console.log(`This is ${i} subscriber that will be pushed ${subscriber}`);
+  //     subscribedUsers.push(subscriber.userTo);
+  //   });
+
+  //   // Need to fecth all the videos that belong to the users that i found in previous step
+
+  //   const videos = await Video.find({ userPosting: { $in: subscribedUsers } })
+  //     .populate("userPosting")
+  //     .exec();
+  //   try {
+  //     res.status(200).json({ success: true, videos });
+  //   } catch (err) {
+  //     return res.status(400).send(err);
+  //   }
+  // } catch (err) {
+  //   res.status(500).json({ message: err.message });
+  // }
+
+  // TODO: Change the subcribe plain user ID to entire Object ID
+  //THE PROBLEM IS THE DIFFERENC BETWEEN AHNS USERS AND GRAYS USER
+  //SO NOW I MUST FIGURE A WAYD TO GET _ID then get the millprime user then subscribe that entire
+  //Object Not just the _id
+
+  Subscriber.find({ userFrom: req.body.userFrom }).exec((err, subscribers) => {
+    if (err) return res.status(400).send(err);
+
+    let subscribedUser = [];
+
+    subscribers.map((subscriber, i) => {
+      subscribedUser.push(subscriber.userTo);
+    });
+    console.log(subscribedUser);
+
+    // Video.find({ userPosting: { $in: [subscribedUser] } }).exec(
+    Video.find({ userPosting: "63443462575cbf86c3b630f4" }).exec(
+      (err, videos) => {
+        if (err) return res.status(400).send(err);
+        res.status(200).json({ success: true, videos });
+        console.log(videos);
+      }
+    );
+  });
+};
+
 const getSingleVideo = async (req, res) => {
-  const videoId = req.params.id;
-  // console.log("PARAMS", videoId);
   if (!req?.params?.id) {
     return res.status(400).json({ message: "Video ID required" });
   }
-  const test = mongoose.Types.ObjectId(videoId);
-  // console.log("MKING AN OBJECTID", test);
-  // const video = await Video.findOne({ id: req.params.id }).exec();
-  const video = await Video.findOne({ _id: test });
-  // console.log("The ids", test, video._id);
+  const _id = mongoose.Types.ObjectId(req.params.id);
+
+  const video = await Video.findOne({ _id }).exec();
   if (!video) {
     return res
       .status(204)
       .json({ message: `No Video matches ID ${req.params.id}` });
   }
   res.status(200).json({ success: true, video });
+  try {
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
 };
 
 const createVideo = (req, res) => {
@@ -112,4 +175,5 @@ module.exports = {
   uploadVideo,
   getVideos,
   getSingleVideo,
+  getSubscriptionVideos,
 };

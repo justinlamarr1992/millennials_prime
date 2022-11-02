@@ -12,6 +12,11 @@ router
 
 router.route("/createVideoFiles").post(videoController.createVideo);
 router.route("/createThumbnail").post(videoController.createThumbnail);
+
+router
+  .route("/subscriptions")
+  .post(verifyRoles(ROLES_LIST.User), videoController.getSubscriptionVideos);
+
 router.route("/:id").post(videoController.getSingleVideo); //original tut had this as a post... revisit
 
 // router.post("/uploadFiles", videoController.createVideo);
