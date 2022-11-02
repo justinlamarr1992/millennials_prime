@@ -11,13 +11,15 @@
 
 // const INITIAL_HEIGHT = 46;
 
-// const CommentBox = ({ userComments }) => {
+// const CommentBox = ({}) => {
+//   // const CommentBox = ({ userComments }) => {
 //   const [isExpanded, setIsExpanded] = useState(true);
 
 //   const [userValue, setUserValue] = useState("");
 //   const [userPicValue, setUserPicValue] = useState("");
 //   const [timeValue, setTimeValue] = useState("");
-//   const [iDValue, setIDValue] = useState(userComments.length);
+//   //   const [iDValue, setIDValue] = useState(userComments.length);
+//   const [iDValue, setIDValue] = useState(0);
 //   const [commentValue, setCommentValue] = useState("");
 //   const [likeValue, setLikeValue] = useState(false);
 

@@ -17,6 +17,9 @@ import VideoBlock from "../../Components/reusuables/catalog/VideoBlock";
 import Subscriber from "./Subscriber";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
+// import MessageBox from "../../Components/messaging/MessageBox";
+import Comments from "../../Components/reusuables/Comments";
+
 const PrimeShow = () => {
   const { auth } = useAuth();
 
@@ -83,6 +86,8 @@ const PrimeShow = () => {
               <h5 className="text-gray">{video.description}</h5>
             </div>
             {/* <PostLikeDisLikeLight userComments={state.uploadedVid.comments} /> */}
+            {/* <CommentBox /> */}
+            <Comments />
           </div>
         </div>
         <SideVideos />
