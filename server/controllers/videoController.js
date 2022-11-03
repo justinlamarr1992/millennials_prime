@@ -161,7 +161,10 @@ const createThumbnail = async (req, res) => {
 
 const uploadVideo = async (req, res) => {
   // console.log("Starting in uploadVideo");
+  // TODO: Work on only send needed info for save
+  // TODO: Change format to the one you like(Dave Gray)
   const video = new Video(req.body);
+  console.log(video);
   video.save((err, video) => {
     if (err) return res.status(400).json({ success: false, err });
     return res.status(200).json({ success: true });

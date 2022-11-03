@@ -12,6 +12,10 @@ router
   .delete(verifyRoles(ROLES_LIST.Admin), userController.deleteUser);
 
 router
+  .route("/user")
+  .post(verifyRoles(ROLES_LIST.User), userController.getUserReq);
+
+router
   .route("/:id")
   .get(verifyRoles(ROLES_LIST.Admin), userController.getUser)
   .patch(verifyRoles(ROLES_LIST.User), userController.updateUserInfo);

@@ -35,6 +35,32 @@ const getUser = async (req, res) => {
   res.json(user);
 };
 
+const getUserReq = async (req, res) => {
+  console.log(req.body.userTo);
+  console.log(req.body.userFrom);
+
+  if (!req?.body?.userTo || !req?.body?.userFrom)
+    return res.status(400).json({ message: "User ID required" });
+
+  try {
+    const userTo = await User.findOne({ _id: req.body.userTo }).exec();
+    if (!userTo) {
+      return res
+        .status(204)
+        .json({ message: `No User matches ID ${req.body.userTo}` });
+    }
+    const userFrom = await User.findOne({ _id: req.body.userFrom }).exec();
+    if (!userFrom) {
+      return res
+        .status(204)
+        .json({ message: `No User matches ID ${req.body.userFrom}` });
+    }
+    res.status({ success: true, userFrom });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const updateUserInfo = async (req, res) => {
   const { DOB, location, businessOwner } = req.body;
   console.log(DOB, location, businessOwner);
@@ -58,5 +84,6 @@ module.exports = {
   getAllUsers,
   deleteUser,
   getUser,
+  getUserReq,
   updateUserInfo,
 };
