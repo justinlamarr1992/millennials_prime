@@ -15,7 +15,7 @@ const Subscriptions = () => {
 
   useEffect(() => {
     axiosPrivate
-      .post("videos/subscriptions", { userFrom: auth._id })
+      .post("/videos/subscriptions", { userFrom: auth._id })
       .then((response) => {
         console.log(response);
         if (response.data.success) {

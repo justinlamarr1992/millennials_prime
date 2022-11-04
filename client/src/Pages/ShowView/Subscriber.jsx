@@ -40,47 +40,47 @@ const Subscriber = ({ userTo, userFrom }) => {
         }
       }
     } else {
+      //   try {
+      //     const response = await axiosPrivate.post(
+      //       "/users/user",
+      //       { userTo, userFrom },
+      //       {
+      //         headers: { "Content-Type": "application/json" },
+      //         withCredentials: true,
+      //       }
+      //     );
+      //     console.log("RESPONSE FOR NEW CODE", response);
+      //     // setUserToTest()
+      //     // setUserFromTest()
+      //   } catch (err) {
+      //     console.log(err);
+      //   }
+      // }
+      //{
+      // when no subscribed
       try {
         const response = await axiosPrivate.post(
-          "/users/user",
+          "/subscribe/subscribe",
           { userTo, userFrom },
           {
             headers: { "Content-Type": "application/json" },
             withCredentials: true,
           }
         );
-        console.log("RESPONSE FOR NEW CODE", response);
-        // setUserToTest()
-        // setUserFromTest()
+        setSubscriberNumber(subscriberNumber + 1);
+        setSubscribed(!subscribed);
+        console.log("NEW SUBSCRIBE REQUEST: ", response);
       } catch (err) {
-        console.log(err);
+        if (!err?.originalStatus) {
+          // isLoading: true until timeout occurs
+          alert("No Server Response");
+        } else if (err.originalStatus === 401) {
+          console.log(err);
+        } else {
+          alert("Subscribing failed Failed");
+        }
       }
     }
-    //{
-    //   // when no subscribed
-    //   try {
-    //     const response = await axiosPrivate.post(
-    //       "/subscribe/subscribe",
-    //       { userTo, userFrom },
-    //       {
-    //         headers: { "Content-Type": "application/json" },
-    //         withCredentials: true,
-    //       }
-    //     );
-    //     setSubscriberNumber(subscriberNumber + 1);
-    //     setSubscribed(!subscribed);
-    //     console.log("NEW SUBSCRIBE REQUEST: ", response);
-    //   } catch (err) {
-    //     if (!err?.originalStatus) {
-    //       // isLoading: true until timeout occurs
-    //       alert("No Server Response");
-    //     } else if (err.originalStatus === 401) {
-    //       console.log(err);
-    //     } else {
-    //       alert("Subscribing failed Failed");
-    //     }
-    //   }
-    // }
   };
 
   useEffect(() => {

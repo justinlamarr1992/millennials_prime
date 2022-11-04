@@ -6,7 +6,7 @@ const Schema = mongoose.Schema;
 const videoSchema = new Schema(
   {
     // TODO: LAter change this back so the rela info can be related to user
-    userPosting: { type: Schema.Types.Object, ref: "MillPrimeUser" },
+    userPosting: { type: Schema.Types.ObjectId, ref: "MillPrimeUser" },
     title: { type: String, maxlength: 50 },
     description: { type: String },
     // replaces his privacy

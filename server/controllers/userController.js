@@ -61,6 +61,8 @@ const getUserReq = async (req, res) => {
   }
 };
 
+const getSingleUser = async (req, res) => {};
+
 const updateUserInfo = async (req, res) => {
   const { DOB, location, businessOwner } = req.body;
   console.log(DOB, location, businessOwner);
@@ -86,4 +88,5 @@ module.exports = {
   getUser,
   getUserReq,
   updateUserInfo,
+  getSingleUser,
 };

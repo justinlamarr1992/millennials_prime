@@ -45,7 +45,26 @@ const PrimeShow = () => {
       })
       .then((response) => {
         if (response.data.success) {
-          setUserInfo(response.data.video.userPosting);
+          console.log(response.data.video.userPosting);
+          const newUserId = response.data.video.userPosting;
+
+          // Get User and Information to push to client
+
+          const getUserInfo = async () => {
+            try {
+              const response1 = await axiosPrivate.get(`/users/${newUserId}`, {
+                headers: { "Content-Type": "multipart/form-data" },
+                withCredentials: true,
+              });
+              setUserInfo(response1.data);
+            } catch (err) {
+              console.log(err);
+            }
+          };
+          getUserInfo();
+
+          console.log(response.data.video);
+          // setUserInfo(response.data);
           setVideo(response.data.video);
           videoFileString = response.data.video.filePath;
         } else {
@@ -53,6 +72,27 @@ const PrimeShow = () => {
         }
       });
   }, [params]);
+
+  // DELETE THIS
+  // useEffect(() => {
+  //   const getUserInfo = async () => {
+  //     try {
+  //       const response = await axiosPrivate.get(`/users/${_id}`, {
+  //         withCredentials: true,
+  //       });
+  //       console.log(response.data);
+  //       setUserPosting(response.data);
+  //     } catch (err) {
+  //       alert("Change this later because you have an err", err);
+  //     }
+  //   };
+  //   getUserInfo();
+
+  //   return () => {
+  //     // this now gets called when the component unmounts
+  //   };
+  // }, []);
+
   // console.log(video.createdAt);
   // console.log(video);
   // console.log(userInfo);
