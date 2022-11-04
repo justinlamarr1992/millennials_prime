@@ -17,7 +17,7 @@ router
 
 router
   .route("/:id")
-  .get(verifyRoles(ROLES_LIST.Admin), userController.getUser)
+  .get(verifyRoles(ROLES_LIST.User), userController.getUser)
   .patch(verifyRoles(ROLES_LIST.User), userController.updateUserInfo);
 
 module.exports = router;
