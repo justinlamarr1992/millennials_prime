@@ -31,6 +31,8 @@ const PrimeShow = () => {
   const [video, setVideo] = useState("");
   const [videoFile, setVideoFile] = useState("");
   const [userInfo, setUserInfo] = useState({});
+  const [commentList, setCommentList] = useState([]);
+
   let videoFileString;
 
   const videoVariable = {
@@ -73,25 +75,9 @@ const PrimeShow = () => {
       });
   }, [params]);
 
-  // DELETE THIS
-  // useEffect(() => {
-  //   const getUserInfo = async () => {
-  //     try {
-  //       const response = await axiosPrivate.get(`/users/${_id}`, {
-  //         withCredentials: true,
-  //       });
-  //       console.log(response.data);
-  //       setUserPosting(response.data);
-  //     } catch (err) {
-  //       alert("Change this later because you have an err", err);
-  //     }
-  //   };
-  //   getUserInfo();
-
-  //   return () => {
-  //     // this now gets called when the component unmounts
-  //   };
-  // }, []);
+  const updateComment = (newComment) => {
+    setCommentList(commentList.concat(newComment));
+  };
 
   // console.log(video.createdAt);
   // console.log(video);
@@ -127,7 +113,12 @@ const PrimeShow = () => {
             </div>
             {/* <PostLikeDisLikeLight userComments={state.uploadedVid.comments} /> */}
             {/* <CommentBox /> */}
-            <Comments />
+            <Comments
+              commentList={commentList}
+              auth={auth._id}
+              postId={video._id}
+              refreshFunction={updateComment}
+            />
           </div>
         </div>
         <SideVideos />

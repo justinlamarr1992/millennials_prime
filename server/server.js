@@ -62,6 +62,7 @@ app.use("/logout", require("./routes/logout"));
 // Any route that doesnt need verifications needs to be ABOVE THIS LINE
 app.use(verifyJWT);
 
+app.use("/comments", require("./routes/api/comments"));
 app.use("/employees", require("./routes/api/employees"));
 app.use("/users", require("./routes/api/users"));
 app.use("/videos", require("./routes/api/video"));
