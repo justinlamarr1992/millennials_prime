@@ -4,6 +4,10 @@ import cn from "classnames";
 import User from "../../Assets/Images/user.jpeg";
 import axios, { axiosPrivate } from "../../API/axios";
 
+import SingleComment from "./SingleComment";
+
+import "../reusuables/post/post.css";
+
 const INITIAL_HEIGHT = 46;
 
 const Comments = ({ commentList, auth, postId, refreshFunction }) => {
@@ -61,10 +65,6 @@ const Comments = ({ commentList, auth, postId, refreshFunction }) => {
     <div>
       <h4>Comments</h4>
       <hr />
-      {/* Comment list */}
-
-      {console.log(commentList)}
-
       {/* Main Comment Form */}
       <form
         onSubmit={onSubmit}
@@ -72,20 +72,14 @@ const Comments = ({ commentList, auth, postId, refreshFunction }) => {
         // onClick={onExpand}
         // onFocus={onExpand}
         // onChange={onChange}
-        className={cn("comment-box", {
-          expanded: isExpanded,
-          collapsed: !isExpanded,
-          modified: commentValue.length > 0,
-        })}
-        style={{ minHeight: isExpanded ? outerHeight.current : INITIAL_HEIGHT }}
+        // className={cn("comment-box", {
+        //   expanded: isExpanded,
+        //   collapsed: !isExpanded,
+        //   modified: commentValue.length > 0,
+        // })}
+        className="comment-box"
+        // style={{ minHeight: isExpanded ? outerHeight.current : INITIAL_HEIGHT }}
       >
-        <div className="comment-box-header">
-          <div className="comment-box-header-user">
-            {/* <img className="comment-box-avatar" src={User} alt="User Avatar" /> */}
-            <h4 className="comment-box-avatar">User Picture here</h4>
-            <h4 className="comment-box-avatar-name">User Name Here</h4>
-          </div>
-        </div>
         <textarea
           ref={textRef}
           // onClick={onExpand}
@@ -99,13 +93,6 @@ const Comments = ({ commentList, auth, postId, refreshFunction }) => {
         />
         <div className="comment-box-actions">
           <button
-            type="button"
-            className="comment-cancel post-button"
-            // onClick={onClose}
-          >
-            Cancel
-          </button>
-          <button
             type="submit"
             className="post-button"
             // disabled={commentValue.length < 1}
@@ -113,28 +100,22 @@ const Comments = ({ commentList, auth, postId, refreshFunction }) => {
             Respond
           </button>
         </div>
-        <div className="prev-comment text-gray">
-          <div className="prev-comment-comments">
-            {/* {userComments.map((data) => ( */}
-            <div className="comment-box-user">
-              <div className="comment-box-user-pic square-container">
-                <h4 className="square-container-contents">User Picture here</h4>
-                {/* <img className="square-container-contents" src={User} alt="" /> */}
-              </div>
-
-              {/* <h4 className="comment-box-user-name">{data.user}</h4> */}
-              <h4 className="comment-box-user-name">Test HArd Code</h4>
-              <h6 className="comment-box-user-date">
-                {/* <TimeCalc postDate={new Date(data.postedDate)} /> */}
-                Date should be here
-              </h6>
-              <h5 className="comment-box-user-comment">Test Comment</h5>
-              {/* <h5 className="comment-box-user-comment">{data.comment}</h5> */}
-            </div>
-            {/* ))} */}
-          </div>
-        </div>
+        {/* <div className="prev-comment text-gray">
+          <div className="prev-comment-comments"></div>
+        </div> */}
       </form>
+      {/* Comment list */}
+      <div className="prev-comment text-gray">
+        <div className="prev-comment-comments">
+          {commentList &&
+            commentList.map(
+              (comment, index) =>
+                !comment.responseTo && (
+                  <SingleComment comment postId refreshFunction />
+                )
+            )}
+        </div>
+      </div>
     </div>
   );
 };

@@ -23,8 +23,6 @@ import Comments from "../../Components/reusuables/Comments";
 const PrimeShow = () => {
   const { auth } = useAuth();
 
-  // console.log(auth);
-
   const axiosPrivate = useAxiosPrivate();
   const params = useParams();
   const videoId = params.videoId;
@@ -42,8 +40,7 @@ const PrimeShow = () => {
   useEffect(() => {
     axiosPrivate
       .post(`/videos/${videoId}`, {
-        headers: { "Content-Type": "multipart/form-data" },
-        withCredentials: true,
+        // headers: { "Content-Type": "multipart/form-data" },
       })
       .then((response) => {
         if (response.data.success) {
@@ -55,8 +52,7 @@ const PrimeShow = () => {
           const getUserInfo = async () => {
             try {
               const response1 = await axiosPrivate.get(`/users/${newUserId}`, {
-                headers: { "Content-Type": "multipart/form-data" },
-                withCredentials: true,
+                // headers: { "Content-Type": "multipart/form-data" },
               });
               setUserInfo(response1.data);
             } catch (err) {
@@ -64,6 +60,21 @@ const PrimeShow = () => {
             }
           };
           getUserInfo();
+
+          const getComments = async () => {
+            try {
+              const response = await axiosPrivate.post(
+                `/comments/getComments`,
+                {
+                  // headers: { "Content-Type": "multipart/form-data" },
+                }
+              );
+              console.log(response);
+            } catch (err) {
+              console.log(err);
+            }
+          };
+          getComments();
 
           console.log(response.data.video);
           // setUserInfo(response.data);

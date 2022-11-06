@@ -21,6 +21,19 @@ const postComment = async (req, res) => {
   }
 };
 
+const getComments = async (req, res) => {
+  console.log("Starting to get the video commentms");
+  try {
+    const comments = await Comment.find({ postId: req.body.postId })
+      .populate("writer")
+      .exec();
+    res.status(200).json({ success: true, comments });
+  } catch (err) {
+    res.status(400).send(err);
+  }
+};
+
 module.exports = {
   postComment,
+  getComments,
 };

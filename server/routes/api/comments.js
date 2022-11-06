@@ -12,6 +12,10 @@ router
   .route("/")
   .post(verifyRoles(ROLES_LIST.User), commentController.postComment);
 
+router
+  .route("/getComments")
+  .post(verifyRoles(ROLES_LIST.User), commentController.getComments);
+
 // router
 //   .route("/subscribe")
 //   .post(verifyRoles(ROLES_LIST.User), subscribeController.postSubscribe);
