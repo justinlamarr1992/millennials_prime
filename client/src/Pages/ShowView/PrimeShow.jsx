@@ -37,6 +37,9 @@ const PrimeShow = () => {
     videoId,
   };
 
+  // CHANGE FORMAT after the click use params to save the ID as a varible just like all ofther
+  // post routes
+
   useEffect(() => {
     axiosPrivate
       .post(`/videos/${videoId}`, {
