@@ -428,6 +428,10 @@ position: absolute;
 @media only screen and (min-width: 1200px) {
     /* Font Sizes */
 
+    .test_black{
+        color:black;
+        
+    }
 
     h1 {
         font-size: var(--wh1);

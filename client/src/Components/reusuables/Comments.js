@@ -5,6 +5,7 @@ import User from "../../Assets/Images/user.jpeg";
 import axios, { axiosPrivate } from "../../API/axios";
 
 import SingleComment from "./SingleComment";
+import ReplyComment from "./ReplyComment.js";
 
 import "../reusuables/post/post.css";
 
@@ -56,11 +57,6 @@ const Comments = ({ commentList, auth, postId, refreshFunction }) => {
   //     setLikeValue(true);
   //   };
 
-  const onClose = () => {
-    setCommentValue("");
-    setIsExpanded(false);
-  };
-
   return (
     <div>
       <h4>Comments</h4>
@@ -111,7 +107,20 @@ const Comments = ({ commentList, auth, postId, refreshFunction }) => {
             commentList.map(
               (comment, index) =>
                 !comment.responseTo && (
-                  <SingleComment comment postId refreshFunction />
+                  <React.Fragment>
+                    <SingleComment
+                      comment={comment}
+                      postId={postId}
+                      refreshFunction={refreshFunction}
+                      auth={auth}
+                    />
+                    <ReplyComment
+                      commentList={commentList}
+                      postId={postId}
+                      refreshFunction={refreshFunction}
+                      //   auth={auth}
+                    />
+                  </React.Fragment>
                 )
             )}
         </div>

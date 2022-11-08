@@ -36,57 +36,54 @@ const PrimeShow = () => {
   const videoVariable = {
     videoId,
   };
+  console.log(videoId);
 
   // CHANGE FORMAT after the click use params to save the ID as a varible just like all ofther
   // post routes
 
   useEffect(() => {
-    axiosPrivate
-      .post(`/videos/${videoId}`, {
-        // headers: { "Content-Type": "multipart/form-data" },
-      })
-      .then((response) => {
-        if (response.data.success) {
-          console.log(response.data.video.userPosting);
-          const newUserId = response.data.video.userPosting;
+    const getVideo = async () => {
+      try {
+        const response = await axiosPrivate.post(`/videos/${videoId}`, {});
+        // console.log("New Get video ", response);
+        const newUserId = response.data.video.userPosting;
+        // Get User and Information to push to client
 
-          // Get User and Information to push to client
+        const getUserInfo = async () => {
+          try {
+            const response1 = await axiosPrivate.get(`/users/${newUserId}`, {
+              // headers: { "Content-Type": "multipart/form-data" },
+            });
+            setUserInfo(response1.data);
+          } catch (err) {
+            console.log(err);
+          }
+        };
+        getUserInfo();
 
-          const getUserInfo = async () => {
-            try {
-              const response1 = await axiosPrivate.get(`/users/${newUserId}`, {
-                // headers: { "Content-Type": "multipart/form-data" },
-              });
-              setUserInfo(response1.data);
-            } catch (err) {
-              console.log(err);
-            }
-          };
-          getUserInfo();
-
-          const getComments = async () => {
-            try {
-              const response = await axiosPrivate.post(
-                `/comments/getComments`,
-                {
-                  // headers: { "Content-Type": "multipart/form-data" },
-                }
-              );
-              console.log(response);
-            } catch (err) {
-              console.log(err);
-            }
-          };
-          getComments();
-
-          console.log(response.data.video);
-          // setUserInfo(response.data);
-          setVideo(response.data.video);
-          videoFileString = response.data.video.filePath;
-        } else {
-          alert("Failed to get Video Info");
-        }
-      });
+        const getComments = async () => {
+          try {
+            const response = await axiosPrivate.post(`/comments/getComments`, {
+              videoId,
+            });
+            console.log(response);
+            setCommentList(response.data.comments);
+          } catch (err) {
+            console.log(err);
+          }
+        };
+        getComments();
+        setVideo(response.data.video);
+        videoFileString = response.data.video.filePath;
+      } catch (err) {
+        console.log(err);
+        alert("Failed To get Video", err);
+      }
+    };
+    getVideo();
+    return () => {
+      // this now gets called when the component unmounts
+    };
   }, [params]);
 
   const updateComment = (newComment) => {

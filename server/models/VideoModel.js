@@ -13,6 +13,7 @@ const videoSchema = new Schema(
     prime: { type: String },
     filePath: { type: String },
     category: String,
+    comments: [{ type: Schema.Types.ObjectId, ref: "Comment" }],
     views: { type: Number, default: 0 },
     duration: { type: String },
     thumbnail: { type: String },
