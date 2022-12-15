@@ -14,17 +14,6 @@ const INITIAL_HEIGHT = 46;
 const Comments = ({ commentList, auth, postId, refreshFunction }) => {
   const [comment, setComment] = useState("");
 
-  const [isExpanded, setIsExpanded] = useState(true);
-
-  const [userValue, setUserValue] = useState("");
-  const [userPicValue, setUserPicValue] = useState("");
-  const [timeValue, setTimeValue] = useState("");
-  //   const [iDValue, setIDValue] = useState(userComments.length);
-  const [iDValue, setIDValue] = useState(0);
-  const [commentValue, setCommentValue] = useState("");
-  const [likeValue, setLikeValue] = useState(false);
-
-  const outerHeight = useRef(INITIAL_HEIGHT);
   const textRef = useRef(null);
   const containerRef = useRef(null);
 
@@ -49,16 +38,8 @@ const Comments = ({ commentList, auth, postId, refreshFunction }) => {
     }
   };
 
-  //   const onChange = (e) => {
-  //     setCommentValue(e.target.value);
-  //     setUserValue("Test User");
-  //     setUserPicValue("Test User");
-  //     setTimeValue(new Date());
-  //     setLikeValue(true);
-  //   };
-
   return (
-    <div>
+    <div className="comment-container">
       <h4>Comments</h4>
       <hr />
       {/* Main Comment Form */}
@@ -83,9 +64,7 @@ const Comments = ({ commentList, auth, postId, refreshFunction }) => {
           onChange={handleChange}
           className="comment-box-field"
           placeholder="Leave a Comment"
-          //   value={commentValue}
-          name="comment"
-          id="comment"
+          value={comment}
         />
         <div className="comment-box-actions">
           <button
@@ -118,7 +97,8 @@ const Comments = ({ commentList, auth, postId, refreshFunction }) => {
                       commentList={commentList}
                       postId={postId}
                       refreshFunction={refreshFunction}
-                      //   auth={auth}
+                      parentCommentID={comment._id}
+                      auth={auth}
                     />
                   </React.Fragment>
                 )

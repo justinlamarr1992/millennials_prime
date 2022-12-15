@@ -5,6 +5,7 @@ import TimeCalc from "./TimeCalc";
 const SingleComment = ({ comment, postId, refreshFunction, auth }) => {
   const [commentValue, setCommentValue] = useState("");
   const [openReply, setOpenReply] = useState(false);
+  // const [replyToText, setReplyToText] = useState(false);
 
   const handleChange = (e) => {
     setCommentValue(e.currentTarget.value);
@@ -13,6 +14,10 @@ const SingleComment = ({ comment, postId, refreshFunction, auth }) => {
   const handleOpenReply = () => {
     setOpenReply(!openReply);
   };
+
+  // const handleReplyTextChange = () => {
+
+  // }
 
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -35,21 +40,14 @@ const SingleComment = ({ comment, postId, refreshFunction, auth }) => {
   };
 
   // const actions = [
-  //   <h1
-  //     onClick={handleOpenReply}
-  //     className="test_black"
-  //     key="comment-basic-reply-to"
-  //   >
-  //     Reply
-  //   </h1>,
+  //   <span onClick={handleOpenReply} key="comment-basic-reply-to">
+  //     Reply to
+  //   </span>
   // ];
 
   return (
     // TODO: FIX THE CONTAINERS  so the extra top is not needed
-    <div
-      className="comment-box-reply-container clickable"
-      onClick={handleOpenReply}
-    >
+    <div className="comment-box-reply-container ">
       <div className="comment-box-user">
         {/* <div className="comment-box-user-pic square-container">
         <h4 className="square-container-contents">User Picture here</h4>
@@ -61,13 +59,13 @@ const SingleComment = ({ comment, postId, refreshFunction, auth }) => {
           <TimeCalc postDate={new Date(comment.createdAt)} />
         </h6>
         <h5 className="comment-box-user-comment">{comment.content}</h5>
-        {/* <h6
-          className="comment-box-user-reply-toggle"
+        <span
+          className="comment-box-user-toggle clickable"
           onClick={handleOpenReply}
-          //  actions={actions}
+          key="comment-basic-reply-to"
         >
-          Click
-        </h6> */}
+          Reply to
+        </span>
       </div>
 
       {openReply && (
