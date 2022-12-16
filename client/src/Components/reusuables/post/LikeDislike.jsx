@@ -1,13 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { FaHeart, FaSkull, FaRegCommentAlt, FaShare } from "react-icons/fa";
 import ShareBox from "../ShareBox";
+import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 
 const LikeDislike = ({ video, videoId, userId, comment, commentId }) => {
+  const axiosPrivate = useAxiosPrivate();
+
   const [share, setShare] = useState(false);
   const [heart, setHeart] = useState(true);
   const [skull, setSkull] = useState(true);
 
-  const varible = {};
+  let varible = {};
+
   if (video) {
     varible = { videoId, userId };
   } else {
@@ -17,12 +21,11 @@ const LikeDislike = ({ video, videoId, userId, comment, commentId }) => {
   useEffect(() => {
     const getLikesDislikes = async () => {
       try {
-        const response = await axiosPrivate.post(`/videos/${videoId}`, {});
+        const response = await axiosPrivate.post(`likes/getLikes`, varible);
         console.log("New Likes Dislikes ", response);
-        // const newUserId = response.data.video.userPosting;
-        // Get User and Information to push to client
-        // setVideo(response.data.video);
-        // videoFileString = response.data.video.filePath;
+        // How many likes does thi video have
+
+        // If I already cliked this button
       } catch (err) {
         console.log(err);
         alert("Failed To get Likes and Dislikes", err);
