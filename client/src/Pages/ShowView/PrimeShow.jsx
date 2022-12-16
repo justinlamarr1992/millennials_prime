@@ -19,6 +19,7 @@ import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
 // import MessageBox from "../../Components/messaging/MessageBox";
 import Comments from "../../Components/reusuables/Comments";
+import LikeDislike from "../../Components/reusuables/post/LikeDislike";
 
 const PrimeShow = () => {
   const { auth } = useAuth();
@@ -112,8 +113,9 @@ const PrimeShow = () => {
                 postedDate={<TimeCalc postDate={new Date(video.createdAt)} />}
                 className="pr-user-info"
               />
-              <div className="view-content-info-user">User Info here</div>
               <div className="view-content-info-user-interactions">
+                <LikeDislike video videoId={videoId} userId={auth._id} />
+                {/* !THIS MAY BE THE BUG */}
                 <Subscriber userTo={userInfo._id} userFrom={auth._id} />
               </div>
             </div>

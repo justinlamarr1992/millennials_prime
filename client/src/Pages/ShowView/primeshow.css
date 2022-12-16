@@ -102,6 +102,11 @@ background-color: gray;
 .video-block-numbers-date{}
 .video-block-numbers-view{}
 
+.view-content-info-user-interactions{
+  display: flex;
+  width: 50%;
+}
+
 .subscribe-button{
   background-color: var(--tri-c);
   color: var(--sec-t);

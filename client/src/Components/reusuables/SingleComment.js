@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { axiosPrivate } from "../../API/axios";
+import LikeDislike from "./post/LikeDislike";
 import TimeCalc from "./TimeCalc";
 
 const SingleComment = ({ comment, postId, refreshFunction, auth }) => {
@@ -66,6 +67,7 @@ const SingleComment = ({ comment, postId, refreshFunction, auth }) => {
         >
           Reply to
         </span>
+        <LikeDislike comment commentId={comment._id} userId={auth} />
       </div>
 
       {openReply && (
