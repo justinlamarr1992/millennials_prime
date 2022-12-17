@@ -81,6 +81,7 @@ const PrimeShow = () => {
       }
     };
     getVideo();
+    console.log("PASSING VIDEO", video);
     return () => {
       // this now gets called when the component unmounts
     };

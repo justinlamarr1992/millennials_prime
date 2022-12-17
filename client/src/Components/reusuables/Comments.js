@@ -3,6 +3,7 @@ import React, { useState, useRef } from "react";
 import cn from "classnames";
 import User from "../../Assets/Images/user.jpeg";
 import axios, { axiosPrivate } from "../../API/axios";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
 import SingleComment from "./SingleComment";
 import ReplyComment from "./ReplyComment.js";

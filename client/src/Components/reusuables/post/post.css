@@ -139,7 +139,14 @@ justify-content: center;
 .heart{
     color: var(--tri-c)
 }
+.heart-number{
+    color: var(--tri-c)
+}
+
 .skull{
+    color: var(--hex-c);
+}
+.skull-number{
     color: var(--hex-c);
 }
 .comment-icon{
