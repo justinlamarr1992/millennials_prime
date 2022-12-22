@@ -7,16 +7,16 @@ const verifyRoles = require("../../middleware/verifyRoles");
 // MAYNOT WORK I CHNGED orignal .post "/" to .get "/"
 // router.route("/").get(verifyRoles(ROLES_LIST.User), likeController.testLikes);
 router
-  .route("/like")
+  .route("/postlike")
   .post(verifyRoles(ROLES_LIST.User), likeController.postLike);
 router
-  .route("/likes")
+  .route("/getlikes")
   .post(verifyRoles(ROLES_LIST.User), likeController.getLikes);
 router
-  .route("/dislike")
+  .route("/postdislike")
   .post(verifyRoles(ROLES_LIST.User), likeController.postDislike);
 router
-  .route("/dislikes")
+  .route("/getdislikes")
   .post(verifyRoles(ROLES_LIST.User), likeController.getDislikes);
 
 router

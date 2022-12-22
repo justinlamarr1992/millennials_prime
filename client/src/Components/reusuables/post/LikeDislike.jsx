@@ -29,10 +29,11 @@ const LikeDislike = ({ video, videoId, userId, comment, commentId }) => {
   useEffect(() => {
     let isMounted = true;
     const controller = new AbortController();
+
     const getLikesDislikes = async () => {
       try {
         console.log("Before the axios request");
-        const response = await axiosPrivate.post(`/likes/likes`, variable);
+        const response = await axiosPrivate.post(`/likes/getlikes`, variable);
         console.log("After the axios Request");
         if (response.data.success) {
           // How many likes does thi video have
@@ -53,8 +54,12 @@ const LikeDislike = ({ video, videoId, userId, comment, commentId }) => {
         // console.log("Failed To get Likes and Dislikes", err);
         // alert("Failed To get Likes and Dislikes", err);
       }
+
       try {
-        const response = await axiosPrivate.post(`/likes/dislikes`, variable);
+        const response = await axiosPrivate.post(
+          `/likes/getdislikes`,
+          variable
+        );
         if (response.data.success) {
           // How many dislikes does thi video have
           setDislikes(response.data.dislikes.length);
@@ -75,6 +80,7 @@ const LikeDislike = ({ video, videoId, userId, comment, commentId }) => {
         // alert("Failed To get Likes and Dislikes", err);
       }
     };
+
     getLikesDislikes();
     return () => {
       isMounted = false;
@@ -86,61 +92,90 @@ const LikeDislike = ({ video, videoId, userId, comment, commentId }) => {
   const heartClick = async () => {
     console.log("Beginning of the Heart click");
     if (likeAction === null) {
-      const response = await axiosPrivate.post(`/likes/like`, variable);
-      if (response.data.success) {
-        setLikes(likes + 1);
-        setLikeAction("liked");
+      try {
+        const response = await axiosPrivate.post(`/likes/postlike`, variable);
+        if (response.data.success) {
+          setLikes(likes + 1);
+          setLikeAction("liked");
 
-        // If dislike is already clicked
+          // If dislike is already clicked
 
-        if (dislikeAction !== null) setDislikeAction(null);
-        setDislikes(dislikes - 1);
+          if (dislikeAction !== null) {
+            setDislikeAction(null);
+            setDislikes(dislikes - 1);
+          }
+        }
+      } catch (err) {
+        console.log("Failed to increase Likes", err);
       }
     } else {
-      console.log("Failed to increase Likes");
+      try {
+        const response = await axiosPrivate.post(`/likes/unlike`, variable);
+        if (response.data.success) {
+          setLikes(likes - 1);
+          setLikeAction(null);
+        }
+      } catch (err) {
+        console.log("Failed to Unlike", err);
+      }
     }
 
-    if (heart == true && skull == true) {
-      setSkull(false);
-      console.log("Heart is ", heart, " and Skull is ", skull);
-    } else if (skull == false) {
-      setHeart(false);
-      setSkull(true);
-      console.log("Heart is ", heart, " and Skull is ", skull);
-    }
+    // if (heart == true && skull == true) {
+    //   setSkull(false);
+    //   console.log("Heart is ", heart, " and Skull is ", skull);
+    // } else if (skull == false) {
+    //   setHeart(false);
+    //   setSkull(true);
+    //   console.log("Heart is ", heart, " and Skull is ", skull);
+    // }
     console.log("End of Heart Click");
   };
-  const skullClick = () => {
+
+  const skullClick = async () => {
     if (dislikeAction === null) {
+      try {
+        const response = await axiosPrivate.post(
+          `/likes/postdislike`,
+          variable
+        );
+
+        if (response.data.success) {
+          setDislikes(dislikes + 1);
+        } else {
+          alert("The response was no successful");
+        }
+      } catch (err) {
+        console.log(err);
+      }
     }
-    if (skull == true && heart == true) {
-      setHeart(false);
-      console.log("Heart is ", heart, " and Skull is ", skull);
-    } else if (heart == false) {
-      setHeart(true);
-      setSkull(false);
-      console.log("Heart is ", heart, " and Skull is ", skull);
-    }
+    // if (skull == true && heart == true) {
+    //   setHeart(false);
+    //   console.log("Heart is ", heart, " and Skull is ", skull);
+    // } else if (heart == false) {
+    //   setHeart(true);
+    //   setSkull(false);
+    //   console.log("Heart is ", heart, " and Skull is ", skull);
+    // }
   };
 
   return (
     <div className="post-like-dislike post-video comment-box-user-like-dislike">
-      {heart == true && (
-        <button className="post-like-btn" id="heart" onClick={heartClick}>
-          <span className="like-dislike-number">
-            <FaHeart className="heart" />
-            <h5 className="heart-number">{likes}</h5>
-          </span>
-        </button>
-      )}
-      {skull == true && (
-        <button className="post-like-btn " id="skull" onClick={skullClick}>
-          <span className="like-dislike-number">
-            <FaSkull className="skull" />
-            <h5 className="skull-number">{dislikes}</h5>
-          </span>
-        </button>
-      )}
+      {/* {heart == true && ( */}
+      <button className="post-like-btn" id="heart" onClick={heartClick}>
+        <span className="like-dislike-number">
+          <FaHeart className="heart" />
+          <h5 className="heart-number">{likes}</h5>
+        </span>
+      </button>
+      {/* )} */}
+      {/* {skull == true && ( */}
+      <button className="post-like-btn " id="skull" onClick={skullClick}>
+        <span className="like-dislike-number">
+          <FaSkull className="skull" />
+          <h5 className="skull-number">{dislikes}</h5>
+        </span>
+      </button>
+      {/* )} */}
     </div>
   );
 };
