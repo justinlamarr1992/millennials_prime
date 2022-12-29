@@ -19,7 +19,7 @@ const LikeDislike = ({ video, videoId, userId, comment, commentId }) => {
   const [skull, setSkull] = useState(true);
 
   let variable = {};
-  // console.log("Video being passed", video);
+  console.log("Video being passed", video);
   if (video) {
     variable = { videoId, userId };
   } else {
@@ -120,14 +120,6 @@ const LikeDislike = ({ video, videoId, userId, comment, commentId }) => {
       }
     }
 
-    // if (heart == true && skull == true) {
-    //   setSkull(false);
-    //   console.log("Heart is ", heart, " and Skull is ", skull);
-    // } else if (skull == false) {
-    //   setHeart(false);
-    //   setSkull(true);
-    //   console.log("Heart is ", heart, " and Skull is ", skull);
-    // }
     console.log("End of Heart Click");
   };
 
@@ -138,24 +130,31 @@ const LikeDislike = ({ video, videoId, userId, comment, commentId }) => {
           `/likes/postdislike`,
           variable
         );
-
         if (response.data.success) {
           setDislikes(dislikes + 1);
-        } else {
-          alert("The response was no successful");
+          setDislikeAction("disliked");
+
+          //   If like is already clicked
+
+          if (likeAction !== null) {
+            setLikeAction(null);
+            setLikes(likes - 1);
+          }
         }
       } catch (err) {
-        console.log(err);
+        console.log("Failed ti increase Dislikes", err);
+      }
+    } else {
+      try {
+        const response = await axiosPrivate.post(`/likes/undislike`, variable);
+        if (response.data.success) {
+          setDislikes(dislikes - 1);
+          setDislikeAction(null);
+        }
+      } catch (err) {
+        console.log("Failed to Undislike");
       }
     }
-    // if (skull == true && heart == true) {
-    //   setHeart(false);
-    //   console.log("Heart is ", heart, " and Skull is ", skull);
-    // } else if (heart == false) {
-    //   setHeart(true);
-    //   setSkull(false);
-    //   console.log("Heart is ", heart, " and Skull is ", skull);
-    // }
   };
 
   return (
