@@ -4,6 +4,10 @@ const Schema = mongoose.Schema;
 const imageSchema = new Schema(
   {
     image: String,
+    userID: {
+      type: Schema.Types.ObjectId,
+      ref: "MillPrimeUser",
+    },
   }
   //   { timestamps: true }
 );

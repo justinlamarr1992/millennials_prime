@@ -104,7 +104,7 @@ const createProfilePicture = async (req, res) => {
   console.log(image);
 
   try {
-    const picture = await Image.create({ image });
+    const picture = await Image.create({ image, userID: _id });
     // const user = await User.findByIdAndUpdate({ _id, image: image });
     res.status(200).json({ success: true, picture });
     // res.status(200).json({ success: true, user });
