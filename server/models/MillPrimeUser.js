@@ -3,7 +3,10 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
   {
-    image: String,
+    profilePic: {
+      type: Schema.Types.ObjectId,
+      ref: "image",
+    },
     username: {
       type: String,
       required: true,

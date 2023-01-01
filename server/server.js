@@ -28,11 +28,12 @@ app.use(credentials);
 // Cross Origin Resource Sharing
 app.use(cors(corsOptions));
 
-// Bulit-in middleware to handle urlencoded formdata
-app.use(express.urlencoded({ extended: false }));
-
 // builtin middleware fro json
-app.use(express.json());
+// app.use(express.json());
+
+// Bulit-in middleware to handle urlencoded formdata
+// app.use(express.urlencoded({ extended: false }));
+// app.use(express.urlencoded({ limit: "50mb", extended: false }));
 
 // middleware for cookies
 app.use(cookieParser());
@@ -42,8 +43,16 @@ app.use(cookieParser());
 app.use("/uploads", express.static(path.join(__dirname, "..", "/uploads")));
 // app.use("/uploads", express.static("uploads"));
 
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: true }));
+// app.use(bodyParser.json());
+app.use(bodyParser.json({ limit: "200mb" }));
+app.use(
+  bodyParser.urlencoded({
+    limit: "200mb",
+    extended: true,
+    parameterLimit: 1000000,
+  })
+);
 
 //middleware
 app.use(express.json({ limit: "30mb", extended: true }));

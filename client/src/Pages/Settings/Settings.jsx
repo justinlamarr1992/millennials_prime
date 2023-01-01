@@ -1,25 +1,102 @@
 import React, { useState } from "react";
-import User from "../../Assets/Images/user.jpeg";
+import { useEffect } from "react";
+import User from "../../Assets/Images/ProfileAvatar.png";
 import "../../Components/settings/settings.css";
 import SettingsModal from "../../Components/settings/SettingsModal";
 
+import useAuth from "../../Hooks/useAuth";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 const Settings = () => {
+  const { auth } = useAuth();
+  const axiosPrivate = useAxiosPrivate();
   const [modal, setModal] = useState(true);
+  const [profileImage, setProfileImage] = useState({ image: "" });
+
+  const _id = auth._id;
+
+  //  useEffect(() => {
+  //    axiosPrivate
+  //      .get("/users", { userFrom: auth._id })
+  //      .then((response) => {
+  //        console.log(response);
+  //        if (response.data.success) {
+  //          console.log(response.data.videos);
+  //          setVideos(response.data.videos);
+  //        } else {
+  //          alert("Failed to get Subscription Videos");
+  //        }
+  //      });
+  //  }, []);
+
+  const createProfileImage = async (newImage) => {
+    try {
+      axiosPrivate.post("/users/pic", { _id, newImage });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    createProfileImage(profileImage);
+    console.log(profileImage);
+  };
+
+  const handleImageUpload = async (e) => {
+    const image = e.target.files[0];
+    const base64 = await convertToBase64(image);
+    console.log(base64);
+    setProfileImage({ ...profileImage, image: base64 });
+  };
 
   const onClick = () => {
     setModal(!modal);
   };
+
   return (
     <div className="page">
       <div className="settings-container">
         <h2 className="settings-page-title">Account Information</h2>
-        <form action="" className="settings-profile-form">
+        <form onSubmit={handleSubmit} className="settings-profile-form">
           <div className="settings-user-info-group">
-            <img
+            <label
+              htmlFor="image-upload"
+              className="square-container settings-user-pic-pic con-shade"
+            >
+              <img
+                className="square-container-contents"
+                src={profileImage.image || User}
+                alt="User Image here"
+              />
+            </label>
+
+            <input
+              className="hide"
+              type="file"
+              lable="Image"
+              name="profileImage"
+              id="image-upload"
+              accept=".jpe, .png, .jpg"
+              onChange={(e) => handleImageUpload(e)}
+            />
+            {/* <div className="square-container settings-user-pic-pic con-shade">
+              <input
+                className="square-container-contents"
+                src={User}
+                alt="User Image here"
+                type="image"
+                lable="Profile Image"
+                name="profileImage"
+                id="image-upload"
+                accept=".jpeg, .png, .jpg"
+              />
+            </div> */}
+            {/* <img
               className="settings-user-pic-pic con-shade"
               src={User}
               alt="User Image here"
-            />
+            /> */}
+
             <h4 className="settings-user-pic-label">Profile Picture</h4>
             <button className="settings-user-pic-button page-button con-shade clickable">
               Change
@@ -153,3 +230,16 @@ const Settings = () => {
   );
 };
 export default Settings;
+
+function convertToBase64(file) {
+  return new Promise((resolve, reject) => {
+    const fileReader = new FileReader();
+    fileReader.readAsDataURL(file);
+    fileReader.onload = () => {
+      resolve(fileReader.result);
+    };
+    fileReader.onerror = (error) => {
+      reject(error);
+    };
+  });
+}

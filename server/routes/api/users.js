@@ -16,13 +16,13 @@ router
   .post(verifyRoles(ROLES_LIST.User), userController.getUserReq);
 
 router
+  .route("/pic")
+  .get(verifyRoles(ROLES_LIST.User), userController.getUserPicture)
+  .post(verifyRoles(ROLES_LIST.User), userController.createProfilePicture);
+
+router
   .route("/:id")
   .get(verifyRoles(ROLES_LIST.User), userController.getUser)
   .patch(verifyRoles(ROLES_LIST.User), userController.updateUserInfo);
-
-router
-  .route("/picture")
-  .get(verifyRoles(ROLES_LIST.User), userController.getUserPicture)
-  .patch(verifyRoles(ROLES_LIST.User), userController.updateProfilePicture);
 
 module.exports = router;

@@ -1,5 +1,7 @@
 // const User = require("../models/PrimeUser");
 const User = require("../models/MillPrimeUser");
+const Image = require("../models/Image");
+var mongoose = require("mongoose");
 
 // const User = require("../models/user");
 
@@ -82,11 +84,34 @@ const updateUserInfo = async (req, res) => {
   res.json(user);
 };
 
-const updateProfilePicture = async (req, res) => {
-  console.log("Updting Picture");
-};
 const getUserPicture = async (res, req) => {
   console.log("Pictures");
+  try {
+    const user = await User.find({});
+
+    res.json(user);
+  } catch (err) {
+    res.status(408).json({ err });
+  }
+};
+
+const createProfilePicture = async (req, res) => {
+  console.log("Updting Picture");
+
+  const _id = mongoose.Types.ObjectId(req.body._id);
+
+  const image = String(req.body.newImage.image);
+  console.log(image);
+
+  try {
+    const picture = await Image.create({ image });
+    // const user = await User.findByIdAndUpdate({ _id, image: image });
+    res.status(200).json({ success: true, picture });
+    // res.status(200).json({ success: true, user });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({ success: false, err });
+  }
 };
 
 module.exports = {
@@ -96,6 +121,6 @@ module.exports = {
   getUserReq,
   updateUserInfo,
   getSingleUser,
-  updateProfilePicture,
+  createProfilePicture,
   getUserPicture,
 };

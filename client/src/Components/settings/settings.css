@@ -28,6 +28,7 @@ height: 100%;
     border-radius: var(--brad);
     justify-self: start;
     align-self: center;
+    cursor: pointer;
 }
 .settings-user-pic-label{
     grid-area: 1/2/2/3;
