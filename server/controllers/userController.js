@@ -82,6 +82,13 @@ const updateUserInfo = async (req, res) => {
   res.json(user);
 };
 
+const updateProfilePicture = async (req, res) => {
+  console.log("Updting Picture");
+};
+const getUserPicture = async (res, req) => {
+  console.log("Pictures");
+};
+
 module.exports = {
   getAllUsers,
   deleteUser,
@@ -89,4 +96,6 @@ module.exports = {
   getUserReq,
   updateUserInfo,
   getSingleUser,
+  updateProfilePicture,
+  getUserPicture,
 };

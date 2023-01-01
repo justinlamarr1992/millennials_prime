@@ -3,6 +3,7 @@ const Schema = mongoose.Schema;
 
 const userSchema = new Schema(
   {
+    image: String,
     username: {
       type: String,
       required: true,
@@ -54,7 +55,6 @@ const userSchema = new Schema(
       specificIntegral: { type: Boolean },
       whatSpecfic: { type: String },
     },
-    image: String,
     // token: { type: String },
     // tokenExp: { type: Number },
     refreshToken: String,

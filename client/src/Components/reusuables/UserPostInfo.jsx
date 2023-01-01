@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import User from "../../Assets/Images/user.jpeg";
+import User from "../../Assets/Images/ProfileAvatar.png";
 import TimeCalc from "./TimeCalc";
 
 import { primePostData } from "./post/data";
@@ -14,13 +14,13 @@ const UserPostInfo = ({
   // console.log(user);
   return (
     <div className="pr-user-info">
-      {/* <div className=" info-pic square-container"> */}
-      {/* <img
+      <div className="info-pic square-container">
+        <img
           className="square-container-contents p-con-shade"
-          src={pic}
+          src={User}
           alt="User Image here"
-        /> */}
-      {/* </div> */}
+        />
+      </div>
 
       <div className="info-name">
         <h4 className="prime-m-text">

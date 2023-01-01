@@ -20,4 +20,9 @@ router
   .get(verifyRoles(ROLES_LIST.User), userController.getUser)
   .patch(verifyRoles(ROLES_LIST.User), userController.updateUserInfo);
 
+router
+  .route("/picture")
+  .get(verifyRoles(ROLES_LIST.User), userController.getUserPicture)
+  .patch(verifyRoles(ROLES_LIST.User), userController.updateProfilePicture);
+
 module.exports = router;
