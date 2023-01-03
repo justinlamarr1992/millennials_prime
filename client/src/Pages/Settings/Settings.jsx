@@ -13,20 +13,26 @@ const Settings = () => {
   const [profileImage, setProfileImage] = useState({ image: "" });
 
   const _id = auth._id;
+  const profilePic = {};
 
-  //  useEffect(() => {
-  //    axiosPrivate
-  //      .get("/users", { userFrom: auth._id })
-  //      .then((response) => {
-  //        console.log(response);
-  //        if (response.data.success) {
-  //          console.log(response.data.videos);
-  //          setVideos(response.data.videos);
-  //        } else {
-  //          alert("Failed to get Subscription Videos");
-  //        }
-  //      });
-  //  }, []);
+  useEffect(() => {
+    console.log(_id);
+
+    const getUserProfilePic = async () => {
+      const getUserInfo = async () => {
+        try {
+          const response = await axiosPrivate.post("/users/user2", { _id });
+          console.log(response.data[0].profilePic);
+          profilePic = response.data[0].profilePic;
+        } catch (err) {
+          console.log(err);
+        }
+      };
+
+      getUserInfo();
+    };
+    getUserProfilePic();
+  }, []);
 
   const createProfileImage = async (newImage) => {
     try {
@@ -51,6 +57,25 @@ const Settings = () => {
 
   const onClick = () => {
     setModal(!modal);
+  };
+
+  const decode = async () => {
+    console.log("starting decode");
+    // Define the string
+    var decodedStringBtoA = "Testing";
+
+    // Encode the String
+    var encodedStringBtoA = btoa(decodedStringBtoA);
+
+    console.log(encodedStringBtoA);
+
+    // Define the string
+    var encodedStringAtoB = encodedStringBtoA;
+
+    // Decode the String
+    var decodedStringAtoB = atob(encodedStringAtoB);
+
+    console.log(decodedStringAtoB);
   };
 
   return (

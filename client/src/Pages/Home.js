@@ -72,6 +72,9 @@ const Home = () => {
         <Link to={`/user`}>
           <button>User</button>
         </Link>
+        <Link to={`/settings`}>
+          <button>Settings</button>
+        </Link>
         <h4
           ref={errRef}
           className={errMsg ? "errmsg" : "offscreen"}

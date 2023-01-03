@@ -16,9 +16,16 @@ router
   .post(verifyRoles(ROLES_LIST.User), userController.getUserReq);
 
 router
+  .route("/user2")
+  .post(verifyRoles(ROLES_LIST.User), userController.getUser2);
+
+router
   .route("/pic")
-  .get(verifyRoles(ROLES_LIST.User), userController.getUserPicture)
   .post(verifyRoles(ROLES_LIST.User), userController.createProfilePicture);
+
+router
+  .route("/getpic")
+  .post(verifyRoles(ROLES_LIST.User), userController.getPicture);
 
 router
   .route("/:id")
