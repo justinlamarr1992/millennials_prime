@@ -1,25 +1,46 @@
-import React, { useState } from "react";
-import { axiosPrivate } from "../../API/axios";
+import React, { useState, useEffect } from "react";
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import LikeDislike from "./post/LikeDislike";
 import TimeCalc from "./TimeCalc";
+import User from "../../Assets/Images//ProfileAvatar.png";
 
 const SingleComment = ({ comment, postId, refreshFunction, auth }) => {
   const [commentValue, setCommentValue] = useState("");
   const [openReply, setOpenReply] = useState(false);
   // const [replyToText, setReplyToText] = useState(false);
 
+  const axiosPrivate = useAxiosPrivate();
+  const [profileImage, setProfileImage] = useState({ image: "" });
+
+  useEffect(() => {
+    console.log(comment.writer);
+    const _id = comment.writer;
+
+    const getUserProfilePic = async () => {
+      try {
+        const response = await axiosPrivate.post("/users/getpic", { _id });
+        console.log(response.data.getImageToClient);
+        // setProfileImage(response.data.getImageToClient);
+        // console.log(profileImage);
+        setProfileImage({
+          ...profileImage,
+          image: response.data.getImageToClient,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getUserProfilePic();
+  }, []);
+
   const handleChange = (e) => {
     setCommentValue(e.currentTarget.value);
   };
-
   const handleOpenReply = () => {
     setOpenReply(!openReply);
   };
-
-  // const handleReplyTextChange = () => {
-
-  // }
-
+  // const handleReplyTextChange = () => {}
   const onSubmit = async (e) => {
     e.preventDefault();
 
@@ -39,7 +60,6 @@ const SingleComment = ({ comment, postId, refreshFunction, auth }) => {
       alert(err);
     }
   };
-
   // const actions = [
   //   <span onClick={handleOpenReply} key="comment-basic-reply-to">
   //     Reply to
@@ -50,10 +70,13 @@ const SingleComment = ({ comment, postId, refreshFunction, auth }) => {
     // TODO: FIX THE CONTAINERS  so the extra top is not needed
     <div className="comment-box-reply-container ">
       <div className="comment-box-user">
-        {/* <div className="comment-box-user-pic square-container">
-        <h4 className="square-container-contents">User Picture here</h4>
-        <img className="square-container-contents" src={User} alt="" />
-      </div> */}
+        <div className="comment-box-user-pic square-container">
+          <img
+            className="square-container-contents"
+            src={profileImage.image || User}
+            alt=""
+          />
+        </div>
 
         <h4 className="comment-box-user-name">{comment.writer.username}</h4>
         <h6 className="comment-box-user-date text-gray">

@@ -51,9 +51,9 @@ const PrimeShow = () => {
 
         const getUserInfo = async () => {
           try {
-            const response1 = await axiosPrivate.get(`/users/${newUserId}`, {
-              // headers: { "Content-Type": "multipart/form-data" },
-            });
+            const response1 = await axiosPrivate.get(`/users/${newUserId}`);
+            console.log(response1);
+
             setUserInfo(response1.data);
           } catch (err) {
             console.log(err);
@@ -91,9 +91,9 @@ const PrimeShow = () => {
     setCommentList(commentList.concat(newComment));
   };
 
-  // console.log(video.createdAt);
-  // console.log(video);
-  // console.log(userInfo);
+  console.log(video.createdAt);
+  console.log(video);
+  console.log(userInfo);
 
   if (userInfo._id && auth._id) {
     return (
@@ -107,7 +107,7 @@ const PrimeShow = () => {
             {/* <Video video={videoFileString} /> */}
             <div className="view-content-info">
               <UserPostInfo
-                // user={userInfo.username}
+                _id={userInfo._id}
                 user={userInfo.username}
                 // pic={video.userPosting && video.userPosting.avatar} Need ti implement this into model
                 postedDate={<TimeCalc postDate={new Date(video.createdAt)} />}

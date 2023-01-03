@@ -1,11 +1,12 @@
-import React, { useState } from "react";
-import { useEffect } from "react";
+import React, { useState, useEffect } from "react";
+
 import User from "../../Assets/Images/ProfileAvatar.png";
 import "../../Components/settings/settings.css";
 import SettingsModal from "../../Components/settings/SettingsModal";
 
 import useAuth from "../../Hooks/useAuth";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+import useUserPicture from "../../Hooks/useUserPicture";
 const Settings = () => {
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
@@ -20,8 +21,7 @@ const Settings = () => {
     const getUserProfilePic = async () => {
       try {
         const response = await axiosPrivate.post("/users/getpic", { _id });
-
-        console.log(response.data.getImageToClient);
+        // console.log(response.data.getImageToClient);
         // setProfileImage(response.data.getImageToClient);
         // console.log(profileImage);
         setProfileImage({
@@ -31,11 +31,13 @@ const Settings = () => {
       } catch (err) {
         console.log(err);
       }
-      // console.log(profilePic);
     };
 
     getUserProfilePic();
   }, [_id]);
+
+  // TODO: Implement this at later date
+  // useUserPicture();
 
   const createProfileImage = async (newImage) => {
     try {
@@ -62,24 +64,24 @@ const Settings = () => {
     setModal(!modal);
   };
 
-  const decode = async () => {
-    console.log("starting decode");
-    // Define the string
-    var decodedStringBtoA = "Testing";
+  // const decode = async () => {
+  //   console.log("starting decode");
+  //   // Define the string
+  //   var decodedStringBtoA = "Testing";
 
-    // Encode the String
-    var encodedStringBtoA = btoa(decodedStringBtoA);
+  //   // Encode the String
+  //   var encodedStringBtoA = btoa(decodedStringBtoA);
 
-    console.log(encodedStringBtoA);
+  //   console.log(encodedStringBtoA);
 
-    // Define the string
-    var encodedStringAtoB = encodedStringBtoA;
+  //   // Define the string
+  //   var encodedStringAtoB = encodedStringBtoA;
 
-    // Decode the String
-    var decodedStringAtoB = atob(encodedStringAtoB);
+  //   // Decode the String
+  //   var decodedStringAtoB = atob(encodedStringAtoB);
 
-    console.log(decodedStringAtoB);
-  };
+  //   console.log(decodedStringAtoB);
+  // };
 
   return (
     <div className="page">
@@ -107,23 +109,6 @@ const Settings = () => {
               accept=".jpe, .png, .jpg"
               onChange={(e) => handleImageUpload(e)}
             />
-            {/* <div className="square-container settings-user-pic-pic con-shade">
-              <input
-                className="square-container-contents"
-                src={User}
-                alt="User Image here"
-                type="image"
-                lable="Profile Image"
-                name="profileImage"
-                id="image-upload"
-                accept=".jpeg, .png, .jpg"
-              />
-            </div> */}
-            {/* <img
-              className="settings-user-pic-pic con-shade"
-              src={User}
-              alt="User Image here"
-            /> */}
 
             <h4 className="settings-user-pic-label">Profile Picture</h4>
             <button className="settings-user-pic-button page-button con-shade clickable">

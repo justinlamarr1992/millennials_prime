@@ -9,15 +9,20 @@ const getUser = async (req, res) => {
   if (!req?.params?.id)
     return res.status(400).json({ message: "User ID required" });
 
-  const _id = mongoose.Types.ObjectId(req.body._id);
+  const _id = mongoose.Types.ObjectId(req.params.id);
+  console.log(_id);
 
-  const user = await User.findOne({ _id }).exec();
-  if (!user) {
-    return res
-      .status(204)
-      .json({ message: `No User matches ID ${req.params.id}` });
+  try {
+    const user = await User.findOne({ _id }).exec();
+    if (!user) {
+      return res
+        .status(204)
+        .json({ message: `No User matches ID ${req.params.id}` });
+    }
+    res.status(200).json(user);
+  } catch (err) {
+    console.log(err);
   }
-  res.json(user);
 };
 const getUser2 = async (req, res) => {
   console.log("Decode Encode Practice");

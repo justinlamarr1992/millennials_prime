@@ -1,15 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import User from "../../Assets/Images/ProfileAvatar.png";
 import TimeCalc from "./TimeCalc";
 
+import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
+
 import { primePostData } from "./post/data";
 import PostLikeDisLike from "./post/PostLikeDislike";
 const UserPostInfo = ({
+  _id,
   user,
   // pic,
   postedDate,
 }) => {
+  const axiosPrivate = useAxiosPrivate();
+  const [modal, setModal] = useState(true);
+  const [profileImage, setProfileImage] = useState({ image: "" });
+
+  useEffect(() => {
+    console.log(_id);
+
+    const getUserProfilePic = async () => {
+      try {
+        const response = await axiosPrivate.post("/users/getpic", { _id });
+        console.log(response.data.getImageToClient);
+        // setProfileImage(response.data.getImageToClient);
+        // console.log(profileImage);
+        setProfileImage({
+          ...profileImage,
+          image: response.data.getImageToClient,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+    };
+
+    getUserProfilePic();
+  }, [_id]);
+
   // console.log(postedDate);
   // console.log(user);
   return (
@@ -17,7 +45,7 @@ const UserPostInfo = ({
       <div className="info-pic square-container">
         <img
           className="square-container-contents p-con-shade"
-          src={User}
+          src={profileImage.image || User}
           alt="User Image here"
         />
       </div>
