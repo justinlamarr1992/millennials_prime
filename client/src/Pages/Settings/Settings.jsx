@@ -27,6 +27,7 @@ const Settings = () => {
         } catch (err) {
           console.log(err);
         }
+        console.log;
       };
 
       getUserInfo();
