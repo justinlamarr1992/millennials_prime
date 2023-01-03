@@ -103,8 +103,17 @@ const getPicture = async (req, res) => {
   const _id = req.body._id;
   try {
     const user = await User.find({ _id });
+    const image = user[0].profilePic;
+    console.log(image);
 
-    res.json(user);
+    try {
+      const getImage = await Image.find({ _id: image });
+      const getImageToClient = getImage[0].image;
+      res.status(200).json({ success: true, getImageToClient });
+    } catch (err) {
+      console.log(err);
+      res.status(408).json({ err });
+    }
   } catch (err) {
     res.status(408).json({ err });
   }

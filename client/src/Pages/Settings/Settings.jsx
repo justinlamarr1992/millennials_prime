@@ -13,27 +13,29 @@ const Settings = () => {
   const [profileImage, setProfileImage] = useState({ image: "" });
 
   const _id = auth._id;
-  const profilePic = {};
 
   useEffect(() => {
     console.log(_id);
 
     const getUserProfilePic = async () => {
-      const getUserInfo = async () => {
-        try {
-          const response = await axiosPrivate.post("/users/user2", { _id });
-          console.log(response.data[0].profilePic);
-          profilePic = response.data[0].profilePic;
-        } catch (err) {
-          console.log(err);
-        }
-        console.log;
-      };
+      try {
+        const response = await axiosPrivate.post("/users/getpic", { _id });
 
-      getUserInfo();
+        console.log(response.data.getImageToClient);
+        // setProfileImage(response.data.getImageToClient);
+        // console.log(profileImage);
+        setProfileImage({
+          ...profileImage,
+          image: response.data.getImageToClient,
+        });
+      } catch (err) {
+        console.log(err);
+      }
+      // console.log(profilePic);
     };
+
     getUserProfilePic();
-  }, []);
+  }, [_id]);
 
   const createProfileImage = async (newImage) => {
     try {
