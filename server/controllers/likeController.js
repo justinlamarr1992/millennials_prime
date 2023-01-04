@@ -10,6 +10,8 @@ const getLikes = async (req, res) => {
   let varFind = {};
   let variable = {};
 
+  console.log(req.body);
+
   if (req.body.videoId) {
     variable = { videoId: req.body.videoId };
   } else {

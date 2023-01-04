@@ -111,6 +111,20 @@ const getSingleVideo = async (req, res) => {
   }
 };
 
+const getPrimeNewsVideo = async (req, res) => {
+  console.log("It ran in the backend");
+
+  try {
+    const video = await Video.find().sort({ _id: -1 }).limit(1);
+    console.log(video);
+
+    res.status(200).json({ success: true, video });
+  } catch (err) {
+    console.log("err");
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
 const createVideo = (req, res) => {
   var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -194,5 +208,6 @@ module.exports = {
   uploadVideo,
   getVideos,
   getSingleVideo,
+  getPrimeNewsVideo,
   getSubscriptionVideos,
 };

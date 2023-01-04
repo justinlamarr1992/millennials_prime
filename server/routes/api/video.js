@@ -10,8 +10,14 @@ router
   .get(videoController.getVideos)
   .post(videoController.uploadVideo);
 
-router.route("/createVideoFiles").post(videoController.createVideo);
-router.route("/createThumbnail").post(videoController.createThumbnail);
+router.route("/primenews").post(videoController.getPrimeNewsVideo);
+
+router
+  .route("/createVideoFiles")
+  .post(verifyRoles(ROLES_LIST.Admin), videoController.createVideo);
+router
+  .route("/createThumbnail")
+  .post(verifyRoles(ROLES_LIST.Admin), videoController.createThumbnail);
 
 router
   .route("/subscriptions")

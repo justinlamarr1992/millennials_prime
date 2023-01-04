@@ -7,7 +7,7 @@ import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
 import { primePostData } from "./post/data";
 import PostLikeDisLike from "./post/PostLikeDislike";
-const UserPostInfo = ({
+const PrimeUserPostInfo = ({
   _id,
   user,
   // pic,
@@ -41,8 +41,8 @@ const UserPostInfo = ({
   // console.log(postedDate);
   // console.log(user);
   return (
-    <div className="user">
-      <div className="info-pic square-container">
+    <div className="pr-user-post-info">
+      <div className="pr-info-pic square-container">
         <img
           className="square-container-contents p-con-shade"
           src={profileImage.image || User}
@@ -50,7 +50,7 @@ const UserPostInfo = ({
         />
       </div>
 
-      <div className="info-name">
+      <div className="pr-info-name">
         <h4 className="prime-m-text">
           <Link className="" to={`/user/users/${user}`}>
             {user}
@@ -63,13 +63,13 @@ const UserPostInfo = ({
           ></Link>
         </h4> */}
       </div>
-      <div className="info-time">
-        <h1>
+      <div className="pr-info-time">
+        <h5>
           <TimeCalc postDate={new Date(postedDate)} />
-        </h1>
+        </h5>
       </div>
       {/* <PostLikeDisLike /> */}
     </div>
   );
 };
-export default UserPostInfo;
+export default PrimeUserPostInfo;

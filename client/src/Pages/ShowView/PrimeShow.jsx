@@ -47,6 +47,7 @@ const PrimeShow = () => {
         const response = await axiosPrivate.post(`/videos/${videoId}`, {});
         // console.log("New Get video ", response);
         const newUserId = response.data.video.userPosting;
+        console.log(response);
         // Get User and Information to push to client
 
         const getUserInfo = async () => {

@@ -64,25 +64,6 @@ const Settings = () => {
     setModal(!modal);
   };
 
-  // const decode = async () => {
-  //   console.log("starting decode");
-  //   // Define the string
-  //   var decodedStringBtoA = "Testing";
-
-  //   // Encode the String
-  //   var encodedStringBtoA = btoa(decodedStringBtoA);
-
-  //   console.log(encodedStringBtoA);
-
-  //   // Define the string
-  //   var encodedStringAtoB = encodedStringBtoA;
-
-  //   // Decode the String
-  //   var decodedStringAtoB = atob(encodedStringAtoB);
-
-  //   console.log(decodedStringAtoB);
-  // };
-
   return (
     <div className="page">
       <div className="settings-container">

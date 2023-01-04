@@ -81,13 +81,20 @@ const App = (props, state) => {
             {/* need to protect this one */}
           </Route>
           <Route path="unauthorized" element={<Unauthorized />} />
+
           {/* Protected Routes */}
           <Route element={<PersistLogin />}>
             {/* More than one role can be in allowed roles  */}
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
               <Route path="/" element={<Home />} />
-              <Route path="user" element={<UserPage />} />
               <Route path="prime-news/catalog" element={<Catalog />} />
+
+              <Route path="user" element={<UserPage />} />
+              {/* <Route path="user/:id" element={<User />} />
+              <Route path="testuser/:id" element={<TestUser />} />
+              <Route path="verified/:userid" element={<Verified />} />
+              <Route path="/connectedusers" element={<ConnectedUsers />} /> */}
+
               <Route
                 path="prime-news/subscriptions"
                 element={<Subscriptions />}

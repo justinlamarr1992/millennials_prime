@@ -83,7 +83,7 @@ const Home = () => {
           {errMsg}
         </h4>
         {/* <SearchBar /> */}
-        {/* <PrimeNews /> */}
+        <PrimeNews />
         {/* <HotItems />
         <FeatPrimes /> */}
         {/* <HomeFeedPost /> */}
