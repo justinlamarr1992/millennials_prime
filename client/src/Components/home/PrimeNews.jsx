@@ -16,11 +16,8 @@ const PrimeNews = () => {
   //   const videoId = params.videoId;
   //   const [video, setVideo] = useState("");
   const [video, setVideo] = useState({});
-  const [videoId, setVideoId] = useState("");
+  //   const [videoId, setVideoId] = useState("");
   const [userInfo, setUserInfo] = useState({});
-
-  let newVideo = {};
-  let newVideoId;
 
   useEffect(() => {
     const getNews = async () => {
@@ -29,7 +26,7 @@ const PrimeNews = () => {
         // console.log(response.data.video[0]);
         console.log(response.data.video[0]);
         setVideo(response.data.video[0]);
-        setVideoId(response.data.video[0]._id);
+        // setVideoId(response.data.video[0]._id);
         const newUserId = response.data.video[0].userPosting;
 
         const getUserInfo = async () => {
@@ -54,15 +51,7 @@ const PrimeNews = () => {
     //   // this now gets called when the component unmounts
     // };
   }, [auth]);
-  console.log(videoId);
-  // console.log(video);
-
-  // newVideo = video;
-  // newVideoId = video._id;
-
-  // console.log(newVideo);
-  // console.log(newVideoId);
-  // console.log(newUserId);
+  console.log(video._id);
 
   return (
     <section id="prime" className="prime-container news-container p-con-shade ">
@@ -83,13 +72,13 @@ const PrimeNews = () => {
       {/* {USER LOGGED IN TERIARY HERE} */}
       <div className="pr-like-dislike">
         <PrimeLikeDislike
-          video={newVideo}
-          videoId={newVideoId}
+          video={video}
+          // videoId={video._id}
           userId={auth._id}
         />
       </div>
 
-      <TestComp video videoId />
+      {/* <TestComp video={video} videoId={videoId} /> */}
 
       <div className="pr-video-info">
         <h3>{video.title}</h3>

@@ -9,24 +9,30 @@ const getLikes = async (req, res) => {
   let varSwitch = {};
   let varFind = {};
   let variable = {};
+  let videoId;
+  let commentId;
+
+  console.log("Starts here");
 
   console.log(req.body);
 
   if (req.body.videoId) {
+    videoId = req.body.videoId;
     variable = { videoId: req.body.videoId };
   } else {
+    commentId = req.body.commentId;
     variable = { commentId: req.body.commentId };
   }
 
   switch (variable) {
     case videoId:
-      varSwitch = mongoose.Types.ObjectId(req.body.videoId);
+      varSwitch = mongoose.Types.ObjectId(videoId);
       varFind = { videoId: varSwitch };
       console.log("This is the Test Var", varSwitch);
       console.log("This is the Test find", varFind);
       break;
     default:
-      varSwitch = mongoose.Types.ObjectId(req.body.commentId);
+      varSwitch = mongoose.Types.ObjectId(commentId);
       varFind = { commentId: varSwitch };
       console.log("This is the Test Var", varSwitch);
       console.log("This is the Test find", varFind);
@@ -45,10 +51,15 @@ const getDislikes = async (req, res) => {
   let varSwitch = {};
   let varFind = {};
   let variable = {};
+  let videoId;
+  let commentId;
+  console.log(req.body);
 
   if (req.body.videoId) {
+    videoId = req.body.videoId;
     variable = { videoId: req.body.videoId };
   } else {
+    commentId = req.body.commentId;
     variable = { commentId: req.body.commentId };
   }
 

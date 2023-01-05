@@ -6,91 +6,113 @@ import { axiosPrivate } from "../../../API/axios";
 // import axios, { axiosPrivate } from "../../API/axios";
 // import { axiosPrivate } from "../../../API/axios";
 
-const PrimeLikeDislike = ({ video, videoId, userId, comment, commentId }) => {
+const PrimeLikeDislike = ({
+  video,
+  // videoId,
+  userId,
+  comment,
+  commentId,
+}) => {
   // const axiosPrivate = useAxiosPrivate();
 
-  console.log(video);
+  console.log("The FIRST CONSOLE LOG", video._id);
 
   const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
   const [likeAction, setLikeAction] = useState(null);
   const [dislikeAction, setDislikeAction] = useState(null);
 
+  const [videoId, setVideoId] = useState("");
+
   const [share, setShare] = useState(false);
   const [heart, setHeart] = useState(true);
   const [skull, setSkull] = useState(true);
 
   let variable = {};
-  console.log(videoId);
-  if (video) {
-    console.log(videoId);
-    variable = { videoId, userId };
-  } else {
-    variable = { commentId, userId };
-  }
 
   useEffect(() => {
-    let isMounted = true;
-    const controller = new AbortController();
+    // let isMounted = true;
+    // const controller = new AbortController();
 
-    const getLikesDislikes = async () => {
-      try {
-        console.log("Before the axios request");
-        const response = await axiosPrivate.post(`/likes/getlikes`, variable);
-        console.log("After the axios Request");
-        if (response.data.success) {
-          // How many likes does thi video have
-          setLikes(response.data.likes.length);
-
-          // If I already cliked this button
-          response.data.likes.map((like) => {
-            if (like.userId === userId) {
-              setLikeAction("liked");
-            }
-          });
-        }
-        console.log(likes);
-      } catch (err) {
-        // console.log(err);
-        console.log("Failed to get Likes", err);
-
-        // console.log("Failed To get Likes and Dislikes", err);
-        // alert("Failed To get Likes and Dislikes", err);
-      }
-
-      try {
-        const response = await axiosPrivate.post(
-          `/likes/getdislikes`,
-          variable
-        );
-        if (response.data.success) {
-          // How many dislikes does thi video have
-          setDislikes(response.data.dislikes.length);
-
-          // If I already cliked this button
-          response.data.dislikes.map((dislike) => {
-            if (dislike.userId === userId) {
-              setDislikeAction("disliked");
-            }
-          });
-        }
-        console.log(dislikes);
-      } catch (err) {
-        // console.log(err);
-        console.log("Failed to get Dislikes", err);
-
-        // console.log("Failed To get Likes and Dislikes", err);
-        // alert("Failed To get Likes and Dislikes", err);
-      }
-    };
+    if (video) {
+      variable = video._id;
+    } else {
+      variable = commentId;
+    }
 
     getLikesDislikes();
-    return () => {
-      isMounted = false;
-      controller.abort();
-      // this now gets called when the component unmounts
-    };
+
+    setVideoId(video._id);
+    console.log("VIDEO INSIDE OF THE USE EFFECT ", video._id);
+
+    // return () => {
+    //   isMounted = false;
+    //   controller.abort();
+    //   // this now gets called when the component unmounts
+    // };
   }, []);
+
+  //   setVideoId(video._id);
+  console.log(videoId);
+
+  //   let variable = {};
+  //   if (video) {
+  //     variable = { videoId, userId };
+  //   } else {
+  //     variable = { commentId, userId };
+  //   }
+
+  console.log("THE DAMN VARIABLE IS ", variable);
+
+  const getLikesDislikes = async () => {
+    try {
+      console.log("Before the axios request");
+      console.log(videoId);
+
+      const response = await axiosPrivate.post(`/likes/getlikes`, variable);
+      console.log("After the axios Request");
+      if (response.data.success) {
+        // How many likes does thi video have
+        setLikes(response.data.likes.length);
+
+        // If I already cliked this button
+        response.data.likes.map((like) => {
+          if (like.userId === userId) {
+            setLikeAction("liked");
+          }
+        });
+      }
+      console.log(likes);
+    } catch (err) {
+      // console.log(err);
+      console.log("Failed to get Likes", err);
+
+      // console.log("Failed To get Likes and Dislikes", err);
+      // alert("Failed To get Likes and Dislikes", err);
+    }
+
+    try {
+      const response = await axiosPrivate.post(`/likes/getdislikes`, variable);
+      if (response.data.success) {
+        // How many dislikes does thi video have
+        setDislikes(response.data.dislikes.length);
+
+        // If I already cliked this button
+        response.data.dislikes.map((dislike) => {
+          if (dislike.userId === userId) {
+            setDislikeAction("disliked");
+          }
+        });
+      }
+      console.log(dislikes);
+    } catch (err) {
+      // console.log(err);
+      console.log("Failed to get Dislikes", err);
+
+      // console.log("Failed To get Likes and Dislikes", err);
+      // alert("Failed To get Likes and Dislikes", err);
+    }
+  };
 
   const heartClick = async () => {
     console.log("Beginning of the Heart click");
