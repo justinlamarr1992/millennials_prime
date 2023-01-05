@@ -9,6 +9,8 @@ import { axiosPrivate } from "../../../API/axios";
 const PrimeLikeDislike = ({ video, videoId, userId, comment, commentId }) => {
   // const axiosPrivate = useAxiosPrivate();
 
+  console.log(video);
+
   const [likes, setLikes] = useState(0);
   const [dislikes, setDislikes] = useState(0);
   const [likeAction, setLikeAction] = useState(null);
@@ -159,7 +161,7 @@ const PrimeLikeDislike = ({ video, videoId, userId, comment, commentId }) => {
   };
 
   return (
-    <div className=" pr-like-dislike post-like-dislike post-video ">
+    <div className=" pr-like-dislike-comp post-like-dislike post-video ">
       <button className="post-like-btn" id="heart" onClick={heartClick}>
         <span className="like-dislike-number">
           <FaHeart className="heart" />

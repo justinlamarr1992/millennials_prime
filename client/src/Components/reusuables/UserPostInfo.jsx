@@ -64,9 +64,9 @@ const UserPostInfo = ({
         </h4> */}
       </div>
       <div className="info-time">
-        <h1>
+        <h5>
           <TimeCalc postDate={new Date(postedDate)} />
-        </h1>
+        </h5>
       </div>
       {/* <PostLikeDisLike /> */}
     </div>

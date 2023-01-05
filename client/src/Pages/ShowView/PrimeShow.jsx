@@ -100,7 +100,7 @@ const PrimeShow = () => {
     return (
       <div
         className="page"
-        style={{ paddingLeft: "calc(var(--nav-w) - 2%)", height: "100vh" }}
+        style={{ paddingLeft: "calc(var(--nav-w) - 2%)", height: "100%" }}
       >
         <div className="view-container">
           <div className="view-content">
@@ -111,7 +111,7 @@ const PrimeShow = () => {
                 _id={userInfo._id}
                 user={userInfo.username}
                 // pic={video.userPosting && video.userPosting.avatar} Need ti implement this into model
-                postedDate={<TimeCalc postDate={new Date(video.createdAt)} />}
+                postedDate={video.createdAt}
                 className="pr-user-info"
               />
               <div className="view-content-info-user-interactions">
