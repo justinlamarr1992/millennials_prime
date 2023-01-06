@@ -6,13 +6,7 @@ import { axiosPrivate } from "../../../API/axios";
 // import axios, { axiosPrivate } from "../../API/axios";
 // import { axiosPrivate } from "../../../API/axios";
 
-const PrimeLikeDislike = ({
-  video,
-  // videoId,
-  userId,
-  comment,
-  commentId,
-}) => {
+const PrimeLikeDislike = ({ video, videoId, userId, comment, commentId }) => {
   // const axiosPrivate = useAxiosPrivate();
 
   console.log("The FIRST CONSOLE LOG", video._id);
@@ -22,55 +16,33 @@ const PrimeLikeDislike = ({
   const [likeAction, setLikeAction] = useState(null);
   const [dislikeAction, setDislikeAction] = useState(null);
 
-  const [videoId, setVideoId] = useState("");
+  //   const [videoId, setVideoId] = useState("");
 
-  const [share, setShare] = useState(false);
-  const [heart, setHeart] = useState(true);
-  const [skull, setSkull] = useState(true);
+  //   const [share, setShare] = useState(false);
+  //   const [heart, setHeart] = useState(true);
+  //   const [skull, setSkull] = useState(true);
 
   let variable = {};
+  console.log("Video being passed", video);
+  if (video) {
+    variable = { videoId, userId };
+  } else {
+    variable = { commentId, userId };
+  }
 
-  useEffect(() => {
-    // let isMounted = true;
-    // const controller = new AbortController();
-
-    if (video) {
-      variable = video._id;
-    } else {
-      variable = commentId;
-    }
-
-    getLikesDislikes();
-
-    setVideoId(video._id);
-    console.log("VIDEO INSIDE OF THE USE EFFECT ", video._id);
-
-    // return () => {
-    //   isMounted = false;
-    //   controller.abort();
-    //   // this now gets called when the component unmounts
-    // };
-  }, []);
-
-  //   setVideoId(video._id);
-  console.log(videoId);
-
-  //   let variable = {};
-  //   if (video) {
-  //     variable = { videoId, userId };
-  //   } else {
-  //     variable = { commentId, userId };
-  //   }
-
-  console.log("THE DAMN VARIABLE IS ", variable);
+  if (video) {
+    variable = { videoId, userId };
+  } else {
+    variable = { commentId, userId };
+  }
 
   const getLikesDislikes = async () => {
     try {
-      console.log("Before the axios request");
-      console.log(videoId);
-
-      const response = await axiosPrivate.post(`/likes/getlikes`, variable);
-      console.log("After the axios Request");
+      // console.log("getLikesDislikes variable", variable);
+      const response = await axiosPrivate.post(`/likes/getlikes`, {
+        videoId: videoId,
+      });
+      console.log("getlikes Resposnse", response);
       if (response.data.success) {
         // How many likes does thi video have
         setLikes(response.data.likes.length);
@@ -82,7 +54,6 @@ const PrimeLikeDislike = ({
           }
         });
       }
-      console.log(likes);
     } catch (err) {
       // console.log(err);
       console.log("Failed to get Likes", err);
@@ -92,7 +63,11 @@ const PrimeLikeDislike = ({
     }
 
     try {
-      const response = await axiosPrivate.post(`/likes/getdislikes`, variable);
+      const response = await axiosPrivate.post(`/likes/getdislikes`, {
+        videoId,
+      });
+      console.log("getdislikes Resposnse", response);
+
       if (response.data.success) {
         // How many dislikes does thi video have
         setDislikes(response.data.dislikes.length);
@@ -104,7 +79,6 @@ const PrimeLikeDislike = ({
           }
         });
       }
-      console.log(dislikes);
     } catch (err) {
       // console.log(err);
       console.log("Failed to get Dislikes", err);
@@ -113,6 +87,8 @@ const PrimeLikeDislike = ({
       // alert("Failed To get Likes and Dislikes", err);
     }
   };
+
+  getLikesDislikes();
 
   const heartClick = async () => {
     console.log("Beginning of the Heart click");

@@ -12,36 +12,26 @@ const getLikes = async (req, res) => {
   let videoId;
   let commentId;
 
-  console.log("Starts here");
+  const body = req.body;
 
-  console.log(req.body);
+  console.log("Request Body", req.body);
 
-  if (req.body.videoId) {
+  if (body.hasOwnProperty("videoId")) {
     videoId = req.body.videoId;
     variable = { videoId: req.body.videoId };
+    varSwitch = mongoose.Types.ObjectId(videoId);
+    varFind = { videoId: varSwitch };
   } else {
     commentId = req.body.commentId;
     variable = { commentId: req.body.commentId };
-  }
-
-  switch (variable) {
-    case videoId:
-      varSwitch = mongoose.Types.ObjectId(videoId);
-      varFind = { videoId: varSwitch };
-      console.log("This is the Test Var", varSwitch);
-      console.log("This is the Test find", varFind);
-      break;
-    default:
-      varSwitch = mongoose.Types.ObjectId(commentId);
-      varFind = { commentId: varSwitch };
-      console.log("This is the Test Var", varSwitch);
-      console.log("This is the Test find", varFind);
-      break;
+    varSwitch = mongoose.Types.ObjectId(commentId);
+    varFind = { commentId: varSwitch };
   }
 
   try {
     const likes = await Like.find(varFind).exec();
     res.status(200).json({ success: true, likes });
+    console.log(likes);
   } catch (err) {
     res.status(400).send(err);
   }
@@ -53,29 +43,21 @@ const getDislikes = async (req, res) => {
   let variable = {};
   let videoId;
   let commentId;
+
+  const body = req.body;
+
   console.log(req.body);
 
-  if (req.body.videoId) {
+  if (body.hasOwnProperty("videoId")) {
     videoId = req.body.videoId;
     variable = { videoId: req.body.videoId };
+    varSwitch = mongoose.Types.ObjectId(videoId);
+    varFind = { videoId: varSwitch };
   } else {
     commentId = req.body.commentId;
     variable = { commentId: req.body.commentId };
-  }
-
-  switch (variable) {
-    case videoId:
-      varSwitch = mongoose.Types.ObjectId(req.body.videoId);
-      varFind = { videoId: varSwitch };
-      console.log("This is the Test Var", varSwitch);
-      console.log("This is the Test find", varFind);
-      break;
-    default:
-      varSwitch = mongoose.Types.ObjectId(req.body.commentId);
-      varFind = { commentId: varSwitch };
-      console.log("This is the Test Var", varSwitch);
-      console.log("This is the Test find", varFind);
-      break;
+    varSwitch = mongoose.Types.ObjectId(commentId);
+    varFind = { commentId: varSwitch };
   }
 
   try {

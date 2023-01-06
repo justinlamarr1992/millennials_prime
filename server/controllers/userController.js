@@ -104,12 +104,12 @@ const updateUserInfo = async (req, res) => {
 };
 
 const getPicture = async (req, res) => {
-  console.log("Decode Encode Practice");
+  // console.log("Decode Encode Practice");
   const _id = req.body._id;
   try {
     const user = await User.find({ _id });
     const image = user[0].profilePic;
-    console.log(image);
+    // console.log(image);
 
     try {
       const getImage = await Image.find({ _id: image });

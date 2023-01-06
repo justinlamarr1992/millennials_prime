@@ -71,11 +71,7 @@ const PrimeNews = () => {
       </div>
       {/* {USER LOGGED IN TERIARY HERE} */}
       <div className="pr-like-dislike">
-        <PrimeLikeDislike
-          video={video}
-          // videoId={video._id}
-          userId={auth._id}
-        />
+        <PrimeLikeDislike video={video} videoId={video._id} userId={auth._id} />
       </div>
 
       {/* <TestComp video={video} videoId={videoId} /> */}
