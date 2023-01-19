@@ -7,7 +7,6 @@ import { primePostData } from "../reusuables/post/data";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import PrimeUserPostInfo from "../reusuables/PrimeUserPostInfo";
 import PrimeLikeDislike from "../reusuables/post/PrimeLikeDislike";
-import TestComp from "./TestComp";
 
 const PrimeNews = () => {
   const { auth } = useAuth();
@@ -58,7 +57,7 @@ const PrimeNews = () => {
       <h2 className="pr-title title-space">Prime News</h2>
       {/* TODO: Keep the structre but now input the values that useEffect response leave... 
       Chabge the user info to resemblbe the primeshows viewing */}
-      <div className="pr-video">
+      <div className="pr-video p-con-shade">
         <Video video={video.filePath} />
       </div>
 
@@ -73,8 +72,6 @@ const PrimeNews = () => {
       <div className="pr-like-dislike">
         <PrimeLikeDislike video={video} videoId={video._id} userId={auth._id} />
       </div>
-
-      {/* <TestComp video={video} videoId={videoId} /> */}
 
       <div className="pr-video-info">
         <h3>{video.title}</h3>

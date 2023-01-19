@@ -42,7 +42,7 @@ const PrimeLikeDislike = ({ video, videoId, userId, comment, commentId }) => {
       const response = await axiosPrivate.post(`/likes/getlikes`, {
         videoId: videoId,
       });
-      console.log("getlikes Resposnse", response);
+      // console.log("getlikes Resposnse", response);
       if (response.data.success) {
         // How many likes does thi video have
         setLikes(response.data.likes.length);
@@ -66,7 +66,7 @@ const PrimeLikeDislike = ({ video, videoId, userId, comment, commentId }) => {
       const response = await axiosPrivate.post(`/likes/getdislikes`, {
         videoId,
       });
-      console.log("getdislikes Resposnse", response);
+      // console.log("getdislikes Resposnse", response);
 
       if (response.data.success) {
         // How many dislikes does thi video have
@@ -91,7 +91,7 @@ const PrimeLikeDislike = ({ video, videoId, userId, comment, commentId }) => {
   getLikesDislikes();
 
   const heartClick = async () => {
-    console.log("Beginning of the Heart click");
+    // console.log("Beginning of the Heart click");
     if (likeAction === null) {
       try {
         const response = await axiosPrivate.post(`/likes/postlike`, variable);
@@ -121,7 +121,7 @@ const PrimeLikeDislike = ({ video, videoId, userId, comment, commentId }) => {
       }
     }
 
-    console.log("End of Heart Click");
+    // console.log("End of Heart Click");
   };
 
   const skullClick = async () => {
