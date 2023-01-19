@@ -10,15 +10,15 @@ import {
 } from "../../Components/forms/UploadForms";
 import FileUpload from "../../Components/reusuables/post/FileUpload";
 import Dropzone from "react-dropzone";
-import axios from "axios";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
-import AuthContext from "../../Context/AuthProvider";
 
 import "./upload.css";
+import useAuth from "../../Hooks/useAuth";
 
 const UploadContent = () => {
-  // const user = useSelector((state) => state.user);
-  // const { user } = useAuthContext();
+  const { auth } = useAuth();
+  const _id = auth._id;
+
   const [upload, setUpload] = useState("");
   const [artwork, setArtwork] = useState(false);
 
@@ -39,10 +39,7 @@ const UploadContent = () => {
 
   const axiosPrivate = useAxiosPrivate();
 
-  const { auth } = useContext(AuthContext);
-
-  const _id = auth._id;
-  console.log(_id);
+  // console.log(_id);
 
   // const Authorization = `Bearer ${user.token}`;
 
@@ -52,7 +49,7 @@ const UploadContent = () => {
         const response = await axiosPrivate.get(`/users/${_id}`, {
           withCredentials: true,
         });
-        console.log(response.data);
+        // console.log(response.data);
         setUserPosting(response.data);
       } catch (err) {
         alert("Change this later because you have an err", err);
@@ -65,7 +62,20 @@ const UploadContent = () => {
     };
   }, []);
 
-  console.log(userPosting);
+  // console.log(userPosting);
+
+  function convertToBase64(file) {
+    return new Promise((resolve, reject) => {
+      const fileReader = new FileReader();
+      fileReader.readAsDataURL(file);
+      fileReader.onload = () => {
+        resolve(fileReader.result);
+      };
+      fileReader.onerror = (error) => {
+        reject(error);
+      };
+    });
+  }
 
   function uploadCheck(e) {
     if (uploadRef.current.selectedIndex == 0) {
@@ -203,46 +213,56 @@ const UploadContent = () => {
       });
   };
 
-  const onDrop = (files) => {
-    let formData = new FormData();
-    console.log(files);
-    formData.append("file", files[0]);
+  const onDrop = async (e) => {
+    const video = e[0];
+    const base64 = await convertToBase64(video);
 
-    // i may be able to replicate this the same for pictures music and all that lets see if it works
-    axiosPrivate
-      .post("http://localhost:4000/videos/createVideoFiles", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
-        withCredentials: true,
-      })
-      .then((response) => {
-        if (response.data.success) {
-          let variable = {
-            filePath: response.data.filePath,
-            fileName: response.data.fileName,
-          };
-          console.log(response.data);
-
-          setFilePath(response.data.filePath);
-          //generate thumbnail with this file path
-          axiosPrivate
-            .post("http://localhost:4000/videos/createThumbnail", variable, {
-              withCredentials: true,
-            })
-            .then((response) => {
-              // console.log(response);
-              if (response.data.success) {
-                setDuration(response.data.fileDuration);
-                setThumbnail(response.data.thumbsFilePath);
-                console.log("Thumbnail post ran");
-              } else {
-                alert("Failed to make the thumbnails");
-              }
-            });
-        } else {
-          alert("failed to save the video in server");
-        }
-      });
+    try {
+      axiosPrivate.post("/videos/createVideoFiles", { _id, base64 });
+    } catch (err) {
+      console.log(err);
+    }
   };
+  // const onDrop = (files) => {
+  //   let formData = new FormData();
+  //   console.log(files);
+  //   formData.append("file", files[0]);
+
+  //   // i may be able to replicate this the same for pictures music and all that lets see if it works
+  //   axiosPrivate
+  //     .post("http://localhost:4000/videos/createVideoFiles", formData, {
+  //       headers: { "Content-Type": "multipart/form-data" },
+  //       withCredentials: true,
+  //     })
+  //     .then((response) => {
+  //       if (response.data.success) {
+  //         let variable = {
+  //           filePath: response.data.filePath,
+  //           fileName: response.data.fileName,
+  //         };
+  //         console.log(response.data);
+
+  //         setFilePath(response.data.filePath);
+  //         //generate thumbnail with this file path
+  //         axiosPrivate
+  //           .post("http://localhost:4000/videos/createThumbnail", variable, {
+  //             withCredentials: true,
+  //           })
+  //           .then((response) => {
+  //             // console.log(response);
+  //             if (response.data.success) {
+  //               setDuration(response.data.fileDuration);
+  //               setThumbnail(response.data.thumbsFilePath);
+  //               console.log("Thumbnail post ran");
+  //             } else {
+  //               alert("Failed to make the thumbnails");
+  //             }
+  //           });
+  //       } else {
+  //         alert("failed to save the video in server");
+  //       }
+  //     });
+  // };
 
   return (
     <div

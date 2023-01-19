@@ -70,6 +70,7 @@ const Home = () => {
         ref={widthRef}
       >
         <PrimeNews />
+<<<<<<< HEAD
 
         <h1>This is the Home Page</h1>
         <h3>Lets see if i can pull the data at will</h3>
@@ -105,6 +106,8 @@ const Home = () => {
         </h4>
 
         {/* <SearchBar /> */}
+=======
+>>>>>>> cec7c479b06365df46d401b482902b7ebd1ec4d2
         {/* <HotItems />
         <FeatPrimes /> */}
         {/* <HomeFeedPost /> */}
@@ -112,7 +115,42 @@ const Home = () => {
         <button className="test-modal-button" onClick={onClick}>
           Modal Test Button
         </button>
+<<<<<<< HEAD
         {modal && <MainModal />}
+=======
+        {modal && <MainModal />} */}
+
+        <Link to={`/prime-news/catalog`}>
+          <button className="home-butt con-shade ">Catalog</button>
+        </Link>
+        {/* <Link to={`/prime-news/subscriptions`}>
+          <button className="home-butt con-shade ">Subscriptions</button>
+        </Link> */}
+        {/* <Link to={`/admin`}>
+          <button>Admin</button>
+        </Link> */}
+        {/* <Link to={`/editor`}>
+          <button>Editor</button>
+        </Link>
+        <Link to={`/user`}>
+          <button>User</button>
+        </Link>
+        <Link to={`/settings`}>
+          <button>Settings</button>
+        </Link> */}
+        <button className="home-logout-butt con-shade" onClick={signOut}>
+          Sign Out
+        </button>
+
+        <h4
+          ref={errRef}
+          className={errMsg ? "errmsg" : "offscreen"}
+          aria-live="assertive"
+        >
+          {errMsg}
+        </h4>
+        {/* <SearchBar /> */}
+>>>>>>> cec7c479b06365df46d401b482902b7ebd1ec4d2
       </div>
     </div>
   );

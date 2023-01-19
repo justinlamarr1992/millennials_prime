@@ -436,3 +436,12 @@ align-items: center;
 .modal-section-title{
   justify-self: start;
 }
+
+.home-butt{
+  background: var(--qui-c);
+  color: var(--pri-t);
+}
+.home-logout-butt{
+  background: var(--sec-c);
+  color: var(--sec-t);
+}

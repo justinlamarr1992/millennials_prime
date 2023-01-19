@@ -7,12 +7,7 @@ import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
 import { primePostData } from "./post/data";
 import PostLikeDisLike from "./post/PostLikeDislike";
-const PrimeUserPostInfo = ({
-  _id,
-  user,
-  // pic,
-  postedDate,
-}) => {
+const PrimeUserPostInfo = ({ _id, user, displayName, postedDate }) => {
   const axiosPrivate = useAxiosPrivate();
   const [modal, setModal] = useState(true);
   const [profileImage, setProfileImage] = useState({ image: "" });
@@ -52,8 +47,8 @@ const PrimeUserPostInfo = ({
 
       <div className="pr-info-name">
         <h4 className="prime-m-text">
-          <Link className="" to={`/user/users/${user}`}>
-            {user}
+          <Link className="" to={`/user/users/${_id}`}>
+            {displayName}
           </Link>
         </h4>
         {/* <h4>

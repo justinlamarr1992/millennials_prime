@@ -28,7 +28,7 @@ import Questionaire3 from "./Pages/auth/Questionaire3";
 // import PasswordRecovery from "./Pages/auth/PasswordRecovery";
 import Unauthorized from "./Pages/auth/Unauthorized";
 
-// import User from "./Pages/User/User";
+import User from "./Pages/User/User";
 // import TestUser from "./Pages/User/TestUser";
 // import Verified from "./Pages/User/Verified";
 
@@ -89,12 +89,12 @@ const App = (props, state) => {
               <Route path="/" element={<Home />} />
               <Route path="prime-news/catalog" element={<Catalog />} />
 
-              <Route path="user" element={<UserPage />} />
-              {/* <Route path="user/:id" element={<User />} />
-              <Route path="testuser/:id" element={<TestUser />} />
+              <Route path="user">
+                <Route path="users/:id" element={<User />} />
+                {/* <Route path="testuser/:id" element={<TestUser />} />
               <Route path="verified/:userid" element={<Verified />} />
               <Route path="/connectedusers" element={<ConnectedUsers />} /> */}
-
+              </Route>
               <Route
                 path="prime-news/subscriptions"
                 element={<Subscriptions />}
