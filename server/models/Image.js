@@ -8,8 +8,14 @@ const imageSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "MillPrimeUser",
     },
-  }
-  //   { timestamps: true }
+    title: { type: String, maxlength: 50 },
+    description: { type: String },
+    comments: { type: Schema.Types.ObjectId, ref: "Comment" },
+    likes: { type: Schema.Types.ObjectId, ref: "Like" },
+    dislikes: { type: Schema.Types.ObjectId, ref: "Dislike" },
+    views: { type: Number, default: 0 },
+  },
+  { timestamps: true }
 );
 
 module.exports = mongoose.model("image", imageSchema);

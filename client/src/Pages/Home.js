@@ -50,39 +50,6 @@ const Home = () => {
         className={"home-container " + (modal ? "user-true" : "user-false")}
         ref={widthRef}
       >
-        <h1>This is the Home Page</h1>
-        <h3>Lets see if i can pull the data at will</h3>
-
-        <button onClick={signOut}>Sign Out</button>
-        <Link to={`/prime-news/upload-content`}>
-          <button>Upload Content</button>
-        </Link>
-        <Link to={`/prime-news/catalog`}>
-          <button>Catalog</button>
-        </Link>
-        <Link to={`/prime-news/subscriptions`}>
-          <button>Subscriptions</button>
-        </Link>
-        <Link to={`/admin`}>
-          <button>Admin</button>
-        </Link>
-        <Link to={`/editor`}>
-          <button>Editor</button>
-        </Link>
-        <Link to={`/user`}>
-          <button>User</button>
-        </Link>
-        <Link to={`/settings`}>
-          <button>Settings</button>
-        </Link>
-        <h4
-          ref={errRef}
-          className={errMsg ? "errmsg" : "offscreen"}
-          aria-live="assertive"
-        >
-          {errMsg}
-        </h4>
-        {/* <SearchBar /> */}
         <PrimeNews />
         {/* <HotItems />
         <FeatPrimes /> */}
@@ -92,6 +59,37 @@ const Home = () => {
           Modal Test Button
         </button>
         {modal && <MainModal />} */}
+
+        <Link to={`/prime-news/catalog`}>
+          <button className="home-butt con-shade ">Catalog</button>
+        </Link>
+        {/* <Link to={`/prime-news/subscriptions`}>
+          <button className="home-butt con-shade ">Subscriptions</button>
+        </Link> */}
+        {/* <Link to={`/admin`}>
+          <button>Admin</button>
+        </Link> */}
+        {/* <Link to={`/editor`}>
+          <button>Editor</button>
+        </Link>
+        <Link to={`/user`}>
+          <button>User</button>
+        </Link>
+        <Link to={`/settings`}>
+          <button>Settings</button>
+        </Link> */}
+        <button className="home-logout-butt con-shade" onClick={signOut}>
+          Sign Out
+        </button>
+
+        <h4
+          ref={errRef}
+          className={errMsg ? "errmsg" : "offscreen"}
+          aria-live="assertive"
+        >
+          {errMsg}
+        </h4>
+        {/* <SearchBar /> */}
       </div>
     </div>
   );

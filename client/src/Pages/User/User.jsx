@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import { usePostsContext } from "../../Hooks/usePostsContext";
-import { useAuthContext } from "../../Hooks/useAuthContext";
+// import { usePostsContext } from "../../Hooks/usePostsContext";
+// import { useAuthContext } from "../../Hooks/useAuthContext";
 
 import FeedText from "../../Components/reusuables/post/FeedText";
 
@@ -27,8 +27,8 @@ const User = () => {
   const [pageWidth, setPageWidth] = useState("var(--home-per)");
   const widthRef = useRef(null);
 
-  const { posts, dispatch } = usePostsContext();
-  const { user } = useAuthContext();
+  // const { posts, dispatch } = usePostsContext();
+  // const { user } = useAuthContext();
 
   const { id } = useParams();
   // TODO: change later and figure way for this to be the actual name and not id
@@ -44,24 +44,24 @@ const User = () => {
     );
   }, []);
 
-  useEffect(() => {
-    const fetchPosts = async () => {
-      const response = await fetch("/api/post/profile", {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
-      const json = await response.json();
+  // useEffect(() => {
+  //   const fetchPosts = async () => {
+  //     const response = await fetch("/api/post/profile", {
+  //       headers: {
+  //         Authorization: `Bearer ${user.token}`,
+  //       },
+  //     });
+  //     const json = await response.json();
 
-      if (response.ok) {
-        dispatch({ type: "SET_POSTS", payload: json });
-      }
-    };
+  //     if (response.ok) {
+  //       dispatch({ type: "SET_POSTS", payload: json });
+  //     }
+  //   };
 
-    if (user) {
-      fetchPosts();
-    }
-  }, [dispatch, user]);
+  //   if (user) {
+  //     fetchPosts();
+  //   }
+  // }, [dispatch, user]);
 
   const onClick = () => {
     setModal(!modal);
@@ -92,14 +92,14 @@ const User = () => {
         {/* Find a way to make this into component but have infor pasted in */}
         <div className="prime-video">
           {/* change name from just prime video to folder container stuff */}
-          <SearchBar />
-          <PrimeUpdateVideo />
+          {/* <SearchBar /> */}
+          {/* <PrimeUpdateVideo /> */}
           {/* TODO: This with the other todo */}
-          <FeedPost name={name} />
+          {/* <FeedPost name={name} /> */}
 
           <h1>Toggle Feed Selections</h1>
 
-          <div
+          {/* <div
             className={modal ? "feed-section-no-wrap" : "feed-section-wrapped"}
           >
             {posts &&
@@ -110,7 +110,7 @@ const User = () => {
             <FeedEpisode modal={modal} setModal={setModal} />
             <FeedMusic modal={modal} setModal={setModal} />
             <FeedStore modal={modal} setModal={setModal} />
-          </div>
+          </div> */}
         </div>
 
         <button className="test-modal-button" onClick={onClick}>

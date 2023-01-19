@@ -9,6 +9,9 @@ const AdminPage = () => {
       // ref={widthRef}
       >
         <h1>This is the admin Page</h1>
+        <Link to={`/prime-news/upload-content`}>
+          <button>Upload Content</button>
+        </Link>
         <Users />
       </div>
     </div>

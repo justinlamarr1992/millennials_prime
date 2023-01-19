@@ -18,6 +18,7 @@ const PrimeNews = () => {
   const [video, setVideo] = useState({});
   //   const [videoId, setVideoId] = useState("");
   const [userInfo, setUserInfo] = useState({});
+  const [userDisplayName, setUserDisplayName] = useState("");
 
   useEffect(() => {
     const getNews = async () => {
@@ -32,7 +33,6 @@ const PrimeNews = () => {
         const getUserInfo = async () => {
           try {
             const response1 = await axiosPrivate.get(`/users/${newUserId}`);
-            console.log(response1);
 
             setUserInfo(response1.data);
           } catch (err) {
@@ -41,6 +41,7 @@ const PrimeNews = () => {
         };
 
         getUserInfo();
+        // setUserDisplayName(userInfo.);
       } catch (err) {
         console.log(err);
       }
@@ -51,20 +52,22 @@ const PrimeNews = () => {
     //   // this now gets called when the component unmounts
     // };
   }, [auth]);
-  console.log(video._id);
+  // console.log(video._id);
+  const displayName = userInfo.firstName + " " + userInfo.lastName;
 
   return (
     <section id="prime" className="prime-container news-container p-con-shade ">
       <h2 className="pr-title title-space">Prime News</h2>
       {/* TODO: Keep the structre but now input the values that useEffect response leave... 
       Chabge the user info to resemblbe the primeshows viewing */}
-      <div className="pr-video">
+      <div className="pr-video p-con-shade">
         <Video video={video.filePath} />
       </div>
 
       <div className="pr-user">
         <PrimeUserPostInfo
           user={userInfo.username}
+          displayName={displayName}
           _id={userInfo._id}
           postedDate={video.createdAt}
         />
@@ -83,6 +86,7 @@ const PrimeNews = () => {
       {/* <div className="pr-like-dislike">
         <PostLikeDisLike />
       </div> */}
+      {/* <h3>{JSON.stringify(userInfo)}</h3> */}
     </section>
   );
 };

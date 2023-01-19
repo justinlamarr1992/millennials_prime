@@ -158,6 +158,24 @@ const createVideo = (req, res) => {
   });
 };
 
+const createNewVideo = async (req, res) => {
+  const _id = mongoose.Types.ObjectId(req.body._id);
+
+  const videoFile = String(req.body.base64);
+  console.log(_id, videoFile);
+
+  try {
+    const video = await Video.create({ video: videoFile, userPosting: _id });
+    //  TODO: Change User so the user has video and video _id in its database
+    //  const user = await User.findByIdAndUpdate(_id, { profilePic: picture });
+    //  res.status(200).json({ success: true, picture, user });
+    res.status(200).json({ success: true, video });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({ success: false, err });
+  }
+};
+
 const createThumbnail = async (req, res) => {
   // console.log("I RAN HAHAHAH");
   let thumbsFilePath = "";
@@ -204,6 +222,7 @@ const uploadVideo = async (req, res) => {
 
 module.exports = {
   createVideo,
+  createNewVideo,
   createThumbnail,
   uploadVideo,
   getVideos,

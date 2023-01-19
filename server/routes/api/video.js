@@ -12,9 +12,12 @@ router
 
 router.route("/primenews").post(videoController.getPrimeNewsVideo);
 
+// router
+//   .route("/createVideoFiles")
+//   .post(verifyRoles(ROLES_LIST.Admin), videoController.createVideo);
 router
   .route("/createVideoFiles")
-  .post(verifyRoles(ROLES_LIST.Admin), videoController.createVideo);
+  .post(verifyRoles(ROLES_LIST.Admin), videoController.createNewVideo);
 router
   .route("/createThumbnail")
   .post(verifyRoles(ROLES_LIST.Admin), videoController.createThumbnail);
