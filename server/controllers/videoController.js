@@ -113,12 +113,16 @@ const getSingleVideo = async (req, res) => {
 
 const getPrimeNewsVideo = async (req, res) => {
   console.log("It ran in the backend");
+  let getVideoToClient;
 
   try {
     const video = await Video.find().sort({ _id: -1 }).limit(1);
     console.log(video);
+    try {
+      getVideoToClient = video.video;
+    } catch (err) {}
 
-    res.status(200).json({ success: true, video });
+    res.status(200).json({ success: true, video, getVideoToClient });
   } catch (err) {
     console.log("err");
     res.status(500).json({ success: false, message: err.message });
@@ -158,24 +162,6 @@ const createVideo = (req, res) => {
   });
 };
 
-const createNewVideo = async (req, res) => {
-  const _id = mongoose.Types.ObjectId(req.body._id);
-
-  const videoFile = String(req.body.base64);
-  console.log(_id, videoFile);
-
-  try {
-    const video = await Video.create({ video: videoFile, userPosting: _id });
-    //  TODO: Change User so the user has video and video _id in its database
-    //  const user = await User.findByIdAndUpdate(_id, { profilePic: picture });
-    //  res.status(200).json({ success: true, picture, user });
-    res.status(200).json({ success: true, video });
-  } catch (err) {
-    console.log(err);
-    return res.status(400).json({ success: false, err });
-  }
-};
-
 const createThumbnail = async (req, res) => {
   // console.log("I RAN HAHAHAH");
   let thumbsFilePath = "";
@@ -207,16 +193,37 @@ const createThumbnail = async (req, res) => {
     });
 };
 
+const createNewVideo = async (req, res) => {
+  console.log(req.body.formData);
+  // TODO: FINDO OUT WHY NOTHINGS BEING SENT
+  res.status(200).json({ message: "Test 1 pass" });
+  // const _id = mongoose.Types.ObjectId(req.body._id);
+
+  // const videoFile = String(req.body.base64);
+  // console.log(_id, videoFile);
+
+  // try {
+  //   const video = await Video.create({ video: videoFile, userPosting: _id });
+  //   //  TODO: Change User so the user has video and video _id in its database
+  //   //  const user = await User.findByIdAndUpdate(_id, { profilePic: picture });
+  //   //  res.status(200).json({ success: true, picture, user });
+  //   res.status(200).json({ success: true, video });
+  // } catch (err) {
+  //   console.log(err);
+  //   return res.status(400).json({ success: false, err });
+  // }
+};
+
 const uploadVideo = async (req, res) => {
-  // console.log("Starting in uploadVideo");
   // TODO: Work on only send needed info for save
-  // TODO: Change format to the one you like(Dave Gray)
-  const video = new Video(req.body);
-  console.log(video);
-  video.save((err, video) => {
-    if (err) return res.status(400).json({ success: false, err });
+  const video = await Video.create(req.body);
+  try {
+    video.save();
     return res.status(200).json({ success: true });
-  });
+  } catch (err) {
+    return res.status(400).json({ success: false, err });
+  }
+
   console.log("Saved");
 };
 

@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Video from "../video/Video";
 
+import Loading from "../../Assets/Images/LoadingScreen.png";
+
 import useAuth from "../../Hooks/useAuth";
 
 import { primePostData } from "../reusuables/post/data";
@@ -18,14 +20,18 @@ const PrimeNews = () => {
   //   const [videoId, setVideoId] = useState("");
   const [userInfo, setUserInfo] = useState({});
   const [userDisplayName, setUserDisplayName] = useState("");
+  const [activeVideo, setActiveVideo] = useState({ active: "" });
 
   useEffect(() => {
     const getNews = async () => {
       try {
-        const response = await axiosPrivate.post("/videos/primenews", {});
+        const response = await axiosPrivate.post("/videos/primenews");
         // console.log(response.data.video[0]);
         console.log(response.data.video[0]);
-        setVideo(response.data.video[0]);
+        setActiveVideo({
+          ...activeVideo,
+          active: response.data.getVideoToClient,
+        });
         // setVideoId(response.data.video[0]._id);
         const newUserId = response.data.video[0].userPosting;
 
@@ -60,7 +66,8 @@ const PrimeNews = () => {
       {/* TODO: Keep the structre but now input the values that useEffect response leave... 
       Chabge the user info to resemblbe the primeshows viewing */}
       <div className="pr-video p-con-shade">
-        <Video video={video.filePath} />
+        <Video video={activeVideo.active || Loading} />
+        {/* <Video video={video.filePath} /> */}
       </div>
 
       <div className="pr-user">

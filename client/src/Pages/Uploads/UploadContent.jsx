@@ -20,6 +20,7 @@ const UploadContent = () => {
   const _id = auth._id;
 
   const [upload, setUpload] = useState("");
+  // const [uploaded, setUploaded] = useState("");
   const [artwork, setArtwork] = useState(false);
 
   const [userPosting, setUserPosting] = useState({});
@@ -29,15 +30,24 @@ const UploadContent = () => {
   // This equals his privacy
   const [prime, setPrime] = useState(0);
   // Will think of changing later
-  const [category, setCategory] = useState("News");
-  const [filePath, setFilePath] = useState("");
+  const [category, setCategory] = useState("");
+  const [filePath, setFilePath] = useState({});
   const [duration, setDuration] = useState("");
   const [thumbnail, setThumbnail] = useState("");
+
+  const [object, setObject] = useState({
+    title,
+    description,
+    prime,
+    category,
+  });
 
   const uploadRef = useRef(false);
   const artworkRef = useRef(false);
 
   const axiosPrivate = useAxiosPrivate();
+
+  let formData = new FormData();
 
   // console.log(_id);
 
@@ -46,10 +56,7 @@ const UploadContent = () => {
   useEffect(() => {
     const getUserInfo = async () => {
       try {
-        const response = await axiosPrivate.get(`/users/${_id}`, {
-          withCredentials: true,
-        });
-        // console.log(response.data);
+        const response = await axiosPrivate.get(`/users/${_id}`);
         setUserPosting(response.data);
       } catch (err) {
         alert("Change this later because you have an err", err);
@@ -60,9 +67,7 @@ const UploadContent = () => {
     return () => {
       // this now gets called when the component unmounts
     };
-  }, []);
-
-  // console.log(userPosting);
+  }, [_id]);
 
   function convertToBase64(file) {
     return new Promise((resolve, reject) => {
@@ -151,77 +156,51 @@ const UploadContent = () => {
   const handleChangeTitle = (e) => {
     // console.log(e.currentTarget.value);
     setTitle(e.currentTarget.value);
+    setObject({ ...object, title: title });
+    console.log(object);
   };
   const handleChangeDescription = (e) => {
     // console.log(e.currentTarget.value);
     setDescription(e.currentTarget.value);
+    setObject({ ...object, description: description });
+    console.log(object);
   };
   const handleWhoChange = (e) => {
-    console.log(e.currentTarget.value);
+    // console.log(e.currentTarget.value);
     setPrime(e.currentTarget.value);
+    setObject({ ...object, prime: prime });
+    console.log(object);
   };
   const handleCategoryChange = (e) => {
-    console.log(e.currentTarget.value);
-    setPrime(e.currentTarget.value);
+    setCategory(e.currentTarget.value);
+    setObject({ ...object, category: category });
+    console.log(object);
   };
 
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const onDrop = async (files) => {
+    // const video = files[0];
+    // console.log(video);
 
-    // if (user.userData && !user.userData.isAuth) {
-    //   return alert("Please Login First");
+    const base64 = await convertToBase64(files[0]);
+    console.log(base64);
+
+    setFilePath(base64);
+    // console.log(filePath);
+    setObject({ ...object, filePath: filePath });
+    console.log(object);
+
+    // try {
+    //   const response = await axiosPrivate.post(
+    //     "/videos/createVideoFiles",
+    //     { formData }
+    //     // {
+    //     //   headers: { "Content-Type": "multipart/form-data" },
+    //     // }
+    //   );
+    //   console.log(response);
+    // } catch (err) {
+    //   console.log(err);
     // }
-
-    if (
-      title === "" ||
-      description === "" ||
-      category === "" ||
-      filePath === "" ||
-      duration === "" ||
-      thumbnail === ""
-    ) {
-      return alert("Fill all of the fields");
-    }
-
-    // Get user who added the video here
-
-    const variables = {
-      // TODO: Comeback later to solve the user problem for here from above
-      userPosting,
-
-      title: title,
-      description: description,
-      prime: prime,
-      filePath: filePath,
-      category: category,
-      duration: duration,
-      thumbnail: thumbnail,
-    };
-    console.log(variables.userPosting);
-
-    axiosPrivate
-      .post("/videos/", variables, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      })
-      .then((response) => {
-        if (response.data.success) {
-          alert("Video Uploaded Successfully");
-        } else {
-          alert("Failed to upload Video");
-        }
-      });
-  };
-
-  const onDrop = async (e) => {
-    const video = e[0];
-    const base64 = await convertToBase64(video);
-
-    try {
-      axiosPrivate.post("/videos/createVideoFiles", { _id, base64 });
-    } catch (err) {
-      console.log(err);
-    }
   };
   // const onDrop = (files) => {
   //   let formData = new FormData();
@@ -263,6 +242,44 @@ const UploadContent = () => {
   //       }
   //     });
   // };
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+
+    if (
+      title === "" ||
+      description === "" ||
+      category === "" ||
+      filePath === ""
+      // duration === "" ||
+      // thumbnail === ""
+    ) {
+      return alert("Fill all of the fields");
+    }
+
+    const variables = {
+      userPosting,
+      title: title,
+      description: description,
+      prime: prime,
+      filePath: filePath,
+      category: category,
+      duration: duration,
+      thumbnail: thumbnail,
+    };
+    console.log(variables);
+
+    try {
+      const response = await axiosPrivate.post("/videos/", variables);
+      if (response.data.success) {
+        alert("Video Uploaded Successfully");
+      } else {
+        alert("Failed to upload Video");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div
@@ -325,31 +342,6 @@ const UploadContent = () => {
             )}
             {upload == "videos" && (
               <>
-                {/* TODO: Make this its own function so multiple uploads can use it */}
-                <h6 className="text-gray">Import Video Here</h6>
-                <Dropzone
-                  // onDrop={(acceptedFiles) => console.log(acceptedFiles)}
-                  onDrop={onDrop}
-                >
-                  {({ getRootProps, getInputProps }) => (
-                    <section>
-                      <div {...getRootProps()}>
-                        <input type="file" name="" {...getInputProps()} />
-                        {/*  */}
-                        <h1>Drag HEre</h1>
-                      </div>
-                    </section>
-                  )}
-                </Dropzone>
-                {/* TODO: Figure out why its no apperaing Youtube clone #5 */}
-                {thumbnail !== "" && (
-                  <div>
-                    <img
-                      src={`http://localhost:4000/${thumbnail}`}
-                      alt="Lets see"
-                    />
-                  </div>
-                )}
                 <div className="label-input">
                   <label htmlFor="">Title of the Video</label>
                   <input
@@ -406,6 +398,30 @@ const UploadContent = () => {
                     </option>
                   </select>
                 </div>
+                {/* TODO: Make this its own function so multiple uploads can use it */}
+                <h6 className="text-gray">Import Video Here</h6>
+                <Dropzone
+                  // onDrop={(acceptedFiles) => console.log(acceptedFiles)}
+                  onDrop={onDrop}
+                >
+                  {({ getRootProps, getInputProps }) => (
+                    <section>
+                      <div {...getRootProps()}>
+                        <input type="file" name="" {...getInputProps()} />
+                        {/*  */}
+                        <h1>Drag HEre</h1>
+                      </div>
+                    </section>
+                  )}
+                </Dropzone>
+                {thumbnail !== "" && (
+                  <div>
+                    <img
+                      src={`http://localhost:4000/${thumbnail}`}
+                      alt="Lets see"
+                    />
+                  </div>
+                )}
               </>
             )}
             {upload == "music" && (
