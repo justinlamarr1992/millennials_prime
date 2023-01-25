@@ -21,6 +21,8 @@ const Video2 = ({ video }) => {
   const volumeSliderRef = useRef(null);
   const volSlider = volumeSliderRef.current;
 
+  console.log(video);
+
   // Play / Pause
   const togglePlay = () => {
     vidRef.current.paused ? vidRef.current.play() : vidRef.current.pause();

@@ -30,7 +30,7 @@ const PrimeNews = () => {
         console.log(response.data.video[0]);
         setActiveVideo({
           ...activeVideo,
-          active: response.data.getVideoToClient,
+          active: response.data.video[0].filePath,
         });
         // setVideoId(response.data.video[0]._id);
         const newUserId = response.data.video[0].userPosting;
@@ -60,13 +60,16 @@ const PrimeNews = () => {
   // console.log(video._id);
   const displayName = userInfo.firstName + " " + userInfo.lastName;
 
+  console.log(activeVideo.active);
+
   return (
     <section id="prime" className="prime-container news-container p-con-shade ">
       <h2 className="pr-title title-space">Prime News</h2>
       {/* TODO: Keep the structre but now input the values that useEffect response leave... 
       Chabge the user info to resemblbe the primeshows viewing */}
       <div className="pr-video p-con-shade">
-        <Video video={activeVideo.active || Loading} />
+        <Video video={activeVideo.active} />
+        {/* <Video video={activeVideo.active || Loading} /> */}
         {/* <Video video={video.filePath} /> */}
       </div>
 
