@@ -22,40 +22,84 @@ const PrimeNews = () => {
   const [userDisplayName, setUserDisplayName] = useState("");
   const [activeVideo, setActiveVideo] = useState({ active: "" });
 
-  useEffect(() => {
-    const getNews = async () => {
-      try {
-        const response = await axiosPrivate.post("/videos/primenews");
-        // console.log(response.data.video[0]);
-        console.log(response.data.video[0]);
-        setActiveVideo({
-          ...activeVideo,
-          active: response.data.video[0].filePath,
-        });
-        // setVideoId(response.data.video[0]._id);
-        const newUserId = response.data.video[0].userPosting;
+  // useEffect(() => {
+  //   const getNews = async () => {
+  //     try {
+  //       const response = await axiosPrivate.get(
+  //         `/testUploads/file/${videoFileName}`,
+  //         {}
+  //       );
+  //       if (response.data.success) {
+  //         console.log(response.data);
+  //         setTestDelVideo(response.data.file._id);
+  //         alert("Video Downloaded Successfully");
+  //       } else {
+  //         alert("Failed to Download Video");
+  //       }
 
-        const getUserInfo = async () => {
-          try {
-            const response1 = await axiosPrivate.get(`/users/${newUserId}`);
+  //       // console.log(response.data.video[0]);
+  //       // setActiveVideo({
+  //       //   ...activeVideo,
+  //       //   active: response.data.video[0].filePath,
+  //       // });
+  //       // // setVideoId(response.data.video[0]._id);
+  //       // const newUserId = response.data.video[0].userPosting;
 
-            setUserInfo(response1.data);
-          } catch (err) {
-            console.log(err);
-          }
-        };
+  //       // const getUserInfo = async () => {
+  //       //   try {
+  //       //     const response1 = await axiosPrivate.get(`/users/${newUserId}`);
 
-        getUserInfo();
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getNews();
+  //       //     setUserInfo(response1.data);
+  //       //   } catch (err) {
+  //       //     console.log(err);
+  //       //   }
+  //       // };
 
-    // return () => {
-    //   // this now gets called when the component unmounts
-    // };
-  }, [auth]);
+  //       getUserInfo();
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   getNews();
+
+  //   // return () => {
+  //   //   // this now gets called when the component unmounts
+  //   // };
+  // }, [auth]);
+  // useEffect(() => {
+  //   const getNews = async () => {
+  //     try {
+  //       const response = await axiosPrivate.post("/videos/primenews");
+  //       // console.log(response.data.video[0]);
+  //       console.log(response.data.video[0]);
+  //       setActiveVideo({
+  //         ...activeVideo,
+  //         active: response.data.video[0].filePath,
+  //       });
+  //       // setVideoId(response.data.video[0]._id);
+  //       const newUserId = response.data.video[0].userPosting;
+
+  //       const getUserInfo = async () => {
+  //         try {
+  //           const response1 = await axiosPrivate.get(`/users/${newUserId}`);
+
+  //           setUserInfo(response1.data);
+  //         } catch (err) {
+  //           console.log(err);
+  //         }
+  //       };
+
+  //       getUserInfo();
+  //     } catch (err) {
+  //       console.log(err);
+  //     }
+  //   };
+  //   getNews();
+
+  //   // return () => {
+  //   //   // this now gets called when the component unmounts
+  //   // };
+  // }, [auth]);
   // console.log(video._id);
   const displayName = userInfo.firstName + " " + userInfo.lastName;
 

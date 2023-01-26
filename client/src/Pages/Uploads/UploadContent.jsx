@@ -260,9 +260,12 @@ const UploadContent = () => {
     };
     console.log(variables);
 
+    const bodyTest = "THIS IS A STATIC BODY ITEM";
+
     try {
       // const response = await axiosPrivate.post("/videos/", variables);
       const response = await axiosPrivate.post("/testUploads/", variables, {
+        // const response = await axiosPrivate.post("/testUploads/", bodyTest, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
