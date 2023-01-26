@@ -7,6 +7,7 @@ const Subscriber = require("../models/Subscriber");
 
 const Video = require("../models/VideoModel");
 var mongoose = require("mongoose");
+const { GridFsStorage } = require("multer-gridfs-storage");
 
 const getVideos = async (req, res) => {
   const videos = await Video.find().sort({ createdAt: -1 });
@@ -216,15 +217,40 @@ const createNewVideo = async (req, res) => {
 
 const uploadVideo = async (req, res) => {
   // TODO: Work on only send needed info for save
-  const video = await Video.create(req.body);
+  // console.log(req.body);
+
+  const test = req.body;
+
+  const storage = new GridFsStorage({
+    url: process.env.MONGO_URI,
+    test: (req, test) => {
+      return new Promise((resolve, reject) => {
+        const title = test.title;
+        const fileInfo = {
+          filename: test,
+          bucketName: "uploads",
+        };
+        resolve(fileInfo);
+      });
+    },
+  });
+  // const video = await Video.create(req.body);
+  // try {
+  //   video.save();
+  //   return res.status(200).json({ success: true });
+  // } catch (err) {
+  //   return res.status(400).json({ success: false, err });
+  // }
+
+  // console.log(storage);
+
   try {
-    video.save();
-    return res.status(200).json({ success: true });
+    const letsSee = multer({ storage });
+    return res.status(200).json({ letsSee, success: true });
   } catch (err) {
+    console.log(err);
     return res.status(400).json({ success: false, err });
   }
-
-  console.log("Saved");
 };
 
 module.exports = {

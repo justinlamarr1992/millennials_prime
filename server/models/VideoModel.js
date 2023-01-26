@@ -12,6 +12,7 @@ const videoSchema = new Schema(
     // replaces his privacy
     prime: { type: String },
     filePath: { type: String },
+    file: { type: String },
     category: String,
     comments: { type: Schema.Types.ObjectId, ref: "Comment" },
     likes: { type: Schema.Types.ObjectId, ref: "Like" },

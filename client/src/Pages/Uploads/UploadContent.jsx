@@ -31,15 +31,20 @@ const UploadContent = () => {
   const [prime, setPrime] = useState(0);
   // Will think of changing later
   const [category, setCategory] = useState("");
-  const [filePath, setFilePath] = useState({});
+  const [file, setFile] = useState([]);
+  // const [file, setFile] = useState("");
   const [duration, setDuration] = useState("");
   const [thumbnail, setThumbnail] = useState("");
 
   const [object, setObject] = useState({
+    userPosting,
     title,
     description,
     prime,
     category,
+    file,
+    duration,
+    thumbnail,
   });
 
   const uploadRef = useRef(false);
@@ -50,8 +55,6 @@ const UploadContent = () => {
   let formData = new FormData();
 
   // console.log(_id);
-
-  // const Authorization = `Bearer ${user.token}`;
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -157,51 +160,34 @@ const UploadContent = () => {
     // console.log(e.currentTarget.value);
     setTitle(e.currentTarget.value);
     setObject({ ...object, title: title });
-    console.log(object);
   };
   const handleChangeDescription = (e) => {
     // console.log(e.currentTarget.value);
     setDescription(e.currentTarget.value);
     setObject({ ...object, description: description });
-    console.log(object);
   };
   const handleWhoChange = (e) => {
     // console.log(e.currentTarget.value);
     setPrime(e.currentTarget.value);
     setObject({ ...object, prime: prime });
-    console.log(object);
   };
+
   const handleCategoryChange = (e) => {
     setCategory(e.currentTarget.value);
     setObject({ ...object, category: category });
-    console.log(object);
   };
 
   const onDrop = async (files) => {
-    // const video = files[0];
-    // console.log(video);
+    // const base64 = await convertToBase64(files[0]);
+    // // console.log(base64);
+    // setFile(base64);
+    // setObject({ ...object, file: file });
 
-    const base64 = await convertToBase64(files[0]);
-    console.log(base64);
-
-    setFilePath(base64);
-    // console.log(filePath);
-    setObject({ ...object, filePath: filePath });
-    console.log(object);
-
-    // try {
-    //   const response = await axiosPrivate.post(
-    //     "/videos/createVideoFiles",
-    //     { formData }
-    //     // {
-    //     //   headers: { "Content-Type": "multipart/form-data" },
-    //     // }
-    //   );
-    //   console.log(response);
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    setFile(files[0]);
+    setObject({ ...object, file: file });
   };
+
+  console.log(object);
   // const onDrop = (files) => {
   //   let formData = new FormData();
   //   console.log(files);
@@ -250,19 +236,24 @@ const UploadContent = () => {
       title === "" ||
       description === "" ||
       category === "" ||
-      filePath === ""
+      file === []
+      // file === ""
       // duration === "" ||
       // thumbnail === ""
     ) {
+      console.log(title);
+      console.log(description);
+      console.log(category);
+      console.log(file);
       return alert("Fill all of the fields");
     }
 
     const variables = {
-      userPosting,
+      userPosting: _id,
       title: title,
       description: description,
       prime: prime,
-      filePath: filePath,
+      file: file,
       category: category,
       duration: duration,
       thumbnail: thumbnail,
@@ -270,8 +261,14 @@ const UploadContent = () => {
     console.log(variables);
 
     try {
-      const response = await axiosPrivate.post("/videos/", variables);
+      // const response = await axiosPrivate.post("/videos/", variables);
+      const response = await axiosPrivate.post("/testUploads/", variables, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
       if (response.data.success) {
+        console.log(response.data);
         alert("Video Uploaded Successfully");
       } else {
         alert("Failed to upload Video");
@@ -409,7 +406,7 @@ const UploadContent = () => {
                       <div {...getRootProps()}>
                         <input type="file" name="" {...getInputProps()} />
                         {/*  */}
-                        <h1>Drag HEre</h1>
+                        <h1>Drag Here</h1>
                       </div>
                     </section>
                   )}

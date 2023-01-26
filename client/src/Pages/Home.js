@@ -1,15 +1,9 @@
 import React, { useState, useRef, useEffect } from "react";
 import useLogout from "../Hooks/useLogout";
-import { useSelector } from "react-redux";
-import {
-  selectCurrentUser,
-  selectCurrentToken,
-} from "../Features/auth/authSlice";
+
 import { Link, useNavigate } from "react-router-dom";
 
 // import { usePostsContext } from "../Hooks/usePostsContext";
-import useFetch from "../Hooks/useFetch";
-import axios from "../API/axios";
 
 import Users from "../Components/DaveGrayTest/User";
 
@@ -25,6 +19,8 @@ import HomeFeedPost from "../Components/reusuables/post/HomeFeedPost";
 
 import MainModal from "../Components/reusuables/modals/MainModal";
 
+import useAxiosPrivate from "../Hooks/useAxiosPrivate";
+
 const Home = () => {
   const [modal, setModal] = useState(true);
   // testing useSelectpr
@@ -36,12 +32,99 @@ const Home = () => {
 
   const navigate = useNavigate();
   const logout = useLogout();
+  const axiosPrivate = useAxiosPrivate();
+
+  const [testVideo, setTestVideo] = useState({});
+  const [testDelVideo, setTestDelVideo] = useState("");
 
   const signOut = async () => {
     // if used in more components, this should be in context
     await logout();
     // axios to /logout endpoint
     navigate("/auth/signin");
+  };
+
+  const recentTest = async () => {
+    try {
+      const response = await axiosPrivate.get(
+        "/testUploads/recent"
+        // headers: {
+        //   "Content-Type": "multipart/form-data",
+        // },
+      );
+      if (response.data.success) {
+        console.log(response.data);
+        setTestVideo(response.data.files[0]);
+        alert("Recent Video Downloaded Successfully");
+      } else {
+        alert("Failed to Download Recent Video");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const test = async () => {
+    try {
+      const response = await axiosPrivate.get(
+        "/testUploads/files"
+        // headers: {
+        //   "Content-Type": "multipart/form-data",
+        // },
+      );
+      if (response.data.success) {
+        console.log(response.data);
+        setTestVideo(response.data.files[0]);
+        alert("Video Downloaded Successfully");
+      } else {
+        alert("Failed to Download Video");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const videoFileName = testVideo.filename;
+  console.log("THE FILE NAME IS", videoFileName);
+
+  // const firstVideo =
+  const testOne = async () => {
+    try {
+      const response = await axiosPrivate.get(
+        `/testUploads/file/${videoFileName}`,
+        {}
+        // headers: {
+        //   "Content-Type": "multipart/form-data",
+        // },
+      );
+      if (response.data.success) {
+        console.log(response.data);
+        setTestDelVideo(response.data.file._id);
+        alert("Video Downloaded Successfully");
+      } else {
+        alert("Failed to Download Video");
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const testDelete = async () => {
+    try {
+      const response = await axiosPrivate.get(
+        `/testUploads/file/del/${testDelVideo}`,
+        {}
+        // headers: {
+        //   "Content-Type": "multipart/form-data",
+        // },
+      );
+      if (response.data.success) {
+        console.log(response.data);
+        alert("Video Delete Successfully");
+      } else {
+        alert("Failed to Delete Video");
+      }
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const onClick = () => {
@@ -96,6 +179,18 @@ const Home = () => {
         <Link to={`/settings`}>
           <button>Settings</button>
         </Link> */}
+        <button className="home-logout-butt con-shade" onClick={recentTest}>
+          Recent Test
+        </button>
+        <button className="home-logout-butt con-shade" onClick={test}>
+          All Files Test
+        </button>
+        <button className="home-logout-butt con-shade" onClick={testOne}>
+          One Files Test
+        </button>
+        <button className="home-logout-butt con-shade" onClick={testDelete}>
+          Delete File Test
+        </button>
         <button className="home-logout-butt con-shade" onClick={signOut}>
           Sign Out
         </button>

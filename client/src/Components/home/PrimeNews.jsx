@@ -46,7 +46,6 @@ const PrimeNews = () => {
         };
 
         getUserInfo();
-        // setUserDisplayName(userInfo.);
       } catch (err) {
         console.log(err);
       }
@@ -60,7 +59,7 @@ const PrimeNews = () => {
   // console.log(video._id);
   const displayName = userInfo.firstName + " " + userInfo.lastName;
 
-  console.log(activeVideo.active);
+  console.log(userInfo);
 
   return (
     <section id="prime" className="prime-container news-container p-con-shade ">
