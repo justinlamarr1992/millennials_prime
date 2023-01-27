@@ -8,33 +8,123 @@ const Video = require("../models/VideoModel");
 var mongoose = require("mongoose");
 
 const upload = require("../middleware/gridFS");
-const { engine, updateMetadata } = upload;
+const {
+  engine,
+  updateMetadata,
+  // , gfs
+} = upload;
 
-// const uploadVideo = async (req, res, next) => {
-//   console.log(req.body);
-//   updateMetadata(req.body);
-//   console.log("Yes I connected");
+const url = process.env.MONGO_URI;
+const connect = mongoose.createConnection(url, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
-//   next();
-//   engine.single("file"); //Static test value
+let gfs;
+connect.once("open", () => {
+  gfs = new mongoose.mongo.GridFSBucket(connect.db, {
+    bucketName: "videos",
+  });
+});
 
-//   // const video = await Video.create(req.body);
-//   try {
-//     // video.save();
-//     // res.status(200).json({ success: true, Body: req.body });
-//   } catch (err) {
-//     console.log(err);
+const uploadVideoInfo = async (req, res, next) => {
+  console.log("Im here now");
 
-//     // return res.status(400).json({ success: false, err });
-//   }
+  console.log(gfs);
+  // const test = await gfs.findOne({}, {}, { sort: { _id: -1 } });
+  // console.log(test);
 
-//   // res.json({ file: req.file });
-// };
-const uploadVideo = async (req, res, next) => {
-  console.log(req.body);
-  console.log("Yes I connected");
+  gfs
+    .find({})
+    .sort({ _id: -1 })
+    .limit(1)
+    .toArray((err, files) => {
+      if (!files || files.length === 0) {
+        return res.status(200).json({
+          success: false,
+          message: "No files available",
+        });
+      }
+      files.map((file) => {
+        if (
+          file.contentType === "image/jpeg" ||
+          file.contentType === "image/png" ||
+          file.contentType === "image/svg"
+        ) {
+          file.isImage = true;
+        } else {
+          file.isImage = false;
+        }
+      });
 
-  // res.json({ file: req.file });
+      res.status(200).json({
+        success: true,
+        files,
+      });
+    });
+
+  // TODO: i am here now all i have to do is add the info from the req.body in to the metadata by changing it some way
+
+  // THIS FINDS ALL FILES!!!!
+  // gfs.find({}, {}, { sort: { _id: "-1" } }).toArray((err, files) => {
+  //   if (!files || files.length === 0) {
+  //     return res.status(200).json({
+  //       success: false,
+  //       message: "No files available",
+  //     });
+  //   }
+  //   files.map((file) => {
+  //     if (
+  //       file.contentType === "image/jpeg" ||
+  //       file.contentType === "image/png" ||
+  //       file.contentType === "image/svg"
+  //     ) {
+  //       file.isImage = true;
+  //     } else {
+  //       file.isImage = false;
+  //     }
+  //   });
+
+  //   res.status(200).json({
+  //     success: true,
+  //     files,
+  //   });
+  // });
+
+  // gfs.find().toArray((err, files) => {
+  //   if (!files || files.length === 0) {
+  //     return res.status(200).json({
+  //       success: false,
+  //       message: "No files available",
+  //     });
+  //   } else {
+  //     console.log(files.length);
+  //   }
+
+  // files.map((file) => {
+  //   if (
+  //     file.contentType === "image/jpeg" ||
+  //     file.contentType === "image/png" ||
+  //     file.contentType === "image/svg"
+  //   ) {
+  //     file.isImage = true;
+  //   } else {
+  //     file.isImage = false;
+  //     console.log("It aint a Picture DAWG");
+  //   }
+  // });
+
+  //   res.status(200).json({
+  //     success: true,
+  //     files,
+  //   });
+  // });
+
+  console.log("Do I make it here?");
+
+  // res
+  //   .status(200)
+  //   .json({ success: true, message: "Info was pasted", info: req.body });
 };
 
 const downloadVideo = async (req, res) => {};
@@ -190,6 +280,6 @@ const downloadVideo = async (req, res) => {};
 // router.route("/").get(testUploadsController.downloadVideo);
 
 module.exports = {
-  uploadVideo,
+  uploadVideoInfo,
   downloadVideo,
 };

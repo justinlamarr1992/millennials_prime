@@ -10,16 +10,17 @@ const upload = require("../../middleware/gridFS");
 
 const { engine, updateMetadata } = upload;
 
-router.route("/").post(
-  (req, res, next) => {
-    console.log(req.body);
-    updateMetadata(req.body);
-    next();
-  },
-  engine.single("file"),
-  testUploadsController.uploadVideo
-);
+//Upload Single File
+// router.post(
+//   "/",
+//   (req, res, next) => {
+//     // updateMetadata(req.body); //Static test value
+//     next();
+//   },
+//   engine.single("file"),
+//   testUploadsController.uploadVideoInfo
+// );
 
-router.route("/").post(testUploadsController.uploadVideo);
+router.route("/").post(testUploadsController.uploadVideoInfo);
 
 module.exports = router;

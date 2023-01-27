@@ -265,7 +265,6 @@ const UploadContent = () => {
     try {
       // const response = await axiosPrivate.post("/videos/", variables);
       const response = await axiosPrivate.post("/testUploads/", variables, {
-        // const response = await axiosPrivate.post("/testUploads/", bodyTest, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

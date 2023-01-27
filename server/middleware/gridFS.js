@@ -19,13 +19,12 @@ connect.once("open", () => {
   });
 });
 
-console.log();
-
-// Create storage engine
+//Create Storage Engine
 let updatedMetadata;
 
 const updateMetadata = (id) => {
   updatedMetadata = id;
+  //   console.log("This is what I need Pasted",     updatedMetadata);
 };
 
 const storage = new GridFsStorage({
@@ -36,23 +35,32 @@ const storage = new GridFsStorage({
         if (err) {
           return reject(err);
         }
-
-        // let metaData;
-        // if (req.body && req.body.checked) {
-        //   metaData = true;
-        // }
-
         const filename = buf.toString("hex") + path.extname(file.originalname);
         const fileInfo = {
           filename: filename,
           bucketName: "videos",
-          metadata: updatedMetadata ? updatedMetadata : null,
+          //   metadata: updatedMetadata ? updatedMetadata : null,
+          metadata: {
+            userPosting: "TEsting",
+            title: "TEsting",
+            description: "TEsting",
+            prime: "prime",
+            file: "TEsting",
+            category: "TEsting",
+            duration: "TEsting",
+            thumbnail: "TEsting",
+          },
         };
         resolve(fileInfo);
       });
     });
   },
 });
+
 const uploadEngine = multer({ storage });
 
-module.exports = { engine: uploadEngine, updateMetadata, gfs };
+module.exports = {
+  engine: uploadEngine,
+  updateMetadata,
+  gfs,
+};
