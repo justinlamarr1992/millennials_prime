@@ -36,10 +36,11 @@ const storage = new GridFsStorage({
           return reject(err);
         }
         const filename = buf.toString("hex") + path.extname(file.originalname);
+        console.log("RANDOM CHECK");
         const fileInfo = {
           filename: filename,
           bucketName: "videos",
-          //   metadata: updatedMetadata ? updatedMetadata : null,
+          // metadata: updatedMetadata ? updatedMetadata : null,
           metadata: {
             userPosting: "TEsting",
             title: "TEsting",

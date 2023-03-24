@@ -263,6 +263,8 @@ const UploadContent = () => {
     const bodyTest = "THIS IS A STATIC BODY ITEM";
 
     try {
+      const testResponse = await axiosPrivate.post("/testUploads/update", {});
+      console.log(testResponse);
       // const response = await axiosPrivate.post("/videos/", variables);
       const response = await axiosPrivate.post("/testUploads/", variables, {
         headers: {

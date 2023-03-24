@@ -10,17 +10,31 @@ const upload = require("../../middleware/gridFS");
 
 const { engine, updateMetadata } = upload;
 
-//Upload Single File
+// Test 3
 // router.post(
 //   "/",
 //   (req, res, next) => {
-//     // updateMetadata(req.body); //Static test value
+//     updateMetadata(req.body); //Static test value
 //     next();
 //   },
 //   engine.single("file"),
-//   testUploadsController.uploadVideoInfo
+//   testUploadsController.trailVideo
 // );
 
-router.route("/").post(testUploadsController.uploadVideoInfo);
+//Upload Single File THIS WORKS BUT NO META DATA ALSO has the uploadcontroller cod to keep file simple
+router.post(
+  "/",
+  (req, res, next) => {
+    updateMetadata(req.body); //Static test value
+    next();
+  },
+  engine.single("file"),
+  testUploadsController.uploadVideoInfo
+);
+
+// This Does not work but i prefer this format
+// router.route("/").post(testUploadsController.uploadVideoInfo);
+
+router.route("/update").post(testUploadsController.updatesMetadata);
 
 module.exports = router;
