@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from "react";
 import VideoBlock from "../../Components/reusuables/catalog/VideoBlock";
-
-import axios from "axios";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 
 import "./primeshow.css";
@@ -20,13 +18,14 @@ const Catalog = () => {
   const axiosPrivate = useAxiosPrivate();
 
   useEffect(() => {
-    axiosPrivate.get("/videos/").then((response) => {
+    console.log("TESTING FOR GRIDFS VIDEOS NOW");
+    axiosPrivate.get("/testUploads/videos").then((response) => {
       console.log(response);
       if (response.data.success) {
-        console.log(response.data.videos);
-        setVideos(response.data.videos);
+        console.log(response.data);
+        setVideos(response.data.files);
       } else {
-        alert("Failed to get Videos");
+        alert("Failed to get GRIDFS Videos");
       }
     });
   }, []);
@@ -36,11 +35,17 @@ const Catalog = () => {
   };
 
   const renderVideoBlock = videos.map((video, index) => {
-    const videoData = { ...video };
-    // console.log(videoData);
+    const videoData = { video };
+    console.log(video);
     return (
       <Link to={`/prime-news/viewer/${video._id}`} state={videoData}>
-        <VideoBlock key={index} {...video} />
+        <VideoBlock
+          key={index}
+          {...video}
+          _id={video._id}
+          createdAt={video.uploadDate}
+          metadata={video.metadata}
+        />
       </Link>
     );
   });
@@ -48,18 +53,7 @@ const Catalog = () => {
     <div className="page">
       <div className="catalog-container">
         <h1>Prime News Videos</h1>
-        <div className="catalog-shows">
-          {renderVideoBlock}
-          {/* {videos.map((data) => {
-            const videoData = { ...data };
-            console.log(videoData);
-            return (
-              <Link to={`/prime-news/viewer`} state={videoData}>
-                <VideoBlock key={data.uploadedVid.number} {...data} />
-              </Link>
-            );
-          })} */}
-        </div>
+        <div className="catalog-shows">{renderVideoBlock}</div>
       </div>
     </div>
   );

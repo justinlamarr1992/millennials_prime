@@ -35,6 +35,7 @@ const UploadContent = () => {
   // const [file, setFile] = useState("");
   const [duration, setDuration] = useState("");
   const [thumbnail, setThumbnail] = useState("");
+  const [videoID, setVideoID] = useState("");
 
   const [object, setObject] = useState({
     userPosting,
@@ -257,13 +258,13 @@ const UploadContent = () => {
       category: category,
       duration: duration,
       thumbnail: thumbnail,
+      videoID: videoID,
     };
     console.log(variables);
 
     const bodyTest = "THIS IS A STATIC BODY ITEM";
 
     try {
-      // const response = await axiosPrivate.post("/videos/", variables);
       const response = await axiosPrivate.post("/testUploads/", variables, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -271,6 +272,7 @@ const UploadContent = () => {
       });
       if (response.data.success) {
         console.log(response.data);
+        setVideoID(response.data.files[0]._id);
         alert("Video Uploaded Successfully");
       } else {
         alert("Failed to upload Video");
@@ -278,6 +280,19 @@ const UploadContent = () => {
     } catch (err) {
       console.log(err);
     }
+
+    // TRYING TRY BLOCK HERE BUT WILL PUT INSIDE OF TRY ABOVE
+    console.log(videoID);
+
+    // try {
+    //   const response = await axiosPrivate.post(
+    //     "/testUploads/update",
+    //     variables,
+    //     {}
+    //   );
+    // } catch (err) {
+    //   console.log(err);
+    // }
   };
 
   return (
