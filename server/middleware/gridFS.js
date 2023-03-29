@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
 const multer = require("multer");
 const { GridFsStorage } = require("multer-gridfs-storage");
+const { ObjectId } = require("mongodb");
 const Grid = require("gridfs-stream");
 var crypto = require("crypto");
-// const path = require("node:path");
 const path = require("path");
 
 const url = process.env.MONGO_URI;
@@ -36,22 +36,22 @@ const storage = new GridFsStorage({
           return reject(err);
         }
         const filename = buf.toString("hex") + path.extname(file.originalname);
-        console.log("RANDOM CHECK");
         const fileInfo = {
           filename: filename,
           bucketName: "videos",
-          // metadata: updatedMetadata ? updatedMetadata : null,
           metadata: {
-            userPosting: "TEsting",
-            title: "TEsting",
-            description: "TEsting",
-            prime: "prime",
-            file: "TEsting",
-            category: "TEsting",
-            duration: "TEsting",
-            thumbnail: "TEsting",
+            userPosting: new ObjectId(req.body.userPosting),
+            title: req.body.title,
+            description: req.body.description,
+            prime: req.body.prime,
+            file: req.body.file,
+            category: req.body.category,
+            duration: req.body.duration,
+            thumbnail: req.body.thumbnail,
           },
         };
+        console.log("GRIDFS REQ.BODY", req.body);
+
         resolve(fileInfo);
       });
     });
