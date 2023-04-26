@@ -209,15 +209,18 @@ const uploadVideoInfo = async (req, res, next) => {
         });
       }
       files.map((file) => {
-        if (
-          file.contentType === "image/jpeg" ||
-          file.contentType === "image/png" ||
-          file.contentType === "image/svg"
-        ) {
-          file.isImage = true;
-        } else {
-          file.isImage = false;
-        }
+        console.log(file);
+        const changeId = file._id;
+        // gfs.put({ _id: changeId }, { filename: "TEst" });
+        // if (
+        //   file.contentType === "image/jpeg" ||
+        //   file.contentType === "image/png" ||
+        //   file.contentType === "image/svg"
+        // ) {
+        //   file.isImage = true;
+        // } else {
+        //   file.isImage = false;
+        // }
       });
 
       res.status(200).json({
