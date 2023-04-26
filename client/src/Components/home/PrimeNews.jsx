@@ -22,6 +22,23 @@ const PrimeNews = () => {
   const [userDisplayName, setUserDisplayName] = useState("");
   const [activeVideo, setActiveVideo] = useState({ active: "" });
 
+  // Here we will retrieve the latest video from the MILL Prime profile
+  useEffect(() => {
+    const getNews = async () => {
+      try {
+        const response = await axiosPrivate.get(`/testUploads/`, {});
+        if (response.data.success) {
+          console.log(response.data);
+        } else {
+          console.log("Failed to get Prime Video");
+        }
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getNews();
+  }, []);
+
   // useEffect(() => {
   //   const getNews = async () => {
   //     try {

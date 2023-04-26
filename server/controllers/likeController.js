@@ -19,12 +19,12 @@ const getLikes = async (req, res) => {
   if (body.hasOwnProperty("videoId")) {
     videoId = req.body.videoId;
     variable = { videoId: req.body.videoId };
-    varSwitch = mongoose.Types.ObjectId(videoId);
+    varSwitch = new mongoose.Types.ObjectId(videoId);
     varFind = { videoId: varSwitch };
   } else {
     commentId = req.body.commentId;
     variable = { commentId: req.body.commentId };
-    varSwitch = mongoose.Types.ObjectId(commentId);
+    varSwitch = new mongoose.Types.ObjectId(commentId);
     varFind = { commentId: varSwitch };
   }
 
@@ -51,12 +51,12 @@ const getDislikes = async (req, res) => {
   if (body.hasOwnProperty("videoId")) {
     videoId = req.body.videoId;
     variable = { videoId: req.body.videoId };
-    varSwitch = mongoose.Types.ObjectId(videoId);
+    varSwitch = new mongoose.Types.ObjectId(videoId);
     varFind = { videoId: varSwitch };
   } else {
     commentId = req.body.commentId;
     variable = { commentId: req.body.commentId };
-    varSwitch = mongoose.Types.ObjectId(commentId);
+    varSwitch = new mongoose.Types.ObjectId(commentId);
     varFind = { commentId: varSwitch };
   }
 

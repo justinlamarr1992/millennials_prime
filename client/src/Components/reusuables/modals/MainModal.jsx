@@ -20,6 +20,7 @@ const MainModal = () => {
         <div className="modal-section ">
           <h4 className="modal-section-title">Who to Follow</h4>
           <div className="modal-home-follows">
+            {/* use logic to find top 3 users gaining views, likes and follows */}
             <HomeFollowComp />
             <HomeFollowComp />
             <HomeFollowComp />
@@ -28,6 +29,7 @@ const MainModal = () => {
         <div className="modal-section ">
           <h4 className="modal-section-title">Connections</h4>
           <div className="modal-home-connections">
+            {/* use Logic to find users that have similar connections that could help user */}
             <HomeConnectionsComp />
             <div>Thing 2</div>
             <div>Thing 3</div>

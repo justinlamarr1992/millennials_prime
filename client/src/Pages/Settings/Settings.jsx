@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 import User from "../../Assets/Images/ProfileAvatar.png";
 import "../../Components/settings/settings.css";
@@ -11,29 +12,64 @@ const Settings = () => {
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
   const [modal, setModal] = useState(true);
+
   const [profileImage, setProfileImage] = useState({ image: "" });
+  const [name, setName] = useState("");
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [DOB, setDOB] = useState("");
+  const [country, setCountry] = useState("");
+  const [state, setState] = useState("");
+  const [city, setCity] = useState("");
+  const [zip, setZip] = useState("");
+
+  const [values, setValues] = useState({
+    name: "",
+    username: "",
+    email: "",
+    DOB: "",
+    country: "",
+    state: "",
+    city: "",
+    zip: "",
+  });
 
   const _id = auth._id;
 
   useEffect(() => {
     console.log(_id);
 
-    const getUserProfilePic = async () => {
+    const getUserInfo = async () => {
       try {
-        const response = await axiosPrivate.post("/users/getpic", { _id });
-        // console.log(response.data.getImageToClient);
-        // setProfileImage(response.data.getImageToClient);
-        // console.log(profileImage);
-        setProfileImage({
-          ...profileImage,
-          image: response.data.getImageToClient,
-        });
+        const response = await axiosPrivate.post("/users/userinfo", { _id });
+        setName(response.data[0].name);
+        setUsername(response.data[0].username);
+        setEmail(response.data[0].email);
+        setDOB(response.data[0].DOB);
+        setCountry(response.data[0].country);
+        setState(response.data[0].state);
+        setCity(response.data[0].city);
+        setZip(response.data[0].zip);
       } catch (err) {
         console.log(err);
       }
     };
-
-    getUserProfilePic();
+    // const getUserProfilePic = async () => {
+    //   try {
+    //     const response = await axiosPrivate.post("/users/getpic", { _id });
+    //     // console.log(response.data.getImageToClient);
+    //     // setProfileImage(response.data.getImageToClient);
+    //     // console.log(profileImage);
+    //     setProfileImage({
+    //       ...profileImage,
+    //       image: response.data.getImageToClient,
+    //     });
+    //   } catch (err) {
+    //     console.log(err);
+    //   }
+    // };
+    getUserInfo();
+    // getUserProfilePic();
   }, [_id]);
 
   // TODO: Implement this at later date
@@ -49,8 +85,8 @@ const Settings = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    createProfileImage(profileImage);
-    console.log(profileImage);
+    // createProfileImage(profileImage);
+    // console.log(profileImage);
   };
 
   const handleImageUpload = async (e) => {
@@ -58,6 +94,46 @@ const Settings = () => {
     const base64 = await convertToBase64(image);
     console.log(base64);
     setProfileImage({ ...profileImage, image: base64 });
+  };
+
+  const handleNameChanges = async (e) => {
+    console.log(e.target.value);
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+  const handleEmailChanges = async (e) => {
+    // May disable
+    console.log(e.target.value);
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+  const handleDOBChanges = async (e) => {
+    console.log(e.target.value);
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+  const handleCountryChanges = async (e) => {
+    console.log(e.target.value);
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+  const handleStateChanges = async (e) => {
+    console.log(e.target.value);
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+  const handleCityChanges = async (e) => {
+    console.log(e.target.value);
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+  const handleZipChanges = async (e) => {
+    console.log(e.target.value);
+    setValues({ ...values, [e.target.name]: e.target.value });
+  };
+  const handleChange = async (e) => {
+    // This is where We update the user main info
+    console.log(values);
+    try {
+      const response = await axiosPrivate.patch(`/users/${_id}`, { values });
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const onClick = () => {
@@ -100,37 +176,93 @@ const Settings = () => {
             <div className="settings-user-info-group">
               <div className="label-input">
                 <label htmlFor="">Name</label>
-                <input type="text" />
+                <input
+                  type="text"
+                  id="name"
+                  value={name}
+                  name="name"
+                  placeholder={name}
+                  onChange={handleNameChanges}
+                />
               </div>
               <div className="label-input">
                 <label htmlFor="">Username</label>
-                <input type="text" />
+                <input
+                  type="text"
+                  id="username"
+                  value={username}
+                  name="username"
+                  placeholder={username}
+                  disabled
+                />
               </div>
               <div className="label-input">
                 <label htmlFor="">Email</label>
-                <input type="email" />
+                <input
+                  type="email"
+                  id="email"
+                  value={email}
+                  name="email"
+                  placeholder={email}
+                  onChange={handleEmailChanges}
+                />
               </div>
               <div className="label-input">
                 <label htmlFor="">Birthday</label>
-                <input type="date" />
+                <input
+                  type="date"
+                  id="DOB"
+                  value={DOB}
+                  name="DOB"
+                  placeholder={DOB}
+                  onChange={handleDOBChanges}
+                />
               </div>
             </div>
             <div className="settings-user-info-group">
               <div className="label-input">
                 <label htmlFor="">Country</label>
-                <input type="text" />
+                <input
+                  type="text"
+                  id="country"
+                  value={country}
+                  name="country"
+                  placeholder={country}
+                  onChange={handleCountryChanges}
+                />
               </div>
               <div className="label-input">
                 <label htmlFor="">State</label>
-                <input type="text" />
+                <input
+                  type="text"
+                  id="state"
+                  value={state}
+                  name="state"
+                  placeholder={state}
+                  onChange={handleStateChanges}
+                />
               </div>
               <div className="label-input">
                 <label htmlFor="">City</label>
-                <input type="text" />
+                <input
+                  type="text"
+                  id="city"
+                  value={city}
+                  name="city"
+                  placeholder={city}
+                  onChange={handleCityChanges}
+                />
               </div>
               <div className="label-input">
                 <label htmlFor="">Zip</label>
-                <input type="text" />
+                <input
+                  type="text"
+                  id="zip"
+                  value={zip}
+                  name="zip"
+                  placeholder={zip}
+                  onChange={handleZipChanges}
+                />
               </div>
             </div>
             <div className="settings-user-info-group">
@@ -210,9 +342,28 @@ const Settings = () => {
               </div>
             </div>
 
-            <button className="settings-user-info-button page-button con-shade clickable">
+            <button
+              className="settings-user-info-button home-butt page-button con-shade clickable"
+              onClick={handleChange}
+            >
               Save Changes
             </button>
+            <Link to="/auth/questionaire2">
+              <button
+                className="settings-user-info-button page-button con-shade clickable"
+                onClick={handleChange}
+              >
+                Business Changes
+              </button>
+            </Link>
+            <Link to="/auth/questionaire2">
+              <button
+                className="settings-user-info-button page-button con-shade clickable"
+                onClick={handleChange}
+              >
+                Artistry Changes
+              </button>
+            </Link>
           </div>
         </form>
         <button className="test-modal-button" onClick={onClick}>

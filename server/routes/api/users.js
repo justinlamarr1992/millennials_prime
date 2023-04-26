@@ -16,8 +16,8 @@ router
   .post(verifyRoles(ROLES_LIST.User), userController.getUserReq);
 
 router
-  .route("/user2")
-  .post(verifyRoles(ROLES_LIST.User), userController.getUser2);
+  .route("/userinfo")
+  .post(verifyRoles(ROLES_LIST.User), userController.getUserInfo);
 
 router
   .route("/pic")
@@ -26,6 +26,10 @@ router
 router
   .route("/getpic")
   .post(verifyRoles(ROLES_LIST.User), userController.getPicture);
+
+router
+  .route("/business/:id")
+  .patch(verifyRoles(ROLES_LIST.User), userController.updateBusinessInfo);
 
 router
   .route("/:id")

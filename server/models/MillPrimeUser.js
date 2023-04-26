@@ -31,17 +31,19 @@ const userSchema = new Schema(
       zip: { type: Number },
     },
     // change too just business
-    businessOwner: {
+    business: {
       entrepreneur: { type: Boolean },
       industry: { type: String },
-      open: { type: Boolean },
-      lengthOpen: {},
-      whyBusiness: {},
-      fistObjective: {},
-      howMany: {},
-      productsAndServices: {},
-      primaryPromotion: {},
-      factorsOfLocation: {},
+      whyIndustry: { type: String },
+      openOnMillPrime: { type: Boolean },
+      lengthOpen: { type: String },
+      whyBusiness: { type: String },
+      firstObjective: { type: String },
+      objectiveNow: { type: String },
+      howMany: { type: String },
+      productsAndServices: { type: String },
+      primaryPromotion: { type: String },
+      factorsOfLocation: { type: String },
     },
     art: {
       artist: { type: Boolean },

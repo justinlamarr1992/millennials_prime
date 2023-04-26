@@ -32,7 +32,6 @@ const UploadContent = () => {
   // Will think of changing later
   const [category, setCategory] = useState("");
   const [file, setFile] = useState([]);
-  // const [file, setFile] = useState("");
   const [duration, setDuration] = useState("");
   const [thumbnail, setThumbnail] = useState("");
   const [videoID, setVideoID] = useState("");
@@ -177,16 +176,23 @@ const UploadContent = () => {
     setCategory(e.currentTarget.value);
     setObject({ ...object, category: category });
   };
-
-  const onDrop = async (files) => {
-    // const base64 = await convertToBase64(files[0]);
-    // // console.log(base64);
-    // setFile(base64);
-    // setObject({ ...object, file: file });
-
-    setFile(files[0]);
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
     setObject({ ...object, file: file });
+    console.log(file);
+    setObject({ ...object, file: file });
+    formData.append("file", file);
   };
+
+  // const onDrop = async (files) => {
+  //   console.log(files);
+  //   setFile(files[0]);
+  //   console.log(file);
+  //   setObject({ ...object, file: file });
+  //   formData.append("video", file);
+
+  //   // const base64 = await convertToBase64(files[0]);
+  // };
 
   console.log(object);
   // const onDrop = (files) => {
@@ -249,7 +255,7 @@ const UploadContent = () => {
       return alert("Fill all of the fields");
     }
 
-    const variables = {
+    formData = {
       userPosting: _id,
       title: title,
       description: description,
@@ -260,15 +266,15 @@ const UploadContent = () => {
       thumbnail: thumbnail,
       videoID: videoID,
     };
-    console.log(variables);
+    console.log(formData);
 
     const bodyTest = "THIS IS A STATIC BODY ITEM";
 
     try {
-      const response = await axiosPrivate.post("/testUploads/", variables, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
+      const response = await axiosPrivate.post("/testUploads/", formData, {
+        // headers: {
+        //   "Content-Type": "multipart/form-data",
+        // },
       });
       if (response.data.success) {
         console.log(response.data);
@@ -306,7 +312,7 @@ const UploadContent = () => {
             Millennials Prime News Upload
           </h2>
           {/* TODO: make sure the dynamioc changes allow to upload to different post */}
-          <form onSubmit={onSubmit}>
+          <form onSubmit={onSubmit} enctype="multipart/form-data">
             <div className="label-input">
               <label htmlFor="">What type of Upload is this?</label>
               <select
@@ -414,20 +420,8 @@ const UploadContent = () => {
                 </div>
                 {/* TODO: Make this its own function so multiple uploads can use it */}
                 <h6 className="text-gray">Import Video Here</h6>
-                <Dropzone
-                  // onDrop={(acceptedFiles) => console.log(acceptedFiles)}
-                  onDrop={onDrop}
-                >
-                  {({ getRootProps, getInputProps }) => (
-                    <section>
-                      <div {...getRootProps()}>
-                        <input type="file" name="" {...getInputProps()} />
-                        {/*  */}
-                        <h1>Drag Here</h1>
-                      </div>
-                    </section>
-                  )}
-                </Dropzone>
+                {/* DROPZONE WAS HERE */}
+                <input type="file" onChange={handleFileChange} />
                 {thumbnail !== "" && (
                   <div>
                     <img
@@ -515,3 +509,20 @@ const UploadContent = () => {
   );
 };
 export default UploadContent;
+
+// <Dropzone
+// onDrop={(acceptedFiles) => console.log(acceptedFiles)}
+// onDrop={onDrop}
+// >
+// {({ getRootProps, getInputProps }) => (
+// <section>
+// <div {...getRootProps()}>
+// <input type="file" name="" {...getInputProps()} />
+{
+  /*  */
+}
+// <h1>Drag Here</h1>
+// </div>
+// </section>
+// )}
+// </Dropzone>;

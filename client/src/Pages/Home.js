@@ -66,7 +66,7 @@ const Home = () => {
   const test = async () => {
     try {
       const response = await axiosPrivate.get(
-        "/testUploads/files"
+        "/testUploads/videos"
         // headers: {
         //   "Content-Type": "multipart/form-data",
         // },
@@ -161,9 +161,9 @@ const Home = () => {
           Modal Test Button
         </button>
         {modal && <MainModal />}x
-        <Link to={`/prime-news/catalog`}>
+        {/* <Link to={`/prime-news/catalog`}>
           <button className="home-butt con-shade ">Catalog</button>
-        </Link>
+        </Link> */}
         {/* <Link to={`/prime-news/subscriptions`}>
           <button className="home-butt con-shade ">Subscriptions</button>
         </Link> */}
@@ -179,7 +179,7 @@ const Home = () => {
         <Link to={`/settings`}>
           <button>Settings</button>
         </Link> */}
-        <button className="home-logout-butt con-shade" onClick={recentTest}>
+        {/* <button className="home-logout-butt con-shade" onClick={recentTest}>
           Recent Test
         </button>
         <button className="home-logout-butt con-shade" onClick={test}>
@@ -190,7 +190,13 @@ const Home = () => {
         </button>
         <button className="home-logout-butt con-shade" onClick={testDelete}>
           Delete File Test
-        </button>
+        </button> */}
+        <Link to="/auth/signin">
+          <button className="home-logout-butt con-shade">Sign In</button>
+        </Link>
+        <Link to="/auth/register">
+          <button className="home-butt con-shade ">Register</button>
+        </Link>
         <button className="home-logout-butt con-shade" onClick={signOut}>
           Sign Out
         </button>

@@ -5,10 +5,8 @@ const ROLES_LIST = require("../../config/roles_list");
 const verifyRoles = require("../../middleware/verifyRoles");
 
 // POST a video
-router
-  .route("/")
-  .get(videoController.getVideos)
-  .post(videoController.uploadVideo);
+router.route("/").get(videoController.getVideos);
+// .post(videoController.uploadVideo);
 
 router.route("/primenews").post(videoController.getPrimeNewsVideo);
 

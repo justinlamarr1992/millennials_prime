@@ -1,25 +1,22 @@
+get rid of questionaire page 1
+use the settings page as the first page from register
+Business Portion will be on its own page all of artistry will have its own
+age check need to be moved to register page 
+useState check if answers blank from back end to select answer or 
+type answer here FOR REGISTRAION
+
+convert all info filling questions to the same as settings
+
+make the settings modal reflect profile busness and art
+
 Go Over Likes and Dislikes for videos
 
 GOALS FOR WEEK 14
 
 Huge Screen
 
-Register
-    faded image Done
-    form verification
-    Specify Password Requirements
-        one lowercase charater
-        one specila charater
-        8 chararters minimum
-        add password strength meter
-        add ability for user to see password
-        allw login with finger print or face
-
 SignIn Page
     form verification
-
-Sign Out Page
-PENDING
 
 
 Password Recovery

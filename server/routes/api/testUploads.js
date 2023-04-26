@@ -4,27 +4,49 @@ const testUploadsController = require("../../controllers/testUploadsContoller");
 const ROLES_LIST = require("../../config/roles_list");
 const verifyRoles = require("../../middleware/verifyRoles");
 const mongoose = require("mongoose");
+var ffmpeg = require("fluent-ffmpeg");
+const multer = require("multer");
+const concat = require("stream-concat");
+var fs = require("fs");
+const { MongoClient, ObjectId, GridFSBucket } = require("mongodb");
+var mime = require("mime");
 
-// Dependencies
-const upload = require("../../middleware/gridFS");
+var app = express();
 
-const { engine, updateMetadata } = upload;
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
 
-//Upload Single File THIS WORKS BUT NO META DATA ALSO has the uploadcontroller cod to keep file simple
-router.post(
-  "/",
-  (req, res, next) => {
-    updateMetadata(); //Static test value
-    next();
-  },
-  engine.single("file"),
-  testUploadsController.uploadVideoInfo
+router.route("/").post(
+  verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor),
+  // (req, res, next) => {
+  //   console.log(req.file);
+  //   next();
+  // },
+  // upload.single("file"),
+  testUploadsController.uploadVideo
 );
+// // ORIGINAL
+// router.route("/").post(
+//   verifyRoles(ROLES_LIST.Admin, ROLES_LIST.Editor),
+//   // (req, res, next) => {
+//   //   console.log(req.file);
+//   //   next();
+//   // },
+//   // upload.single("file"),
+//   testUploadsController.uploadVideo
+// );
 
-// This Does not work but i prefer this format
-// router.route("/").post(testUploadsController.uploadVideoInfo);
-
-router.route("/").get(testUploadsController.getVideo);
-router.route("/videos").get(testUploadsController.getVideos);
+router
+  .route("/")
+  .get(verifyRoles(ROLES_LIST.User), testUploadsController.getVideo);
+router
+  .route("/videos")
+  .get(verifyRoles(ROLES_LIST.User), testUploadsController.getVideos);
+// router
+//   .route(`/files`)
+//   .get(verifyRoles(ROLES_LIST.User), testUploadsController.getVideos);
+// router
+//   .route(`/file`)
+//   .get(verifyRoles(ROLES_LIST.User), testUploadsController.getVideo);
 
 module.exports = router;

@@ -9,7 +9,7 @@ const getUser = async (req, res) => {
   if (!req?.params?.id)
     return res.status(400).json({ message: "User ID required" });
 
-  const _id = mongoose.Types.ObjectId(req.params.id);
+  const _id = new mongoose.Types.ObjectId(req.params.id);
   console.log(_id);
 
   try {
@@ -24,8 +24,8 @@ const getUser = async (req, res) => {
     console.log(err);
   }
 };
-const getUser2 = async (req, res) => {
-  console.log("Decode Encode Practice");
+const getUserInfo = async (req, res) => {
+  console.log("User Info from Post _id");
   const _id = req.body._id;
   try {
     const user = await User.find({ _id });
@@ -85,16 +85,52 @@ const getUserReq = async (req, res) => {
 const getSingleUser = async (req, res) => {};
 
 const updateUserInfo = async (req, res) => {
-  const { DOB, location, businessOwner } = req.body;
-  console.log(DOB, location, businessOwner);
+  const _id = new mongoose.Types.ObjectId(req.params);
+  console.log(_id);
+  const { name, email, DOB, country, state, city, zip } = req.body.values;
+  let location = { country, state, city, zip };
+
+  console.log(name, email, DOB, location);
+  // This will be for the second one
+  // console.log(DOB, location, businessOwner);
   if (!req?.params?.id)
     return res.status(400).json({ message: "User ID required" });
-  const user = await User.findOneAndUpdate({
-    _id: req.params.id,
-    DOB,
-    location,
-    businessOwner,
-  }).exec();
+  const user = await User.findOneAndUpdate(
+    { _id },
+    {
+      name,
+      email,
+      DOB,
+      location,
+    }
+  ).exec();
+  if (!user) {
+    return res
+      .status(204)
+      .json({ message: `No User matches ID ${req.params.id}` });
+  }
+  res.json(user);
+};
+const updateBusinessInfo = async (req, res) => {
+  const _id = new mongoose.Types.ObjectId(req.params);
+  console.log(_id);
+  const { name, email, DOB, country, state, city, zip } = req.body.values;
+  let location = { country, state, city, zip };
+
+  console.log(name, email, DOB, location);
+  // This will be for the second one
+  // console.log(DOB, location, businessOwner);
+  if (!req?.params?.id)
+    return res.status(400).json({ message: "User ID required" });
+  const user = await User.findOneAndUpdate(
+    { _id },
+    {
+      name,
+      email,
+      DOB,
+      location,
+    }
+  ).exec();
   if (!user) {
     return res
       .status(204)
@@ -143,9 +179,10 @@ module.exports = {
   getAllUsers,
   deleteUser,
   getUser,
-  getUser2,
+  getUserInfo,
   getUserReq,
   updateUserInfo,
+  updateBusinessInfo,
   getSingleUser,
   createProfilePicture,
   getPicture,

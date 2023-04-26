@@ -13,11 +13,6 @@ var bodyParser = require("body-parser");
 const credentials = require("./middleware/credentials");
 const mongoose = require("mongoose");
 
-// Testing Multer Uploads
-const multer = require("multer");
-const { GridFsStorage } = require("multer-gridfs-storage");
-const Grid = require("gridfs-stream");
-
 const connectDB = require("./config/dbConn");
 const PORT = process.env.PORT || 4000;
 

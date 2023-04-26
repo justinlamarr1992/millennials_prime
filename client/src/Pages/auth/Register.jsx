@@ -106,7 +106,7 @@ const Register = () => {
       setUser("");
       setPassword("");
       setMatchPassword("");
-      navigate(from, { replace: true });
+      // navigate(from, { replace: true });
     } catch (err) {
       if (!err?.originalStatus) {
         // isLoading: true until timeout occurs
