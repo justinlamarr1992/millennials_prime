@@ -16,21 +16,11 @@ const Questionaire = () => {
   console.log("THISIS THE AUTH PROVIDER", auth);
 
   const [allowed, setAllowed] = useState(false);
-  const [DOB, setDOB] = useState("");
   const [location, setLocation] = useState({
     country: String,
     city: String,
     state: String,
     zip: Number,
-  });
-  const [business, setBusiness] = useState(false);
-  const [industry, setIndustry] = useState("");
-  const [open, setOpen] = useState(false);
-
-  const [businessOwner, setBusinessOwner] = useState({
-    entrepreneur: Boolean,
-    industry: String,
-    open: Boolean,
   });
 
   const navigate = useNavigate();
@@ -48,55 +38,9 @@ const Questionaire = () => {
     console.log(location.country, location.city, location.state, location.zip);
   };
 
-  const bossCheck = (e) => {
-    console.log(business);
-    const inputBusiness = document.getElementById("business").value;
-
-    if (inputBusiness === "yes") {
-      setBusiness(true);
-    } else {
-      setBusiness(false);
-    }
-    console.log(inputBusiness);
-  };
-  const industryCheck = (e) => {
-    setIndustry(document.getElementById("country").value);
-  };
-  const openCheck = (e) => {
-    const inputOpen = document.getElementById("open").value;
-
-    if (inputOpen === "yes") {
-      setOpen(true);
-    } else {
-      setOpen(false);
-      console.log(open);
-    }
-  };
-  const ageCheck = (e) => {
-    e.preventDefault();
-    const inputDate = document.getElementById("dateofbirth").value;
-    var birthDate = new Date(inputDate);
-    var birthYear = birthDate.getFullYear();
-    console.log(birthYear);
-    console.log(birthDate);
-    if (birthYear < 1996 && birthYear > 1981) {
-      setAllowed(true);
-      questionaire1Info();
-      setDOB(birthDate);
-    } else {
-      // alert("You are not a Millennial");
-    }
-  };
-
   const onSubmit = async (e) => {
     e.preventDefault();
     let dataToSubmit = {
-      DOB,
-      businessOwner: {
-        entrepreneur: business,
-        industry: industry,
-        open: open,
-      },
       location: {
         country: location.country,
         city: location.city,
@@ -122,6 +66,7 @@ const Questionaire = () => {
       // setUser("");
       // setPassword("");
       //   navigate(from, { replace: true });
+      navigate("/auth/questionaire2");
     } catch (err) {
       console.log("Nope");
 
@@ -159,7 +104,7 @@ const Questionaire = () => {
             <img className="auth-logo" src={Logo} alt="MPrime Logo" />
 
             <div className="form-text">
-              <h4>Do You Make the Cut?</h4>
+              <h4>Location?</h4>
               <h6 className="text-gray">Answer the Following Questions</h6>
             </div>
           </div>
@@ -195,63 +140,6 @@ const Questionaire = () => {
               />
             </div>
 
-            <div className="label-input">
-              <label htmlFor="">Do you have a business?</label>
-              <select
-                name="business"
-                id="business"
-                onChange={bossCheck}
-                placeholder="Select Answer"
-              >
-                <option value="" disabled selected>
-                  Select your option
-                </option>
-                <option value="yes">Yes</option>
-                <option value="no">No</option>
-              </select>
-            </div>
-            {business == true && (
-              <div className="label-input">
-                <label htmlFor="">What is the Industry Your Operate in?</label>
-                <input
-                  type="text"
-                  onChange={industryCheck}
-                  placeholder="State"
-                  id="industry"
-                  // ref={emailRef}
-                  // required
-                />
-              </div>
-            )}
-            {business == true && (
-              <div className="label-input">
-                <label htmlFor="">
-                  Are you Open to Business with Users here.
-                </label>
-                <select
-                  name="open"
-                  id="open"
-                  onChange={openCheck}
-                  placeholder="Select Answer"
-                >
-                  <option value="" disabled selected>
-                    Select your option
-                  </option>
-                  <option value="yes">Yes</option>
-                  <option value="no">No</option>
-                </select>
-              </div>
-            )}
-
-            <div className="label-input">
-              <label htmlFor="">When were you Born</label>
-              <input
-                type="date"
-                name="dateofbirth"
-                id="dateofbirth"
-                onChange={ageCheck}
-              />
-            </div>
             {allowed == true ? (
               <button className="auth-button login">Next</button>
             ) : (

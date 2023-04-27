@@ -45,6 +45,9 @@ const Register = () => {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
 
+  const [allowed, setAllowed] = useState(false);
+  const [DOB, setDOB] = useState("");
+
   const [errMsg, setErrMsg] = useState("");
   const [success, setSuccess] = useState(false);
 
@@ -71,6 +74,23 @@ const Register = () => {
     setErrMsg("");
   }, [user, password, matchPassword]);
 
+  const ageCheck = (e) => {
+    e.preventDefault();
+    const inputDate = document.getElementById("dateofbirth").value;
+    var birthDate = new Date(inputDate);
+    var birthYear = birthDate.getFullYear();
+    console.log(birthYear);
+    console.log(birthDate);
+    if (birthYear < 1996 && birthYear > 1981) {
+      setAllowed(true);
+      setDOB(birthDate);
+      console.log(allowed, DOB);
+    } else {
+      console.log(allowed);
+      console.log("You are not a Millennial");
+    }
+  };
+
   // Dave GraYS
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -87,6 +107,7 @@ const Register = () => {
       password,
       firstName,
       lastName,
+      DOB,
     };
 
     try {
@@ -106,6 +127,9 @@ const Register = () => {
       setUser("");
       setPassword("");
       setMatchPassword("");
+      setDOB("");
+
+      navigate("/auth/questionaire");
       // navigate(from, { replace: true });
     } catch (err) {
       if (!err?.originalStatus) {
@@ -298,10 +322,21 @@ const Register = () => {
                 Must match the first password input field.
               </p>
             </div>
+            <div className="label-input">
+              <label htmlFor="">When were you Born</label>
+              <input
+                type="date"
+                name="DOB"
+                id="dateofbirth"
+                onChange={ageCheck}
+              />
+            </div>
             <button
               className="auth-button login"
               disabled={
-                !validName || !validPassword || !validMatch ? true : false
+                !validName || !validPassword || !validMatch
+                  ? true
+                  : false || allowed == false
               }
             >
               Create an Account
