@@ -112,31 +112,76 @@ const updateUserInfo = async (req, res) => {
   res.json(user);
 };
 const updateBusinessInfo = async (req, res) => {
+  const testMessage = "Yes it Fires";
   const _id = new mongoose.Types.ObjectId(req.params);
   console.log(_id);
-  const { name, email, DOB, country, state, city, zip } = req.body.values;
-  let location = { country, state, city, zip };
 
-  console.log(name, email, DOB, location);
-  // This will be for the second one
-  // console.log(DOB, location, businessOwner);
-  if (!req?.params?.id)
-    return res.status(400).json({ message: "User ID required" });
-  const user = await User.findOneAndUpdate(
-    { _id },
-    {
-      name,
-      email,
-      DOB,
-      location,
+  const {
+    entrepreneur,
+    industry,
+    whyIndustry,
+    openOnMillPrime,
+    lengthOpen,
+    whyBusiness,
+    firstObjective,
+    objectiveNow,
+    howMany,
+    productsAndServices,
+    primaryPromotion,
+    factorsOfLocation,
+  } = req.body.values;
+
+  let business = {
+    entrepreneur,
+    industry,
+    whyIndustry,
+    openOnMillPrime,
+    lengthOpen,
+    whyBusiness,
+    firstObjective,
+    objectiveNow,
+    howMany,
+    productsAndServices,
+    primaryPromotion,
+    factorsOfLocation,
+  };
+  console.log(business);
+  try {
+    if (!req?.params?.id)
+      return res.status(400).json({ message: "User ID required" });
+
+    const user = await User.findByIdAndUpdate(
+      { _id },
+      {
+        email: "OMG@123.com",
+        business: {
+          entrepreneur,
+          industry,
+          whyIndustry,
+          openOnMillPrime,
+          lengthOpen,
+          whyBusiness,
+          firstObjective,
+          objectiveNow,
+          howMany,
+          productsAndServices,
+          primaryPromotion,
+          factorsOfLocation,
+        },
+      }
+    );
+    console.log(user);
+    // Trying Insert next
+    if (!user) {
+      return res
+        .status(204)
+        .json({ message: `No User matches ID ${req.params.id}` });
     }
-  ).exec();
-  if (!user) {
-    return res
-      .status(204)
-      .json({ message: `No User matches ID ${req.params.id}` });
+    res.status(200).json({ success: true, user, testMessage });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ success: false, err });
   }
-  res.json(user);
 };
 
 const getPicture = async (req, res) => {

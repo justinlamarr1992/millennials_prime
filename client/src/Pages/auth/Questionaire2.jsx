@@ -90,13 +90,18 @@ const Questionaire2 = () => {
 
     if (inputBusiness === "yes") {
       setBusiness(true);
+      setEntrepreneur(true);
     } else {
       setBusiness(false);
+      setEntrepreneur(false);
     }
-    console.log(inputBusiness);
+    setValues({ ...values, [e.target.name]: e.target.value });
+    console.log(values);
   };
   const industryCheck = (e) => {
     setIndustryIn(document.getElementById("industry").value);
+    setValues({ ...values, [e.target.name]: e.target.value });
+    console.log(values);
   };
   const openCheck = (e) => {
     const inputOpen = document.getElementById("open").value;
@@ -107,10 +112,50 @@ const Questionaire2 = () => {
       setOpen(false);
       console.log(open);
     }
+    setValues({ ...values, [e.target.name]: e.target.value });
+    console.log(values);
+  };
+  const handleWhyIndusty = async (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+    console.log(values);
+  };
+  const handleHowLong = async (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+    console.log(values);
+  };
+  const handleWhyBus = async (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+    console.log(values);
+  };
+  const handlefirstObj = async (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+    console.log(values);
+  };
+  const handleObjNow = async (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+    console.log(values);
+  };
+  const handleHowMany = async (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+    console.log(values);
+  };
+  const handleProducts = async (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+    console.log(values);
+  };
+  const handlePriPro = async (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+    console.log(values);
+  };
+  const handleFactors = async (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+    console.log(e.target.value);
+    console.log(values);
   };
 
   const handleUpdate = async (e) => {
     // This is where We update the user business info
+    e.preventDefault();
     console.log(values);
     try {
       const response = await axiosPrivate.patch(`/users/business/${_id}`, {
@@ -151,6 +196,7 @@ const Questionaire2 = () => {
                 name="entrepreneur"
                 id="business"
                 onChange={bossCheck}
+                // value={entrepreneur}
                 placeholder="Select Answer"
               >
                 <option value="" disabled selected>
@@ -168,6 +214,7 @@ const Questionaire2 = () => {
                   onChange={industryCheck}
                   placeholder="State"
                   id="industry"
+                  name="industry"
                   // ref={emailRef}
                   // required
                 />
@@ -179,7 +226,12 @@ const Questionaire2 = () => {
                 <label htmlFor="">
                   Why did you decide to start a business in this industry?
                 </label>
-                <input type="text" id="why-industry" />
+                <input
+                  type="text"
+                  id="why-industry"
+                  name="whyIndustry"
+                  onChange={handleWhyIndusty}
+                />
               </div>
             )}
 
@@ -189,7 +241,7 @@ const Questionaire2 = () => {
                   Are you Open to Business with Users here.
                 </label>
                 <select
-                  name="open"
+                  name="openOnMillPrime"
                   id="open"
                   onChange={openCheck}
                   placeholder="Select Answer"
@@ -209,9 +261,10 @@ const Questionaire2 = () => {
                   How long have you ran your business?
                 </label>
                 <select
-                  name="business"
+                  name="lengthOpen"
                   id="business-start-value"
                   placeholder="Select Answer"
+                  onChange={handleHowLong}
                 >
                   <option value="" disabled selected>
                     Select your option
@@ -231,7 +284,11 @@ const Questionaire2 = () => {
                 <label htmlFor="">
                   Why did you decide to start your own business?
                 </label>
-                <select name="business" id="business">
+                <select
+                  name="whyBusiness"
+                  id="business"
+                  onChange={handleWhyBus}
+                >
                   <option value="" disabled selected>
                     Select your option
                   </option>
@@ -253,21 +310,31 @@ const Questionaire2 = () => {
                 <label htmlFor="">
                   What was your first objective when you founded your business?
                 </label>
-                <input type="text" id="first-objection" />
+                <input
+                  type="text"
+                  id="first-objection"
+                  name="firstObjective"
+                  onChange={handlefirstObj}
+                />
               </div>
             )}
 
             {business == true && (
               <div className="label-input">
                 <label htmlFor="">What are the objectives now?</label>
-                <input type="text" id="now-objective" />
+                <input
+                  type="text"
+                  id="now-objective"
+                  name="objectiveNow"
+                  onChange={handleObjNow}
+                />
               </div>
             )}
 
             {business == true && (
               <div className="label-input">
                 <label htmlFor="">How many people work for your company?</label>
-                <select name="employees" id="employees">
+                <select name="howMany" id="employees" onChange={handleHowMany}>
                   <option value="" disabled selected>
                     Select your option
                   </option>
@@ -284,7 +351,12 @@ const Questionaire2 = () => {
                 <label htmlFor="">
                   What products or services do you offer?
                 </label>
-                <input id="services" type="text" />
+                <input
+                  id="services"
+                  type="text"
+                  name="productsAndServices"
+                  onChange={handleProducts}
+                />
               </div>
             )}
 
@@ -294,9 +366,11 @@ const Questionaire2 = () => {
                   What is your Primary method to promote your business?
                 </label>
                 <select
-                  name="promotion"
+                  name="primaryPromotion"
                   id="promotion"
                   placeholder="Select Answer"
+                  // value={}
+                  onChange={handlePriPro}
                 >
                   <option value="" disabled selected>
                     Select your option
@@ -320,9 +394,10 @@ const Questionaire2 = () => {
                   What factors influenced your decision to locate your business?
                 </label>
                 <select
-                  name="location"
+                  name="factorsOfLocation"
                   id="location"
                   placeholder="Select Answer"
+                  onChange={handleFactors}
                 >
                   <option value="" disabled selected>
                     Select your option
@@ -341,6 +416,7 @@ const Questionaire2 = () => {
                 </select>
               </div>
             )}
+
             <button className="auth-button login" onClick={handleUpdate}>
               Next
             </button>
