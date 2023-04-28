@@ -129,8 +129,9 @@ const Register = () => {
       setMatchPassword("");
       setDOB("");
 
-      navigate("/auth/questionaire");
-      // navigate(from, { replace: true });
+      navigate("/settings/myinfo", {
+        state: { data: "This is the data passed" },
+      });
     } catch (err) {
       if (!err?.originalStatus) {
         // isLoading: true until timeout occurs

@@ -26,7 +26,7 @@ const SettingsModal = () => {
           {/* <h3 className="modal-setting-title">Settings</h3> */}
           <NavLink
             key="account"
-            to="/settings/config"
+            to="/settings/myinfo"
             className="modal-setting-button"
             style={({ isActive }) => {
               return isActive ? { color: "var(--qua-c)" } : {};
@@ -35,11 +35,13 @@ const SettingsModal = () => {
             <div className="setting-button-icon-box">
               <FaUserAlt className="setting-button-icon" />
             </div>
-            <h4 className="setting-button-text">My Account</h4>
+            <h4 className="setting-button-text">My Infomation</h4>
           </NavLink>
+
+          {/* Change information and CSS stuff and Icon to business Info */}
           <NavLink
             key="account"
-            to="/settings/notifications"
+            to="/settings/business"
             className="modal-setting-button"
             style={({ isActive }) => {
               return isActive ? { color: "var(--qua-c)" } : {};
@@ -48,11 +50,13 @@ const SettingsModal = () => {
             <div className="setting-button-icon-box">
               <FaBell className="setting-button-icon" />
             </div>
-            <h4 className="setting-button-text">Notifications</h4>
+            <h4 className="setting-button-text">Business</h4>
           </NavLink>
+
+          {/* Change information and CSS stuff and Icon to Art Info */}
           <NavLink
             key="account"
-            to="/settings/privacy-policy"
+            to="/settings/art"
             className="modal-setting-button"
             style={({ isActive }) => {
               return isActive ? { color: "var(--qua-c)" } : {};
@@ -61,7 +65,7 @@ const SettingsModal = () => {
             <div className="setting-button-icon-box">
               <FaShieldAlt className="setting-button-icon" />
             </div>
-            <h4 className="setting-button-text">Privacy Policy</h4>
+            <h4 className="setting-button-text">Art</h4>
           </NavLink>
           <NavLink
             key="account"
@@ -76,6 +80,7 @@ const SettingsModal = () => {
             </div>
             <h4 className="setting-button-text">Contact Us</h4>
           </NavLink>
+          <h4>Notifications and Privacy policy stuff added here later</h4>
         </div>
       </div>
     </div>

@@ -118,6 +118,7 @@ const updateBusinessInfo = async (req, res) => {
 
   const {
     entrepreneur,
+    companyName,
     industry,
     whyIndustry,
     openOnMillPrime,
@@ -132,7 +133,9 @@ const updateBusinessInfo = async (req, res) => {
   } = req.body.values;
 
   let business = {
+    // businessLogo,
     entrepreneur,
+    companyName,
     industry,
     whyIndustry,
     openOnMillPrime,
@@ -153,9 +156,10 @@ const updateBusinessInfo = async (req, res) => {
     const user = await User.findByIdAndUpdate(
       { _id },
       {
-        email: "OMG@123.com",
         business: {
+          // businessLogo,
           entrepreneur,
+          companyName,
           industry,
           whyIndustry,
           openOnMillPrime,
@@ -167,6 +171,80 @@ const updateBusinessInfo = async (req, res) => {
           productsAndServices,
           primaryPromotion,
           factorsOfLocation,
+        },
+      }
+    );
+    console.log(user);
+    // Trying Insert next
+    if (!user) {
+      return res
+        .status(204)
+        .json({ message: `No User matches ID ${req.params.id}` });
+    }
+    res.status(200).json({ success: true, user, testMessage });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ success: false, err });
+  }
+};
+const updateArtInfo = async (req, res) => {
+  const testMessage = "Yes it Fires";
+  const _id = new mongoose.Types.ObjectId(req.params);
+  console.log(_id);
+
+  const {
+    artist,
+    professional,
+    purpose,
+    affectIssues,
+    navigateIndustry,
+    inspirationOfWork,
+    styleChanged,
+    favsOrNoneFavs,
+    network,
+    support,
+    critics,
+    specificIntegral,
+    whatSpecfic,
+  } = req.body.values;
+
+  let art = {
+    artist,
+    professional,
+    purpose,
+    affectIssues,
+    navigateIndustry,
+    inspirationOfWork,
+    styleChanged,
+    favsOrNoneFavs,
+    network,
+    support,
+    critics,
+    specificIntegral,
+    whatSpecfic,
+  };
+  console.log(art);
+  try {
+    if (!req?.params?.id)
+      return res.status(400).json({ message: "User ID required" });
+
+    const user = await User.findByIdAndUpdate(
+      { _id },
+      {
+        art: {
+          artist,
+          professional,
+          purpose,
+          affectIssues,
+          navigateIndustry,
+          inspirationOfWork,
+          styleChanged,
+          favsOrNoneFavs,
+          network,
+          support,
+          critics,
+          specificIntegral,
+          whatSpecfic,
         },
       }
     );
@@ -228,6 +306,7 @@ module.exports = {
   getUserReq,
   updateUserInfo,
   updateBusinessInfo,
+  updateArtInfo,
   getSingleUser,
   createProfilePicture,
   getPicture,

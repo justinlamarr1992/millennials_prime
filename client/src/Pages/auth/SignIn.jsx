@@ -19,7 +19,6 @@ const SignIn = () => {
 
   const navigate = useNavigate();
   const location = useLocation();
-  const from = location.state?.from?.pathname || "/";
 
   const userRef = useRef();
   const emailRef = useRef();
@@ -31,6 +30,21 @@ const SignIn = () => {
   const [errMsg, setErrMsg] = useState("");
 
   const [check, toggleCheck] = useToggle("persist", false);
+
+  let from = location.state?.from?.pathname || "/";
+
+  console.log("Use Location Hook ", location);
+
+  // TODO: FIGURE OUT THE BUG
+  // This is the code coming from somewhere that needs the login
+  // conflicts with already login procedures
+  // if (location.state != null) {
+  //   from = location.state;
+  // } else {
+  //   from = "/";
+  // }
+
+  console.log("Use Location Hook From ", from);
 
   useEffect(() => {
     userRef.current.focus();

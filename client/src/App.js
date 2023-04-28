@@ -14,7 +14,7 @@ import Home from "./Pages/Home";
 
 // import Messages from "./Pages/Messaging/Messages";
 // import ConnectedUsers from "./Pages/ConnectedUsers/ConnectedUsers";
-import Settings from "./Pages/Settings/Settings";
+import MyInfo from "./Pages/Settings/MyInfo";
 // import Notifications from "./Pages/Settings/Notifications";
 import PrivacyPolicy from "./Pages/Settings/PrivacyPolicy";
 import ContactUs from "./Pages/Settings/ContactUs";
@@ -22,9 +22,8 @@ import ContactUs from "./Pages/Settings/ContactUs";
 import SignOut from "./Pages/auth/SignOut.jsx";
 import SignIn from "./Pages/auth/SignIn";
 import Register from "./Pages/auth/Register";
-import Questionaire from "./Pages/auth/Questionaire";
-import Questionaire2 from "./Pages/auth/Questionaire2";
-import Questionaire3 from "./Pages/auth/Questionaire3";
+import Business from "./Pages/auth/Business";
+import Art from "./Pages/auth/Art";
 // import PasswordRecovery from "./Pages/auth/PasswordRecovery";
 import Unauthorized from "./Pages/auth/Unauthorized";
 
@@ -69,9 +68,6 @@ const App = (props, state) => {
           <Route path="/auth">
             <Route path="register" element={<Register />} />
             <Route path="signin" element={<SignIn />} />
-            <Route path="questionaire" element={<Questionaire />} />
-            <Route path="questionaire2" element={<Questionaire2 />} />
-            <Route path="questionaire3" element={<Questionaire3 />} />
 
             {/* <Route path="signout" element={<SignOut />} /> */}
             {/* <Route path="passwordrecovery" element={<PasswordRecovery />} />  */}
@@ -99,7 +95,11 @@ const App = (props, state) => {
                 path="prime-news/subscriptions"
                 element={<Subscriptions />}
               />
-              <Route path="settings" element={<Settings />} />
+              <Route path="/settings">
+                <Route path="myinfo" element={<MyInfo />} />
+                <Route path="business" element={<Business />} />
+                <Route path="art" element={<Art />} />
+              </Route>
             </Route>
 
             <Route element={<RequireAuth allowedRoles={[ROLES.Editor]} />}>

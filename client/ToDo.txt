@@ -9,6 +9,8 @@ convert all info filling questions to the same as settings
 
 make the settings modal reflect profile busness and art
 
+Figure out the Bug in Login vs Register to settings to login
+
 Go Over Likes and Dislikes for videos
 
 GOALS FOR WEEK 14

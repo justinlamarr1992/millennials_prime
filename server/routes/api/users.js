@@ -28,6 +28,10 @@ router
   .post(verifyRoles(ROLES_LIST.User), userController.getPicture);
 
 router
+  .route("/art/:id")
+  .patch(verifyRoles(ROLES_LIST.User), userController.updateArtInfo);
+
+router
   .route("/business/:id")
   .patch(verifyRoles(ROLES_LIST.User), userController.updateBusinessInfo);
 

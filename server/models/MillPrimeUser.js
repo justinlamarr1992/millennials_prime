@@ -13,6 +13,7 @@ const userSchema = new Schema(
     },
     firstName: { type: String, maxlength: 50 },
     lastName: { type: String, maxlength: 50 },
+    name: { type: String, maxlength: 100 },
     DOB: { type: Date },
     email: { type: String },
     password: { type: String, minlength: 6 },
@@ -32,6 +33,11 @@ const userSchema = new Schema(
     },
     // change too just business
     business: {
+      businessLogo: {
+        type: Schema.Types.ObjectId,
+        ref: "businessLogo",
+      },
+      companyName: { type: String },
       entrepreneur: { type: Boolean },
       industry: { type: String },
       whyIndustry: { type: String },

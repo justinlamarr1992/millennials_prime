@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import User from "../../Assets/Images/ProfileAvatar.png";
 import "../../Components/settings/settings.css";
@@ -8,10 +8,12 @@ import SettingsModal from "../../Components/settings/SettingsModal";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import useUserPicture from "../../Hooks/useUserPicture";
-const Settings = () => {
+const MyInfo = () => {
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
   const [modal, setModal] = useState(true);
+
+  const navigate = useNavigate();
 
   const [profileImage, setProfileImage] = useState({ image: "" });
   const [name, setName] = useState("");
@@ -43,13 +45,13 @@ const Settings = () => {
       try {
         const response = await axiosPrivate.post("/users/userinfo", { _id });
         setName(response.data[0].name);
-        setUsername(response.data[0].username);
-        setEmail(response.data[0].email);
+        setUsername(response.data[0].email);
+        setEmail(response.data[0].username);
         setDOB(response.data[0].DOB);
-        setCountry(response.data[0].country);
-        setState(response.data[0].state);
-        setCity(response.data[0].city);
-        setZip(response.data[0].zip);
+        setCountry(response.data[0].location.country);
+        setState(response.data[0].location.state);
+        setCity(response.data[0].location.city);
+        setZip(response.data[0].location.zip);
       } catch (err) {
         console.log(err);
       }
@@ -205,6 +207,7 @@ const Settings = () => {
                   name="email"
                   placeholder={email}
                   onChange={handleEmailChanges}
+                  disabled
                 />
               </div>
               <div className="label-input">
@@ -348,22 +351,6 @@ const Settings = () => {
             >
               Save Changes
             </button>
-            <Link to="/auth/questionaire2">
-              <button
-                className="settings-user-info-button page-button con-shade clickable"
-                onClick={handleChange}
-              >
-                Business Changes
-              </button>
-            </Link>
-            <Link to="/auth/questionaire2">
-              <button
-                className="settings-user-info-button page-button con-shade clickable"
-                onClick={handleChange}
-              >
-                Artistry Changes
-              </button>
-            </Link>
           </div>
         </form>
         <button className="test-modal-button" onClick={onClick}>
@@ -374,7 +361,7 @@ const Settings = () => {
     </div>
   );
 };
-export default Settings;
+export default MyInfo;
 
 function convertToBase64(file) {
   return new Promise((resolve, reject) => {

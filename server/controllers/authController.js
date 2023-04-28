@@ -9,8 +9,8 @@ const handleLogin = async (req, res) => {
   const cookies = req.cookies;
   // console.log(`cookie available at login: ${JSON.stringify(cookies)}`);
   const { user, password } = req.body;
-  // console.log(req.body);
-  // console.log(user, password);
+  console.log(req.body);
+  console.log(user, password);
   if (!user || !password)
     return res
       .status(400)
