@@ -80,18 +80,6 @@ const Business = () => {
           setPrimaryPromotion(response.data[0].business.primaryPromotion);
           setFactorsOfLocation(response.data[0].business.factorsOfLocation);
         }
-        // setCompanyName(response.data[0].companyName);
-        // setIndustry(response.data[0].industry);
-        // setWhyIndustry(response.data[0].whyIndustry);
-        // setOpenOnMillPrime(response.data[0].openOnMillPrime);
-        // setLengthOpen(response.data[0].lengthOpen);
-        // setWhyBusiness(response.data[0].whyBusiness);
-        // setFirstObjective(response.data[0].firstObjective);
-        // setObjectiveNow(response.data[0].objectiveNow);
-        // setHowMany(response.data[0].howMany);
-        // setProductsAndServices(response.data[0].productsAndServices);
-        // setPrimaryPromotion(response.data[0].primaryPromotion);
-        // setFactorsOfLocation(response.data[0].factorsOfLocation);
       } catch (err) {
         console.log(err);
       }
@@ -106,6 +94,7 @@ const Business = () => {
     setProfileImage({ ...profileImage, image: base64 });
   };
 
+  // True/false Drop Down Checks
   const bossCheck = (e) => {
     console.log(business);
     const inputBusiness = document.getElementById("business").value;
@@ -148,6 +137,8 @@ const Business = () => {
     setValues({ ...values, [e.target.name]: e.target.value });
     console.log(values);
   };
+
+  // Handles
   const handleWhyIndusty = async (e) => {
     setValues({ ...values, [e.target.name]: e.target.value });
     console.log(values);
@@ -191,7 +182,7 @@ const Business = () => {
   };
 
   const handleUpdate = async (e) => {
-    // This is where We update the user business info
+    // This is where We update the user art info
     e.preventDefault();
     console.log(values);
     try {

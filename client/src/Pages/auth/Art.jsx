@@ -28,12 +28,11 @@ const Art = () => {
   const [support, setSupport] = useState("");
   const [critics, setCritics] = useState("");
   const [specificIntegral, setSpecificIntegral] = useState("");
-  const [whatSpecfic, setWhatSpecfic] = useState("");
+  const [whatSpecfic, setWhatSpecfic] = useState(null);
 
   const artRef = useRef(false);
   const networkRef = useRef(false);
   const integralRef = useRef(false);
-  const [continues, setContinues] = useState(false);
   const inputArtist = document.querySelector("#artist");
 
   // info to be sent in backend
@@ -52,6 +51,7 @@ const Art = () => {
     specificIntegral: "",
     whatSpecfic: "",
   });
+  const [errMsg, setErrMsg] = useState("");
 
   const _id = auth._id;
 
@@ -60,62 +60,74 @@ const Art = () => {
 
     const getUserArtInfo = async () => {
       try {
-        const response = await axiosPrivate.post("/user/userinfo", { _id });
+        const response = await axiosPrivate.post("/users/userinfo", { _id });
         console.log(response.data[0]);
-        if (response.data[0].art) setArtist(response.data[0].art.artist);
-        setArtist(false);
+        setArtist(response.data[0].art.artist);
+        if (artist == true) {
+          setProfessional(response.data[0].art.professional);
+          setPurpose(response.data[0].art.purpose);
+          setAffectIssues(response.data[0].art.affectIssues);
+          setNavigateIndustry(response.data[0].art.navigateIndustry);
+          setInspirationOfWork(response.data[0].art.inspirationOfWork);
+          setStyleChanged(response.data[0].art.styleChanged);
+          setFavsOrNoneFavs(response.data[0].art.favsOrNoneFavs);
+          setNetwork(response.data[0].art.network);
+          setSupport(response.data[0].art.support);
+          setCritics(response.data[0].art.critics);
+          setSpecificIntegral(response.data[0].art.specificIntegral);
+          setWhatSpecfic(response.data[0].art.whatSpecfic);
+        }
       } catch (err) {
         console.log(err);
       }
     };
 
     getUserArtInfo();
-  }, []);
-
-  useEffect(() => {
-    artCheck();
-  }, [artRef.current.selectedIndex]);
+  }, [_id]);
 
   const artCheck = (e) => {
-    console.log(artRef.current.selectedIndex);
-    if (artRef.current.selectedIndex == 0) {
-      console.log(" dont continue");
-      setContinues(false);
-    } else if (artRef.current.selectedIndex == 1) {
-      console.log("Yes");
+    console.log(art);
+    const inputArt = document.getElementById("artist").value;
+
+    if (inputArt === "yes") {
       setArt(true);
-      setContinues(true);
-    } else if (artRef.current.selectedIndex == 2) {
-      console.log("No");
+      setArtist(true);
+    } else {
       setArt(false);
-      setContinues(true);
+      setArtist(false);
+      setProfessional("");
+      setPurpose("");
+      setAffectIssues("");
+      setNavigateIndustry("");
+      setInspirationOfWork("");
+      setStyleChanged("");
+      setFavsOrNoneFavs("");
+      setNetwork("");
+      setSupport("");
+      setCritics("");
+      setSpecificIntegral("");
+      setWhatSpecfic("");
     }
+    setValues({ ...values, [e.target.name]: e.target.value });
+    console.log(values);
   };
   const networkCheck = (e) => {
-    if (networkRef.current.selectedIndex == 0) {
-      console.log("select an answer");
-    } else if (networkRef.current.selectedIndex == 1) {
+    if (document.getElementById("network").value == "yes") {
       setNetwork(true);
-      console.log(network);
-    } else if (networkRef.current.selectedIndex == 2) {
+    } else {
       setNetwork(false);
-      console.log(network);
     }
-    console.log(networkRef.current.selectedIndex);
+
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
   const integralCheck = (e) => {
-    if (integralRef.current.selectedIndex == 0) {
-      console.log("select an answer");
-    } else if (integralRef.current.selectedIndex == 1) {
+    if (document.getElementById("specificIntegral").value == "yes") {
       setSpecificIntegral(true);
-      console.log(specificIntegral);
-    } else if (integralRef.current.selectedIndex == 2) {
+    } else {
       setSpecificIntegral(false);
-      console.log(specificIntegral);
     }
-    console.log(integralRef.current.selectedIndex);
+    setValues({ ...values, [e.target.name]: e.target.value });
   };
-  // TODO: Figure out how to disable the button until all the answers completed
 
   const handleUpdate = async (e) => {
     // This is where We update the user business info
@@ -129,6 +141,11 @@ const Art = () => {
     } catch (err) {
       console.log(err);
     }
+  };
+
+  const handleChange = (e) => {
+    setValues({ ...values, [e.target.name]: e.target.value });
+    console.log(values);
   };
 
   const onClick = () => {
@@ -162,7 +179,11 @@ const Art = () => {
                   <label htmlFor="">
                     Have you worked as a professional artist before?
                   </label>
-                  <select name="pro" id="pro">
+                  <select
+                    name="professional"
+                    id="professional"
+                    onChange={handleChange}
+                  >
                     <option value="" disabled selected>
                       Select your option
                     </option>
@@ -174,20 +195,38 @@ const Art = () => {
                   <label htmlFor="">
                     What's the purpose or goal of your work?
                   </label>
-                  <input type="text" />
+                  <input
+                    type="text"
+                    onChange={handleChange}
+                    placeholder="Select Answer"
+                    id="purpose"
+                    name="purpose"
+                  />
                 </div>
                 <div className="label-input">
                   <label htmlFor="">
                     Favorite and least favorite parts of professional art?
                   </label>
-                  <input type="text" />
+                  <input
+                    type="text"
+                    onChange={handleChange}
+                    placeholder="Select Answer"
+                    id="favsOrNoneFavs"
+                    name="favsOrNoneFavs"
+                  />
                 </div>
 
                 <div className="label-input">
                   <label htmlFor="">
                     How can your work affect societal issues?
                   </label>
-                  <input type="text" />
+                  <input
+                    type="text"
+                    onChange={handleChange}
+                    placeholder="Select Answer"
+                    id="affectIssues"
+                    name="affectIssues"
+                  />
                 </div>
               </div>
 
@@ -196,25 +235,49 @@ const Art = () => {
                   <label htmlFor="">
                     Which art/music trends inspire your current work?
                   </label>
-                  <input type="text" />
+                  <input
+                    type="text"
+                    onChange={handleChange}
+                    placeholder="Select Answer"
+                    id="inspirationOfWork"
+                    name="inspirationOfWork"
+                  />
                 </div>
                 <div className="label-input">
                   <label htmlFor="">
-                    How has your style changed over time?{" "}
+                    How has your style changed over time?
                   </label>
-                  <input type="text" />
+                  <input
+                    type="text"
+                    onChange={handleChange}
+                    placeholder="Select Answer"
+                    id="styleChanged"
+                    name="styleChanged"
+                  />
                 </div>
                 <div className="label-input">
                   <label htmlFor="">
                     What have critics said about your work?
                   </label>
-                  <input type="text" />
+                  <input
+                    type="text"
+                    onChange={handleChange}
+                    placeholder="Select Answer"
+                    id="critics"
+                    name="critics"
+                  />
                 </div>
                 <div className="label-input">
                   <label htmlFor="">
                     How do you navigate the professional art industry?
                   </label>
-                  <input type="text" />
+                  <input
+                    type="text"
+                    onChange={handleChange}
+                    placeholder="Select Answer"
+                    id="navigateIndustry"
+                    name="navigateIndustry"
+                  />
                 </div>
               </div>
 
@@ -224,12 +287,7 @@ const Art = () => {
                     Do you have a network of other artists?
                   </label>
                   {/* If yes give a brief one to sentence description */}
-                  <select
-                    name="network"
-                    id="network"
-                    onChange={networkCheck}
-                    ref={networkRef}
-                  >
+                  <select name="network" id="network" onChange={networkCheck}>
                     <option value="" disabled selected>
                       Select your option
                     </option>
@@ -239,7 +297,14 @@ const Art = () => {
                 </div>
                 <div className="label-input">
                   <label htmlFor="">How do they support you?</label>
-                  <input type="text" disabled={network ? false : true} />
+                  <input
+                    type="text"
+                    onChange={handleChange}
+                    placeholder="Select Answer"
+                    id="support"
+                    name="support"
+                    disabled={network ? false : true}
+                  />
                 </div>
               </div>
 
@@ -249,9 +314,8 @@ const Art = () => {
                     Anything specific integral to your work?
                   </label>
                   <select
-                    name="integral"
-                    id="integral"
-                    ref={integralRef}
+                    name="specificIntegral"
+                    id="specificIntegral"
                     onChange={integralCheck}
                   >
                     <option value="" disabled selected>
@@ -266,6 +330,11 @@ const Art = () => {
                   <input
                     type="text"
                     disabled={specificIntegral ? false : true}
+                    onChange={handleChange}
+                    placeholder="Select Answer"
+                    id="whatSpecfic"
+                    name="whatSpecfic"
+                    disabled={specificIntegral ? false : true}
                   />
                 </div>
               </div>
@@ -273,7 +342,7 @@ const Art = () => {
           )}
 
           <button className="auth-button login" onClick={handleUpdate}>
-            Update Business Information
+            Update Art Information
           </button>
         </form>
         <button className="test-modal-button" onClick={onClick}>
