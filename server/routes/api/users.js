@@ -36,6 +36,11 @@ router
   .patch(verifyRoles(ROLES_LIST.User), userController.updateBusinessInfo);
 
 router
+  .route("/modal")
+  // .route("/modal/:id")
+  .post(verifyRoles(ROLES_LIST.User), userController.getModalInfo);
+
+router
   .route("/:id")
   .get(verifyRoles(ROLES_LIST.User), userController.getUser)
   .patch(verifyRoles(ROLES_LIST.User), userController.updateUserInfo);

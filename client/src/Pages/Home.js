@@ -1,6 +1,8 @@
 import React, { useState, useRef, useEffect } from "react";
 import useLogout from "../Hooks/useLogout";
 
+import useAuth from "../Hooks/useAuth";
+
 import { Link, useNavigate } from "react-router-dom";
 
 // import { usePostsContext } from "../Hooks/usePostsContext";
@@ -22,6 +24,8 @@ import MainModal from "../Components/reusuables/modals/MainModal";
 import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 
 const Home = () => {
+  const { auth } = useAuth();
+
   const [modal, setModal] = useState(true);
   // testing useSelectpr
   const [pageWidth, setPageWidth] = useState("var(--home-per)");
@@ -36,6 +40,8 @@ const Home = () => {
 
   const [testVideo, setTestVideo] = useState({});
   const [testDelVideo, setTestDelVideo] = useState("");
+
+  const _id = auth._id;
 
   const signOut = async () => {
     // if used in more components, this should be in context
@@ -160,7 +166,7 @@ const Home = () => {
         <button className="test-modal-button" onClick={onClick}>
           Modal Test Button
         </button>
-        {modal && <MainModal />}x
+        {modal && <MainModal _id={_id} />}x
         {/* <Link to={`/prime-news/catalog`}>
           <button className="home-butt con-shade ">Catalog</button>
         </Link> */}

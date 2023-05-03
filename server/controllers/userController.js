@@ -5,6 +5,48 @@ var mongoose = require("mongoose");
 
 // const User = require("../models/user");
 
+const getModalInfo = async (req, res) => {
+  // if (!req?.params?.id)
+  //   return res.status(400).json({ message: "User ID required" });
+
+  // const _id = new mongoose.Types.ObjectId(req.params.id);
+
+  console.log(req.body);
+  const _id = new mongoose.Types.ObjectId(req.body._id);
+
+  console.log(_id);
+
+  try {
+    const user = await User.find({
+      _id: { $nin: [_id] },
+    }).limit(3);
+    // .toArray();
+    // .toArray((err, users) => {
+    //   if (!users || users.length === 0) {
+    //     return res.status(200).json({
+    //       success: false,
+    //       message: "No Users Available",
+    //     });
+    //   }
+    //   users.map((user) => {
+    //     console.log(user);
+    //   });
+    // });
+
+    // .find({})
+    // .sort({ _id: -1 })
+    // .limit(1)
+
+    // if (!user) {
+    //   return res
+    //     .status(204)
+    //     .json({ message: `No User matches ID ${req.params.id}` });
+    // }
+    res.status(200).json(user);
+  } catch (err) {
+    console.log(err);
+  }
+};
 const getUser = async (req, res) => {
   if (!req?.params?.id)
     return res.status(400).json({ message: "User ID required" });
@@ -301,6 +343,7 @@ const createProfilePicture = async (req, res) => {
 module.exports = {
   getAllUsers,
   deleteUser,
+  getModalInfo,
   getUser,
   getUserInfo,
   getUserReq,

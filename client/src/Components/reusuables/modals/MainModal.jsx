@@ -1,11 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import User from "../../../Assets/Images/user.jpeg";
 import { FaEnvelope } from "react-icons/fa";
 import HomeFollowComp from "./HomeFollowComp";
 import HomeConnectionsComp from "./HomeConnectionsComp";
 import ModalTop from "./ModalTop";
+import useAxiosPrivate from "../../../Hooks/useAxiosPrivate";
 
-const MainModal = () => {
+const MainModal = ({ _id }) => {
+  const axiosPrivate = useAxiosPrivate();
+
+  const [firstUser, setFirstUser] = useState({});
+  const [secondUser, setSecondUser] = useState({});
+  const [thirdUser, setThirdUser] = useState({});
+
+  // Strt logic here for all Modal logic
+
+  // find 3 users for follows and connections
+  console.log("This is the ID for the main modal", _id);
+
+  useEffect(() => {
+    const getModalInfo = async () => {
+      try {
+        const response = await axiosPrivate.post("/users/modal", { _id });
+        setFirstUser(response.data[0]);
+        setSecondUser(response.data[1]);
+        setThirdUser(response.data[2]);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    getModalInfo();
+  }, []);
+  console.log(firstUser);
+  console.log(secondUser);
+  console.log(thirdUser);
+
   return (
     <div className="modal con-shade home-modal">
       <div className="modal-container">
@@ -21,9 +50,9 @@ const MainModal = () => {
           <h4 className="modal-section-title">Who to Follow</h4>
           <div className="modal-home-follows">
             {/* use logic to find top 3 users gaining views, likes and follows */}
-            <HomeFollowComp />
-            <HomeFollowComp />
-            <HomeFollowComp />
+            <HomeFollowComp user={firstUser} />
+            <HomeFollowComp user={secondUser} />
+            <HomeFollowComp user={thirdUser} />
           </div>
         </div>
         <div className="modal-section ">
@@ -31,8 +60,8 @@ const MainModal = () => {
           <div className="modal-home-connections">
             {/* use Logic to find users that have similar connections that could help user */}
             <HomeConnectionsComp />
-            <div>Thing 2</div>
-            <div>Thing 3</div>
+            <HomeConnectionsComp />
+            <HomeConnectionsComp />
           </div>
         </div>
       </div>
