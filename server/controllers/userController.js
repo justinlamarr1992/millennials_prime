@@ -11,13 +11,17 @@ const getModalInfo = async (req, res) => {
 
   // const _id = new mongoose.Types.ObjectId(req.params.id);
 
-  console.log(req.body);
   const _id = new mongoose.Types.ObjectId(req.body._id);
 
   console.log(_id);
 
+  // TODO: Get better ways to refine this
+
   try {
-    const user = await User.find({
+    // This is the code for who to follow that is doing good
+    // So instead of just users find users with most activity of
+    // some sort
+    const follows = await User.find({
       _id: { $nin: [_id] },
     }).limit(3);
     // .toArray();
@@ -42,7 +46,13 @@ const getModalInfo = async (req, res) => {
     //     .status(204)
     //     .json({ message: `No User matches ID ${req.params.id}` });
     // }
-    res.status(200).json(user);
+    // This is the code for who to connects that is doing good
+
+    const connects = await User.find({
+      _id: { $nin: [_id] },
+    }).limit(3);
+
+    res.status(200).json({ follows, connects });
   } catch (err) {
     console.log(err);
   }

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import Pic from "../../../Assets/Images/user.jpeg";
 import { FaUserPlus } from "react-icons/fa";
 
-const HomeConnectionsComp = () => {
+const HomeConnectionsComp = ({ user }) => {
   // TODO: Create an established connections componenet
   return (
     <div className="modal-home-follows-comp s-prime-container">
@@ -17,17 +17,18 @@ const HomeConnectionsComp = () => {
 
       <h5 className="modal-home-follows-name">
         <Link
-          to={`/user/users/name`}
+          to={`/user/users/${user._id}`}
           // TODO: Display name but have Link to the @username
           // to={`/user/users/${data.id}`}
         >
-          Name
+          {user.username}
         </Link>
       </h5>
-      <h5 className="modal-home-follows-industry">Industry</h5>
-      <div className="modal-home-follows-add p-con-shade clickable">
-        <FaUserPlus />
-      </div>
+      {/* TODO: figure better way to do that */}
+
+      <h5 className="modal-home-follows-industry">
+        {user.business ? user.business.industry : "Primer (SUBJECT TO CHANGE)"}
+      </h5>
     </div>
   );
 };

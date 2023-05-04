@@ -27,25 +27,37 @@ const getSubscribes = async (req, res) => {
 };
 
 const getSubscribed = async (req, res) => {
+  console.log(req.body);
+  console.log("TO: ", req.body.userTo, ", From: ", req.body.userFrom);
   const userTo = req.body.userTo;
   const userFrom = req.body.userFrom;
 
-  const subscribed = await Subscriber.find({ userTo, userFrom }).exec();
+  // const subscribed = await Subscriber.find({ userTo, userFrom }).exec();
+  const subscribed = await Subscriber.find({
+    $and: [{ userTo, userFrom }],
+  }).exec();
+
+  console.log(subscribed);
 
   try {
     let result = false;
     if (subscribed.length !== 0) {
       result = true;
     }
-    res.json({ subscribed: result });
+    res.json({ result, subscribed, Test: "Test1111" });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
 };
 
 const postSubscribe = async (req, res) => {
+  const userTo = req.body.userTo;
+  const userFrom = req.body.userFrom;
   try {
-    const subscribe = await Subscriber.create(req.body);
+    const subscribe = await Subscriber.create({
+      userTo,
+      userFrom,
+    });
     console.log(subscribe);
     res.status(201).json({ success: `New Subscriber` });
   } catch (err) {

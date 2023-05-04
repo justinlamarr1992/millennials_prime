@@ -11,9 +11,6 @@ const Subscriber = ({ userTo, userFrom }) => {
   const [userToTest, setUserToTest] = useState({});
   const [userFromTest, setUserFromTest] = useState({});
 
-  // const userTo = "Is this ist hardedcoded";
-  // const userFrom = "It Maybe";
-
   const handleSubscribe = async () => {
     if (subscribed) {
       // when already subscribed
@@ -40,24 +37,6 @@ const Subscriber = ({ userTo, userFrom }) => {
         }
       }
     } else {
-      //   try {
-      //     const response = await axiosPrivate.post(
-      //       "/users/user",
-      //       { userTo, userFrom },
-      //       {
-      //         headers: { "Content-Type": "application/json" },
-      //         withCredentials: true,
-      //       }
-      //     );
-      //     console.log("RESPONSE FOR NEW CODE", response);
-      //     // setUserToTest()
-      //     // setUserFromTest()
-      //   } catch (err) {
-      //     console.log(err);
-      //   }
-      // }
-      //{
-      // when no subscribed
       try {
         const response = await axiosPrivate.post(
           "/subscribe/subscribe",
