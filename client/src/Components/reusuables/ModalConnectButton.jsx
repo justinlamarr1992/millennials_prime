@@ -10,7 +10,7 @@ const ModalConnectButton = ({ userTo, userFrom, userid }) => {
 
   console.log(userFrom, userTo, userid);
   //   const connectedValues = { userFrom, userTo, userid };
-  const connectedValues = { userid, userTo, userFrom };
+  const connectedValues = JSON.stringify({ userid, userTo, userFrom });
 
   const [connected, setConnected] = useState(false);
   console.log(
@@ -29,17 +29,10 @@ const ModalConnectButton = ({ userTo, userFrom, userid }) => {
     if (connected) {
       // when already connected
       try {
-        const response = await axiosPrivate.post(
-          "/subscribe/unsubscribe",
-          {
-            userTo,
-            userFrom,
-          },
-          {
-            headers: { "Content-Type": "application/json" },
-            withCredentials: true,
-          }
-        );
+        const response = await axiosPrivate.post("/subscribe/unsubscribe", {
+          userFrom,
+          userTo,
+        });
         setConnected(!connected);
         console.log("NEW connect REQUEST: ", response);
       } catch (err) {
@@ -88,29 +81,29 @@ const ModalConnectButton = ({ userTo, userFrom, userid }) => {
     " while the testing userid is ",
     userid
   );
-  useEffect(() => {
-    // let isMounted = true;
-    // const controller = new AbortController();
-    const getConnected = async () => {
-      try {
-        const response = await axiosPrivate.post(
-          "/subscribe/subscribed",
-          //   { userFrom, userTo },
-          { connectedValues }
-        );
-        // setConnected();
-        console.log(response.data.result);
-        setConnected(response.data.result);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getConnected();
-    // return () => {
-    //   isMounted = false;
-    //   controller.abort();
-    // };
-  }, []);
+  //   useEffect(() => {
+
+  const getConnected = async () => {
+    try {
+      const response = await axiosPrivate.post(
+        "/subscribe/subscribed",
+        {
+          userFrom,
+          userTo,
+          // userid
+        }
+        // { connectedValues }
+      );
+      // setConnected();
+      console.log(response);
+      setConnected(response.data.connected);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  getConnected();
+
+  //   }, [userFrom]);
 
   return (
     <button

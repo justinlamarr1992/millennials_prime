@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+var mongoose = require("mongoose");
 const Subscriber = require("../models/Subscriber");
 const Video = require("../models/VideoModel");
 // const { subscribe } = require("../routes/root");
@@ -10,9 +11,9 @@ const getSubscribes = async (req, res) => {
   const userTo = req.body.userTo;
   const userFrom = req.body.userFrom;
 
-  console.log("req.body : ", req.body);
-  console.log("userTo from getSubscribes: ", userTo);
-  console.log("userFrom from getSubscribes: ", userFrom);
+  // console.log("req.body : ", req.body);
+  // console.log("userTo from getSubscribes: ", userTo);
+  // console.log("userFrom from getSubscribes: ", userFrom);
 
   const subscribers = await Subscriber.find({ userTo }).exec();
   if (!subscribers)
@@ -27,34 +28,45 @@ const getSubscribes = async (req, res) => {
 };
 
 const getSubscribed = async (req, res) => {
-  console.log(req.body);
-  console.log(
-    "TO: ",
-    req.body.userTo,
-    ", From: ",
-    req.body.userFrom,
-    " Userid: ",
-    req.body.userid
-  );
-  const userTo = req.body.userTo;
-  const userFrom = req.body.userFrom;
-  const userid = req.body.userid;
+  // console.log(req.body);
+  // console.log(
+  //   "TO: ",
+  //   req.body.userTo,
+  //   ", From: ",
+  //   req.body.userFrom
+  //   // " Userid: ",
+  //   // req.body.userid
+  // );
+  const userTo = new mongoose.Types.ObjectId(req.body.userTo);
+  const userFrom = new mongoose.Types.ObjectId(req.body.userFrom);
+  // const userid = req.body.userid;
+  let connected = Boolean;
 
-  // const subscribed = await Subscriber.find({ userTo, userFrom }).exec();
-  const subscribed = await Subscriber.find({
-    $and: [{ userTo, userFrom }],
-  }).exec();
-
-  console.log(subscribed);
-
-  try {
-    let result = false;
-    if (subscribed.length !== 0) {
-      result = true;
+  if (
+    !userTo ||
+    !userFrom
+    // || userid
+  ) {
+    return res
+      .status(400)
+      .json({ message: "Need all of the neccessary information" });
+  } else {
+    try {
+      // const subscribed = await Subscriber.find({ userTo, userFrom }).exec();
+      const subscribed = await Subscriber.find({
+        $and: [{ userTo, userFrom }],
+      }).exec();
+      if (!subscribed || subscribed.length < 1) {
+        connected = false;
+        res.status(200).json({ connected, message: "Users arent connected" });
+      } else {
+        // console.log("This is the Subscribed query", subscribed);
+        connected = true;
+        res.status(200).json({ connected, message: "Users are connected" });
+      }
+    } catch (err) {
+      res.status(500).json({ message: err.message });
     }
-    res.json({ result, subscribed, userFrom, userTo, userid });
-  } catch (err) {
-    res.status(500).json({ message: err.message });
   }
 };
 
@@ -66,7 +78,7 @@ const postSubscribe = async (req, res) => {
       userTo,
       userFrom,
     });
-    console.log(subscribe);
+    // console.log(subscribe);
     res.status(201).json({ success: `New Subscriber` });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -81,15 +93,16 @@ const postSubscribe = async (req, res) => {
 };
 
 const postUnsubscribe = async (req, res) => {
-  const userTo = req.body.userTo;
-  const userFrom = req.body.userFrom;
+  // console.log(req.body);
+  const userTo = new mongoose.Types.ObjectId(req.body.userTo);
+  const userFrom = new mongoose.Types.ObjectId(req.body.userFrom);
 
   try {
-    const subscribe = await Subscriber.findOneAndDelete({
+    const unsubscribe = await Subscriber.findOneAndDelete({
       userTo,
       userFrom,
     }).exec();
-    res.status(201).json({ success: true });
+    res.status(201).json({ success: true, unsubscribe });
     // res.status(201).json({ success: true, doc }); but this doesnt work and with out its does it
     // John Ahn awanted doc
   } catch (err) {

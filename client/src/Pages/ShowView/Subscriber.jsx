@@ -63,9 +63,6 @@ const Subscriber = ({ userTo, userFrom }) => {
   };
 
   useEffect(() => {
-    let isMounted = true;
-    const controller = new AbortController();
-
     console.log(userTo);
     console.log(userFrom);
 
@@ -77,7 +74,6 @@ const Subscriber = ({ userTo, userFrom }) => {
           { userTo, userFrom },
           // subscribeNumberVariable,
           {
-            signal: controller.signal,
             headers: { "Content-Type": "application/json" },
             withCredentials: true,
           }
@@ -102,7 +98,6 @@ const Subscriber = ({ userTo, userFrom }) => {
           // subscribeNumberVariable,
 
           {
-            signal: controller.signal,
             headers: { "Content-Type": "application/json" },
             withCredentials: true,
           }
@@ -116,11 +111,6 @@ const Subscriber = ({ userTo, userFrom }) => {
       }
     };
     getSubscribed();
-
-    return () => {
-      isMounted = false;
-      controller.abort();
-    };
   }, []);
 
   return (

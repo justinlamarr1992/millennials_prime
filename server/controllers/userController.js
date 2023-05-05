@@ -1,16 +1,12 @@
 // const User = require("../models/PrimeUser");
 const User = require("../models/MillPrimeUser");
 const Image = require("../models/Image");
+const Subscriber = require("../models/Subscriber");
 var mongoose = require("mongoose");
 
 // const User = require("../models/user");
 
 const getModalInfo = async (req, res) => {
-  // if (!req?.params?.id)
-  //   return res.status(400).json({ message: "User ID required" });
-
-  // const _id = new mongoose.Types.ObjectId(req.params.id);
-
   const _id = new mongoose.Types.ObjectId(req.body._id);
 
   console.log(_id);
@@ -21,36 +17,43 @@ const getModalInfo = async (req, res) => {
     // This is the code for who to follow that is doing good
     // So instead of just users find users with most activity of
     // some sort
-    const follows = await User.find({
-      _id: { $nin: [_id] },
-    }).limit(3);
-    // .toArray();
-    // .toArray((err, users) => {
-    //   if (!users || users.length === 0) {
-    //     return res.status(200).json({
-    //       success: false,
-    //       message: "No Users Available",
-    //     });
-    //   }
-    //   users.map((user) => {
-    //     console.log(user);
-    //   });
-    // });
 
-    // .find({})
-    // .sort({ _id: -1 })
-    // .limit(1)
+    // const follows = await User.find({
+    //   _id: { $nin: [_id] },
+    // }).limit(3);
+    const follows = await User.aggregate([{ $sample: { size: 3 } }]);
 
-    // if (!user) {
-    //   return res
-    //     .status(204)
-    //     .json({ message: `No User matches ID ${req.params.id}` });
-    // }
     // This is the code for who to connects that is doing good
 
-    const connects = await User.find({
-      _id: { $nin: [_id] },
-    }).limit(3);
+    // First Connects
+    // const connects = await User.find({
+    //   _id: { $nin: [_id] },
+    // }).limit(3);
+    // const subscribed = await Subscriber.find({
+    //     $and: [{ userTo, userFrom }],
+    //   }).exec();
+
+    let connects = await Subscriber.find({ userFrom: _id });
+    // console.log("This is the Random Connects List", randomConnects);
+
+    const _randomslice = (ar, size) => {
+      let new_ar = [...ar];
+      new_ar.splice(Math.floor(Math.random() * ar.length), 1);
+      return ar.length <= size + 1 ? new_ar : _randomslice(new_ar, size);
+    };
+
+    // console.log("This is the Code im trying", _randomslice(randomConnects, 2));
+
+    connects = _randomslice(connects, 3);
+
+    const ranArray = [];
+    const newTest = connects.map((newItem, i) => {
+      console.log("New user", i, ": ", newItem._id);
+
+      ranArray.push(User.findOne({ _id: newItem._id }).exec());
+    });
+
+    console.log("The New Array of _ids: ", ranArray);
 
     res.status(200).json({ follows, connects });
   } catch (err) {

@@ -7,7 +7,7 @@
 // const HomeFeedEpisode = ({ modal, setModal }) => {
 //   return (
 //     <div>
-//       {episodeData.map((data) => (
+//       {episodeData((data) => (
 //         <section
 //           className={
 //             "post-episode-container prime-container p-con-shade wrapping " +

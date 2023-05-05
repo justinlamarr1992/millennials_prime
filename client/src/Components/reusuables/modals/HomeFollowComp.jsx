@@ -30,7 +30,8 @@ const HomeFollowComp = ({ _id, user }) => {
       <ModalConnectButton
         userTo={user._id}
         userFrom={_id}
-        userid={`${userid}`}
+        // userid={`${userid}`}
+        userid={user}
       />
     </div>
   );
