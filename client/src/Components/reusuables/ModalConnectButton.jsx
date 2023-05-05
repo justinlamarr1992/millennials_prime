@@ -5,9 +5,12 @@ import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 const ModalConnectButton = ({ userTo, userFrom, userid }) => {
   const axiosPrivate = useAxiosPrivate();
 
+  // const userTo = userTo;
+  // const userid = userid;
+
   console.log(userFrom, userTo, userid);
   //   const connectedValues = { userFrom, userTo, userid };
-  const connectedValues = { userid };
+  const connectedValues = { userid, userTo, userFrom };
 
   const [connected, setConnected] = useState(false);
   console.log(
@@ -16,7 +19,9 @@ const ModalConnectButton = ({ userTo, userFrom, userid }) => {
     " and ",
     userFrom,
     " is ",
-    connected
+    connected,
+    " while the testing userid is ",
+    userid
   );
 
   const handleFollow = async () => {
@@ -79,7 +84,9 @@ const ModalConnectButton = ({ userTo, userFrom, userid }) => {
     " and ",
     userFrom,
     " is ",
-    connected
+    connected,
+    " while the testing userid is ",
+    userid
   );
   useEffect(() => {
     // let isMounted = true;
@@ -89,12 +96,7 @@ const ModalConnectButton = ({ userTo, userFrom, userid }) => {
         const response = await axiosPrivate.post(
           "/subscribe/subscribed",
           //   { userFrom, userTo },
-          { userid },
-          {
-            // signal: controller.signal,
-            headers: { "Content-Type": "application/json" },
-            withCredentials: true,
-          }
+          { connectedValues }
         );
         // setConnected();
         console.log(response.data.result);

@@ -54,17 +54,17 @@ const MainModal = ({ _id }) => {
             <HomeFollowComp
               _id={_id}
               user={firstFollow}
-              userid={firstFollow._id}
+              // userid={firstFollow._id}
             />
             <HomeFollowComp
               _id={_id}
               user={secondFollow}
-              userid={secondFollow._id}
+              // userid={secondFollow._id}
             />
             <HomeFollowComp
               _id={_id}
               user={thirdFollow}
-              userid={thirdFollow._id}
+              // userid={thirdFollow._id}
             />
           </div>
         </div>

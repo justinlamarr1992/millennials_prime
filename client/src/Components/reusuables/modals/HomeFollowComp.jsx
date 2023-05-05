@@ -4,9 +4,9 @@ import Pic from "../../../Assets/Images/user.jpeg";
 import ModalConnectButton from "../ModalConnectButton";
 
 const HomeFollowComp = ({ _id, user }) => {
-  let userid = user._id;
-  console.log(user);
-  console.log(userid);
+  const userid = user._id;
+  // console.log(user);
+  // console.log(userid);
 
   return (
     <div className="modal-home-follows-comp s-prime-container">
@@ -19,12 +19,7 @@ const HomeFollowComp = ({ _id, user }) => {
       </div>
 
       <h5 className="modal-home-follows-name">
-        <Link
-          to={`/user/users/${userid}`}
-          // TODO: Display name but have Link to the @username
-        >
-          {user.username}
-        </Link>
+        <Link to={`/user/users/${userid}`}>{user.username}</Link>
       </h5>
       {/* TODO: figure better way to do that */}
       <h5 className="modal-home-follows-industry">
@@ -32,7 +27,11 @@ const HomeFollowComp = ({ _id, user }) => {
       </h5>
       {/* <h5 className="modal-home-follows-industry">{user.business.industry}</h5> */}
 
-      <ModalConnectButton userTo={user._id} userFrom={_id} userid={userid} />
+      <ModalConnectButton
+        userTo={user._id}
+        userFrom={_id}
+        userid={`${userid}`}
+      />
     </div>
   );
 };

@@ -28,9 +28,17 @@ const getSubscribes = async (req, res) => {
 
 const getSubscribed = async (req, res) => {
   console.log(req.body);
-  console.log("TO: ", req.body.userTo, ", From: ", req.body.userFrom);
+  console.log(
+    "TO: ",
+    req.body.userTo,
+    ", From: ",
+    req.body.userFrom,
+    " Userid: ",
+    req.body.userid
+  );
   const userTo = req.body.userTo;
   const userFrom = req.body.userFrom;
+  const userid = req.body.userid;
 
   // const subscribed = await Subscriber.find({ userTo, userFrom }).exec();
   const subscribed = await Subscriber.find({
@@ -44,7 +52,7 @@ const getSubscribed = async (req, res) => {
     if (subscribed.length !== 0) {
       result = true;
     }
-    res.json({ result, subscribed, Test: "Test1111" });
+    res.json({ result, subscribed, userFrom, userTo, userid });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
