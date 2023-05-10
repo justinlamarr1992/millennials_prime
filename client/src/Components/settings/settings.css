@@ -92,6 +92,7 @@ justify-content: space-around;
 }
 .modal-setting-title{}
 .modal-setting-button{
+    /* color: var(--sec); */
     display: flex;
     align-items: center;
     width: 100%;

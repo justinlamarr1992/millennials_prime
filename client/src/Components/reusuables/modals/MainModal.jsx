@@ -38,7 +38,7 @@ const MainModal = ({ _id }) => {
       }
     };
     getModalInfo();
-  }, []);
+  }, [_id]);
 
   return (
     <div className="modal con-shade home-modal">
@@ -73,10 +73,9 @@ const MainModal = ({ _id }) => {
         <div className="modal-section ">
           <h4 className="modal-section-title">Connections</h4>
           <div className="modal-home-connections">
-            {/* use Logic to find users that have similar connections that could help user */}
-            <HomeConnectionsComp user={firstConnects} />
-            <HomeConnectionsComp user={secondConnects} />
-            <HomeConnectionsComp user={thirdConnects} />
+            <HomeConnectionsComp _id={firstConnects} />
+            <HomeConnectionsComp _id={secondConnects} />
+            <HomeConnectionsComp _id={thirdConnects} />
           </div>
         </div>
       </div>

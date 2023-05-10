@@ -10,7 +10,7 @@
 //   return (
 //     <section
 //       className={
-//         "post-store-container prime-container p-con-shade " +
+//         "post-store-container nonprime-container p-con-shade " +
 //         (modal ? "no-wrapping" : "wrapping")
 //       }
 //     >

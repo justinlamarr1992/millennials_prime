@@ -494,6 +494,12 @@ position: absolute;
         color: var(--tri-t);
         font-weight: normal;
     }
+    .text-pri{
+        color: var(--pri-t);
+    }
+    .text-sec{
+        color: var(--sec-t)
+    }
     
     a {
         text-decoration: none;

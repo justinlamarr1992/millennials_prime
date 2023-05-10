@@ -6,7 +6,7 @@
 
 // const PrimeUpdateVideo = () => {
 //   return (
-//     <section id="prime" className="prime-container news-container p-con-shade ">
+//     <section id="prime" className="nonprime-container news-container p-con-shade ">
 //       <h2 className="pr-title title-space">Weekly Progress Video</h2>
 //       <Video video={userProgressData[0].uploadedVid.video} />
 //       {/* <UserPostInfo className="pr-user-info" /> */}

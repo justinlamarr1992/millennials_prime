@@ -66,6 +66,8 @@ const userSchema = new Schema(
       specificIntegral: { type: Boolean },
       whatSpecfic: { type: String },
     },
+    prime: { type: Boolean, default: false },
+
     // token: { type: String },
     // tokenExp: { type: Number },
     refreshToken: String,

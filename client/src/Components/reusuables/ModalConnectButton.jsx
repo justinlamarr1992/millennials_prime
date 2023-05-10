@@ -8,7 +8,6 @@ const ModalConnectButton = ({ userTo, userFrom, userid }) => {
   // const userTo = userTo;
   // const userid = userid;
 
-  console.log(userFrom, userTo, userid);
   //   const connectedValues = { userFrom, userTo, userid };
   const connectedValues = JSON.stringify({ userid, userTo, userFrom });
 
@@ -95,7 +94,7 @@ const ModalConnectButton = ({ userTo, userFrom, userid }) => {
         // { connectedValues }
       );
       // setConnected();
-      console.log(response);
+      // console.log(response);
       setConnected(response.data.connected);
     } catch (err) {
       console.log(err);

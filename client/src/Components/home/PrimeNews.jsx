@@ -123,7 +123,10 @@ const PrimeNews = () => {
   console.log(userInfo);
 
   return (
-    <section id="prime" className="prime-container news-container p-con-shade ">
+    <section
+      id="prime"
+      className="nonprime-container news-container p-con-shade "
+    >
       <h2 className="pr-title title-space">Prime News</h2>
       {/* TODO: Keep the structre but now input the values that useEffect response leave... 
       Chabge the user info to resemblbe the primeshows viewing */}
@@ -142,9 +145,9 @@ const PrimeNews = () => {
         />
       </div>
       {/* {USER LOGGED IN TERIARY HERE} */}
-      <div className="pr-like-dislike">
+      {/* <div className="pr-like-dislike">
         <PrimeLikeDislike video={video} videoId={video._id} userId={auth._id} />
-      </div>
+      </div> */}
 
       <div className="pr-video-info">
         <h3>{video.title}</h3>

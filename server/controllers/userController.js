@@ -48,12 +48,14 @@ const getModalInfo = async (req, res) => {
 
     const ranArray = [];
     const newTest = connects.map((newItem, i) => {
-      console.log("New user", i, ": ", newItem._id);
-
-      ranArray.push(User.findOne({ _id: newItem._id }).exec());
+      console.log("New user", i, ": ", newItem.userTo);
+      // ranArray.push(User.findOne({ _id: newItem._id }).exec());
+      ranArray.push(newItem.userTo);
     });
 
     console.log("The New Array of _ids: ", ranArray);
+
+    connects = ranArray;
 
     res.status(200).json({ follows, connects });
   } catch (err) {
@@ -80,10 +82,17 @@ const getUser = async (req, res) => {
   }
 };
 const getUserInfo = async (req, res) => {
-  console.log("User Info from Post _id");
-  const _id = req.body._id;
+  // const _id = req.body._id;
+  // console.log("This is the user ", req.body._id);
+
+  // const _id = new mongoose.Types.ObjectId(req.body._id);
+  // console.log("This is the user ", _id);
   try {
-    const user = await User.find({ _id });
+    console.log("This is the user ", req.body._id);
+
+    const _id = new mongoose.Types.ObjectId(req.body._id);
+    console.log("This is the user ", _id);
+    const user = await User.find(_id);
 
     res.json(user);
   } catch (err) {

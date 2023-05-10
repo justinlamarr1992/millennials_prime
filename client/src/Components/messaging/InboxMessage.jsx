@@ -4,7 +4,7 @@
 // const InboxMessage = () => {
 //   return (
 //     <div>
-//       <section className="prime-container inbox-message-container con-shade">
+//       <section className="nonprime-container inbox-message-container con-shade">
 //         <img className="inbox-sender-pic" src={User} alt="User Image here" />
 //         <h4 className="inbox-sender-name">Justin Williams</h4>
 //         <h5 className="inbox-sender-message">This is a sample message</h5>

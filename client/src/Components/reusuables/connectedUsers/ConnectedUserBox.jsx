@@ -20,7 +20,7 @@
 //       <section
 //         className={
 //           verified
-//             ? "prime-container con-shade connected-user-container"
+//             ? "nonprime-container con-shade connected-user-container"
 //             : "norm-container con-shade connected-user-container"
 //         }
 //       >
@@ -101,7 +101,7 @@
 //       </section> */}
 
 //       {/* Not Connected Prime member */}
-//       {/* <section className="prime-container con-shade connected-user-container">
+//       {/* <section className="nonprime-container con-shade connected-user-container">
 //         <img
 //           className="connected-user-info-pic"
 //           src={User}

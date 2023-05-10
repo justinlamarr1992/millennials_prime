@@ -17,7 +17,7 @@ margin: 2% 10% 2% 0;
   transform: scale(1.1, 1.1);
 }
 
-.prime-container {
+.nonprime-container {
             background-image: linear-gradient(
         to top,
          #611821 0%, 
@@ -31,7 +31,7 @@ margin: 2% 10% 2% 0;
     animation: movingGradient 10s linear infinite alternate;
     color: var(--sec-t);
 }
-.s-prime-container {
+.s-nonprime-container {
             background-image: linear-gradient(
         to top,
          #611821 0%, 
@@ -44,6 +44,34 @@ margin: 2% 10% 2% 0;
     background-size: 150% 150%;
     animation: movingGradient 10s linear infinite alternate;
     color: var(--sec-t);
+}
+.user-prime-container {
+            background-image: linear-gradient(
+        to top,
+        #fffd9b 0%, 
+         #eee588 25%, 
+         #ddcd76 50%,
+        #cbb665 75%,
+        #b9a054 100%
+         );
+    border-radius: var(--brad);
+    background-size: 150% 150%;
+    animation: movingGradient 10s linear infinite alternate;
+    color: var(--pri-t);
+}
+.s-prime-container {
+            background-image: linear-gradient(
+        to top,
+         #fffd9b 0%, 
+         #eee588 25%, 
+         #ddcd76 50%,
+        #cbb665 75%,
+        #b9a054 100%
+         );
+    border-radius: var(--s-brad);
+    background-size: 150% 150%;
+    animation: movingGradient 10s linear infinite alternate;
+    color: var(--pri-t);
 }
 
 .norm-container {
