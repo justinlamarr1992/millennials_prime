@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import User from "../../../Assets/Images/user.jpeg";
 import { FaEnvelope } from "react-icons/fa";
 import HomeFollowComp from "./HomeFollowComp";
