@@ -62,7 +62,9 @@ const App = (props, state) => {
       <Routes className="container-comp">
         <Route path="/" element={<Layout />}>
           {/* Public */}
+          {/* FOR PHASE 1 */}
           <Route path="/" element={<Home />} />
+          {/* FOR PHASE 1 */}
           {/* Auth */}
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />
           <Route path="/contact-us" element={<ContactUs />} />
@@ -83,7 +85,9 @@ const App = (props, state) => {
           <Route element={<PersistLogin />}>
             {/* More than one role can be in allowed roles  */}
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
+              {/* PHASE2 */}
               {/* <Route path="/" element={<Home />} /> */}
+              {/* PHASE2 */}
               <Route path="prime-news/catalog" element={<Catalog />} />
 
               <Route path="user">

@@ -26,7 +26,7 @@ import useAxiosPrivate from "../Hooks/useAxiosPrivate";
 const Home = () => {
   const { auth } = useAuth();
 
-  const [modal, setModal] = useState(true);
+  const [modal, setModal] = useState(false);
   // testing useSelectpr
   const [pageWidth, setPageWidth] = useState("var(--home-per)");
   const widthRef = useRef(null);
@@ -159,24 +159,28 @@ const Home = () => {
         ref={widthRef}
       >
         <PrimeNews />
-        {/* <HotItems />
-        <FeatPrimes /> */}
-        {/* <HomeFeedPost /> */}
-        {/* <PostList modal={modal} setModal={setModal} widthRef={widthRef} /> */}
-        <button className="test-modal-button" onClick={onClick}>
+
+        {/* <button className="test-modal-button" onClick={onClick}>
           Modal Test Button
         </button>
-        {modal && <MainModal _id={_id} />}x
-        {/* <Link to={`/prime-news/catalog`}>
+        {modal && <MainModal _id={_id} />} */}
+
+        {/* PHASE 2 */}
+        {/* <HotItems />
+        <FeatPrimes />
+        <HomeFeedPost />
+        <PostList modal={modal} setModal={setModal} widthRef={widthRef} />
+
+        <Link to={`/prime-news/catalog`}>
           <button className="home-butt con-shade ">Catalog</button>
-        </Link> */}
-        {/* <Link to={`/prime-news/subscriptions`}>
+        </Link>
+        <Link to={`/prime-news/subscriptions`}>
           <button className="home-butt con-shade ">Subscriptions</button>
-        </Link> */}
-        {/* <Link to={`/admin`}>
+        </Link>
+        <Link to={`/admin`}>
           <button>Admin</button>
-        </Link> */}
-        {/* <Link to={`/editor`}>
+        </Link>
+        <Link to={`/editor`}>
           <button>Editor</button>
         </Link>
         <Link to={`/user`}>
@@ -184,8 +188,8 @@ const Home = () => {
         </Link>
         <Link to={`/settings`}>
           <button>Settings</button>
-        </Link> */}
-        {/* <button className="home-logout-butt con-shade" onClick={recentTest}>
+        </Link>
+        <button className="home-logout-butt con-shade" onClick={recentTest}>
           Recent Test
         </button>
         <button className="home-logout-butt con-shade" onClick={test}>
@@ -196,7 +200,7 @@ const Home = () => {
         </button>
         <button className="home-logout-butt con-shade" onClick={testDelete}>
           Delete File Test
-        </button> */}
+        </button>
         <Link to="/auth/signin">
           <button className="home-logout-butt con-shade">Sign In</button>
         </Link>
@@ -205,7 +209,7 @@ const Home = () => {
         </Link>
         <button className="home-logout-butt con-shade" onClick={signOut}>
           Sign Out
-        </button>
+        </button> */}
         <h4
           ref={errRef}
           className={errMsg ? "errmsg" : "offscreen"}

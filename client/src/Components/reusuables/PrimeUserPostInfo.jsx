@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import User from "../../Assets/Images/ProfileAvatar.png";
+import MillPrime from "../../Assets/Images/MillennialsPrimeLogoNB.png";
 import TimeCalc from "./TimeCalc";
 
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
@@ -40,31 +41,50 @@ const PrimeUserPostInfo = ({ _id, user, displayName, postedDate }) => {
       <div className="pr-info-pic square-container">
         <img
           className="square-container-contents p-con-shade"
-          src={profileImage.image || User}
-          alt="User Image here"
+          src={profileImage.image || MillPrime}
+          alt="Millennials Prime Logo"
         />
       </div>
-
       <div className="pr-info-name">
-        <h4 className="prime-m-text">
-          <Link className="" to={`/user/users/${_id}`}>
-            {displayName}
-          </Link>
-        </h4>
-        {/* <h4>
-          <Link
-            className="prof-connected-users-img-container square-container "
-            to={`/user/users/${data.id}`}
-          ></Link>
-        </h4> */}
+        <h5 className="prime-m-text">Millennials Prime</h5>
       </div>
       <div className="pr-info-time">
         <h5>
           <TimeCalc postDate={new Date(postedDate)} />
         </h5>
       </div>
-      {/* <PostLikeDisLike /> */}
     </div>
   );
 };
 export default PrimeUserPostInfo;
+// Phase 2
+{
+  /* <div className="pr-user-post-info">
+      <div className="pr-info-pic square-container">
+        <img
+          className="square-container-contents p-con-shade"
+          src={profileImage.image || User}
+          alt="User Image here"
+        />
+      </div>
+      <div className="pr-info-name">
+        <h4 className="prime-m-text">
+          <Link className="" to={`/user/users/${_id}`}>
+            {displayName}
+          </Link>
+        </h4>
+        <h4>
+          <Link
+            className="prof-connected-users-img-container square-container "
+            to={`/user/users/${data.id}`}
+          ></Link>
+        </h4>
+      </div>
+      <div className="pr-info-time">
+        <h5>
+          <TimeCalc postDate={new Date(postedDate)} />
+        </h5>
+      </div>
+      <PostLikeDisLike />
+    </div> */
+}
