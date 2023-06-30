@@ -1,0 +1,38 @@
+{
+  "files": {
+    "main.css": "/static/css/main.b2f563de.css",
+    "main.js": "/static/js/main.155ae492.js",
+    "static/js/787.6f03546d.chunk.js": "/static/js/787.6f03546d.chunk.js",
+    "static/media/video.mp4": "/static/media/video.ecb31ea980b8345d45d0.mp4",
+    "static/media/MillennialsPrimeLogoNB.png": "/static/media/MillennialsPrimeLogoNB.d0bf072c08f18620d633.png",
+    "static/media/MillennialsPrimeLogo.png": "/static/media/MillennialsPrimeLogo.4529d081b8f14031342f.png",
+    "static/media/VideoThumbNail.png": "/static/media/VideoThumbNail.5f8001dd4eb268c36109.png",
+    "static/media/video3.mp4": "/static/media/video3.b80861f88e947c08f9a6.mp4",
+    "static/media/User0.jpeg": "/static/media/User0.7fef4bb6b13bf643eaba.jpeg",
+    "static/media/LoadingScreen.png": "/static/media/LoadingScreen.ca4678adaf01e30dccde.png",
+    "static/media/video2.mp4": "/static/media/video2.e8d8405162f714749f8a.mp4",
+    "static/media/TestArtWork2.jpeg": "/static/media/TestArtWork2.3cdc847e2e1aa68e7776.jpeg",
+    "static/media/image5.png": "/static/media/image5.306dbea495afad18463f.png",
+    "static/media/TestArtWork.jpeg": "/static/media/TestArtWork.f6346b6b353901bc70ee.jpeg",
+    "static/media/Recording.m4a": "/static/media/Recording.4a32b75bab041518ad20.m4a",
+    "static/media/Guitar.jpeg": "/static/media/Guitar.c95a352935f835d8d56c.jpeg",
+    "static/media/user.jpeg": "/static/media/user.c134b69e0b636325930d.jpeg",
+    "static/media/image3.png": "/static/media/image3.f7246f0739c562ca26ae.png",
+    "static/media/Drums.jpeg": "/static/media/Drums.fc3e5b374d9ff7ba313d.jpeg",
+    "static/media/Company1.jpeg": "/static/media/Company1.78467381f0275c9e03b1.jpeg",
+    "static/media/Company3.jpg": "/static/media/Company3.0f4e7e153be875216677.jpg",
+    "static/media/image4.png": "/static/media/image4.5e419277cc5502df4c71.png",
+    "static/media/Company2.jpeg": "/static/media/Company2.68e4d1fd6b77acf3308b.jpeg",
+    "static/media/ProfileAvatar.png": "/static/media/ProfileAvatar.0d14c6999b4a5c8e86a7.png",
+    "static/media/Microphone.jpg": "/static/media/Microphone.ce9a974a0f8e89a475c3.jpg",
+    "static/media/User5.jpeg": "/static/media/User5.db317323923fc3755a31.jpeg",
+    "index.html": "/index.html",
+    "main.b2f563de.css.map": "/static/css/main.b2f563de.css.map",
+    "main.155ae492.js.map": "/static/js/main.155ae492.js.map",
+    "787.6f03546d.chunk.js.map": "/static/js/787.6f03546d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.b2f563de.css",
+    "static/js/main.155ae492.js"
+  ]
+}

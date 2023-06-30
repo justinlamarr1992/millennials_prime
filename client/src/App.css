@@ -52,13 +52,13 @@
     --mh3: 1.438rem;
     /* h4 weight/Bold lineheight/32*/
     --wh4: 1.5rem;
-    /* --mh4: ; */
+    --mh4: 1.375rem;
     /* h5 weight/Regular lineheight/24*/
     --wh5: 1rem;
-    /* --mh5: ; */
+    --mh5: ;
     /* h6 weight/thin lineheight/16*/
     --wh6: 0.75rem;
-    /* --mh5: ; */
+    --mh6: ;
     /* label weight/Bold lineheight/auto*/
     --wlabel: 0.75rem;
     --mlabel: 0.75rem;
@@ -168,6 +168,9 @@ body {
 }
 h1, h2, h3, h4, h5, h6{
     margin: 0;
+}
+h1{
+    font-size: var(--wh1);
 }
 button {
     cursor: pointer;
@@ -399,12 +402,93 @@ position: absolute;
 
 
 /* Extra small devices (phones, 600px and down) */
-@media only screen and (max-width: 600px) {}
+@media only screen and (max-width: 600px) {
+
+
+    h1 {
+        font-size: var(--mh1);
+        font-weight: Bold;
+        line-height: 5rem;
+    }
+    
+    h2 {
+        font-size: var(--mh2);
+        font-weight: Bold;
+        line-height: 4rem;
+    }
+    
+    h3 {
+        font-size: var(--mh3);
+        font-weight: Bold;
+        line-height: 3rem;
+    }
+    
+    h4 {
+        font-size: var(--mh4);
+        font-weight: Bold;
+        line-height: 2rem;
+    }
+    
+    h5 {
+        font-size: var(--mh5);
+        font-weight: Bold;
+        line-height: 2rem;
+    }
+    h6 {
+        font-size: var(--mh6);
+        font-weight: normal;
+        line-height: 0.75rem;
+    }
+    
+    p,
+    .footer-anchor {
+        font-size: var(--mt);
+        font-weight: Bold;
+        line-height: 1.5rem;
+    }
+    
+    .text-big {
+        font-size: 1.625rem;
+        font-weight: lighter;
+        line-height: 2rem;
+    }
+    
+    .text-gray {
+        font-size: var(--wtg);
+        color: var(--tri-t);
+        font-weight: normal;
+    }
+    .page {
+    width: 100%;
+    /* height: 100%; */
+    background: var(--background);
+    /* The reason for page mess up */
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    padding-top: 30%;
+
+    position: fixed;
+}
+}
 /* Small devices (portrait tablets and large phones, 600px and up) */
 @media only screen and (min-width: 600px) {
     .container {
         display: grid;
         grid-template-columns: var(--mcol);
+        .page {
+    width: 100%;
+    /* height: 100%; */
+    background: var(--background);
+
+    /* The reason for page mess up */
+    display: flex;
+    flex-direction: row;
+    
+    /* margin: auto; */
+    padding-left: 0;
+    /* padding-left: var(--nav-w); */
+}
     }
 }
 /* Medium devices (landscape tablets, 768px and up) */
