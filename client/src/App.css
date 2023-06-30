@@ -183,6 +183,7 @@ button {
     color: var(--sec-t);
     font-size: var(--wh4);
     font-weight: bold;
+    user-select: none;
 }
 button:disabled {
     opacity: 0.5;
