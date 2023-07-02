@@ -32,8 +32,8 @@
     /* --bshade: 0 0px 25px 1px hsla(0, 0%, 56%, 0.764); */
     --bshade: 0 0px 25px 1px #97989e;
     --bshadeclicked: none;
-    --p-bshade: 0 0px 25px 1px black;
-    /* --tshade: 0 0px 25px 1px var(--shade); */
+    /* --p-bshade: 0 0px 25px 1px black; */
+    --p-bshade: 0 0px 25px 1px #611821;
     --tshade: 0 0px 25px 1px #000000;
     --btn-shade:0 0px 25px 1px black;
     /* --active-shade: */
@@ -404,8 +404,6 @@ position: absolute;
 
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {
-
-
     h1 {
         font-size: var(--mh1);
         font-weight: Bold;
@@ -468,7 +466,6 @@ position: absolute;
     flex-direction: column;
     padding-left: 0;
     padding-top: 30%;
-
 }
 }
 /* Small devices (portrait tablets and large phones, 600px and up) */
@@ -476,23 +473,35 @@ position: absolute;
     .container {
         display: grid;
         grid-template-columns: var(--mcol);
-        .page {
+    }
+    .page {
     width: 100%;
     /* height: 100%; */
     background: var(--background);
-
     /* The reason for page mess up */
     display: flex;
-    flex-direction: row;
-    
-    /* margin: auto; */
+    flex-direction: column;
     padding-left: 0;
-    /* padding-left: var(--nav-w); */
+    padding-top: 30%;
 }
-    }
 }
 /* Medium devices (landscape tablets, 768px and up) */
-@media only screen and (min-width: 768px) {}
+@media only screen and (min-width: 768px) {
+        .container {
+        display: grid;
+        grid-template-columns: var(--mcol);
+    }
+    .page {
+    width: 100%;
+    /* height: 100%; */
+    background: var(--background);
+    /* The reason for page mess up */
+    display: flex;
+    flex-direction: column;
+    padding-left: 0;
+    padding-top: 30%;
+}
+}
 /* Large devices (laptops/desktops, 992px and up) */
 @media only screen and (min-width: 992px) {
     .container {
