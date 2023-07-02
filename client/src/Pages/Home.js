@@ -159,6 +159,9 @@ const Home = () => {
         ref={widthRef}
       >
         <PrimeNews />
+        <div className="user-prime-container">
+          <h1>More to Come</h1>
+        </div>
 
         {/* <button className="test-modal-button" onClick={onClick}>
           Modal Test Button

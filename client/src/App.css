@@ -1,22 +1,26 @@
 
 :root {
-    /* colors */
+    /* Background */
     --background: #F7F7F7;
     --background2: #C4C4C4;
-    /* --background: linear-gradient(to right,
-            #BD2932,
-            #611821); */
+
+    /* Form Color */
     --form-c: #ffffff;
-    /* --form-c: #F7F7F7; */
+
+    /* Text Colors */
     --pri-t: #020101;
     --sec-t: #ffffff;
     --tri-t: #8F92A1;
+
+    /* Colors */
     --pri-c: #611821;
     --sec-c: #8e202b;
     --tri-c: #BD2932;
     --qua-c: #fffd9b;
     --qui-c: #ddcd76;
     --hex-c: #b9a054;
+
+    /* NavBar Colors */
     --navb-c: #BD2932;
     --foot-c: #939597;
 
@@ -24,59 +28,55 @@
 
     --outline: #8F92A1;
 
+    /* Glowing Colors */
     --gl:0 0px 10px 4px var(--qua-c);
     --gl-red:0 0px 10px 4px var(--tri-c);
     --gl-hov:0 0px 10px 10px var(--qui-c);
 
+/* Shade Colors */
     --shade:#8F92A1;
-    /* --bshade: 0 0px 25px 1px hsla(0, 0%, 56%, 0.764); */
     --bshade: 0 0px 25px 1px #97989e;
     --bshadeclicked: none;
-    /* --p-bshade: 0 0px 25px 1px black; */
     --p-bshade: 0 0px 25px 1px #611821;
     --tshade: 0 0px 25px 1px #000000;
     --btn-shade:0 0px 25px 1px black;
-    /* --active-shade: */
 
     /* typography */
     --font: "Inter", sans-serif;
+
+    /* Font Size */
     /* Web Size */
-    /* h1 weight/Bold lineheight/80*/
-    --wh1: 4.5rem;
-    --mh1:2.938rem;
-    /* h2 weight/Bold lineheight/64*/
-    --wh2: 3.5rem;
-    --mh2: 2.5rem;
-    /* h3 weight/Bold lineheight/48*/
-    --wh3: 2.5rem;
-    --mh3: 1.438rem;
-    /* h4 weight/Bold lineheight/32*/
-    --wh4: 1.5rem;
-    --mh4: 1.375rem;
-    /* h5 weight/Regular lineheight/24*/
-    --wh5: 1rem;
-    --mh5: ;
-    /* h6 weight/thin lineheight/16*/
-    --wh6: 0.75rem;
-    --mh6: ;
-    /* label weight/Bold lineheight/auto*/
-    --wlabel: 0.75rem;
-    --mlabel: 0.75rem;
-    /* text-big weight/Regular lineheight/32*/
-    --wtb: 1.25rem;
-    --mtb: 1.25rem;
-    /* text weight/Bold lineheight/24*/
-    --wt: 1rem;
-    --mt: 0.75rem;
-    /* text-Gray...input text weight/Regular lineheight/24*/
-    --wtg: 1rem;
-    --mtg: 1rem;
-    /* text-Gray weight/Bold lineheight/24*/
-    --wts: 0.75rem;
-    --mts: 0.75rem;
-    /* button text weight/Bold lineheight/24*/
-    --wb: 1rem;
-    --mb: 1.5rem;
+    --wh1: 4.5rem; /*h1*/
+    --wh2: 3.5rem; /*h2*/
+    --wh3: 2.5rem; /*h3*/
+    --wh4: 1.5rem; /*h4*/
+    --wh5: 1rem; /*h5*/
+    --wh6: 0.75rem; /*h6*/
+
+    /* Text Weight */
+    --wlabel: 0.75rem; /*Labels*/
+    --wtb: 1.25rem; /*Text Big*/
+    --wt: 1rem; /*Text Weight*/
+       --wtg: 1rem; /*Text Gray*/
+    --wts: 0.75rem; /*Gray Text Weight*/
+    --wb: 1rem; /*button text weight*/
+
+
+    /* Mobile/ Tablet */
+    --mh1:2.938rem; /*h1*/
+    --mh2: 2.5rem; /*h2*/
+    --mh3: 1.438rem; /*h3*/
+    --mh4: 1.375rem; /*h4*/
+    --mh5: ; /*h5*/
+    --mh6: ; /*h6*/
+
+    /* Text Weight */
+    --mlabel: 0.75rem; /*Labels Weight*/
+    --mtb: 1.25rem; /*Big Text Weight*/
+    --mt: 0.75rem; /*Text Weight*/
+    --mtg: 1rem; /*Text Gray Weight*/
+    --mts: 0.75rem; /**/
+    --mb: 1.5rem; /*Button Text Weight*/
 
 
     /* bold */
@@ -88,6 +88,7 @@
 
     --boxcol: 6% auto 6%;
 
+    /* Grid Gaps */
     --cgap:20px;
     --rgap:10px;
     /* Section Padding */
@@ -103,6 +104,7 @@
     --tbrad: 2rem 2rem 0 0;
     --bbrad: 0 0 2rem 2rem;
 
+    /* Section I think */
     --s-brad:1rem 1rem 1rem 1rem;
     --s-lbrad: 1rem 0 0 1rem;
     --s-rbrad: 0 1rem 1rem 0;
@@ -125,17 +127,17 @@
     --mess-mod-w: 45%;
 
     /* Button */
---but-h:4rem;
---but-w:100%;
---but-wh:25%;
---but-brad:0.625rem;
---but-bor:0 solid var(--outline);
---but-mar:0.25rem 0.125rem;
-/* laptop Screen */
---but-h-l:3rem;
+    --but-h:4rem;
+    --but-w:100%;
+    --but-wh:25%;
+    --but-brad:0.625rem;
+    --but-bor:0 solid var(--outline);
+    --but-mar:0.25rem 0.125rem;
+    /* laptop Screen */
+        --but-h-l:3rem;
 --but-mar-l:0.25rem 0.125rem;
 
-/* Inputs */
+    /* Inputs */
     --inp-h:3rem;
     --inp-w:100%;
     --inp-brad: 0.313rem;
@@ -150,9 +152,8 @@
 
 --transition: 0.4s ease;
 
-/* Test */
---test: 90%;
-
+    /* Test */
+    --test: 90%;
 }
 
 * {
@@ -407,49 +408,41 @@ position: absolute;
     h1 {
         font-size: var(--mh1);
         font-weight: Bold;
-        line-height: 5rem;
     }
     
     h2 {
         font-size: var(--mh2);
         font-weight: Bold;
-        line-height: 4rem;
     }
     
     h3 {
         font-size: var(--mh3);
         font-weight: Bold;
-        line-height: 3rem;
     }
     
     h4 {
         font-size: var(--mh4);
         font-weight: Bold;
-        line-height: 2rem;
     }
     
     h5 {
         font-size: var(--mh5);
         font-weight: Bold;
-        line-height: 2rem;
     }
     h6 {
         font-size: var(--mh6);
         font-weight: normal;
-        line-height: 0.75rem;
     }
     
     p,
     .footer-anchor {
         font-size: var(--mt);
         font-weight: Bold;
-        line-height: 1.5rem;
     }
     
     .text-big {
         font-size: 1.625rem;
         font-weight: lighter;
-        line-height: 2rem;
     }
     
     .text-gray {

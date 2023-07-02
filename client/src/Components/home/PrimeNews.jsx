@@ -73,27 +73,30 @@ const PrimeNews = () => {
       {/* <Video video={activeVideo.active || Loading} /> */}
       {/* <Video video={video.filePath} /> */}
 
-      <div className="pr-user">
+      {/* <div className="pr-user">
         <PrimeUserPostInfo
           user={userInfo.username}
           displayName={displayName}
           _id={userInfo._id}
           postedDate={video.createdAt}
         />
-      </div>
+      </div> */}
       {/* {USER LOGGED IN TERIARY HERE} */}
       {/* <div className="pr-like-dislike">
         <PrimeLikeDislike video={video} videoId={video._id} userId={auth._id} />
       </div> */}
 
-      <div className="pr-video-info">
+      <div className="pr-video-info-news">
+        <h3>Millennials Prime Episode 1</h3>
+        <h5 className="text-gray">
+          Debut Video WorldWide News: Russia vs Ukraine, ChatGPT, supreme Court
+          and More
+        </h5>
+      </div>
+      {/* <div className="pr-video-info">
         <h3>{video.title}</h3>
         <h5 className="text-gray">{video.description}</h5>
-      </div>
-      {/* <div className="pr-like-dislike">
-        <PostLikeDisLike />
       </div> */}
-      {/* <h3>{JSON.stringify(userInfo)}</h3> */}
     </section>
   );
 };
