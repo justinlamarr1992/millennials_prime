@@ -125,7 +125,7 @@ border: none;
 
 /* background-image: linear-gradient(to right top, ,  ); */
 .pr-title{
-    grid-column:2/3 ;
+    grid-column:2/4 ;
     grid-row:1/2;
   /* border: 1px solid white; */
 
@@ -210,13 +210,19 @@ grid-column:2/3 ;
 .pr-like-dislike-comp{
 }
 
-
+.more-to-come {
+  color: var(--sec-t);
+  text-align: center;
+  padding: 25px;
+}
 
 .pr-hot-items{
     /* grid-column:2/3 ;
     grid-row:5/6; */
 
 }
+
+
 
 /* Hot Items/Feature Primes */
 

@@ -53,25 +53,15 @@ const PrimeNews = () => {
       Chabge the user info to resemblbe the primeshows viewing */}
 
       <iframe
+        src="https://video.bunnycdn.com/play/147838/38cfaf07-c691-466b-9f6f-5c342f4a19af"
         className="pr-video p-con-shade"
-        // id="d71bda38-3ae5-40aa-8c24-93179412e432"
-        src="https://iframe.dacast.com/vod/4cb5f7e0-f945-e8aa-b1a8-62e9bf774b85/d71bda38-3ae5-40aa-8c24-93179412e432"
-        width="100%"
-        height="100%"
-        // frameborder="0"
-        // scrolling="no"
-        // allow="autoplay;encrypted-media"
-        allowFullScreen
-        // webkitallowfullscreen
-        // mozallowfullscreen
-        // oallowfullscreen
-        // msallowfullscreen
-        // style="position:absolute;top:0;left:0;"
+        loading="lazy"
+        width="1280"
+        height="720"
+        style={{ border: "none" }}
+        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+        allowfullscreen="true"
       ></iframe>
-
-      {/* <Video video={activeVideo.active} /> */}
-      {/* <Video video={activeVideo.active || Loading} /> */}
-      {/* <Video video={video.filePath} /> */}
 
       {/* <div className="pr-user">
         <PrimeUserPostInfo
