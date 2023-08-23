@@ -53,7 +53,7 @@ const PrimeNews = () => {
       Chabge the user info to resemblbe the primeshows viewing */}
 
       <iframe
-        src="https://video.bunnycdn.com/play/147838/38cfaf07-c691-466b-9f6f-5c342f4a19af"
+        src="https://video.bunnycdn.com/embed/147838/38cfaf07-c691-466b-9f6f-5c342f4a19af"
         className="pr-video p-con-shade"
         loading="lazy"
         width="1280"
