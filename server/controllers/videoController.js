@@ -130,6 +130,10 @@ const getPrimeNewsVideo = async (req, res) => {
   }
 };
 
+const getBunnyInfo = async (req, res) => {
+  console.log("Back to the back end");
+};
+
 const createVideo = (req, res) => {
   var storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -215,49 +219,12 @@ const createNewVideo = async (req, res) => {
   // }
 };
 
-// const uploadVideo = async (req, res) => {
-//   // TODO: Work on only send needed info for save
-//   // console.log(req.body);
-
-//   const test = req.body;
-
-//   const storage = new GridFsStorage({
-//     url: process.env.MONGO_URI,
-//     test: (req, test) => {
-//       return new Promise((resolve, reject) => {
-//         const title = test.title;
-//         const fileInfo = {
-//           filename: test,
-//           bucketName: "uploads",
-//         };
-//         resolve(fileInfo);
-//       });
-//     },
-//   });
-//   // const video = await Video.create(req.body);
-//   // try {
-//   //   video.save();
-//   //   return res.status(200).json({ success: true });
-//   // } catch (err) {
-//   //   return res.status(400).json({ success: false, err });
-//   // }
-
-//   // console.log(storage);
-
-//   try {
-//     const letsSee = multer({ storage });
-//     return res.status(200).json({ letsSee, success: true });
-//   } catch (err) {
-//     console.log(err);
-//     return res.status(400).json({ success: false, err });
-//   }
-// };
-
 module.exports = {
   createVideo,
   createNewVideo,
   createThumbnail,
   // uploadVideo,
+  getBunnyInfo,
   getVideos,
   getSingleVideo,
   getPrimeNewsVideo,

@@ -1,8 +1,10 @@
 
 :root {
     /* Background */
-    --background: #F7F7F7;
-    --background2: #C4C4C4;
+    --background: #000000;
+    /* --background: #F7F7F7; */
+    --background2: #000000;
+    /* --background2: #C4C4C4; */
 
     /* Form Color */
     --form-c: #ffffff;

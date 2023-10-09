@@ -17,31 +17,47 @@ const PrimeNews = () => {
   //   const videoId = params.videoId;
   //   const [video, setVideo] = useState("");
   const [video, setVideo] = useState({});
+  const [videoGuid, setVideoGuid] = useState("");
+  const [videoTitle, setVideoTitle] = useState("");
+  const [videoDesc, setVideoDesc] = useState("");
+
   //   const [videoId, setVideoId] = useState("");
   const [userInfo, setUserInfo] = useState({});
   const [userDisplayName, setUserDisplayName] = useState("");
   const [activeVideo, setActiveVideo] = useState({ active: "" });
 
+  // Get Latest Video
   // Here we will retrieve the latest video from the MILL Prime profile
-  useEffect(() => {
-    const getNews = async () => {
-      try {
-        const response = await axiosPrivate.get(`/testUploads/`, {});
-        if (response.data.success) {
-          console.log(response.data);
-        } else {
-          console.log("Failed to get Prime Video");
-        }
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    getNews();
-  }, []);
+  const options = {
+    method: "GET",
+    headers: {
+      accept: "application/json",
+      AccessKey: "a80779d4-9931-4345-80c1ca2315d2-fc09-4143",
+    },
+  };
 
-  const displayName = userInfo.firstName + " " + userInfo.lastName;
+  fetch(
+    "https://video.bunnycdn.com/library/147838/videos?page=1&itemsPerPage=2&orderBy=date",
+    options
+  )
+    .then((response) => response.json())
+    .then((response) => {
+      console.log(response);
+      console.log("Latest Video", response.items[0]);
+      setVideo(response.items[0]);
+      setVideoGuid(response.items[0].guid);
+      setVideoDesc(response.items[0].metaTags[0].value);
+      setVideoTitle(response.items[0].title);
+    })
+    .catch((err) => console.error(err));
 
-  console.log(userInfo);
+  console.log("Video Array", video);
+  console.log("Video Guid", videoGuid);
+  console.log("Video Title", videoTitle);
+  console.log("Video Description", videoDesc);
+  // const displayName = userInfo.firstName + " " + userInfo.lastName;
+
+  // console.log(userInfo);
 
   return (
     <section
@@ -53,7 +69,13 @@ const PrimeNews = () => {
       Chabge the user info to resemblbe the primeshows viewing */}
 
       <iframe
-        src="https://video.bunnycdn.com/embed/147838/38cfaf07-c691-466b-9f6f-5c342f4a19af"
+        src={
+          video
+            ? `https://video.bunnycdn.com/embed/147838/${videoGuid}`
+            : "Loading"
+        }
+        // src="https://video.bunnycdn.com/embed/147838/ec4cbe34-8750-4695-b252-69f53e51627a"
+        // src={`https://video.bunnycdn.com/embed/147838/${videoGuid}`}
         className="pr-video p-con-shade"
         loading="lazy"
         width="1280"
@@ -77,15 +99,18 @@ const PrimeNews = () => {
       </div> */}
 
       <div className="pr-video-info-news">
-        <h3>Millennials Prime Episode 1</h3>
+        <h3>{video.title ? video.title : "Loading"}</h3>
         <h5 className="text-gray">
-          Debut Video WorldWide News: Russia vs Ukraine, ChatGPT, supreme Court
-          and More
+          {video.metaTags
+            ? video.metaTags[0].value
+            : "Grabbing the Information Now"}
         </h5>
       </div>
       {/* <div className="pr-video-info">
         <h3>{video.title}</h3>
-        <h5 className="text-gray">{video.description}</h5>
+        <h5 className="text-gray">
+          {video.metaTags ? video.metaTags[0].value : "Loading"}
+        </h5>
       </div> */}
     </section>
   );

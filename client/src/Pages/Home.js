@@ -41,6 +41,8 @@ const Home = () => {
   const [testVideo, setTestVideo] = useState({});
   const [testDelVideo, setTestDelVideo] = useState("");
 
+  const [bunnyInfo, setBunnyInfo] = useState({});
+
   const _id = auth._id;
 
   const signOut = async () => {
@@ -50,88 +52,8 @@ const Home = () => {
     navigate("/auth/signin");
   };
 
-  const recentTest = async () => {
-    try {
-      const response = await axiosPrivate.get(
-        "/testUploads/recent"
-        // headers: {
-        //   "Content-Type": "multipart/form-data",
-        // },
-      );
-      if (response.data.success) {
-        console.log(response.data);
-        setTestVideo(response.data.files[0]);
-        alert("Recent Video Downloaded Successfully");
-      } else {
-        alert("Failed to Download Recent Video");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  const test = async () => {
-    try {
-      const response = await axiosPrivate.get(
-        "/testUploads/videos"
-        // headers: {
-        //   "Content-Type": "multipart/form-data",
-        // },
-      );
-      if (response.data.success) {
-        console.log(response.data);
-        setTestVideo(response.data.files[0]);
-        alert("Video Downloaded Successfully");
-      } else {
-        alert("Failed to Download Video");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   const videoFileName = testVideo.filename;
   console.log("THE FILE NAME IS", videoFileName);
-
-  // const firstVideo =
-  const testOne = async () => {
-    try {
-      const response = await axiosPrivate.get(
-        `/testUploads/file/${videoFileName}`,
-        {}
-        // headers: {
-        //   "Content-Type": "multipart/form-data",
-        // },
-      );
-      if (response.data.success) {
-        console.log(response.data);
-        setTestDelVideo(response.data.file._id);
-        alert("Video Downloaded Successfully");
-      } else {
-        alert("Failed to Download Video");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
-  const testDelete = async () => {
-    try {
-      const response = await axiosPrivate.get(
-        `/testUploads/file/del/${testDelVideo}`,
-        {}
-        // headers: {
-        //   "Content-Type": "multipart/form-data",
-        // },
-      );
-      if (response.data.success) {
-        console.log(response.data);
-        alert("Video Delete Successfully");
-      } else {
-        alert("Failed to Delete Video");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  };
 
   const onClick = () => {
     setModal(!modal);
@@ -165,11 +87,6 @@ const Home = () => {
           </h1>
         </div>
 
-        {/* <button className="test-modal-button" onClick={onClick}>
-          Modal Test Button
-        </button>
-        {modal && <MainModal _id={_id} />} */}
-
         {/* PHASE 2 */}
         {/* <HotItems />
         <FeatPrimes />
@@ -194,18 +111,6 @@ const Home = () => {
         <Link to={`/settings`}>
           <button>Settings</button>
         </Link>
-        <button className="home-logout-butt con-shade" onClick={recentTest}>
-          Recent Test
-        </button>
-        <button className="home-logout-butt con-shade" onClick={test}>
-          All Files Test
-        </button>
-        <button className="home-logout-butt con-shade" onClick={testOne}>
-          One Files Test
-        </button>
-        <button className="home-logout-butt con-shade" onClick={testDelete}>
-          Delete File Test
-        </button>
         <Link to="/auth/signin">
           <button className="home-logout-butt con-shade">Sign In</button>
         </Link>
