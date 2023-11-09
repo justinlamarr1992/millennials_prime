@@ -35,6 +35,7 @@ const UploadContent = () => {
   const [duration, setDuration] = useState("");
   const [thumbnail, setThumbnail] = useState("");
   const [videoID, setVideoID] = useState("");
+  const [video, setVideo] = useState({});
 
   const [object, setObject] = useState({
     userPosting,
@@ -54,6 +55,8 @@ const UploadContent = () => {
 
   let formData = new FormData();
 
+  let testVideo;
+
   // console.log(_id);
 
   useEffect(() => {
@@ -71,6 +74,11 @@ const UploadContent = () => {
       // this now gets called when the component unmounts
     };
   }, [_id]);
+
+  // TESt useeffect
+  useEffect(() => {
+    console.log(video);
+  }, [video]);
 
   function convertToBase64(file) {
     return new Promise((resolve, reject) => {
@@ -108,6 +116,52 @@ const UploadContent = () => {
       // );
     } else if (uploadRef.current.selectedIndex == 3) {
       setUpload("videos");
+      // Create Video
+      const options = {
+        method: "POST",
+        headers: {
+          accept: "application/json",
+          "content-type": "application/*+json",
+          AccessKey: "a80779d4-9931-4345-80c1ca2315d2-fc09-4143",
+        },
+        body: '{"title":"Creating Video"}',
+      };
+
+      fetch("https://video.bunnycdn.com/library/147838/videos", options)
+        .then((response) => response.json())
+        .then((response) => {
+          console.log("This is the newly uploaded video", response);
+          setVideo(response);
+          testVideo = response;
+          setTimeout(() => {
+            console.log(
+              "1st: console.log setVideo from inside fetch",
+              video,
+              Date.now()
+            );
+            console.log(
+              "2nd: console.log testVideo from inside fetch",
+              testVideo,
+              Date.now()
+            );
+          }, 3000);
+          // console.log(
+          //   "1st: console.log setVideo from inside fetch",
+          //   video,
+          //   Date.now()
+          // );
+        })
+        .catch((err) => console.error(err));
+      console.log(
+        "3rd: console.log setVideo from outside fetch",
+        video,
+        Date.now()
+      );
+      console.log(
+        "4th: console.log testVideo from outside fetch",
+        testVideo,
+        Date.now()
+      );
       console.log(upload);
       // return (
       //   <div className="label-input">
@@ -177,12 +231,31 @@ const UploadContent = () => {
     setObject({ ...object, category: category });
   };
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-    setObject({ ...object, file: file });
-    console.log(file);
-    setObject({ ...object, file: file });
-    formData.append("file", file);
+    const data = new FormData();
+    let file = e.target.files[0];
+    let video;
+    const toBase64 = (file) =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+
+    async function Main() {
+      video = await toBase64(file);
+      console.log(video);
+    }
+
+    Main();
   };
+  // const handleFileChange = (e) => {
+  //   setFile(e.target.files[0]);
+  //   setObject({ ...object, file: file });
+  //   console.log(file);
+  //   setObject({ ...object, file: file });
+  //   formData.append("file", file);
+  // };
 
   // const onDrop = async (files) => {
   //   console.log(files);
@@ -243,8 +316,8 @@ const UploadContent = () => {
       title === "" ||
       description === "" ||
       category === "" ||
-      file === []
-      // file === ""
+      // file === []
+      file === ""
       // duration === "" ||
       // thumbnail === ""
     ) {
@@ -270,35 +343,26 @@ const UploadContent = () => {
 
     const bodyTest = "THIS IS A STATIC BODY ITEM";
 
-    try {
-      const response = await axiosPrivate.post("/testUploads/", formData, {
-        // headers: {
-        //   "Content-Type": "multipart/form-data",
-        // },
-      });
-      if (response.data.success) {
-        console.log(response.data);
-        setVideoID(response.data.files[0]._id);
-        alert("Video Uploaded Successfully");
-      } else {
-        alert("Failed to upload Video");
-      }
-    } catch (err) {
-      console.log(err);
-    }
+    // EDIT VIDEO
+    const options = {
+      method: "POST",
+      headers: {
+        accept: "application/json",
+        "content-type": "application/*+json",
+        AccessKey: "a80779d4-9931-4345-80c1ca2315d2-fc09-4143",
+      },
+      body: `{"title":"${title}","metaTags":[{"property":"description","value":"${description}"}, {"property":"prime","value":"${prime}"},{"property":"category","value":"${category}"},{"property":"userPosting","value":"${_id}"}]}`,
+    };
 
-    // TRYING TRY BLOCK HERE BUT WILL PUT INSIDE OF TRY ABOVE
-    console.log(videoID);
-
-    // try {
-    //   const response = await axiosPrivate.post(
-    //     "/testUploads/update",
-    //     variables,
-    //     {}
-    //   );
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    fetch(
+      `https://video.bunnycdn.com/library/147838/videos/${video.guid}`,
+      options
+    )
+      .then((response) => response.json())
+      .then((response) => {
+        console.log("This is the newly Edited video", response);
+      })
+      .catch((err) => console.error(err));
   };
 
   return (

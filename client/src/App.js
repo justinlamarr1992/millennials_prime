@@ -83,6 +83,8 @@ const App = (props, state) => {
 
           {/* Protected Routes */}
           <Route element={<PersistLogin />}>
+            {/* ROUTES ONLY USERS CAN GO */}
+
             {/* More than one role can be in allowed roles  */}
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
               {/* PHASE2 */}
@@ -106,6 +108,7 @@ const App = (props, state) => {
                 <Route path="art" element={<Art />} />
               </Route>
             </Route>
+            {/* ROUTES ONLY EDITOR USERS AND GO */}
 
             <Route element={<RequireAuth allowedRoles={[ROLES.Editor]} />}>
               <Route path="editor" element={<EditorPage />} />
@@ -114,7 +117,7 @@ const App = (props, state) => {
                 element={<UploadContent />}
               />
             </Route>
-
+            {/* ROUTES ONLY ADMIN USERS AND GO */}
             <Route element={<RequireAuth allowedRoles={[ROLES.Admin]} />}>
               <Route path="admin" element={<AdminPage />} />
             </Route>

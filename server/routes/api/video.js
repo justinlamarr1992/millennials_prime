@@ -11,16 +11,6 @@ router.route("/bunnyInfo").get(videoController.getBunnyInfo);
 
 router.route("/primenews").post(videoController.getPrimeNewsVideo);
 
-// router
-//   .route("/createVideoFiles")
-//   .post(verifyRoles(ROLES_LIST.Admin), videoController.createVideo);
-router
-  .route("/createVideoFiles")
-  .post(verifyRoles(ROLES_LIST.Admin), videoController.createNewVideo);
-router
-  .route("/createThumbnail")
-  .post(verifyRoles(ROLES_LIST.Admin), videoController.createThumbnail);
-
 router
   .route("/subscriptions")
   .post(verifyRoles(ROLES_LIST.User), videoController.getSubscriptionVideos);
