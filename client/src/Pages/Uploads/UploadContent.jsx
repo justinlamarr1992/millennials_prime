@@ -15,6 +15,10 @@ import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import "./upload.css";
 import useAuth from "../../Hooks/useAuth";
 
+// TEST
+import axios from "axios";
+const fs = require("fs");
+
 const UploadContent = () => {
   const { auth } = useAuth();
   const _id = auth._id;
@@ -36,6 +40,7 @@ const UploadContent = () => {
   const [thumbnail, setThumbnail] = useState("");
   const [videoID, setVideoID] = useState("");
   const [video, setVideo] = useState({});
+  const [videoFile, setVideoFile] = useState({});
 
   const [object, setObject] = useState({
     userPosting,
@@ -116,7 +121,9 @@ const UploadContent = () => {
       // );
     } else if (uploadRef.current.selectedIndex == 3) {
       setUpload("videos");
-      // Create Video
+
+      // THIS IS WHERE I
+      // CREATE THE INITIAL VIDEO
       const options = {
         method: "POST",
         headers: {
@@ -133,35 +140,9 @@ const UploadContent = () => {
           console.log("This is the newly uploaded video", response);
           setVideo(response);
           testVideo = response;
-          setTimeout(() => {
-            console.log(
-              "1st: console.log setVideo from inside fetch",
-              video,
-              Date.now()
-            );
-            console.log(
-              "2nd: console.log testVideo from inside fetch",
-              testVideo,
-              Date.now()
-            );
-          }, 3000);
-          // console.log(
-          //   "1st: console.log setVideo from inside fetch",
-          //   video,
-          //   Date.now()
-          // );
         })
         .catch((err) => console.error(err));
-      console.log(
-        "3rd: console.log setVideo from outside fetch",
-        video,
-        Date.now()
-      );
-      console.log(
-        "4th: console.log testVideo from outside fetch",
-        testVideo,
-        Date.now()
-      );
+
       console.log(upload);
       // return (
       //   <div className="label-input">
@@ -233,22 +214,32 @@ const UploadContent = () => {
   const handleFileChange = (e) => {
     const data = new FormData();
     let file = e.target.files[0];
-    let video;
-    const toBase64 = (file) =>
-      new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.readAsDataURL(file);
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = (error) => reject(error);
-      });
+    let videoToBase;
+
+    // const toBase64 = (file) =>
+    //   new Promise((resolve, reject) => {
+    //     const reader = new FileReader();
+    //     reader.readAsDataURL(file);
+    //     reader.onload = () => resolve(reader.result);
+    //     reader.onerror = (error) => reject(error);
+    //   });
+
+    // async function Main() {
+    //   videoToBase = await toBase64(file);
+    //   console.log(videoToBase);
+    //   setVideo(videoToBase);
+    // }
 
     async function Main() {
-      video = await toBase64(file);
-      console.log(video);
+      videoToBase = await convertToBase64(file);
+      console.log(videoToBase);
+      setVideoFile(videoToBase);
     }
 
     Main();
   };
+
+  console.log("the Video Variable after HAndle change", video);
   // const handleFileChange = (e) => {
   //   setFile(e.target.files[0]);
   //   setObject({ ...object, file: file });
@@ -267,7 +258,6 @@ const UploadContent = () => {
   //   // const base64 = await convertToBase64(files[0]);
   // };
 
-  console.log(object);
   // const onDrop = (files) => {
   //   let formData = new FormData();
   //   console.log(files);
@@ -340,6 +330,7 @@ const UploadContent = () => {
       videoID: videoID,
     };
     console.log(formData);
+    console.log("This could be the VIDEO FILE", videoFile);
 
     const bodyTest = "THIS IS A STATIC BODY ITEM";
 
@@ -364,6 +355,74 @@ const UploadContent = () => {
       })
       .catch((err) => console.error(err));
   };
+
+  // TEST FROM SUPPORT
+  // const uploadVideo = require("./bunnystream.js");
+
+  function uploadVideo(videoPath, authKey, libraryId, videoName) {
+    const baseUrl = "https://video.bunnycdn.com/library/";
+    const createOptions = {
+      url: `${baseUrl}${libraryId}/videos`,
+      data: {
+        title: videoName,
+      },
+      headers: {
+        AccessKey: authKey,
+        "Content-Type": "application/json",
+      },
+    };
+
+    axios
+      .post(createOptions.url, createOptions.data, {
+        headers: createOptions.headers,
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          const uploadOptions = {
+            url: `${baseUrl}${libraryId}/videos/${response.data.guid}`,
+            data: fs.createReadStream(videoPath),
+            headers: {
+              AccessKey: authKey,
+              "Content-Type": "application/octet-stream",
+            },
+          };
+
+          axios
+            .put(uploadOptions.url, uploadOptions.data, {
+              headers: uploadOptions.headers,
+            })
+            .then((response) => {
+              if (response.status === 200) {
+                return true;
+              }
+              return false;
+            })
+            .catch((error) => {
+              console.log(error);
+              return false;
+            });
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+        return false;
+      });
+  }
+
+  async function uploadMyVideo() {
+    const result = await uploadVideo(
+      "/path/to/video/file.mp4",
+      "your-auth-key",
+      "your-library-id",
+      "your-video-name"
+    );
+  }
+
+  // Try this link
+  // https://support.bunny.net/hc/en-us/requests/223075?page=1
+  // Also go to backend and look in video controller
+
+  uploadMyVideo();
 
   return (
     <div

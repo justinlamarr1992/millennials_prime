@@ -84,7 +84,6 @@ const App = (props, state) => {
           {/* Protected Routes */}
           <Route element={<PersistLogin />}>
             {/* ROUTES ONLY USERS CAN GO */}
-
             {/* More than one role can be in allowed roles  */}
             <Route element={<RequireAuth allowedRoles={[ROLES.User]} />}>
               {/* PHASE2 */}
