@@ -17,6 +17,10 @@ router
 
 router.route("/:id").post(videoController.getSingleVideo); //original tut had this as a post... revisit
 
+// Test from support
+// router.route("/uploadVideo").post(videoController.uploadVideo); //original tut had this as a post... revisit
+// Test from support
+
 // router.post("/uploadFiles", videoController.createVideo);
 // router.post("/:id", videoController.getSingleVideo);
 // router.post("/thumbnail", videoController.createThumbnail);

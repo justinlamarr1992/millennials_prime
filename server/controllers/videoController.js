@@ -3,6 +3,11 @@ const Subscriber = require("../models/Subscriber");
 const Video = require("../models/VideoModel");
 var mongoose = require("mongoose");
 
+// Test from support
+// const fs = require("fs");
+// const axios = require("axios");
+// Test from support
+
 const getVideos = async (req, res) => {
   const videos = await Video.find().sort({ createdAt: -1 });
   if (!videos) return res.status(204).json({ message: `No Videos ` });
@@ -128,10 +133,63 @@ const getBunnyInfo = async (req, res) => {
   console.log("Back to the back end");
 };
 
+// Test from support
+// function uploadVideo(videoPath, authKey, libraryId, videoName) {
+//   const baseUrl = "https://video.bunnycdn.com/library/";
+//   const createOptions = {
+//     url: `${baseUrl}${libraryId}/videos`,
+//     data: {
+//       title: videoName,
+//     },
+//     headers: {
+//       AccessKey: authKey,
+//       "Content-Type": "application/json",
+//     },
+//   };
+
+//   axios
+//     .post(createOptions.url, createOptions.data, {
+//       headers: createOptions.headers,
+//     })
+//     .then((response) => {
+//       if (response.status === 200) {
+//         const uploadOptions = {
+//           url: `${baseUrl}${libraryId}/videos/${response.data.guid}`,
+//           data: fs.createReadStream(videoPath),
+//           headers: {
+//             AccessKey: authKey,
+//             "Content-Type": "application/octet-stream",
+//           },
+//         };
+
+//         axios
+//           .put(uploadOptions.url, uploadOptions.data, {
+//             headers: uploadOptions.headers,
+//           })
+//           .then((response) => {
+//             if (response.status === 200) {
+//               return true;
+//             }
+//             return false;
+//           })
+//           .catch((error) => {
+//             console.log(error);
+//             return false;
+//           });
+//       }
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//       return false;
+//     });
+// }
+// Test from support
+
 module.exports = {
   getBunnyInfo,
   getVideos,
   getSingleVideo,
   getPrimeNewsVideo,
   getSubscriptionVideos,
+  // uploadVideo,
 };
