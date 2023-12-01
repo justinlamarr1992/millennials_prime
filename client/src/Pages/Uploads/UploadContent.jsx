@@ -17,7 +17,7 @@ import useAuth from "../../Hooks/useAuth";
 
 // TEST
 import axios from "axios";
-const fs = require("fs");
+// const fs = require("fs");
 
 const UploadContent = () => {
   const { auth } = useAuth();
@@ -60,10 +60,6 @@ const UploadContent = () => {
 
   let formData = new FormData();
 
-  let testVideo;
-
-  // console.log(_id);
-
   useEffect(() => {
     const getUserInfo = async () => {
       try {
@@ -80,10 +76,15 @@ const UploadContent = () => {
     };
   }, [_id]);
 
-  // TESt useeffect
-  useEffect(() => {
-    console.log(video);
-  }, [video]);
+  const testBackEnd = async () => {
+    try {
+      const response = await axiosPrivate.get(`/videos/bunnyInfo`);
+      console.log(response.data);
+    } catch (err) {
+      alert("Change this later because you have an err", err);
+    }
+  };
+  testBackEnd();
 
   function convertToBase64(file) {
     return new Promise((resolve, reject) => {
@@ -139,7 +140,6 @@ const UploadContent = () => {
         .then((response) => {
           console.log("This is the newly uploaded video", response);
           setVideo(response);
-          testVideo = response;
         })
         .catch((err) => console.error(err));
 
@@ -216,19 +216,7 @@ const UploadContent = () => {
     let file = e.target.files[0];
     let videoToBase;
 
-    // const toBase64 = (file) =>
-    //   new Promise((resolve, reject) => {
-    //     const reader = new FileReader();
-    //     reader.readAsDataURL(file);
-    //     reader.onload = () => resolve(reader.result);
-    //     reader.onerror = (error) => reject(error);
-    //   });
-
-    // async function Main() {
-    //   videoToBase = await toBase64(file);
-    //   console.log(videoToBase);
-    //   setVideo(videoToBase);
-    // }
+    console.log("This is the data from the File change function", file);
 
     async function Main() {
       videoToBase = await convertToBase64(file);
@@ -359,70 +347,70 @@ const UploadContent = () => {
   // TEST FROM SUPPORT
   // const uploadVideo = require("./bunnystream.js");
 
-  function uploadVideo(videoPath, authKey, libraryId, videoName) {
-    const baseUrl = "https://video.bunnycdn.com/library/";
-    const createOptions = {
-      url: `${baseUrl}${libraryId}/videos`,
-      data: {
-        title: videoName,
-      },
-      headers: {
-        AccessKey: authKey,
-        "Content-Type": "application/json",
-      },
-    };
+  // function uploadVideo(videoPath, authKey, libraryId, videoName) {
+  //   const baseUrl = "https://video.bunnycdn.com/library/";
+  //   const createOptions = {
+  //     url: `${baseUrl}${libraryId}/videos`,
+  //     data: {
+  //       title: videoName,
+  //     },
+  //     headers: {
+  //       AccessKey: authKey,
+  //       "Content-Type": "application/json",
+  //     },
+  //   };
 
-    axios
-      .post(createOptions.url, createOptions.data, {
-        headers: createOptions.headers,
-      })
-      .then((response) => {
-        if (response.status === 200) {
-          const uploadOptions = {
-            url: `${baseUrl}${libraryId}/videos/${response.data.guid}`,
-            data: fs.createReadStream(videoPath),
-            headers: {
-              AccessKey: authKey,
-              "Content-Type": "application/octet-stream",
-            },
-          };
+  //   axios
+  //     .post(createOptions.url, createOptions.data, {
+  //       headers: createOptions.headers,
+  //     })
+  //     .then((response) => {
+  //       if (response.status === 200) {
+  //         const uploadOptions = {
+  //           url: `${baseUrl}${libraryId}/videos/${response.data.guid}`,
+  //           data: fs.createReadStream(videoPath),
+  //           headers: {
+  //             AccessKey: authKey,
+  //             "Content-Type": "application/octet-stream",
+  //           },
+  //         };
 
-          axios
-            .put(uploadOptions.url, uploadOptions.data, {
-              headers: uploadOptions.headers,
-            })
-            .then((response) => {
-              if (response.status === 200) {
-                return true;
-              }
-              return false;
-            })
-            .catch((error) => {
-              console.log(error);
-              return false;
-            });
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-        return false;
-      });
-  }
+  //         axios
+  //           .put(uploadOptions.url, uploadOptions.data, {
+  //             headers: uploadOptions.headers,
+  //           })
+  //           .then((response) => {
+  //             if (response.status === 200) {
+  //               return true;
+  //             }
+  //             return false;
+  //           })
+  //           .catch((error) => {
+  //             console.log(error);
+  //             return false;
+  //           });
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //       return false;
+  //     });
+  // }
 
-  async function uploadMyVideo() {
-    const result = await uploadVideo(
-      "/path/to/video/file.mp4",
-      "your-auth-key",
-      "your-library-id",
-      "your-video-name"
-    );
-  }
+  // async function uploadMyVideo() {
+  //   const result = await uploadVideo(
+  //     "/path/to/video/file.mp4",
+  //     "your-auth-key",
+  //     "your-library-id",
+  //     "your-video-name"
+  //   );
+  // }
 
   // Try this link
   // https://support.bunny.net/hc/en-us/requests/223075?page=1
   // Also go to backend and look in video controller
 
-  uploadMyVideo();
+  // uploadMyVideo();
 
   return (
     <div
