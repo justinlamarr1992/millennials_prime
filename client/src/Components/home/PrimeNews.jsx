@@ -32,14 +32,21 @@ const PrimeNews = () => {
     method: "GET",
     headers: {
       accept: "application/json",
-      AccessKey: "a80779d4-9931-4345-80c1ca2315d2-fc09-4143",
+      // AccessKey: "a80779d4-9931-4345-80c1ca2315d2-fc09-4143",
+      AccessKey: "4c5ea068-0b40-40ae-8d9b2865c27c-f2d3-4fd9",
     },
   };
 
+  // this ks the fetch with the test Library
   fetch(
-    "https://video.bunnycdn.com/library/147838/videos?page=1&itemsPerPage=2&orderBy=date",
+    "https://video.bunnycdn.com/library/181057/videos?page=1&itemsPerPage=2&orderBy=date",
     options
   )
+    // This is the fetch with the actually Library
+    // fetch(
+    //   "https://video.bunnycdn.com/library/147838/videos?page=1&itemsPerPage=2&orderBy=date",
+    //   options
+    // )
     .then((response) => response.json())
     .then((response) => {
       console.log(response);
@@ -71,7 +78,7 @@ const PrimeNews = () => {
       <iframe
         src={
           video
-            ? `https://video.bunnycdn.com/embed/147838/${videoGuid}`
+            ? `https://video.bunnycdn.com/embed/181057/${videoGuid}`
             : "Loading"
         }
         // src="https://video.bunnycdn.com/embed/147838/ec4cbe34-8750-4695-b252-69f53e51627a"

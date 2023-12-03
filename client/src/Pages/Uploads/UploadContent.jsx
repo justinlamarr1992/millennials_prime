@@ -76,16 +76,6 @@ const UploadContent = () => {
     };
   }, [_id]);
 
-  const testBackEnd = async () => {
-    try {
-      const response = await axiosPrivate.get(`/videos/bunnyInfo`);
-      console.log(response.data);
-    } catch (err) {
-      alert("Change this later because you have an err", err);
-    }
-  };
-  testBackEnd();
-
   function convertToBase64(file) {
     return new Promise((resolve, reject) => {
       const fileReader = new FileReader();
@@ -130,12 +120,12 @@ const UploadContent = () => {
         headers: {
           accept: "application/json",
           "content-type": "application/*+json",
-          AccessKey: "a80779d4-9931-4345-80c1ca2315d2-fc09-4143",
+          AccessKey: "4c5ea068-0b40-40ae-8d9b2865c27c-f2d3-4fd9",
         },
-        body: '{"title":"Creating Video"}',
+        body: `{"title":"Creating Video ${new Date()}"}`,
       };
 
-      fetch("https://video.bunnycdn.com/library/147838/videos", options)
+      fetch("https://video.bunnycdn.com/library/181057/videos", options)
         .then((response) => response.json())
         .then((response) => {
           console.log("This is the newly uploaded video", response);
@@ -144,12 +134,6 @@ const UploadContent = () => {
         .catch((err) => console.error(err));
 
       console.log(upload);
-      // return (
-      //   <div className="label-input">
-      //     <label htmlFor="">Text</label>
-      //     <input type="text" />
-      //   </div>
-      // );
     } else if (uploadRef.current.selectedIndex == 4) {
       setUpload("music");
       console.log(upload);
@@ -212,8 +196,11 @@ const UploadContent = () => {
     setObject({ ...object, category: category });
   };
   const handleFileChange = (e) => {
-    const data = new FormData();
-    let file = e.target.files[0];
+    console.log("THIS IS THE INFO PASTED WITH DROPZONE ", e[0]);
+    setVideoFile(e);
+    console.log("The dropped data in a useState", videoFile);
+
+    let file = e[0];
     let videoToBase;
 
     console.log("This is the data from the File change function", file);
@@ -316,25 +303,26 @@ const UploadContent = () => {
       duration: duration,
       thumbnail: thumbnail,
       videoID: videoID,
+      videoFile: videoFile,
     };
     console.log(formData);
-    console.log("This could be the VIDEO FILE", videoFile);
 
     const bodyTest = "THIS IS A STATIC BODY ITEM";
 
-    // EDIT VIDEO
+    // EDIT VIDEO may need to move this to the backend
     const options = {
       method: "POST",
       headers: {
         accept: "application/json",
         "content-type": "application/*+json",
-        AccessKey: "a80779d4-9931-4345-80c1ca2315d2-fc09-4143",
+        AccessKey: "4c5ea068-0b40-40ae-8d9b2865c27c-f2d3-4fd9",
+        // AccessKey: "a80779d4-9931-4345-80c1ca2315d2-fc09-4143",
       },
       body: `{"title":"${title}","metaTags":[{"property":"description","value":"${description}"}, {"property":"prime","value":"${prime}"},{"property":"category","value":"${category}"},{"property":"userPosting","value":"${_id}"}]}`,
     };
 
     fetch(
-      `https://video.bunnycdn.com/library/147838/videos/${video.guid}`,
+      `https://video.bunnycdn.com/library/181057/videos/${video.guid}`,
       options
     )
       .then((response) => response.json())
@@ -342,75 +330,17 @@ const UploadContent = () => {
         console.log("This is the newly Edited video", response);
       })
       .catch((err) => console.error(err));
+
+    const testBackEnd = async () => {
+      try {
+        const response = await axiosPrivate.post(`/videos/bunnyInfo`, formData);
+        console.log(response.data);
+      } catch (err) {
+        alert("Change this later because you have an err", err);
+      }
+    };
+    testBackEnd();
   };
-
-  // TEST FROM SUPPORT
-  // const uploadVideo = require("./bunnystream.js");
-
-  // function uploadVideo(videoPath, authKey, libraryId, videoName) {
-  //   const baseUrl = "https://video.bunnycdn.com/library/";
-  //   const createOptions = {
-  //     url: `${baseUrl}${libraryId}/videos`,
-  //     data: {
-  //       title: videoName,
-  //     },
-  //     headers: {
-  //       AccessKey: authKey,
-  //       "Content-Type": "application/json",
-  //     },
-  //   };
-
-  //   axios
-  //     .post(createOptions.url, createOptions.data, {
-  //       headers: createOptions.headers,
-  //     })
-  //     .then((response) => {
-  //       if (response.status === 200) {
-  //         const uploadOptions = {
-  //           url: `${baseUrl}${libraryId}/videos/${response.data.guid}`,
-  //           data: fs.createReadStream(videoPath),
-  //           headers: {
-  //             AccessKey: authKey,
-  //             "Content-Type": "application/octet-stream",
-  //           },
-  //         };
-
-  //         axios
-  //           .put(uploadOptions.url, uploadOptions.data, {
-  //             headers: uploadOptions.headers,
-  //           })
-  //           .then((response) => {
-  //             if (response.status === 200) {
-  //               return true;
-  //             }
-  //             return false;
-  //           })
-  //           .catch((error) => {
-  //             console.log(error);
-  //             return false;
-  //           });
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.log(error);
-  //       return false;
-  //     });
-  // }
-
-  // async function uploadMyVideo() {
-  //   const result = await uploadVideo(
-  //     "/path/to/video/file.mp4",
-  //     "your-auth-key",
-  //     "your-library-id",
-  //     "your-video-name"
-  //   );
-  // }
-
-  // Try this link
-  // https://support.bunny.net/hc/en-us/requests/223075?page=1
-  // Also go to backend and look in video controller
-
-  // uploadMyVideo();
 
   return (
     <div
@@ -531,16 +461,29 @@ const UploadContent = () => {
                 </div>
                 {/* TODO: Make this its own function so multiple uploads can use it */}
                 <h6 className="text-gray">Import Video Here</h6>
-                {/* DROPZONE WAS HERE */}
-                <input type="file" onChange={handleFileChange} />
-                {thumbnail !== "" && (
+                <Dropzone
+                  onDrop={(acceptedFiles) => handleFileChange(acceptedFiles)}
+                  //  onDrop={onDrop}
+                >
+                  {({ getRootProps, getInputProps }) => (
+                    <section>
+                      <div {...getRootProps()}>
+                        <input type="file" name="" {...getInputProps()} />
+
+                        <h1>Drag Here</h1>
+                      </div>
+                    </section>
+                  )}
+                </Dropzone>
+                {/* <input type="file" onChange={handleFileChange} /> */}
+                {/* {thumbnail !== "" && (
                   <div>
                     <img
                       src={`http://localhost:4000/${thumbnail}`}
                       alt="Lets see"
                     />
                   </div>
-                )}
+                )} */}
               </>
             )}
             {upload == "music" && (
@@ -620,20 +563,3 @@ const UploadContent = () => {
   );
 };
 export default UploadContent;
-
-// <Dropzone
-// onDrop={(acceptedFiles) => console.log(acceptedFiles)}
-// onDrop={onDrop}
-// >
-// {({ getRootProps, getInputProps }) => (
-// <section>
-// <div {...getRootProps()}>
-// <input type="file" name="" {...getInputProps()} />
-{
-  /*  */
-}
-// <h1>Drag Here</h1>
-// </div>
-// </section>
-// )}
-// </Dropzone>;
