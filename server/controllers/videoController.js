@@ -134,18 +134,78 @@ function getBunnyInfo(req, res) {
   // THE PATH IS PROVIDED FROM BODY
   const body = req.body;
 
+  console.log(body);
   let videoPath = body.videoFile[0];
   console.log(videoPath);
-  let videoPathTest = "../../TestAssets/video3.mp4";
+  // let videoPathTest = "../../TestAssets/video3.mp4";
   let api_key = "4c5ea068-0b40-40ae-8d9b2865c27c-f2d3-4fd9";
   // let authKey = "a80779d4-9931-4345-80c1ca2315d2-fc09-4143";
   let libraryId = 181057;
   // let libraryId = "147838";
   let videoName = `Created in Backend: title:${body.title} ${new Date()}`;
 
-  let presigned_signature = sha256(
-    libraryId + api_key + expiration_time + video_id
-  );
+  try {
+    const baseUrl = "https://video.bunnycdn.com/library/";
+    const createOptions = {
+      url: `${baseUrl}${libraryId}/videos`,
+      data: {
+        title: videoName,
+      },
+      headers: {
+        AccessKey: api_key,
+        "Content-Type": "application/json",
+      },
+    };
+
+    axios
+      .post(createOptions.url, createOptions.data, {
+        headers: createOptions.headers,
+      })
+      .then((response) => {
+        if (response.status === 200) {
+          const uploadOptions = {
+            url: `${baseUrl}${libraryId}/videos/${response.data.guid}`,
+            data: fs.createReadStream(videoPath),
+            headers: {
+              AccessKey: authKey,
+              "Content-Type": "application/octet-stream",
+            },
+          };
+          console.log("Response outside of uploadOptions", response);
+
+          axios
+            .put(uploadOptions.url, uploadOptions.data, {
+              headers: uploadOptions.headers,
+            })
+            .then((response) => {
+              if (response.status === 200) {
+                return true;
+              }
+              return false;
+            })
+            .catch((error) => {
+              console.log(error);
+              return false;
+            });
+        }
+        console.log("Response outside of then", response);
+      })
+      .catch((error) => {
+        console.log(error);
+        return false;
+      });
+
+    console.log("THE TRY WORKED");
+    res.status(200).json({ success: true, createOptions });
+  } catch (err) {
+    console.log("THE TRY DIDNT WORK");
+    console.log("err", err);
+    res.status(500).json({ success: false, message: err.message });
+  }
+
+  // let presigned_signature = sha256(
+  //   libraryId + api_key + expiration_time + video_id
+  // );
 
   // // Create a new tus upload
   // var upload = new tus.Upload(file, {
@@ -185,7 +245,7 @@ function getBunnyInfoFirst(req, res) {
   // libraryId;
   let videoPath = body.videoFile[0];
   console.log(videoPath);
-  let videoPathTest = "../../TestAssets/video3.mp4";
+  // let videoPathTest = "../../TestAssets/video3.mp4";
   let authKey = "4c5ea068-0b40-40ae-8d9b2865c27c-f2d3-4fd9";
   // let authKey = "a80779d4-9931-4345-80c1ca2315d2-fc09-4143";
   let libraryId = "181057";
