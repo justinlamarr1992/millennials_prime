@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/static/css/main.9c346f69.css",
-    "main.js": "/static/js/main.e8c6f60a.js",
+    "main.js": "/static/js/main.c21b3960.js",
     "static/js/787.6f03546d.chunk.js": "/static/js/787.6f03546d.chunk.js",
     "static/media/video.mp4": "/static/media/video.ecb31ea980b8345d45d0.mp4",
     "static/media/MillennialsPrimeLogoNB.png": "/static/media/MillennialsPrimeLogoNB.d0bf072c08f18620d633.png",
@@ -28,11 +28,11 @@
     "static/media/User5.jpeg": "/static/media/User5.db317323923fc3755a31.jpeg",
     "index.html": "/index.html",
     "main.9c346f69.css.map": "/static/css/main.9c346f69.css.map",
-    "main.e8c6f60a.js.map": "/static/js/main.e8c6f60a.js.map",
+    "main.c21b3960.js.map": "/static/js/main.c21b3960.js.map",
     "787.6f03546d.chunk.js.map": "/static/js/787.6f03546d.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.9c346f69.css",
-    "static/js/main.e8c6f60a.js"
+    "static/js/main.c21b3960.js"
   ]
 }
