@@ -89,7 +89,7 @@ const PrimeNews = () => {
         height="720"
         style={{ border: "none" }}
         allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-        allowfullscreen="true"
+        allowFullScreen={true}
       ></iframe>
 
       {/* <div className="pr-user">
