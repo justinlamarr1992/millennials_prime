@@ -11,7 +11,6 @@ import {
 import FileUpload from "../../Components/reusuables/post/FileUpload";
 import Dropzone from "react-dropzone";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
-
 import "./upload.css";
 import useAuth from "../../Hooks/useAuth";
 
@@ -35,12 +34,13 @@ const UploadContent = () => {
   const [prime, setPrime] = useState(0);
   // Will think of changing later
   const [category, setCategory] = useState("");
-  const [file, setFile] = useState([]);
+  // const [file, setFile] = useState([]);
   const [duration, setDuration] = useState("");
   const [thumbnail, setThumbnail] = useState("");
   const [videoID, setVideoID] = useState("");
   const [video, setVideo] = useState({});
-  const [videoFile, setVideoFile] = useState({});
+  // const [videoFile, setVideoFile] = useState({});
+  let videoFile;
 
   const [object, setObject] = useState({
     userPosting,
@@ -48,7 +48,7 @@ const UploadContent = () => {
     description,
     prime,
     category,
-    file,
+    // file,
     duration,
     thumbnail,
   });
@@ -59,6 +59,12 @@ const UploadContent = () => {
   const axiosPrivate = useAxiosPrivate();
 
   let formData = new FormData();
+
+  // Change these later to only have admin have these things
+
+  // Change these later to only have admin have these things
+
+  var tus = require("tus-js-client");
 
   useEffect(() => {
     const getUserInfo = async () => {
@@ -112,26 +118,27 @@ const UploadContent = () => {
       // );
     } else if (uploadRef.current.selectedIndex == 3) {
       setUpload("videos");
+      try {
+        const options = {
+          method: "POST",
+          headers: {
+            accept: "application/json",
+            "content-type": "application/*+json",
+            AccessKey: "4c5ea068-0b40-40ae-8d9b2865c27c-f2d3-4fd9",
+          },
+          // body: `{"title":"(Pre upload) Creating Video ${title} ${new Date()}"}`,
+          body: `{"title":"${title} ${new Date()}","metaTags":[{"property":"description","value":"${description}"}, {"property":"prime","value":"${prime}"},{"property":"category","value":"${category}"},{"property":"userPosting","value":"${_id}"}]}`,
+        };
 
-      // THIS IS WHERE I
-      // CREATE THE INITIAL VIDEO
-      // const options = {
-      //   method: "POST",
-      //   headers: {
-      //     accept: "application/json",
-      //     "content-type": "application/*+json",
-      //     AccessKey: "4c5ea068-0b40-40ae-8d9b2865c27c-f2d3-4fd9",
-      //   },
-      //   body: `{"title":"Creating Video ${new Date()}"}`,
-      // };
-
-      // fetch("https://video.bunnycdn.com/library/181057/videos", options)
-      //   .then((response) => response.json())
-      //   .then((response) => {
-      //     console.log("This is the newly uploaded video", response);
-      //     setVideo(response);
-      //   })
-      //   .catch((err) => console.error(err));
+        fetch("https://video.bunnycdn.com/library/181057/videos", options)
+          .then((response) => response.json())
+          .then((response) => {
+            setVideoID(response.guid);
+            console.log("This is the videoID", videoID, new Date());
+          });
+      } catch (err) {
+        console.log("ERROR", err);
+      }
 
       // console.log(upload);
     } else if (uploadRef.current.selectedIndex == 4) {
@@ -197,13 +204,16 @@ const UploadContent = () => {
   };
   const handleFileChange = (e) => {
     console.log("THIS IS THE INFO PASTED WITH DROPZONE ", e[0]);
-    setVideoFile(e);
-    console.log("The dropped data in a useState", videoFile);
+    // setVideoFile(new File([e], e.name));
+    console.log(e[0]);
+    // setVideoFile(e[0]);
+    videoFile = e[0];
+    console.log("Video file after button click", videoFile);
+    // console.log(new File([e], e.name));
+    // console.log("The dropped data in a useState", videoFile);
 
-    let file = e[0];
+    // let file = e[0];
     // let videoToBase;
-
-    console.log("This is the data from the File change function", file);
 
     // async function Main() {
     //   videoToBase = await convertToBase64(file);
@@ -214,129 +224,112 @@ const UploadContent = () => {
     // Main();
   };
 
-  console.log("the Video Variable after HAndle change", video);
-  // const handleFileChange = (e) => {
-  //   setFile(e.target.files[0]);
-  //   setObject({ ...object, file: file });
-  //   console.log(file);
-  //   setObject({ ...object, file: file });
-  //   formData.append("file", file);
-  // };
-
-  // const onDrop = async (files) => {
-  //   console.log(files);
-  //   setFile(files[0]);
-  //   console.log(file);
-  //   setObject({ ...object, file: file });
-  //   formData.append("video", file);
-
-  //   // const base64 = await convertToBase64(files[0]);
-  // };
-
-  // const onDrop = (files) => {
-  //   let formData = new FormData();
-  //   console.log(files);
-  //   formData.append("file", files[0]);
-
-  //   // i may be able to replicate this the same for pictures music and all that lets see if it works
-  //   axiosPrivate
-  //     .post("http://localhost:4000/videos/createVideoFiles", formData, {
-  //       headers: { "Content-Type": "multipart/form-data" },
-  //       withCredentials: true,
-  //     })
-  //     .then((response) => {
-  //       if (response.data.success) {
-  //         let variable = {
-  //           filePath: response.data.filePath,
-  //           fileName: response.data.fileName,
-  //         };
-  //         console.log(response.data);
-
-  //         setFilePath(response.data.filePath);
-  //         //generate thumbnail with this file path
-  //         axiosPrivate
-  //           .post("http://localhost:4000/videos/createThumbnail", variable, {
-  //             withCredentials: true,
-  //           })
-  //           .then((response) => {
-  //             // console.log(response);
-  //             if (response.data.success) {
-  //               setDuration(response.data.fileDuration);
-  //               setThumbnail(response.data.thumbsFilePath);
-  //               console.log("Thumbnail post ran");
-  //             } else {
-  //               alert("Failed to make the thumbnails");
-  //             }
-  //           });
-  //       } else {
-  //         alert("failed to save the video in server");
-  //       }
-  //     });
-  // };
-
-  const onSubmit = async (e) => {
+  const onSubmit = (e) => {
     e.preventDefault();
 
     if (
       title === "" ||
       description === "" ||
-      category === "" ||
+      category === ""
       // file === []
-      file === ""
+      // file === ""
       // duration === "" ||
       // thumbnail === ""
-    ) {
-      console.log(title);
-      console.log(description);
-      console.log(category);
-      console.log(file);
+    )
       return alert("Fill all of the fields");
-    }
 
     formData = {
       userPosting: _id,
       title: title,
       description: description,
       prime: prime,
-      file: file,
+      // file: file,
       category: category,
       duration: duration,
       thumbnail: thumbnail,
       videoID: videoID,
-      videoFile: videoFile,
     };
-    // console.log(formData);
-
-    const bodyTest = "THIS IS A STATIC BODY ITEM";
-
-    // EDIT VIDEO may need to move this to the backend
-    // const options = {
-    //   method: "POST",
-    //   headers: {
-    //     accept: "application/json",
-    //     "content-type": "application/*+json",
-    //     AccessKey: "4c5ea068-0b40-40ae-8d9b2865c27c-f2d3-4fd9",
-    //     // AccessKey: "a80779d4-9931-4345-80c1ca2315d2-fc09-4143",
-    //   },
-    //   body: `{"title":"${title}","metaTags":[{"property":"description","value":"${description}"}, {"property":"prime","value":"${prime}"},{"property":"category","value":"${category}"},{"property":"userPosting","value":"${_id}"}]}`,
-    // };
-
-    // fetch(
-    //   `https://video.bunnycdn.com/library/181057/videos/${video.guid}`,
-    //   options
-    // )
-    //   .then((response) => response.json())
-    //   .then((response) => {
-    //     console.log("This is the newly Edited video", response);
-    //   })
-    //   .catch((err) => console.error(err));
 
     const testBackEnd = async () => {
       try {
+        console.log("Video file before backend data", videoFile);
+
         const response = await axiosPrivate.post(`/videos/bunnyInfo`, formData);
         console.log(response.data);
+        if (response.data.success === true) {
+          try {
+            console.log("Video file after backend data", videoFile);
+            // Create a new tus upload
+            var upload = new tus.Upload(videoFile, {
+              // var upload = new tus.Upload(file, {
+              endpoint: "https://video.bunnycdn.com/tusupload",
+              retryDelays: [0, 3000, 5000, 10000, 20000, 60000, 60000],
+              headers: {
+                AuthorizationSignature: response.data.shaAttempt, // SHA256 signature (library_id + api_key + expiration_time + video_id)
+                AuthorizationExpire: response.data.authorizationExpire, // Expiration time as in the signature,
+                VideoId: response.data.video_id,
+                // "video-guid", // The guid of a previously created video object through the Create Video API call
+                LibraryId: response.data.libraryId,
+              },
+              metadata: {
+                filetype: videoFile.type,
+                title: "Is this where the title is changed",
+                collection: "collectionID",
+              },
+              onError: function (error) {
+                console.log("ERROR", error);
+              },
+              onProgress: function (bytesUploaded, bytesTotal) {
+                console.log(
+                  bytesTotal,
+                  "Bytes Total",
+                  bytesUploaded,
+                  "Bytes Uploaded"
+                );
+              },
+              onSuccess: function () {
+                console.log("The video Uploaded Great Job");
+              },
+            });
+            // Check if there are any previous uploads to continue.
+            upload.findPreviousUploads().then(function (previousUploads) {
+              // Found previous uploads so we select the first one.
+              if (previousUploads.length) {
+                upload.resumeFromPreviousUpload(previousUploads[0]);
+              }
+              // Start the upload
+              upload.start();
+            });
+            console.log("It Does");
+          } catch (err) {
+            console.log("ERROR", err);
+          }
+        }
       } catch (err) {
         alert("Change this later because you have an err", err);
+      } finally {
+        // EDIT VIDEO may need to move this to the backend
+        const options = {
+          method: "POST",
+          headers: {
+            accept: "application/json",
+            "content-type": "application/*+json",
+            AccessKey: "4c5ea068-0b40-40ae-8d9b2865c27c-f2d3-4fd9",
+            // AccessKey: "a80779d4-9931-4345-80c1ca2315d2-fc09-4143",
+          },
+          body: `{"title":"${title}","metaTags":[{"property":"description","value":"${description}"}, {"property":"prime","value":"${prime}"},{"property":"category","value":"${category}"},{"property":"userPosting","value":"${_id}"}]}`,
+        };
+
+        fetch(
+          `https://video.bunnycdn.com/library/181057/videos/${videoID}`,
+          // `https://video.bunnycdn.com/library/181057/videos/${video.guid}`,
+          options
+        )
+          .then((response) => response.json())
+          .then((response) => {
+            console.log("This is the newly Edited video", response);
+          })
+          .catch((err) => console.error(err));
       }
     };
     testBackEnd();
