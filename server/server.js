@@ -12,9 +12,11 @@ const cookieParser = require("cookie-parser");
 var bodyParser = require("body-parser");
 const credentials = require("./middleware/credentials");
 const mongoose = require("mongoose");
+// YOUTUBE TUTUTIAL
+const functions = require("firebase-functions");
 
 const connectDB = require("./config/dbConn");
-const PORT = process.env.PORT || 4000;
+const PORT = process.env.CONNECTIONPORT || 4000;
 
 // Connect to the DB
 connectDB();
@@ -59,6 +61,7 @@ app.use("/register", require("./routes/register"));
 app.use("/auth", require("./routes/auth"));
 app.use("/refresh", require("./routes/refresh"));
 app.use("/logout", require("./routes/logout"));
+app.use("/test", require("./routes/test"));
 
 // Any route that doesnt need verifications needs to be ABOVE THIS LINE
 app.use(verifyJWT);
@@ -90,3 +93,6 @@ mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB");
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
+
+// YOUTUBE TUTUTIAL
+exports.api = functions.https.onRequest(app);

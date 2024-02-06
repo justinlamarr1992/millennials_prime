@@ -32,25 +32,28 @@ const PrimeNews = () => {
     method: "GET",
     headers: {
       accept: "application/json",
-      // AccessKey: "a80779d4-9931-4345-80c1ca2315d2-fc09-4143",
-      AccessKey: "4c5ea068-0b40-40ae-8d9b2865c27c-f2d3-4fd9",
+      // Live Actual Folder
+      AccessKey: "a80779d4-9931-4345-80c1ca2315d2-fc09-4143",
+      // Test Folder
+      // AccessKey: "4c5ea068-0b40-40ae-8d9b2865c27c-f2d3-4fd9",
     },
   };
 
-  // this ks the fetch with the test Library
+  // Live Library
   fetch(
-    "https://video.bunnycdn.com/library/181057/videos?page=1&itemsPerPage=2&orderBy=date",
+    "https://video.bunnycdn.com/library/147838/videos?page=1&itemsPerPage=2&orderBy=date",
     options
   )
-    // This is the fetch with the actually Library
+    // Test Library
     // fetch(
-    //   "https://video.bunnycdn.com/library/147838/videos?page=1&itemsPerPage=2&orderBy=date",
+    //   "https://video.bunnycdn.com/library/181057/videos?page=1&itemsPerPage=2&orderBy=date",
     //   options
     // )
+
     .then((response) => response.json())
     .then((response) => {
-      console.log(response);
-      console.log("Latest Video", response.items[0]);
+      // console.log(response);
+      // console.log("Latest Video", response.items[0]);
       setVideo(response.items[0]);
       setVideoGuid(response.items[0].guid);
       setVideoDesc(response.items[0].metaTags[0].value);
@@ -58,10 +61,10 @@ const PrimeNews = () => {
     })
     .catch((err) => console.error(err));
 
-  console.log("Video Array", video);
-  console.log("Video Guid", videoGuid);
-  console.log("Video Title", videoTitle);
-  console.log("Video Description", videoDesc);
+  // console.log("Video Array", video);
+  // console.log("Video Guid", videoGuid);
+  // console.log("Video Title", videoTitle);
+  // console.log("Video Description", videoDesc);
   // const displayName = userInfo.firstName + " " + userInfo.lastName;
 
   // console.log(userInfo);
@@ -76,13 +79,18 @@ const PrimeNews = () => {
       Chabge the user info to resemblbe the primeshows viewing */}
 
       <iframe
+        // Live Video File
         src={
           video
-            ? `https://video.bunnycdn.com/embed/181057/${videoGuid}`
+            ? `https://video.bunnycdn.com/embed/147838/${videoGuid}`
             : "Loading"
         }
-        // src="https://video.bunnycdn.com/embed/147838/ec4cbe34-8750-4695-b252-69f53e51627a"
-        // src={`https://video.bunnycdn.com/embed/147838/${videoGuid}`}
+        // Test Video File
+        // src={
+        //   video
+        //     ? `https://video.bunnycdn.com/embed/181057/${videoGuid}`
+        //     : "Loading"
+        // }
         className="pr-video p-con-shade"
         loading="lazy"
         width="1280"
