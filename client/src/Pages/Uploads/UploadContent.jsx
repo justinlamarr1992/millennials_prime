@@ -248,9 +248,10 @@ const UploadContent = () => {
       duration: duration,
       thumbnail: thumbnail,
       videoID: videoID,
+      // later library ID if a Prime Submitter
     };
 
-    const testBackEnd = async () => {
+    const sendToBackEnd = async () => {
       try {
         console.log("Video file before backend data", videoFile);
 
@@ -332,7 +333,7 @@ const UploadContent = () => {
           .catch((err) => console.error(err));
       }
     };
-    testBackEnd();
+    sendToBackEnd();
   };
 
   return (
