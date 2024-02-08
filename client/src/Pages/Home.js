@@ -81,11 +81,13 @@ const Home = () => {
         ref={widthRef}
       >
         <PrimeNews />
-        <div className="user-prime-container ">
-          <h1 className="user-prime-container more-to-come p2-con-shade">
-            More to Come
-          </h1>
-        </div>
+        <Link to={`/prime-news/upload-content`}>
+          <div className="user-prime-container ">
+            <h1 className="user-prime-container more-to-come p2-con-shade">
+              More to Come
+            </h1>
+          </div>
+        </Link>
 
         {/* PHASE 2 */}
         {/* <HotItems />
