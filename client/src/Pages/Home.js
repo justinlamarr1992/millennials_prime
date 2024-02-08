@@ -60,6 +60,16 @@ const Home = () => {
     pageWidthChange();
   };
 
+  const backEndTest = async () => {
+    const response = await axiosPrivate.get(`/test/`);
+    console.log(response.data);
+    if (response.data.success === true) {
+      alert("The Back End has Sent back a good connection");
+    } else {
+      alert("There was no connection to the back end");
+    }
+  };
+
   const pageWidthChange = () => {
     if (modal == true) {
       console.log("true");
@@ -88,6 +98,12 @@ const Home = () => {
             </h1>
           </div>
         </Link>
+        <button
+          onClick={backEndTest}
+          class="feed-reply-post page-button connect-btn clickable con-shade"
+        >
+          Test Back End connection
+        </button>
 
         {/* PHASE 2 */}
         {/* <HotItems />

@@ -6,7 +6,7 @@
   "functions": [
     {
       "source": "server",
-      "codebase": "default",
+      "codebase": "millprimebackend",
       "ignore": [
         "node_modules",
         ".git",

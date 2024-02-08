@@ -34,10 +34,15 @@ app.use(cors(corsOptions));
 // middleware for cookies
 app.use(cookieParser());
 
-// serve static files MEANING THE FILES SAVED FOR TESTING
-//TODO: FIND WAY FOR PRODUCTION
-app.use("/uploads", express.static(path.join(__dirname, "..", "/uploads")));
-// app.use("/uploads", express.static("uploads"));
+// TEST
+app.use(function (req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
+});
+// TEST
 
 app.use(bodyParser.json({ limit: "200mb" }));
 app.use(
