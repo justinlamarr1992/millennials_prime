@@ -88,11 +88,10 @@ const getUserInfo = async (req, res) => {
   // const _id = new mongoose.Types.ObjectId(req.body._id);
   // console.log("This is the user ", _id);
   try {
-    console.log("This is the user ", req.body._id);
-
     const _id = new mongoose.Types.ObjectId(req.body._id);
-    console.log("This is the user ", _id);
     const user = await User.find(_id);
+    console.log("This is the user ", _id);
+    console.log("This is the user info", user);
 
     res.json(user);
   } catch (err) {
@@ -154,7 +153,7 @@ const updateUserInfo = async (req, res) => {
   const { name, email, DOB, country, state, city, zip } = req.body.values;
   let location = { country, state, city, zip };
 
-  console.log(name, email, DOB, location);
+  console.log("User Updated ", name, email, DOB, location);
   // This will be for the second one
   // console.log(DOB, location, businessOwner);
   if (!req?.params?.id)

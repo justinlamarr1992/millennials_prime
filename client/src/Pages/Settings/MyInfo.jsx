@@ -131,7 +131,10 @@ const MyInfo = () => {
     // This is where We update the user main info
     console.log(values);
     try {
-      const response = await axiosPrivate.patch(`/users/${_id}`, { values });
+      const response = await axiosPrivate.patch(
+        `https://us-central1-millennialsprime.cloudfunctions.net/api/users/${_id}`,
+        { values }
+      );
       console.log(response);
     } catch (err) {
       console.log(err);

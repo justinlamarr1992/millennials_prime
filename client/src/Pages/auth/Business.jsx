@@ -17,7 +17,7 @@ const Business = () => {
   const [profileImage, setProfileImage] = useState({ image: "" });
 
   // info to be sent in backend
-  const [entrepreneur, setEntrepreneur] = useState("");
+  const [entrepreneur, setEntrepreneur] = useState(null);
   const [companyName, setCompanyName] = useState("");
   const [industry, setIndustry] = useState("");
   const [whyIndustry, setWhyIndustry] = useState("");
@@ -57,15 +57,19 @@ const Business = () => {
   const _id = auth._id;
 
   useEffect(() => {
-    console.log(_id);
-
     const getUserBusinessInfo = async () => {
       try {
-        const response = await axiosPrivate.post("/users/userinfo", { _id });
+        const response = await axiosPrivate.post(
+          "https://us-central1-millennialsprime.cloudfunctions.net/api/users/userinfo",
+          { _id }
+        );
         console.log(response.data[0]);
         setEntrepreneur(response.data[0].business.entrepreneur);
         if (entrepreneur == true) {
           console.log("I have a company and the follow is the data");
+
+          setBusiness(true);
+          setEntrepreneur(true);
 
           setCompanyName(response.data[0].business.companyName);
           setIndustry(response.data[0].business.industry);
@@ -214,7 +218,7 @@ const Business = () => {
               name="entrepreneur"
               id="business"
               onChange={bossCheck}
-              // value={entrepreneur}
+              value={entrepreneur}
               placeholder="Select Answer"
             >
               <option value="" disabled selected>

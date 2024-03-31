@@ -135,6 +135,7 @@ justify-content: space-evenly;
 
 .label-input label{
     margin:5px;
+    color: var(--tri-t);
 }
 .label-input input, .validation-wrapper input {
     border-radius: var(--inp-brad);
