@@ -78,12 +78,12 @@ app.use("/test", require("./routes/test"));
 app.use(verifyJWT);
 
 // Testing Restart
-// app.use("/comments", require("./routes/api/comments"));
-// app.use("/employees", require("./routes/api/employees"));
-// app.use("/users", require("./routes/api/users"));
-// app.use("/videos", require("./routes/api/video"));
-// app.use("/subscribe", require("./routes/api/subscribe"));
-// app.use("/likes", require("./routes/api/likes"));
+app.use("/comments", require("./routes/api/comments"));
+app.use("/employees", require("./routes/api/employees"));
+app.use("/users", require("./routes/api/users"));
+app.use("/videos", require("./routes/api/video"));
+app.use("/subscribe", require("./routes/api/subscribe"));
+app.use("/likes", require("./routes/api/likes"));
 
 // ALSO TESTING
 // app.use("/testUploads", require("./routes/api/testUploads"));

@@ -1,4 +1,4 @@
-import React, { Suspense, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Route, Routes, Navigate } from "react-router-dom";
 
 import RequireAuth from "./Components/DaveGrayTest/RequireAuth";
@@ -70,6 +70,8 @@ const App = (props, state) => {
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/auth">
             <Route path="register" element={<Register />} />
+            <Route path="business" element={<Business />} />
+            <Route path="art" element={<Art />} />
             <Route path="signin" element={<SignIn />} />
 
             {/* <Route path="signout" element={<SignOut />} /> */}
