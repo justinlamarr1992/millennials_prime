@@ -34,65 +34,72 @@ app.use(cors(corsOptions));
 // middleware for cookies
 app.use(cookieParser());
 
-// TEST
 app.use(function (req, res, next) {
-  res.setHeader("Access-Control-Allow-Origin", "*");
+  // this is used to make the development work
+  // res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  // without origins changes this to false
   res.setHeader("Access-Control-Allow-Credentials", true);
   next();
 });
 // TEST
 
-app.use(bodyParser.json({ limit: "200mb" }));
-app.use(
-  bodyParser.urlencoded({
-    limit: "200mb",
-    extended: true,
-    parameterLimit: 1000000,
-  })
-);
+// Testing Restart
+// app.use(bodyParser.json({ limit: "200mb" }));
+// app.use(
+//   bodyParser.urlencoded({
+//     limit: "200mb",
+//     extended: true,
+//     parameterLimit: 1000000,
+//   })
+// );
 
+// Testing Restart
 //middleware
-app.use(express.json({ limit: "30mb", extended: true }));
-app.use((req, res, next) => {
-  console.log(req.path, req.method);
-  next();
-});
+// app.use(express.json({ limit: "30mb", extended: true }));
+// app.use((req, res, next) => {
+//   console.log(req.path, req.method);
+//   next();
+// });
 
 // Routes
-app.use("/", require("./routes/root"));
+// Testing Restart
+// app.use("/", require("./routes/root"));
 app.use("/register", require("./routes/register"));
 app.use("/auth", require("./routes/auth"));
 app.use("/refresh", require("./routes/refresh"));
 app.use("/logout", require("./routes/logout"));
+
 app.use("/test", require("./routes/test"));
 
 // Any route that doesnt need verifications needs to be ABOVE THIS LINE
+// Testing Restart
 app.use(verifyJWT);
 
-app.use("/comments", require("./routes/api/comments"));
-app.use("/employees", require("./routes/api/employees"));
-app.use("/users", require("./routes/api/users"));
-app.use("/videos", require("./routes/api/video"));
-app.use("/subscribe", require("./routes/api/subscribe"));
-app.use("/likes", require("./routes/api/likes"));
+// Testing Restart
+// app.use("/comments", require("./routes/api/comments"));
+// app.use("/employees", require("./routes/api/employees"));
+// app.use("/users", require("./routes/api/users"));
+// app.use("/videos", require("./routes/api/video"));
+// app.use("/subscribe", require("./routes/api/subscribe"));
+// app.use("/likes", require("./routes/api/likes"));
 
 // ALSO TESTING
-app.use("/testUploads", require("./routes/api/testUploads"));
+// app.use("/testUploads", require("./routes/api/testUploads"));
 
-app.all("*", (req, res) => {
-  res.status(404);
-  if (req.accepts("html")) {
-    res.sendFile(path.join(__dirname, "views", "404.html"));
-  } else if (req.accepts("json")) {
-    res.json({ error: "404 Not Found" });
-  } else {
-    res.type("txt").send("404 Not Found");
-  }
-});
+// app.all("*", (req, res) => {
+//   res.status(404);
+//   if (req.accepts("html")) {
+//     res.sendFile(path.join(__dirname, "views", "404.html"));
+//   } else if (req.accepts("json")) {
+//     res.json({ error: "404 Not Found" });
+//   } else {
+//     res.type("txt").send("404 Not Found");
+//   }
+// });
 
-app.use(errorHandler);
+// app.use(errorHandler);
 
 mongoose.connection.once("open", () => {
   console.log("Connected to MongoDB");

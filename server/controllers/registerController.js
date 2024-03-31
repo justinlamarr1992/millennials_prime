@@ -1,16 +1,5 @@
-// const UserTest = require("../models/User");
-// const User = require("../models/PrimeUser");
 const User = require("../models/MillPrimeUser");
-
 const bcrypt = require("bcrypt");
-// const usersDb = {
-//   users: require("../models/users.json"),
-//   setUsers: function (data) {
-//     this.users = data;
-//   },
-// };
-// const path = require("path");
-// const fsPromises = require("fs").promises;
 
 const handleNewUser = async (req, res) => {
   console.log(req.body);

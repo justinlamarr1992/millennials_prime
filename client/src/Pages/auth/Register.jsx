@@ -112,7 +112,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4000/register",
+        "https://us-central1-millennialsprime.cloudfunctions.net/api/register",
         dataToSubmit,
 
         {

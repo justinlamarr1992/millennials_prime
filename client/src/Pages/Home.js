@@ -22,6 +22,7 @@ import HomeFeedPost from "../Components/reusuables/post/HomeFeedPost";
 import MainModal from "../Components/reusuables/modals/MainModal";
 
 import useAxiosPrivate from "../Hooks/useAxiosPrivate";
+import axios from "axios";
 
 const Home = () => {
   const { auth } = useAuth();
@@ -32,7 +33,7 @@ const Home = () => {
   const widthRef = useRef(null);
   const errRef = useRef();
 
-  const [errMsg, setErrMsg] = useState("");
+  const [errMsg, setErrMsg] = useState(null);
 
   const navigate = useNavigate();
   const logout = useLogout();
@@ -61,13 +62,37 @@ const Home = () => {
   };
 
   const backEndTest = async () => {
-    const response = await axiosPrivate.get(`/test/`);
-    console.log(response.data);
-    if (response.data.success === true) {
-      alert("The Back End has Sent back a good connection");
-    } else {
-      alert("There was no connection to the back end");
+    try {
+      const response = await axios.get(
+        // `http://localhost:4000/test/web`,
+        `https://us-central1-millennialsprime.cloudfunctions.net/api/test/web`,
+        {
+          withCredentials: true,
+        }
+      );
+      if (response.status == 200) {
+        console.log(response.data);
+        console.log("The Back End has Sent back a good connection");
+      }
+    } catch (err) {
+      console.log("There was no connection to the back end");
+      setErrMsg(err);
     }
+
+    // const response = axios.get(
+    //   `https://us-central1-millennialsprime.cloudfunctions.net/api/test/web`,
+    //   {
+    //     withCredentials: true,
+    //   }
+    // );
+
+    // if (response.status == 200) {
+    //   console.log(response.data);
+    //   console.log("The Back End has Sent back a good connection");
+    // } else {
+    //   console.log("There was no connection to the back end");
+    //   setErrMsg
+    // }
   };
 
   const pageWidthChange = () => {
@@ -104,6 +129,7 @@ const Home = () => {
         >
           Test Back End connection
         </button>
+        {errMsg ? <h1>error</h1> : <h2>All Good</h2>}
 
         {/* PHASE 2 */}
         {/* <HotItems />
