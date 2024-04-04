@@ -127,8 +127,11 @@ const Home = () => {
           onClick={backEndTest}
           class="feed-reply-post page-button connect-btn clickable con-shade"
         >
-          Test Back End connection
+          Test Settings Page
         </button>
+        <Link to={`/settings/business`}>
+          <button>Settings</button>
+        </Link>
         {errMsg ? <h1>error</h1> : <h2>All Good</h2>}
 
         {/* PHASE 2 */}
@@ -152,9 +155,7 @@ const Home = () => {
         <Link to={`/user`}>
           <button>User</button>
         </Link>
-        <Link to={`/settings`}>
-          <button>Settings</button>
-        </Link>
+        
         <Link to="/auth/signin">
           <button className="home-logout-butt con-shade">Sign In</button>
         </Link>

@@ -17,7 +17,12 @@ const Business = () => {
   const [profileImage, setProfileImage] = useState({ image: "" });
 
   // info to be sent in backend
-  const [entrepreneur, setEntrepreneur] = useState(null);
+
+  // THIS DOES CHANGE THE WORDING OF THE SELECT BUT NOT THE FUNCTION
+  const [testEntrepreneur, setTestEntrepreneur] = useState("yes");
+  // THIS DOES CHANGE THE WORDING OF THE SELECT BUT NOT THE FUNCTION
+
+  const [entrepreneur, setEntrepreneur] = useState("");
   const [companyName, setCompanyName] = useState("");
   const [industry, setIndustry] = useState("");
   const [whyIndustry, setWhyIndustry] = useState("");
@@ -213,12 +218,13 @@ const Business = () => {
           action=""
         >
           <div className="label-input">
-            <label htmlFor="">Do you have a business?</label>
+            <label>Do you have a business?</label>
             <select
               name="entrepreneur"
               id="business"
               onChange={bossCheck}
-              value={entrepreneur}
+              value={testEntrepreneur}
+              // value=""
               placeholder="Select Answer"
             >
               <option value="" disabled selected>
