@@ -70,8 +70,6 @@ const App = (props, state) => {
           <Route path="/contact-us" element={<ContactUs />} />
           <Route path="/auth">
             <Route path="register" element={<Register />} />
-            <Route path="business" element={<Business />} />
-            <Route path="art" element={<Art />} />
             <Route path="signin" element={<SignIn />} />
 
             {/* <Route path="signout" element={<SignOut />} /> */}

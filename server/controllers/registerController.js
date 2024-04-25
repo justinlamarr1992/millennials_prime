@@ -5,7 +5,7 @@ const handleNewUser = async (req, res) => {
   console.log(req.body);
   const { user, password, firstName, lastName, DOB } = req.body;
   const name = firstName + " " + lastName;
-  const email = user.split("@")[0];
+  const email = user;
   // const username = user.split("@")[0];
   if (!user || !password)
     return res.status(400).json({ message: "Email and Password required" });

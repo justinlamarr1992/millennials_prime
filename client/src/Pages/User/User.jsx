@@ -20,8 +20,6 @@ import FeedEpisode from "../../Components/reusuables/post/FeedEpisode";
 import FeedMusic from "../../Components/reusuables/post/FeedMusic";
 import FeedStore from "../../Components/reusuables/post/FeedStore";
 
-import useFetch from "../../Hooks/useFetch";
-
 const User = () => {
   const [modal, setModal] = useState(true);
   const [pageWidth, setPageWidth] = useState("var(--home-per)");

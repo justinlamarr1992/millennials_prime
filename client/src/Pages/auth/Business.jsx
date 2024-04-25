@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import CompanyLogo from "../../Assets/Images/CompanyLogo.png";
 import "./auth.css";
@@ -7,57 +7,53 @@ import SettingsModal from "../../Components/settings/SettingsModal";
 
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import useAuth from "../../Hooks/useAuth";
-
 const Business = () => {
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
   const [modal, setModal] = useState(true);
 
+  const navigate = useNavigate();
+
   // Business Logo
-  const [profileImage, setProfileImage] = useState({ image: "" });
+  const [profileImage, setProfileImage] = useState({ image: null });
 
-  // info to be sent in backend
-
-  // THIS DOES CHANGE THE WORDING OF THE SELECT BUT NOT THE FUNCTION
-  const [testEntrepreneur, setTestEntrepreneur] = useState("yes");
-  // THIS DOES CHANGE THE WORDING OF THE SELECT BUT NOT THE FUNCTION
-
-  const [entrepreneur, setEntrepreneur] = useState("");
-  const [companyName, setCompanyName] = useState("");
-  const [industry, setIndustry] = useState("");
-  const [whyIndustry, setWhyIndustry] = useState("");
-  const [openOnMillPrime, setOpenOnMillPrime] = useState("");
-  const [lengthOpen, setLengthOpen] = useState("");
-  const [whyBusiness, setWhyBusiness] = useState("");
-  const [firstObjective, setFirstObjective] = useState("");
-  const [objectiveNow, setObjectiveNow] = useState("");
-  const [howMany, setHowMany] = useState("");
-  const [productsAndServices, setProductsAndServices] = useState("");
-  const [primaryPromotion, setPrimaryPromotion] = useState("");
-  const [factorsOfLocation, setFactorsOfLocation] = useState("");
+  // Form useStates
+  const [entrepreneur, setEntrepreneur] = useState(null);
+  const [companyName, setCompanyName] = useState(null);
+  const [industry, setIndustry] = useState(null);
+  const [whyIndustry, setWhyIndustry] = useState(null);
+  const [openOnMillPrime, setOpenOnMillPrime] = useState(null);
+  const [lengthOpen, setLengthOpen] = useState(null);
+  const [whyBusiness, setWhyBusiness] = useState(null);
+  const [firstObjective, setFirstObjective] = useState(null);
+  const [objectiveNow, setObjectiveNow] = useState(null);
+  const [howMany, setHowMany] = useState(null);
+  const [productsAndServices, setProductsAndServices] = useState(null);
+  const [primaryPromotion, setPrimaryPromotion] = useState(null);
+  const [factorsOfLocation, setFactorsOfLocation] = useState(null);
 
   // info to be sent in backend
   const [values, setValues] = useState({
-    entrepreneur: "",
-    companyName: "",
-    industry: "",
-    whyIndustry: "",
-    openOnMillPrime: "",
-    lengthOpen: "",
-    whyBusiness: "",
-    firstObjective: "",
-    objectiveNow: "",
-    howMany: "",
-    productsAndServices: "",
-    primaryPromotion: "",
-    factorsOfLocation: "",
+    entrepreneur: null,
+    companyName: null,
+    industry: null,
+    whyIndustry: null,
+    openOnMillPrime: null,
+    lengthOpen: null,
+    whyBusiness: null,
+    firstObjective: null,
+    objectiveNow: null,
+    howMany: null,
+    productsAndServices: null,
+    primaryPromotion: null,
+    factorsOfLocation: null,
   });
 
-  const [business, setBusiness] = useState(false);
-  const [industryIn, setIndustryIn] = useState("");
-  const [open, setOpen] = useState(false);
+  const [business, setBusiness] = useState(null);
+  const [industryIn, setIndustryIn] = useState(null);
+  const [open, setOpen] = useState(null);
 
-  const [errMsg, setErrMsg] = useState("");
+  const [errMsg, setErrMsg] = useState(null);
 
   const _id = auth._id;
 
@@ -68,14 +64,8 @@ const Business = () => {
           "https://us-central1-millennialsprime.cloudfunctions.net/api/users/userinfo",
           { _id }
         );
-        console.log(response.data[0]);
-        setEntrepreneur(response.data[0].business.entrepreneur);
-        if (entrepreneur == true) {
-          console.log("I have a company and the follow is the data");
-
-          setBusiness(true);
-          setEntrepreneur(true);
-
+        if (response.data[0].business) {
+          setEntrepreneur(response.data[0].business.entrepreneur);
           setCompanyName(response.data[0].business.companyName);
           setIndustry(response.data[0].business.industry);
           setWhyIndustry(response.data[0].business.whyIndustry);
@@ -88,9 +78,14 @@ const Business = () => {
           setProductsAndServices(response.data[0].business.productsAndServices);
           setPrimaryPromotion(response.data[0].business.primaryPromotion);
           setFactorsOfLocation(response.data[0].business.factorsOfLocation);
+          bossCheck();
+        } else {
+          console.log("We broke broke");
         }
+        console.log("User Data ", response.data[0].business);
       } catch (err) {
         console.log(err);
+        // setErrMsg(err);
       }
     };
     getUserBusinessInfo();
@@ -106,26 +101,9 @@ const Business = () => {
   // True/false Drop Down Checks
   const bossCheck = (e) => {
     console.log(business);
-    const inputBusiness = document.getElementById("business").value;
 
-    if (inputBusiness === "yes") {
-      setBusiness(true);
-      setEntrepreneur(true);
-    } else {
-      setIndustry("");
-      setWhyIndustry("");
-      setOpenOnMillPrime("");
-      setLengthOpen("");
-      setWhyBusiness("");
-      setFirstObjective("");
-      setObjectiveNow("");
-      setHowMany("");
-      setProductsAndServices("");
-      setPrimaryPromotion("");
-      setFactorsOfLocation("");
-      setBusiness(false);
-      setEntrepreneur(false);
-    }
+    setBusiness(true);
+
     setValues({ ...values, [e.target.name]: e.target.value });
     console.log(values);
   };
@@ -148,45 +126,8 @@ const Business = () => {
   };
 
   // Handles
-  const handleWhyIndusty = async (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-    console.log(values);
-  };
-  const handleHowLong = async (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-    console.log(values);
-  };
-  const handleCompanyName = async (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-    console.log(values);
-  };
-  const handleWhyBus = async (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-    console.log(values);
-  };
-  const handlefirstObj = async (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-    console.log(values);
-  };
-  const handleObjNow = async (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-    console.log(values);
-  };
-  const handleHowMany = async (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-    console.log(values);
-  };
-  const handleProducts = async (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-    console.log(values);
-  };
-  const handlePriPro = async (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-    console.log(values);
-  };
-  const handleFactors = async (e) => {
-    setValues({ ...values, [e.target.name]: e.target.value });
-    console.log(e.target.value);
+  const handleChange = (e) => {
+    setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     console.log(values);
   };
 
@@ -195,13 +136,19 @@ const Business = () => {
     e.preventDefault();
     console.log(values);
     try {
-      const response = await axiosPrivate.patch(`/users/business/${_id}`, {
-        values,
-      });
+      const response = await axiosPrivate.patch(
+        `https://us-central1-millennialsprime.cloudfunctions.net/api/users/business/${_id}`,
+        {
+          values,
+        }
+      );
       console.log(response);
     } catch (err) {
       console.log(err);
     }
+    navigate("/settings/art", {
+      state: { data: "This is the data passed" },
+    });
   };
 
   const onClick = () => {
@@ -212,19 +159,14 @@ const Business = () => {
     <div className="page">
       <div className="settings-container">
         <h2 className="settings-page-title">Business Information</h2>
-        <form
-          className="settings-profile-form"
-          onSubmit={handleUpdate}
-          action=""
-        >
+        <form className="settings-profile-form" onSubmit={handleUpdate}>
           <div className="label-input">
             <label>Do you have a business?</label>
             <select
               name="entrepreneur"
               id="business"
               onChange={bossCheck}
-              value={testEntrepreneur}
-              // value=""
+              value={entrepreneur}
               placeholder="Select Answer"
             >
               <option value="" disabled selected>
@@ -235,7 +177,7 @@ const Business = () => {
             </select>
           </div>
 
-          {business == true && (
+          {business && (
             <div className="settings-user-info">
               <div className="settings-user-info-group">
                 <label
@@ -270,12 +212,11 @@ const Business = () => {
                   <label htmlFor="">What is the Name of the Company?</label>
                   <input
                     type="text"
-                    onChange={handleCompanyName}
+                    onChange={handleChange}
                     placeholder="Company Name"
                     id="company-name"
                     name="companyName"
-                    // ref={emailRef}
-                    // required
+                    value={companyName}
                   />
                 </div>
 
@@ -305,10 +246,11 @@ const Business = () => {
                   </label>
                   <input
                     type="text"
-                    onChange={industryCheck}
+                    onChange={handleChange}
                     placeholder="State"
                     id="industry"
                     name="industry"
+                    value={industry}
                     // ref={emailRef}
                     // required
                   />
@@ -322,7 +264,8 @@ const Business = () => {
                     type="text"
                     id="why-industry"
                     name="whyIndustry"
-                    onChange={handleWhyIndusty}
+                    value={whyIndustry}
+                    onChange={handleChange}
                   />
                 </div>
 
@@ -332,9 +275,10 @@ const Business = () => {
                   </label>
                   <select
                     name="lengthOpen"
+                    value={lengthOpen}
                     id="business-start-value"
                     placeholder="Select Answer"
-                    onChange={handleHowLong}
+                    onChange={handleChange}
                   >
                     <option value="" disabled selected>
                       Select your option
@@ -356,8 +300,9 @@ const Business = () => {
                   </label>
                   <select
                     name="whyBusiness"
+                    value={whyBusiness}
                     id="business"
-                    onChange={handleWhyBus}
+                    onChange={handleChange}
                   >
                     <option value="" disabled selected>
                       Select your option
@@ -384,7 +329,8 @@ const Business = () => {
                     type="text"
                     id="first-objection"
                     name="firstObjective"
-                    onChange={handlefirstObj}
+                    value={firstObjective}
+                    onChange={handleChange}
                   />
                 </div>
 
@@ -394,7 +340,8 @@ const Business = () => {
                     type="text"
                     id="now-objective"
                     name="objectiveNow"
-                    onChange={handleObjNow}
+                    value={objectiveNow}
+                    onChange={handleChange}
                   />
                 </div>
 
@@ -404,8 +351,9 @@ const Business = () => {
                   </label>
                   <select
                     name="howMany"
+                    value={howMany}
                     id="employees"
-                    onChange={handleHowMany}
+                    onChange={handleChange}
                   >
                     <option value="" disabled selected>
                       Select your option
@@ -427,7 +375,8 @@ const Business = () => {
                     id="services"
                     type="text"
                     name="productsAndServices"
-                    onChange={handleProducts}
+                    value={productsAndServices}
+                    onChange={handleChange}
                   />
                 </div>
 
@@ -437,10 +386,11 @@ const Business = () => {
                   </label>
                   <select
                     name="primaryPromotion"
+                    value={primaryPromotion}
                     id="promotion"
                     placeholder="Select Answer"
                     // value={}
-                    onChange={handlePriPro}
+                    onChange={handleChange}
                   >
                     <option value="" disabled selected>
                       Select your option
@@ -464,8 +414,9 @@ const Business = () => {
                   <select
                     name="factorsOfLocation"
                     id="location"
+                    value={factorsOfLocation}
                     placeholder="Select Answer"
-                    onChange={handleFactors}
+                    onChange={handleChange}
                   >
                     <option value="" disabled selected>
                       Select your option

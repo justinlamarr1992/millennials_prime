@@ -1,9 +1,6 @@
 import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
-import {
-  selectCurrentUser,
-  selectCurrentToken,
-} from "../../Features/auth/authSlice";
+
 import { Link } from "react-router-dom";
 import axios from "../../API/axios";
 

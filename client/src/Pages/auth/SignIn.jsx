@@ -63,10 +63,14 @@ const SignIn = () => {
     };
 
     try {
-      const response = await axios.post(SIGNIN_URL, dataToSubmit, {
-        headers: { "Content-Type": "application/json" },
-        withCredentials: true,
-      });
+      const response = await axios.post(
+        "https://us-central1-millennialsprime.cloudfunctions.net/api/auth",
+        dataToSubmit,
+        {
+          headers: { "Content-Type": "application/json" },
+          withCredentials: true,
+        }
+      );
       console.log(JSON.stringify(response?.data));
       const accessToken = response?.data?.accessToken;
       const _id = response?.data._id;

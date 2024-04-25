@@ -8,6 +8,8 @@ import SettingsModal from "../../Components/settings/SettingsModal";
 import useAuth from "../../Hooks/useAuth";
 import useAxiosPrivate from "../../Hooks/useAxiosPrivate";
 import useUserPicture from "../../Hooks/useUserPicture";
+
+// NOT FINISHED NEED TO FIND OUT WHY BIRTHDAY DOES AUTOPOULATE
 const MyInfo = () => {
   const { auth } = useAuth();
   const axiosPrivate = useAxiosPrivate();
@@ -15,35 +17,79 @@ const MyInfo = () => {
 
   const navigate = useNavigate();
 
-  const [profileImage, setProfileImage] = useState({ image: "" });
-  const [name, setName] = useState("");
-  const [username, setUsername] = useState("");
-  const [email, setEmail] = useState("");
-  const [DOB, setDOB] = useState("");
-  const [country, setCountry] = useState("");
-  const [state, setState] = useState("");
-  const [city, setCity] = useState("");
-  const [zip, setZip] = useState("");
+  // Business Logo
+  const [profileImage, setProfileImage] = useState({ image: null });
 
+  // Form UseStates
+  const [name, setName] = useState(null);
+  const [username, setUsername] = useState(null);
+  const [email, setEmail] = useState(null);
+  const [DOB, setDOB] = useState(null);
+  const [country, setCountry] = useState(null);
+  const [state, setState] = useState(null);
+  const [city, setCity] = useState(null);
+  const [zip, setZip] = useState(null);
+  const [canLike, setCanLike] = useState(null);
+  const [canDislike, setCanDislike] = useState(null);
+  const [canComment, setCanComment] = useState(null);
+  const [canShare, setCanShare] = useState(null);
+  const [industry, setIndustry] = useState(null);
+  const [B2B, setB2B] = useState(null);
+  const [eComm, setEComm] = useState(null);
+  const [upload, setUpload] = useState(null);
+  // const [profileSettings, setProfileSettings] = useState({
+  //   canLike: null,
+  //   canDislike: null,
+  //   canComment: null,
+  //   canShare: null,
+  //   industry: null,
+  //   B2B: null,
+  //   eComm: null,
+  //   upload: null,
+  // });
+
+  // info to be sent in the backend
   const [values, setValues] = useState({
-    name: "",
-    username: "",
-    email: "",
-    DOB: "",
-    country: "",
-    state: "",
-    city: "",
-    zip: "",
+    name: null,
+    username: null,
+    email: null,
+    DOB: null,
+    country: null,
+    state: null,
+    city: null,
+    zip: null,
+    canLike: null,
+    canDislike: null,
+    canComment: null,
+    canShare: null,
+    industry: null,
+    B2B: null,
+    eComm: null,
+    upload: null,
+    // TEst later
+    // profileSettings: {
+    //   canLike: null,
+    //   canDislike: null,
+    //   canComment: null,
+    //   canShare: null,
+    //   industry: null,
+    //   B2B: null,
+    //   eComm: null,
+    //   upload: null,
+    // },
   });
+
+  const [errMsg, setErrMsg] = useState(null);
 
   const _id = auth._id;
 
   useEffect(() => {
-    console.log(_id);
-
     const getUserInfo = async () => {
       try {
-        const response = await axiosPrivate.post("/users/userinfo", { _id });
+        const response = await axiosPrivate.post(
+          "https://us-central1-millennialsprime.cloudfunctions.net/api/users/userinfo",
+          { _id }
+        );
         setName(response.data[0].name);
         setUsername(response.data[0].email);
         setEmail(response.data[0].username);
@@ -52,8 +98,20 @@ const MyInfo = () => {
         setState(response.data[0].location.state);
         setCity(response.data[0].location.city);
         setZip(response.data[0].location.zip);
+        setCanLike(response.data[0].profileSettings.canLike);
+        setCanDislike(response.data[0].profileSettings.canDislike);
+        setCanComment(response.data[0].profileSettings.canComment);
+        setCanShare(response.data[0].profileSettings.canShare);
+        setIndustry(response.data[0].profileSettings.industry);
+        setB2B(response.data[0].profileSettings.B2B);
+        setEComm(response.data[0].profileSettings.eComm);
+        setUpload(response.data[0].profileSettings.upload);
+        // Test LAter
+        // setProfileSettings(response.data[0].profile);
+        console.log(response);
       } catch (err) {
         console.log(err);
+        // setErrMsg(err);
       }
     };
     // const getUserProfilePic = async () => {
@@ -85,12 +143,6 @@ const MyInfo = () => {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // createProfileImage(profileImage);
-    // console.log(profileImage);
-  };
-
   const handleImageUpload = async (e) => {
     const image = e.target.files[0];
     const base64 = await convertToBase64(image);
@@ -98,36 +150,13 @@ const MyInfo = () => {
     setProfileImage({ ...profileImage, image: base64 });
   };
 
-  const handleNameChanges = async (e) => {
-    console.log(e.target.value);
-    setValues({ ...values, [e.target.name]: e.target.value });
+  const handleChange = (e) => {
+    setValues((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    console.log(values);
   };
-  const handleEmailChanges = async (e) => {
-    // May disable
-    console.log(e.target.value);
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-  const handleDOBChanges = async (e) => {
-    console.log(e.target.value);
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-  const handleCountryChanges = async (e) => {
-    console.log(e.target.value);
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-  const handleStateChanges = async (e) => {
-    console.log(e.target.value);
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-  const handleCityChanges = async (e) => {
-    console.log(e.target.value);
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-  const handleZipChanges = async (e) => {
-    console.log(e.target.value);
-    setValues({ ...values, [e.target.name]: e.target.value });
-  };
-  const handleChange = async (e) => {
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
     // This is where We update the user main info
     console.log(values);
     try {
@@ -139,6 +168,18 @@ const MyInfo = () => {
     } catch (err) {
       console.log(err);
     }
+    try {
+      const response = await axiosPrivate.patch(
+        `https://us-central1-millennialsprime.cloudfunctions.net/api/users/profilesettings/${_id}`,
+        { values }
+      );
+      console.log(response);
+    } catch (err) {
+      console.log(err);
+    }
+    navigate("/settings/business", {
+      state: { data: "This is the data passed" },
+    });
   };
 
   const onClick = () => {
@@ -187,7 +228,7 @@ const MyInfo = () => {
                   value={name}
                   name="name"
                   placeholder={name}
-                  onChange={handleNameChanges}
+                  onChange={handleChange}
                 />
               </div>
               <div className="label-input">
@@ -209,7 +250,7 @@ const MyInfo = () => {
                   value={email}
                   name="email"
                   placeholder={email}
-                  onChange={handleEmailChanges}
+                  onChange={handleChange}
                   disabled
                 />
               </div>
@@ -221,7 +262,7 @@ const MyInfo = () => {
                   value={DOB}
                   name="DOB"
                   placeholder={DOB}
-                  onChange={handleDOBChanges}
+                  onChange={handleChange}
                 />
               </div>
             </div>
@@ -234,7 +275,7 @@ const MyInfo = () => {
                   value={country}
                   name="country"
                   placeholder={country}
-                  onChange={handleCountryChanges}
+                  onChange={handleChange}
                 />
               </div>
               <div className="label-input">
@@ -245,7 +286,7 @@ const MyInfo = () => {
                   value={state}
                   name="state"
                   placeholder={state}
-                  onChange={handleStateChanges}
+                  onChange={handleChange}
                 />
               </div>
               <div className="label-input">
@@ -256,7 +297,7 @@ const MyInfo = () => {
                   value={city}
                   name="city"
                   placeholder={city}
-                  onChange={handleCityChanges}
+                  onChange={handleChange}
                 />
               </div>
               <div className="label-input">
@@ -267,90 +308,139 @@ const MyInfo = () => {
                   value={zip}
                   name="zip"
                   placeholder={zip}
-                  onChange={handleZipChanges}
+                  onChange={handleChange}
                 />
               </div>
             </div>
             <div className="settings-user-info-group">
               <div className="label-input">
                 <label htmlFor="">Viewers Can Like</label>
-                <select>
+                <select
+                  name="canLike"
+                  value={canLike}
+                  id="canLike"
+                  onChange={handleChange}
+                >
                   <option value="">Select Answer</option>
-                  <option value="">Yes</option>
-                  <option value="">No</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
                 </select>
               </div>
               <div className="label-input">
                 <label htmlFor="">Viewers Can Dislike</label>
-                <select>
+                <select
+                  name="canDislike"
+                  value={canDislike}
+                  id="canDislike"
+                  onChange={handleChange}
+                >
                   <option value="">Select Answer</option>
-                  <option value="">Yes</option>
-                  <option value="">No</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
                 </select>
               </div>
               <div className="label-input">
                 <label htmlFor="">Viewers Can Comment</label>
-                <select>
+                <select
+                  name="canComment"
+                  value={canComment}
+                  id="canComment"
+                  onChange={handleChange}
+                >
                   <option value="">Select Answer</option>
-                  <option value="">Yes</option>
-                  <option value="">No</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
                 </select>
               </div>
               <div className="label-input">
                 <label htmlFor="">Viewers Can Share</label>
-                <select>
+                <select
+                  name="canShare"
+                  value={canShare}
+                  id="canShare"
+                  onChange={handleChange}
+                >
                   <option value="">Select Answer</option>
-                  <option value="">Yes</option>
-                  <option value="">No</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
                 </select>
               </div>
             </div>
             <div className="settings-user-info-group">
               <div className="label-input">
                 <label htmlFor="">Industry</label>
-                <select>
-                  <option value="">Industry Example</option>
-                  <option value="">Industry Example</option>
-                  <option value="">Industry Example</option>
-                  <option value="">Industry Example</option>
-                  <option value="">Industry Example</option>
-                  <option value="">Industry Example</option>
-                  <option value="">Industry Example</option>
-                  <option value="">Industry Example</option>
-                  <option value="">Industry Example</option>
-                  <option value="">Industry Example</option>
-                  <option value="">Industry Example</option>
+                <select
+                  name="industry"
+                  value={industry}
+                  id="industry"
+                  onChange={handleChange}
+                >
+                  <option value="architecture">Architecture</option>
+                  <option value="education">Education</option>
+                  <option value="engineer">Engineering</option>
+                  <option value="financial">
+                    Financial Services & Insurance
+                  </option>
+                  <option value="government">Government</option>
+                  <option value="healthcare">
+                    Healthcare & Pharmaceutical
+                  </option>
+                  <option value="hospitality">Hospitality</option>
+                  <option value="manufacturing">
+                    Manufacturing/ Industrial
+                  </option>
+                  <option value="marketing">Marketing</option>
+                  <option value="media">Media & Entertainment</option>
+                  <option value="nonprofit">Non-Profit</option>
+                  <option value="professional">Professional Services</option>
+                  <option value="retail">Retail & Consumer Products</option>
+                  <option value="sports">Sports</option>
+                  <option value="tech">Tech</option>
+                  <option value="telecommunications">Telecommunications</option>
+                  <option value="transportation">Transportation</option>
+
+                  <option value="other">Other</option>
                 </select>
               </div>
               <div className="label-input">
                 <label htmlFor="">Looking For B2B Relationships</label>
-                <select>
+                <select name="B2B" value={B2B} id="B2B" onChange={handleChange}>
                   <option value="">Select Answer</option>
-                  <option value="">Yes</option>
-                  <option value="">No</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
                 </select>
               </div>
               <div className="label-input">
                 <label htmlFor="">E-Commerence</label>
-                <select>
+                <select
+                  name="eComm"
+                  value={eComm}
+                  id="eComm"
+                  onChange={handleChange}
+                >
                   <option value="">Select Answer</option>
-                  <option value="">Yes</option>
-                  <option value="">No</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
                 </select>
               </div>
               <div className="label-input">
                 <label htmlFor="">Upload Content</label>
-                <select>
+                <select
+                  name="upload"
+                  value={upload}
+                  id="upload"
+                  onChange={handleChange}
+                >
                   <option value="">Select Answer</option>
-                  <option value="">Yes</option>
-                  <option value="">No</option>
+                  <option value="true">Yes</option>
+                  <option value="false">No</option>
                 </select>
               </div>
             </div>
 
             <button
               className="settings-user-info-button home-butt page-button con-shade clickable"
-              onClick={handleChange}
+              onClick={handleSubmit}
             >
               Save Changes
             </button>

@@ -27,7 +27,7 @@ const userSchema = new Schema(
       zip: { type: Number },
     },
     // change too just business
-    businessOwner: {
+    business: {
       entrepreneur: { type: Boolean },
       industry: { type: String },
       open: { type: Boolean },
@@ -58,6 +58,16 @@ const userSchema = new Schema(
     // token: { type: String },
     // tokenExp: { type: Number },
     refreshToken: [String],
+    profileSettings: {
+      canLike: { type: Boolean },
+      canDislike: { type: Boolean },
+      canComment: { type: Boolean },
+      canShare: { type: Boolean },
+      industry: { type: String },
+      B2B: { type: Boolean },
+      eComm: { type: Boolean },
+      upload: { type: Boolean },
+    },
   },
   { timestamps: true }
 );

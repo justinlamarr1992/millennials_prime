@@ -34,6 +34,9 @@ router
 router
   .route("/business/:id")
   .patch(verifyRoles(ROLES_LIST.User), userController.updateBusinessInfo);
+router
+  .route("/profilesettings/:id")
+  .patch(verifyRoles(ROLES_LIST.User), userController.updateProfileSettings);
 
 router
   .route("/modal")

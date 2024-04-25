@@ -67,7 +67,7 @@ const getUser = async (req, res) => {
     return res.status(400).json({ message: "User ID required" });
 
   const _id = new mongoose.Types.ObjectId(req.params.id);
-  console.log(_id);
+  // console.log(_id);
 
   try {
     const user = await User.findOne({ _id }).exec();
@@ -82,18 +82,10 @@ const getUser = async (req, res) => {
   }
 };
 const getUserInfo = async (req, res) => {
-  // const _id = req.body._id;
-  // console.log("This is the user ", req.body._id);
-
-  // const _id = new mongoose.Types.ObjectId(req.body._id);
-  // console.log("This is the user ", _id);
   try {
     const _id = new mongoose.Types.ObjectId(req.body._id);
     const user = await User.find(_id);
-    console.log("This is the user ", _id);
-    console.log("This is the user info", user);
-
-    res.json(user);
+    res.status(200).json(user);
   } catch (err) {
     res.status(408).json({ err });
   }
@@ -148,37 +140,40 @@ const getUserReq = async (req, res) => {
 const getSingleUser = async (req, res) => {};
 
 const updateUserInfo = async (req, res) => {
+  console.log("UPDATE USER INFO NOW");
   const _id = new mongoose.Types.ObjectId(req.params);
-  console.log(_id);
   const { name, email, DOB, country, state, city, zip } = req.body.values;
   let location = { country, state, city, zip };
 
-  console.log("User Updated ", name, email, DOB, location);
-  // This will be for the second one
-  // console.log(DOB, location, businessOwner);
-  if (!req?.params?.id)
-    return res.status(400).json({ message: "User ID required" });
-  const user = await User.findOneAndUpdate(
-    { _id },
-    {
-      name,
-      email,
-      DOB,
-      location,
+  try {
+    if (!req?.params?.id) {
+      return res.status(400).json({ message: "User ID required" });
     }
-  ).exec();
-  if (!user) {
-    return res
-      .status(204)
-      .json({ message: `No User matches ID ${req.params.id}` });
-  }
-  res.json(user);
-};
-const updateBusinessInfo = async (req, res) => {
-  const testMessage = "Yes it Fires";
-  const _id = new mongoose.Types.ObjectId(req.params);
-  console.log(_id);
 
+    const user = await User.findByIdAndUpdate(
+      { _id },
+      {
+        name,
+        email,
+        DOB,
+        location,
+      }
+    );
+    if (!user) {
+      return res
+        .status(204)
+        .json({ message: `No User matches ID ${req.params.id}` });
+    }
+    console.log("User Updated ", name, email, DOB, location);
+    res.status(200).json({ name, email, DOB, location });
+  } catch (err) {
+    console.log(err);
+    return res.status(400).json({ success: false, err });
+  }
+};
+
+const updateBusinessInfo = async (req, res) => {
+  const _id = new mongoose.Types.ObjectId(req.params);
   const {
     entrepreneur,
     companyName,
@@ -194,7 +189,6 @@ const updateBusinessInfo = async (req, res) => {
     primaryPromotion,
     factorsOfLocation,
   } = req.body.values;
-
   let business = {
     // businessLogo,
     entrepreneur,
@@ -211,7 +205,6 @@ const updateBusinessInfo = async (req, res) => {
     primaryPromotion,
     factorsOfLocation,
   };
-  console.log(business);
   try {
     if (!req?.params?.id)
       return res.status(400).json({ message: "User ID required" });
@@ -237,8 +230,7 @@ const updateBusinessInfo = async (req, res) => {
         },
       }
     );
-    console.log(user);
-    // Trying Insert next
+
     if (!user) {
       return res
         .status(204)
@@ -250,11 +242,64 @@ const updateBusinessInfo = async (req, res) => {
     res.status(400).json({ success: false, err });
   }
 };
-const updateArtInfo = async (req, res) => {
-  const testMessage = "Yes it Fires";
+const updateProfileSettings = async (req, res) => {
   const _id = new mongoose.Types.ObjectId(req.params);
   console.log(_id);
+  const {
+    canLike,
+    canDislike,
+    canComment,
+    canShare,
+    industry,
+    B2B,
+    eComm,
+    upload,
+  } = req.body.values;
+  let profileSettings = {
+    canLike,
+    canDislike,
+    canComment,
+    canShare,
+    industry,
+    B2B,
+    eComm,
+    upload,
+  };
+  console.log(profileSettings);
+  try {
+    if (!req?.params?.id)
+      return res.status(400).json({ message: "User ID required" });
 
+    const user = await User.findByIdAndUpdate(
+      { _id },
+      {
+        profileSettings: {
+          canLike,
+          canDislike,
+          canComment,
+          canShare,
+          industry,
+          B2B,
+          eComm,
+          upload,
+        },
+      }
+    );
+    console.log(user);
+    // Trying Insert next
+    if (!user) {
+      return res
+        .status(204)
+        .json({ message: `No User matches ID ${req.params.id}` });
+    }
+    res.status(200).json({ success: true, profileSettings });
+  } catch (err) {
+    console.log(err);
+    res.status(400).json({ success: false, err });
+  }
+};
+const updateArtInfo = async (req, res) => {
+  const _id = new mongoose.Types.ObjectId(req.params);
   const {
     artist,
     professional,
@@ -270,7 +315,6 @@ const updateArtInfo = async (req, res) => {
     specificIntegral,
     whatSpecfic,
   } = req.body.values;
-
   let art = {
     artist,
     professional,
@@ -286,7 +330,6 @@ const updateArtInfo = async (req, res) => {
     specificIntegral,
     whatSpecfic,
   };
-  console.log(art);
   try {
     if (!req?.params?.id)
       return res.status(400).json({ message: "User ID required" });
@@ -311,14 +354,12 @@ const updateArtInfo = async (req, res) => {
         },
       }
     );
-    console.log(user);
-    // Trying Insert next
     if (!user) {
       return res
         .status(204)
         .json({ message: `No User matches ID ${req.params.id}` });
     }
-    res.status(200).json({ success: true, user, testMessage });
+    res.status(200).json({ success: true, art });
   } catch (err) {
     console.log(err);
     res.status(400).json({ success: false, err });
@@ -362,16 +403,17 @@ const createProfilePicture = async (req, res) => {
 };
 
 module.exports = {
-  getAllUsers,
+  createProfilePicture,
   deleteUser,
+  getAllUsers,
   getModalInfo,
+  getPicture,
+  getSingleUser,
   getUser,
   getUserInfo,
   getUserReq,
-  updateUserInfo,
-  updateBusinessInfo,
   updateArtInfo,
-  getSingleUser,
-  createProfilePicture,
-  getPicture,
+  updateBusinessInfo,
+  updateProfileSettings,
+  updateUserInfo,
 };
