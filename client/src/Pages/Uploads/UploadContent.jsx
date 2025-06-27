@@ -209,19 +209,6 @@ const UploadContent = () => {
     // setVideoFile(e[0]);
     videoFile = e[0];
     console.log("Video file after button click", videoFile);
-    // console.log(new File([e], e.name));
-    // console.log("The dropped data in a useState", videoFile);
-
-    // let file = e[0];
-    // let videoToBase;
-
-    // async function Main() {
-    //   videoToBase = await convertToBase64(file);
-    //   console.log(videoToBase);
-    //   setVideoFile(videoToBase);
-    // }
-
-    // Main();
   };
 
   const onSubmit = (e) => {

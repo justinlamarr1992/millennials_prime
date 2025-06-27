@@ -13,6 +13,7 @@ import HotItems from "../Components/home/HotItems";
 import Newsfeed from "../Components/home/Newsfeed";
 
 import "../Components/home/home.css";
+import Countdown from "react-countdown";
 import PrimeNews from "../Components/home/PrimeNews";
 import SearchBar from "../Components/reusuables/SearchBar";
 import FeatPrimes from "../Components/newsfeed/FeatPrimes";
@@ -108,6 +109,19 @@ const Home = () => {
       console.log(pageWidth);
     }
   };
+  const renderer = ({ days, hours, minutes, seconds, completed }) => {
+    if (completed) {
+      // Render a completed state
+      return <span>LET'S GO!!!!</span>;
+    } else {
+      // Render a countdown
+      return (
+        <span>
+          {days} Days {hours} hours {minutes} mins {seconds} secs
+        </span>
+      );
+    }
+  };
 
   const content = (
     <div className="page">
@@ -119,19 +133,26 @@ const Home = () => {
         <Link to={`/prime-news/upload-content`}>
           <div className="user-prime-container ">
             <h1 className="user-prime-container more-to-come p2-con-shade">
-              More to Come
+              More to Come <br></br>
+              <Countdown
+                className="more-to-come "
+                date={"July 31, 2025 00:00:00"}
+                renderer={renderer}
+              />
+              {/* <Countdown className="more-to-come " date={Date.now() + 10000} /> */}
             </h1>
           </div>
         </Link>
-        <button
+
+        {/* <button
           onClick={backEndTest}
           class="feed-reply-post page-button connect-btn clickable con-shade"
         >
           Test Settings Page
-        </button>
-        <Link to={`/settings/business`}>
+        </button> */}
+        {/* <Link to={`/settings/business`}>
           <button>Settings</button>
-        </Link>
+        </Link> */}
         {errMsg ? <h1>error</h1> : <h2>All Good</h2>}
 
         {/* PHASE 2 */}

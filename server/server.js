@@ -74,10 +74,8 @@ app.use("/logout", require("./routes/logout"));
 app.use("/test", require("./routes/test"));
 
 // Any route that doesnt need verifications needs to be ABOVE THIS LINE
-// Testing Restart
 app.use(verifyJWT);
 
-// Testing Restart
 app.use("/comments", require("./routes/api/comments"));
 app.use("/employees", require("./routes/api/employees"));
 app.use("/users", require("./routes/api/users"));
@@ -102,8 +100,8 @@ app.use("/likes", require("./routes/api/likes"));
 // app.use(errorHandler);
 
 mongoose.connection.once("open", () => {
-  console.log("Connected to MongoDB");
-  app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  console.log(`Connected to MongoDB at ${Date.now()}`);
+  app.listen(PORT, () => console.log(`Listening to Port at ${Date.now()}`));
 });
 
 // YOUTUBE TUTUTIAL

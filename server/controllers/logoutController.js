@@ -21,17 +21,6 @@ const handleLogout = async (req, res) => {
   const result = await foundUser.save();
   // console.log(result);
 
-  // Old No DB
-  // const otherUsers = usersDb.users.filter(
-  //   (person) => person.refreshToken !== foundUser.refreshToken
-  // );
-  // const currentUser = { ...foundUser, refreshToken: "" };
-  // usersDb.setUsers([...otherUsers, currentUser]);
-  // await fsPromises.writeFile(
-  //   path.join(__dirname, "..", "models", "users.json"),
-  //   JSON.stringify(usersDb.users)
-  // );
-
   res.clearCookie("jwt", { httpOnly: true, sameSite: "None", secure: true }); //secure: true - only serves on https
   res.sendStatus(204);
 };
