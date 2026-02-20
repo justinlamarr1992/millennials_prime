@@ -134,18 +134,17 @@ function getBunnyInfo(req, res) {
   const body = req.body;
   console.log(body);
 
-  let libraryId = 181057;
-  // let libraryId = "147838";
+  const libraryId = process.env.BUNNYCDN_LIBRARY_ID;
+  const api_key = process.env.BUNNYCDN_API_KEY;
 
-  let api_key = "4c5ea068-0b40-40ae-8d9b2865c27c-f2d3-4fd9";
-  // let authKey = "a80779d4-9931-4345-80c1ca2315d2-fc09-4143";
+  if (!libraryId || !api_key) {
+    return res.status(500).json({ success: false, message: 'BunnyCDN not configured' });
+  }
 
   const authorizationExpire = Math.floor(Date.now() / 1000) + 3600 * 48; // authorize for two days
 
   const video_id = body.videoID;
   console.log(video_id);
-
-  let videoName = `Created in Backend: title:${body.title} ${new Date()}`;
 
   const shaAttempt = sha256(
     libraryId + api_key + authorizationExpire + video_id
