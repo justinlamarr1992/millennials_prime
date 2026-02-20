@@ -7,6 +7,18 @@ const { getBunnyInfo } = require('../controllers/videoController');
 describe('getBunnyInfo', () => {
   let req;
   let res;
+  let originalLibraryId;
+  let originalApiKey;
+
+  beforeAll(() => {
+    originalLibraryId = process.env.BUNNYCDN_LIBRARY_ID;
+    originalApiKey = process.env.BUNNYCDN_API_KEY;
+  });
+
+  afterAll(() => {
+    process.env.BUNNYCDN_LIBRARY_ID = originalLibraryId;
+    process.env.BUNNYCDN_API_KEY = originalApiKey;
+  });
 
   beforeEach(() => {
     req = { body: { videoID: 'test-video-guid', title: 'Test Video' } };

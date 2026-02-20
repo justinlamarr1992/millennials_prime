@@ -132,7 +132,7 @@ const getPrimeNewsVideo = async (req, res) => {
 function getBunnyInfo(req, res) {
   // THE PATH IS PROVIDED FROM BODY
   const body = req.body;
-  console.log(body);
+  console.log('getBunnyInfo called', { videoID: body && body.videoID });
 
   const libraryId = process.env.BUNNYCDN_LIBRARY_ID;
   const api_key = process.env.BUNNYCDN_API_KEY;
