@@ -4,6 +4,8 @@ const Image = require("../models/Image");
 const Subscriber = require("../models/Subscriber");
 var mongoose = require("mongoose");
 
+const EXCLUDED_FIELDS = "-password -refreshToken";
+
 // const User = require("../models/user");
 
 const getModalInfo = async (req, res) => {
@@ -73,7 +75,7 @@ const getUser = async (req, res) => {
   // console.log(_id);
 
   try {
-    const user = await User.findOne({ _id }).select("-password -refreshToken").exec();
+    const user = await User.findOne({ _id }).select(EXCLUDED_FIELDS).exec();
     if (!user) {
       return res
         .status(204)
@@ -87,7 +89,7 @@ const getUser = async (req, res) => {
 const getUserInfo = async (req, res) => {
   try {
     const _id = new mongoose.Types.ObjectId(req.body._id);
-    const user = await User.find(_id).select("-password -refreshToken");
+    const user = await User.find({ _id }).select(EXCLUDED_FIELDS);
     res.status(200).json(user);
   } catch (err) {
     res.status(408).json({ err });
@@ -95,9 +97,13 @@ const getUserInfo = async (req, res) => {
 };
 
 const getAllUsers = async (req, res) => {
-  const users = await User.find().select("-password -refreshToken");
-  if (!users) return res.status(204).json({ message: "No users found" });
-  res.json(users);
+  try {
+    const users = await User.find().select(EXCLUDED_FIELDS);
+    if (!users) return res.status(204).json({ message: "No users found" });
+    res.json(users);
+  } catch (err) {
+    res.status(408).json({ err });
+  }
 };
 
 const deleteUser = async (req, res) => {
@@ -397,7 +403,7 @@ const createProfilePicture = async (req, res) => {
 
   try {
     const picture = await Image.create({ image, userID: _id });
-    const user = await User.findByIdAndUpdate(_id, { profilePic: picture }, { select: "-password -refreshToken" });
+    const user = await User.findByIdAndUpdate(_id, { profilePic: picture }).select(EXCLUDED_FIELDS);
     res.status(200).json({ success: true, picture, user });
   } catch (err) {
     console.log(err);

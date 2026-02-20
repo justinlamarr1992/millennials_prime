@@ -85,6 +85,13 @@ describe("userController", () => {
       expect(mockSelect).toHaveBeenCalledWith("-password -refreshToken");
       expect(res.json).toHaveBeenCalledWith([SAFE_USER]);
     });
+
+    it("returns 408 on database error", async () => {
+      req = {};
+      User.find.mockReturnValue({ select: jest.fn().mockRejectedValue(new Error("DB error")) });
+      await getAllUsers(req, res);
+      expect(res.status).toHaveBeenCalledWith(408);
+    });
   });
 
   describe("getUserInfo", () => {
@@ -145,13 +152,13 @@ describe("userController", () => {
   });
 
   describe("createProfilePicture", () => {
-    it("calls findByIdAndUpdate with select option to exclude sensitive fields", async () => {
+    it("chains .select('-password -refreshToken') on findByIdAndUpdate", async () => {
       req = { body: { _id: MOCK_ID, newImage: { image: "base64data" } } };
       Image.create.mockResolvedValue({ _id: "imgId" });
-      User.findByIdAndUpdate.mockResolvedValue(SAFE_USER);
+      const mockSelect = jest.fn().mockResolvedValue(SAFE_USER);
+      User.findByIdAndUpdate.mockReturnValue({ select: mockSelect });
       await createProfilePicture(req, res);
-      const [, , options] = User.findByIdAndUpdate.mock.calls[0];
-      expect(options).toEqual(expect.objectContaining({ select: "-password -refreshToken" }));
+      expect(mockSelect).toHaveBeenCalledWith("-password -refreshToken");
       expect(res.status).toHaveBeenCalledWith(200);
     });
 
