@@ -138,13 +138,16 @@ function getBunnyInfo(req, res) {
   const api_key = process.env.BUNNYCDN_API_KEY;
 
   if (!libraryId || !api_key) {
-    return res.status(500).json({ success: false, message: 'BunnyCDN not configured' });
+    return res.status(503).json({ success: false, message: 'BunnyCDN not configured' });
   }
 
-  const authorizationExpire = Math.floor(Date.now() / 1000) + 3600 * 48; // authorize for two days
-
   const video_id = body.videoID;
+  if (!video_id) {
+    return res.status(400).json({ success: false, message: 'videoID is required' });
+  }
   console.log(video_id);
+
+  const authorizationExpire = Math.floor(Date.now() / 1000) + 3600 * 48; // authorize for two days
 
   const shaAttempt = sha256(
     libraryId + api_key + authorizationExpire + video_id

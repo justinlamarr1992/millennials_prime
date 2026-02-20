@@ -18,25 +18,34 @@ describe('getBunnyInfo', () => {
     delete process.env.BUNNYCDN_API_KEY;
   });
 
-  it('returns 500 when env vars are missing', () => {
+  it('returns 503 when env vars are missing', () => {
     getBunnyInfo(req, res);
-    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.status).toHaveBeenCalledWith(503);
     expect(res.json).toHaveBeenCalledWith({ success: false, message: 'BunnyCDN not configured' });
   });
 
-  it('returns 500 when only BUNNYCDN_LIBRARY_ID is missing', () => {
+  it('returns 503 when only BUNNYCDN_LIBRARY_ID is missing', () => {
     process.env.BUNNYCDN_API_KEY = 'test-key';
     getBunnyInfo(req, res);
-    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.status).toHaveBeenCalledWith(503);
   });
 
-  it('returns 500 when only BUNNYCDN_API_KEY is missing', () => {
+  it('returns 503 when only BUNNYCDN_API_KEY is missing', () => {
     process.env.BUNNYCDN_LIBRARY_ID = '147838';
     getBunnyInfo(req, res);
-    expect(res.status).toHaveBeenCalledWith(500);
+    expect(res.status).toHaveBeenCalledWith(503);
   });
 
-  it('returns 200 with correct payload when env vars are set', () => {
+  it('returns 400 when videoID is missing from body', () => {
+    process.env.BUNNYCDN_LIBRARY_ID = '147838';
+    process.env.BUNNYCDN_API_KEY = 'test-key';
+    req.body = { title: 'Test Video' };
+    getBunnyInfo(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({ success: false, message: 'videoID is required' });
+  });
+
+  it('returns 200 with correct payload when env vars and videoID are set', () => {
     process.env.BUNNYCDN_LIBRARY_ID = '147838';
     process.env.BUNNYCDN_API_KEY = 'test-key';
     getBunnyInfo(req, res);
