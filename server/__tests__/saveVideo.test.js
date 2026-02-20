@@ -9,7 +9,7 @@ describe("saveVideo", () => {
 
   beforeEach(() => {
     req = {
-      user: "testuser",
+      userId: "507f1f77bcf86cd799439011",
       body: {
         videoId: "bunny-cdn-guid-123",
         title: "Breaking News",
@@ -40,7 +40,7 @@ describe("saveVideo", () => {
     await saveVideo(req, res);
     expect(Video.create).toHaveBeenCalledWith({
       video: "bunny-cdn-guid-123",
-      userPosting: "testuser",
+      userPosting: "507f1f77bcf86cd799439011",
       title: "Breaking News",
       description: "A brief description",
       category: "All News",

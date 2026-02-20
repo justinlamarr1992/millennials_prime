@@ -181,7 +181,7 @@ const saveVideo = async (req, res) => {
   try {
     const video = await Video.create({
       video: videoId,
-      userPosting: req.user,
+      userPosting: req.userId,
       title,
       description,
       category,
