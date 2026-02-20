@@ -183,7 +183,7 @@ const updateUserInfo = async (req, res) => {
     res.status(200).json({ name, email, DOB, location });
   } catch (err) {
     console.log(err);
-    return res.status(400).json({ success: false, err });
+    return res.status(400).json({ success: false, message: err.message });
   }
 };
 
@@ -254,7 +254,7 @@ const updateBusinessInfo = async (req, res) => {
     res.status(200).json({ success: true });
   } catch (err) {
     console.log(err);
-    res.status(400).json({ success: false, err });
+    res.status(400).json({ success: false, message: err.message });
   }
 };
 const updateProfileSettings = async (req, res) => {
@@ -310,7 +310,7 @@ const updateProfileSettings = async (req, res) => {
     res.status(200).json({ success: true, profileSettings });
   } catch (err) {
     console.log(err);
-    res.status(400).json({ success: false, err });
+    res.status(400).json({ success: false, message: err.message });
   }
 };
 const updateArtInfo = async (req, res) => {
@@ -377,7 +377,7 @@ const updateArtInfo = async (req, res) => {
     res.status(200).json({ success: true, art });
   } catch (err) {
     console.log(err);
-    res.status(400).json({ success: false, err });
+    res.status(400).json({ success: false, message: err.message });
   }
 };
 
@@ -395,10 +395,10 @@ const getPicture = async (req, res) => {
       res.status(200).json({ success: true, getImageToClient });
     } catch (err) {
       console.log(err);
-      res.status(408).json({ err });
+      res.status(408).json({ message: err.message });
     }
   } catch (err) {
-    res.status(408).json({ err });
+    res.status(408).json({ message: err.message });
   }
 };
 
@@ -413,7 +413,7 @@ const createProfilePicture = async (req, res) => {
     res.status(200).json({ success: true, picture, user });
   } catch (err) {
     console.log(err);
-    return res.status(400).json({ success: false, err });
+    return res.status(400).json({ success: false, message: err.message });
   }
 };
 

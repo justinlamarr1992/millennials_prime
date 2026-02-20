@@ -180,11 +180,12 @@ describe("userController", () => {
       expect(res.status).toHaveBeenCalledWith(200);
     });
 
-    it("returns 400 on error", async () => {
+    it("returns 400 with sanitized message on error", async () => {
       req = { body: { _id: MOCK_ID, newImage: { image: "base64data" } } };
       Image.create.mockRejectedValue(new Error("Create error"));
       await createProfilePicture(req, res);
       expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ success: false, message: expect.any(String) });
     });
   });
 
@@ -211,11 +212,12 @@ describe("userController", () => {
       expect(res.status).toHaveBeenCalledWith(204);
     });
 
-    it("returns 400 on database error", async () => {
+    it("returns 400 with sanitized message on database error", async () => {
       req = BUSINESS_REQ;
       User.findByIdAndUpdate.mockRejectedValue(new Error("DB error"));
       await updateBusinessInfo(req, res);
       expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ success: false, message: expect.any(String) });
     });
   });
 });
