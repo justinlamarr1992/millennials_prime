@@ -68,7 +68,31 @@ describe("saveVideo", () => {
     });
   });
 
-  it("returns 500 when Video.create throws", async () => {
+  it("returns 400 when Video.create throws a ValidationError", async () => {
+    const err = new Error("validation failed");
+    err.name = "ValidationError";
+    Video.create.mockRejectedValue(err);
+    await saveVideo(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      message: "Invalid video data",
+    });
+  });
+
+  it("returns 400 when Video.create throws a CastError", async () => {
+    const err = new Error("cast failed");
+    err.name = "CastError";
+    Video.create.mockRejectedValue(err);
+    await saveVideo(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      message: "Invalid video data",
+    });
+  });
+
+  it("returns 500 when Video.create throws an unexpected error", async () => {
     Video.create.mockRejectedValue(new Error("DB connection failed"));
     await saveVideo(req, res);
     expect(res.status).toHaveBeenCalledWith(500);
