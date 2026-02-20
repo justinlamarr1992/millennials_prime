@@ -8,6 +8,7 @@ const verifyJWT = (req, res, next) => {
   const token = authHeader.split(" ")[1];
   jwt.verify(token, process.env.SECRET, (err, decoded) => {
     if (err) return res.sendStatus(403);
+    if (!decoded.UserInfo._id) return res.sendStatus(403);
     req.user = decoded.UserInfo.username;
     req.roles = decoded.UserInfo.roles;
     req.userId = decoded.UserInfo._id;

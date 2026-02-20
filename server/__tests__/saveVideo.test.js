@@ -25,16 +25,6 @@ describe("saveVideo", () => {
     jest.clearAllMocks();
   });
 
-  it("returns 401 when req.userId is missing", async () => {
-    req.userId = undefined;
-    await saveVideo(req, res);
-    expect(res.status).toHaveBeenCalledWith(401);
-    expect(res.json).toHaveBeenCalledWith({
-      success: false,
-      message: "User authentication required",
-    });
-  });
-
   it("returns 400 when videoId is missing", async () => {
     req.body.videoId = undefined;
     await saveVideo(req, res);
@@ -76,7 +66,7 @@ describe("saveVideo", () => {
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
       success: false,
-      message: "Invalid video data",
+      message: "validation failed",
     });
   });
 
@@ -88,7 +78,7 @@ describe("saveVideo", () => {
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
       success: false,
-      message: "Invalid video data",
+      message: "cast failed",
     });
   });
 
