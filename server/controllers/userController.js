@@ -21,7 +21,10 @@ const getModalInfo = async (req, res) => {
     // const follows = await User.find({
     //   _id: { $nin: [_id] },
     // }).limit(3);
-    const follows = await User.aggregate([{ $sample: { size: 3 } }]);
+    const follows = await User.aggregate([
+      { $sample: { size: 3 } },
+      { $project: { password: 0, refreshToken: 0 } },
+    ]);
 
     // This is the code for who to connects that is doing good
 
@@ -70,7 +73,7 @@ const getUser = async (req, res) => {
   // console.log(_id);
 
   try {
-    const user = await User.findOne({ _id }).exec();
+    const user = await User.findOne({ _id }).select("-password -refreshToken").exec();
     if (!user) {
       return res
         .status(204)
@@ -84,7 +87,7 @@ const getUser = async (req, res) => {
 const getUserInfo = async (req, res) => {
   try {
     const _id = new mongoose.Types.ObjectId(req.body._id);
-    const user = await User.find(_id);
+    const user = await User.find(_id).select("-password -refreshToken");
     res.status(200).json(user);
   } catch (err) {
     res.status(408).json({ err });
@@ -92,7 +95,7 @@ const getUserInfo = async (req, res) => {
 };
 
 const getAllUsers = async (req, res) => {
-  const users = await User.find();
+  const users = await User.find().select("-password -refreshToken");
   if (!users) return res.status(204).json({ message: "No users found" });
   res.json(users);
 };
@@ -388,13 +391,13 @@ const getPicture = async (req, res) => {
 };
 
 const createProfilePicture = async (req, res) => {
-  const _id = mongoose.Types.ObjectId(req.body._id);
+  const _id = new mongoose.Types.ObjectId(req.body._id);
 
   const image = String(req.body.newImage.image);
 
   try {
     const picture = await Image.create({ image, userID: _id });
-    const user = await User.findByIdAndUpdate(_id, { profilePic: picture });
+    const user = await User.findByIdAndUpdate(_id, { profilePic: picture }, { select: "-password -refreshToken" });
     res.status(200).json({ success: true, picture, user });
   } catch (err) {
     console.log(err);
