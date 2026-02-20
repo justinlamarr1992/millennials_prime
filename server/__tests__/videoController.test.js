@@ -1,7 +1,3 @@
-jest.mock('../models/Subscriber');
-jest.mock('../models/VideoModel');
-jest.mock('mongoose');
-
 const { getBunnyInfo } = require('../controllers/videoController');
 
 describe('getBunnyInfo', () => {
