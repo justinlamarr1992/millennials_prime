@@ -66,7 +66,7 @@ const getModalInfo = async (req, res) => {
     res.status(200).json({ follows, connects });
   } catch (err) {
     console.log(err);
-    res.status(500).json({ err });
+    res.status(500).json({ message: err.message });
   }
 };
 const getUser = async (req, res) => {
@@ -86,7 +86,7 @@ const getUser = async (req, res) => {
     res.status(200).json(user);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ err });
+    res.status(500).json({ message: err.message });
   }
 };
 const getUserInfo = async (req, res) => {
@@ -98,7 +98,7 @@ const getUserInfo = async (req, res) => {
     }
     res.status(200).json(user);
   } catch (err) {
-    res.status(408).json({ err });
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -108,7 +108,7 @@ const getAllUsers = async (req, res) => {
     if (!users || users.length === 0) return res.status(204).json({ message: "No users found" });
     res.json(users);
   } catch (err) {
-    res.status(408).json({ err });
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -188,7 +188,7 @@ const updateUserInfo = async (req, res) => {
 };
 
 const updateBusinessInfo = async (req, res) => {
-  const _id = new mongoose.Types.ObjectId(req.params);
+  const _id = new mongoose.Types.ObjectId(req.params.id);
   const {
     entrepreneur,
     companyName,
@@ -251,7 +251,7 @@ const updateBusinessInfo = async (req, res) => {
         .status(204)
         .json({ message: `No User matches ID ${req.params.id}` });
     }
-    res.status(200).json({ success: true, user, testMessage });
+    res.status(200).json({ success: true });
   } catch (err) {
     console.log(err);
     res.status(400).json({ success: false, err });

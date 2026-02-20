@@ -7,6 +7,7 @@ const {
   getUserInfo,
   getModalInfo,
   createProfilePicture,
+  updateBusinessInfo,
 } = require("../controllers/userController");
 
 jest.mock("../models/MillPrimeUser");
@@ -59,13 +60,14 @@ describe("userController", () => {
       expect(res.json).toHaveBeenCalledWith(SAFE_USER);
     });
 
-    it("returns 500 on database error", async () => {
+    it("returns 500 with sanitized message on database error", async () => {
       req = { params: { id: MOCK_ID } };
       User.findOne.mockReturnValue({
         select: jest.fn().mockReturnValue({ exec: jest.fn().mockRejectedValue(new Error("DB error")) }),
       });
       await getUser(req, res);
       expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ message: expect.any(String) });
     });
   });
 
@@ -86,11 +88,12 @@ describe("userController", () => {
       expect(res.json).toHaveBeenCalledWith([SAFE_USER]);
     });
 
-    it("returns 408 on database error", async () => {
+    it("returns 500 with sanitized message on database error", async () => {
       req = {};
       User.find.mockReturnValue({ select: jest.fn().mockRejectedValue(new Error("DB error")) });
       await getAllUsers(req, res);
-      expect(res.status).toHaveBeenCalledWith(408);
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ message: expect.any(String) });
     });
   });
 
@@ -114,13 +117,14 @@ describe("userController", () => {
       expect(res.status).toHaveBeenCalledWith(204);
     });
 
-    it("returns 408 on database error", async () => {
+    it("returns 500 with sanitized message on database error", async () => {
       req = { body: { _id: MOCK_ID } };
       User.findOne.mockReturnValue({
         select: jest.fn().mockReturnValue({ exec: jest.fn().mockRejectedValue(new Error("DB error")) }),
       });
       await getUserInfo(req, res);
-      expect(res.status).toHaveBeenCalledWith(408);
+      expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ message: expect.any(String) });
     });
   });
 
@@ -154,11 +158,12 @@ describe("userController", () => {
       expect(response).toHaveProperty("connects");
     });
 
-    it("returns 500 on aggregate error", async () => {
+    it("returns 500 with sanitized message on aggregate error", async () => {
       req = { body: { _id: MOCK_ID } };
       User.aggregate.mockRejectedValue(new Error("Aggregate error"));
       await getModalInfo(req, res);
       expect(res.status).toHaveBeenCalledWith(500);
+      expect(res.json).toHaveBeenCalledWith({ message: expect.any(String) });
     });
   });
 
@@ -179,6 +184,37 @@ describe("userController", () => {
       req = { body: { _id: MOCK_ID, newImage: { image: "base64data" } } };
       Image.create.mockRejectedValue(new Error("Create error"));
       await createProfilePicture(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+    });
+  });
+
+  describe("updateBusinessInfo", () => {
+    const BUSINESS_REQ = {
+      params: { id: MOCK_ID },
+      body: { values: {} },
+    };
+
+    it("returns 200 without user document in response", async () => {
+      req = BUSINESS_REQ;
+      User.findByIdAndUpdate.mockResolvedValue(SAFE_USER);
+      await updateBusinessInfo(req, res);
+      expect(res.status).toHaveBeenCalledWith(200);
+      const response = res.json.mock.calls[0][0];
+      expect(response).not.toHaveProperty("user");
+      expect(response).toHaveProperty("success", true);
+    });
+
+    it("returns 204 when user not found", async () => {
+      req = BUSINESS_REQ;
+      User.findByIdAndUpdate.mockResolvedValue(null);
+      await updateBusinessInfo(req, res);
+      expect(res.status).toHaveBeenCalledWith(204);
+    });
+
+    it("returns 400 on database error", async () => {
+      req = BUSINESS_REQ;
+      User.findByIdAndUpdate.mockRejectedValue(new Error("DB error"));
+      await updateBusinessInfo(req, res);
       expect(res.status).toHaveBeenCalledWith(400);
     });
   });
