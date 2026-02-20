@@ -66,6 +66,7 @@ const getModalInfo = async (req, res) => {
     res.status(200).json({ follows, connects });
   } catch (err) {
     console.log(err);
+    res.status(500).json({ err });
   }
 };
 const getUser = async (req, res) => {
@@ -85,12 +86,16 @@ const getUser = async (req, res) => {
     res.status(200).json(user);
   } catch (err) {
     console.log(err);
+    res.status(500).json({ err });
   }
 };
 const getUserInfo = async (req, res) => {
   try {
     const _id = new mongoose.Types.ObjectId(req.body._id);
-    const user = await User.find({ _id }).select(EXCLUDED_FIELDS);
+    const user = await User.findOne({ _id }).select(EXCLUDED_FIELDS).exec();
+    if (!user) {
+      return res.status(204).json({ message: `No User matches ID ${req.body._id}` });
+    }
     res.status(200).json(user);
   } catch (err) {
     res.status(408).json({ err });
@@ -100,7 +105,7 @@ const getUserInfo = async (req, res) => {
 const getAllUsers = async (req, res) => {
   try {
     const users = await User.find().select(EXCLUDED_FIELDS);
-    if (!users) return res.status(204).json({ message: "No users found" });
+    if (!users || users.length === 0) return res.status(204).json({ message: "No users found" });
     res.json(users);
   } catch (err) {
     res.status(408).json({ err });

@@ -59,20 +59,20 @@ describe("userController", () => {
       expect(res.json).toHaveBeenCalledWith(SAFE_USER);
     });
 
-    it("handles database errors without sending a response", async () => {
+    it("returns 500 on database error", async () => {
       req = { params: { id: MOCK_ID } };
       User.findOne.mockReturnValue({
         select: jest.fn().mockReturnValue({ exec: jest.fn().mockRejectedValue(new Error("DB error")) }),
       });
       await getUser(req, res);
-      expect(res.json).not.toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(500);
     });
   });
 
   describe("getAllUsers", () => {
     it("returns 204 when no users found", async () => {
       req = {};
-      User.find.mockReturnValue({ select: jest.fn().mockResolvedValue(null) });
+      User.find.mockReturnValue({ select: jest.fn().mockResolvedValue([]) });
       await getAllUsers(req, res);
       expect(res.status).toHaveBeenCalledWith(204);
     });
@@ -95,19 +95,30 @@ describe("userController", () => {
   });
 
   describe("getUserInfo", () => {
-    it("calls .select('-password -refreshToken') and returns 200 with user", async () => {
+    it("calls findOne with .select('-password -refreshToken') and returns 200 with user", async () => {
       req = { body: { _id: MOCK_ID } };
-      const mockSelect = jest.fn().mockResolvedValue([SAFE_USER]);
-      User.find.mockReturnValue({ select: mockSelect });
+      const mockSelect = jest.fn().mockReturnValue({ exec: jest.fn().mockResolvedValue(SAFE_USER) });
+      User.findOne.mockReturnValue({ select: mockSelect });
       await getUserInfo(req, res);
       expect(mockSelect).toHaveBeenCalledWith("-password -refreshToken");
       expect(res.status).toHaveBeenCalledWith(200);
-      expect(res.json).toHaveBeenCalledWith([SAFE_USER]);
+      expect(res.json).toHaveBeenCalledWith(SAFE_USER);
+    });
+
+    it("returns 204 when user is not found", async () => {
+      req = { body: { _id: MOCK_ID } };
+      User.findOne.mockReturnValue({
+        select: jest.fn().mockReturnValue({ exec: jest.fn().mockResolvedValue(null) }),
+      });
+      await getUserInfo(req, res);
+      expect(res.status).toHaveBeenCalledWith(204);
     });
 
     it("returns 408 on database error", async () => {
       req = { body: { _id: MOCK_ID } };
-      User.find.mockReturnValue({ select: jest.fn().mockRejectedValue(new Error("DB error")) });
+      User.findOne.mockReturnValue({
+        select: jest.fn().mockReturnValue({ exec: jest.fn().mockRejectedValue(new Error("DB error")) }),
+      });
       await getUserInfo(req, res);
       expect(res.status).toHaveBeenCalledWith(408);
     });
@@ -143,11 +154,11 @@ describe("userController", () => {
       expect(response).toHaveProperty("connects");
     });
 
-    it("handles aggregate errors without sending a response", async () => {
+    it("returns 500 on aggregate error", async () => {
       req = { body: { _id: MOCK_ID } };
       User.aggregate.mockRejectedValue(new Error("Aggregate error"));
       await getModalInfo(req, res);
-      expect(res.json).not.toHaveBeenCalled();
+      expect(res.status).toHaveBeenCalledWith(500);
     });
   });
 
