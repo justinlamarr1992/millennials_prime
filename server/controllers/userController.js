@@ -4,6 +4,9 @@ const Image = require("../models/Image");
 const Subscriber = require("../models/Subscriber");
 var mongoose = require("mongoose");
 
+const EXCLUDED_FIELDS = "-password -refreshToken";
+const EXCLUDED_FIELDS_PROJECTION = { password: 0, refreshToken: 0 };
+
 // const User = require("../models/user");
 
 const getModalInfo = async (req, res) => {
@@ -21,7 +24,10 @@ const getModalInfo = async (req, res) => {
     // const follows = await User.find({
     //   _id: { $nin: [_id] },
     // }).limit(3);
-    const follows = await User.aggregate([{ $sample: { size: 3 } }]);
+    const follows = await User.aggregate([
+      { $sample: { size: 3 } },
+      { $project: EXCLUDED_FIELDS_PROJECTION },
+    ]);
 
     // This is the code for who to connects that is doing good
 
@@ -60,6 +66,7 @@ const getModalInfo = async (req, res) => {
     res.status(200).json({ follows, connects });
   } catch (err) {
     console.log(err);
+    res.status(500).json({ message: err.message });
   }
 };
 const getUser = async (req, res) => {
@@ -70,7 +77,7 @@ const getUser = async (req, res) => {
   // console.log(_id);
 
   try {
-    const user = await User.findOne({ _id }).exec();
+    const user = await User.findOne({ _id }).select(EXCLUDED_FIELDS).exec();
     if (!user) {
       return res
         .status(204)
@@ -79,22 +86,30 @@ const getUser = async (req, res) => {
     res.status(200).json(user);
   } catch (err) {
     console.log(err);
+    res.status(500).json({ message: err.message });
   }
 };
 const getUserInfo = async (req, res) => {
   try {
     const _id = new mongoose.Types.ObjectId(req.body._id);
-    const user = await User.find(_id);
+    const user = await User.findOne({ _id }).select(EXCLUDED_FIELDS).exec();
+    if (!user) {
+      return res.status(204).json({ message: `No User matches ID ${req.body._id}` });
+    }
     res.status(200).json(user);
   } catch (err) {
-    res.status(408).json({ err });
+    res.status(500).json({ message: err.message });
   }
 };
 
 const getAllUsers = async (req, res) => {
-  const users = await User.find();
-  if (!users) return res.status(204).json({ message: "No users found" });
-  res.json(users);
+  try {
+    const users = await User.find().select(EXCLUDED_FIELDS);
+    if (!users || users.length === 0) return res.status(204).json({ message: "No users found" });
+    res.json(users);
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 const deleteUser = async (req, res) => {
@@ -168,12 +183,12 @@ const updateUserInfo = async (req, res) => {
     res.status(200).json({ name, email, DOB, location });
   } catch (err) {
     console.log(err);
-    return res.status(400).json({ success: false, err });
+    return res.status(400).json({ success: false, message: err.message });
   }
 };
 
 const updateBusinessInfo = async (req, res) => {
-  const _id = new mongoose.Types.ObjectId(req.params);
+  const _id = new mongoose.Types.ObjectId(req.params.id);
   const {
     entrepreneur,
     companyName,
@@ -236,10 +251,10 @@ const updateBusinessInfo = async (req, res) => {
         .status(204)
         .json({ message: `No User matches ID ${req.params.id}` });
     }
-    res.status(200).json({ success: true, user, testMessage });
+    res.status(200).json({ success: true });
   } catch (err) {
     console.log(err);
-    res.status(400).json({ success: false, err });
+    res.status(400).json({ success: false, message: err.message });
   }
 };
 const updateProfileSettings = async (req, res) => {
@@ -295,7 +310,7 @@ const updateProfileSettings = async (req, res) => {
     res.status(200).json({ success: true, profileSettings });
   } catch (err) {
     console.log(err);
-    res.status(400).json({ success: false, err });
+    res.status(400).json({ success: false, message: err.message });
   }
 };
 const updateArtInfo = async (req, res) => {
@@ -362,7 +377,7 @@ const updateArtInfo = async (req, res) => {
     res.status(200).json({ success: true, art });
   } catch (err) {
     console.log(err);
-    res.status(400).json({ success: false, err });
+    res.status(400).json({ success: false, message: err.message });
   }
 };
 
@@ -380,25 +395,25 @@ const getPicture = async (req, res) => {
       res.status(200).json({ success: true, getImageToClient });
     } catch (err) {
       console.log(err);
-      res.status(408).json({ err });
+      res.status(408).json({ message: err.message });
     }
   } catch (err) {
-    res.status(408).json({ err });
+    res.status(408).json({ message: err.message });
   }
 };
 
 const createProfilePicture = async (req, res) => {
-  const _id = mongoose.Types.ObjectId(req.body._id);
+  const _id = new mongoose.Types.ObjectId(req.body._id);
 
   const image = String(req.body.newImage.image);
 
   try {
     const picture = await Image.create({ image, userID: _id });
-    const user = await User.findByIdAndUpdate(_id, { profilePic: picture });
+    const user = await User.findByIdAndUpdate(_id, { profilePic: picture }, { new: true }).select(EXCLUDED_FIELDS);
     res.status(200).json({ success: true, picture, user });
   } catch (err) {
     console.log(err);
-    return res.status(400).json({ success: false, err });
+    return res.status(400).json({ success: false, message: err.message });
   }
 };
 
