@@ -7,7 +7,9 @@ const verifyRoles = require("../../middleware/verifyRoles");
 // POST a video
 router.route("/").get(videoController.getVideos);
 router.route("/bunnyInfo").post(videoController.getBunnyInfo);
-router.route("/save").post(videoController.saveVideo);
+router
+  .route("/save")
+  .post(verifyRoles(ROLES_LIST.User), videoController.saveVideo);
 // .post(videoController.uploadVideo);
 
 router.route("/primenews").post(videoController.getPrimeNewsVideo);
