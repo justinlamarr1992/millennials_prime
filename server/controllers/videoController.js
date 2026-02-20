@@ -132,18 +132,18 @@ const getPrimeNewsVideo = async (req, res) => {
 function getBunnyInfo(req, res) {
   // THE PATH IS PROVIDED FROM BODY
   const body = req.body;
-  console.log('getBunnyInfo called', { videoID: body && body.videoID });
+  console.log("getBunnyInfo called", { videoID: body && body.videoID });
 
   const libraryId = process.env.BUNNYCDN_LIBRARY_ID;
   const api_key = process.env.BUNNYCDN_API_KEY;
 
   if (!libraryId || !api_key) {
-    return res.status(503).json({ success: false, message: 'BunnyCDN not configured' });
+    return res.status(503).json({ success: false, message: "BunnyCDN not configured" });
   }
 
   const video_id = body.videoID;
   if (!video_id) {
-    return res.status(400).json({ success: false, message: 'videoID is required' });
+    return res.status(400).json({ success: false, message: "videoID is required" });
   }
   console.log(video_id);
 
