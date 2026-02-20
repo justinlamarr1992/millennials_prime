@@ -35,6 +35,17 @@ describe("verifyJWT", () => {
     expect(next).toHaveBeenCalled();
   });
 
+  it("returns 403 when token is valid but UserInfo is missing from payload", () => {
+    jwt.verify.mockImplementation((_token, _secret, callback) => {
+      callback(null, {});
+    });
+
+    verifyJWT(req, res, next);
+
+    expect(res.sendStatus).toHaveBeenCalledWith(403);
+    expect(next).not.toHaveBeenCalled();
+  });
+
   it("returns 403 when token is valid but _id is missing from payload", () => {
     const mockDecoded = {
       UserInfo: { username: "testuser", roles: [2001] },
