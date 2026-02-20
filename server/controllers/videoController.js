@@ -170,10 +170,37 @@ function getBunnyInfo(req, res) {
   }
 }
 
+const saveVideo = async (req, res) => {
+  const { videoId, title, description, category, audience } = req.body;
+  console.log("saveVideo called", { videoId });
+
+  if (!videoId) {
+    return res.status(400).json({ success: false, message: "videoId is required" });
+  }
+
+  try {
+    const video = await Video.create({
+      video: videoId,
+      userPosting: req.userId,
+      title,
+      description,
+      category,
+      prime: audience,
+    });
+    res.status(201).json({ success: true, videoId: video.video });
+  } catch (err) {
+    if (err.name === "ValidationError" || err.name === "CastError") {
+      return res.status(400).json({ success: false, message: err.message });
+    }
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
 module.exports = {
   getBunnyInfo,
   getVideos,
   getSingleVideo,
   getPrimeNewsVideo,
   getSubscriptionVideos,
+  saveVideo,
 };
