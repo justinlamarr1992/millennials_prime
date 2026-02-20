@@ -57,6 +57,7 @@ app.use(function (req, res, next) {
 
 // Testing Restart
 //middleware
+app.use(express.json());
 // app.use(express.json({ limit: "30mb", extended: true }));
 // app.use((req, res, next) => {
 //   console.log(req.path, req.method);
