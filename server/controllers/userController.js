@@ -5,6 +5,7 @@ const Subscriber = require("../models/Subscriber");
 var mongoose = require("mongoose");
 
 const EXCLUDED_FIELDS = "-password -refreshToken";
+const EXCLUDED_FIELDS_PROJECTION = { password: 0, refreshToken: 0 };
 
 // const User = require("../models/user");
 
@@ -25,7 +26,7 @@ const getModalInfo = async (req, res) => {
     // }).limit(3);
     const follows = await User.aggregate([
       { $sample: { size: 3 } },
-      { $project: { password: 0, refreshToken: 0 } },
+      { $project: EXCLUDED_FIELDS_PROJECTION },
     ]);
 
     // This is the code for who to connects that is doing good
@@ -403,7 +404,7 @@ const createProfilePicture = async (req, res) => {
 
   try {
     const picture = await Image.create({ image, userID: _id });
-    const user = await User.findByIdAndUpdate(_id, { profilePic: picture }).select(EXCLUDED_FIELDS);
+    const user = await User.findByIdAndUpdate(_id, { profilePic: picture }, { new: true }).select(EXCLUDED_FIELDS);
     res.status(200).json({ success: true, picture, user });
   } catch (err) {
     console.log(err);

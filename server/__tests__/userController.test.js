@@ -152,13 +152,15 @@ describe("userController", () => {
   });
 
   describe("createProfilePicture", () => {
-    it("chains .select('-password -refreshToken') on findByIdAndUpdate", async () => {
+    it("chains .select('-password -refreshToken') on findByIdAndUpdate with { new: true }", async () => {
       req = { body: { _id: MOCK_ID, newImage: { image: "base64data" } } };
       Image.create.mockResolvedValue({ _id: "imgId" });
       const mockSelect = jest.fn().mockResolvedValue(SAFE_USER);
       User.findByIdAndUpdate.mockReturnValue({ select: mockSelect });
       await createProfilePicture(req, res);
       expect(mockSelect).toHaveBeenCalledWith("-password -refreshToken");
+      const [, , options] = User.findByIdAndUpdate.mock.calls[0];
+      expect(options).toEqual(expect.objectContaining({ new: true }));
       expect(res.status).toHaveBeenCalledWith(200);
     });
 
