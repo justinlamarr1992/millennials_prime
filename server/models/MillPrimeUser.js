@@ -64,12 +64,14 @@ const userSchema = new Schema(
       support: { type: String },
       critics: { type: String },
       specificIntegral: { type: Boolean },
-      whatSpecfic: { type: String },
+      whatSpecific: { type: String },
     },
     prime: { type: Boolean, default: false },
-
-    // token: { type: String },
-    // tokenExp: { type: Number },
+    interests: [{ type: String }],
+    b2bOpportunities: { type: Boolean, default: false },
+    b2bOpportunityTags: [{ type: String }],
+    isVerified: { type: Boolean, default: false },
+    verifiedSince: { type: Date },
     refreshToken: String,
   },
   { timestamps: true }
