@@ -9,8 +9,6 @@ const handleLogin = async (req, res) => {
   const cookies = req.cookies;
   // console.log(`cookie available at login: ${JSON.stringify(cookies)}`);
   const { user, password } = req.body;
-  console.log(req.body);
-  console.log(user, password);
   if (!user || !password)
     return res
       .status(400)
@@ -55,7 +53,9 @@ const handleLogin = async (req, res) => {
       _id
     );
     // TODO: uncomment secure for production
-    res.json({ accessToken, _id, roles });
+    // refreshToken included in body so mobile clients (React Native) can store it —
+    // httpOnly cookies are not persisted by the native HTTP stack
+    res.json({ accessToken, _id, roles, refreshToken });
   } else {
     res.sendStatus(401);
   }

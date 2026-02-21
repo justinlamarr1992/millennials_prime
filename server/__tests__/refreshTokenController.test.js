@@ -41,9 +41,19 @@ describe("handleRefreshToken", () => {
     expect(res.sendStatus).toHaveBeenCalledWith(403);
   });
 
+  it("returns 403 when decoded username does not match found user", async () => {
+    const mockUser = { username: "testuser", roles: { User: 2001 }, _id: "507f1f77bcf86cd799439011", refreshToken: "valid-refresh-token" };
+    User.findOne.mockReturnValue({ exec: jest.fn().mockResolvedValue(mockUser) });
+    jwt.verify.mockImplementation((_token, _secret, callback) => {
+      callback(null, { username: "differentuser" });
+    });
+    await handleRefreshToken(req, res);
+    expect(res.sendStatus).toHaveBeenCalledWith(403);
+  });
+
   it("signs the access token with _id in UserInfo payload", async () => {
     const mockId = "507f1f77bcf86cd799439011";
-    const mockUser = { username: "testuser", roles: { User: 2001 }, _id: mockId, refreshToken: "valid-refresh-token" };
+    const mockUser = { username: "testuser", roles: { User: 2001 }, _id: mockId, refreshToken: "valid-refresh-token", save: jest.fn().mockResolvedValue({}) };
     User.findOne.mockReturnValue({ exec: jest.fn().mockResolvedValue(mockUser) });
     jwt.verify.mockImplementation((_token, _secret, callback) => {
       callback(null, { username: "testuser" });
@@ -59,7 +69,7 @@ describe("handleRefreshToken", () => {
 
   it("returns accessToken, roles, and _id in response on success", async () => {
     const mockId = "507f1f77bcf86cd799439011";
-    const mockUser = { username: "testuser", roles: { User: 2001 }, _id: mockId, refreshToken: "valid-refresh-token" };
+    const mockUser = { username: "testuser", roles: { User: 2001 }, _id: mockId, refreshToken: "valid-refresh-token", save: jest.fn().mockResolvedValue({}) };
     User.findOne.mockReturnValue({ exec: jest.fn().mockResolvedValue(mockUser) });
     jwt.verify.mockImplementation((_token, _secret, callback) => {
       callback(null, { username: "testuser" });
@@ -71,5 +81,66 @@ describe("handleRefreshToken", () => {
     expect(res.json).toHaveBeenCalledWith(
       expect.objectContaining({ accessToken: "new-access-token", _id: mockId })
     );
+  });
+
+  it("returns 401 when no refresh token in cookies or body", async () => {
+    req.cookies = {};
+    req.body = {};
+    await handleRefreshToken(req, res);
+    expect(res.sendStatus).toHaveBeenCalledWith(401);
+  });
+
+  it("accepts refresh token from req.body.refreshToken when cookie is absent", async () => {
+    const mockId = "507f1f77bcf86cd799439011";
+    const mockUser = { username: "testuser", roles: { User: 2001 }, _id: mockId, refreshToken: "body-refresh-token", save: jest.fn().mockResolvedValue({}) };
+    req.cookies = {};
+    req.body = { refreshToken: "body-refresh-token" };
+    User.findOne.mockReturnValue({ exec: jest.fn().mockResolvedValue(mockUser) });
+    jwt.verify.mockImplementation((_token, _secret, callback) => {
+      callback(null, { username: "testuser" });
+    });
+    jwt.sign.mockReturnValue("new-access-token");
+
+    await handleRefreshToken(req, res);
+
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({ accessToken: "new-access-token" })
+    );
+  });
+
+  it("includes new refreshToken in response body on success", async () => {
+    const mockId = "507f1f77bcf86cd799439011";
+    const mockUser = { username: "testuser", roles: { User: 2001 }, _id: mockId, refreshToken: "valid-refresh-token", save: jest.fn().mockResolvedValue({}) };
+    User.findOne.mockReturnValue({ exec: jest.fn().mockResolvedValue(mockUser) });
+    jwt.verify.mockImplementation((_token, _secret, callback) => {
+      callback(null, { username: "testuser" });
+    });
+    jwt.sign
+      .mockReturnValueOnce("new-access-token")
+      .mockReturnValueOnce("new-refresh-token");
+
+    await handleRefreshToken(req, res);
+
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({ refreshToken: "new-refresh-token" })
+    );
+  });
+
+  it("rotates refresh token — saves new token to user document", async () => {
+    const mockId = "507f1f77bcf86cd799439011";
+    const saveMock = jest.fn().mockResolvedValue({});
+    const mockUser = { username: "testuser", roles: { User: 2001 }, _id: mockId, refreshToken: "valid-refresh-token", save: saveMock };
+    User.findOne.mockReturnValue({ exec: jest.fn().mockResolvedValue(mockUser) });
+    jwt.verify.mockImplementation((_token, _secret, callback) => {
+      callback(null, { username: "testuser" });
+    });
+    jwt.sign
+      .mockReturnValueOnce("new-access-token")
+      .mockReturnValueOnce("new-refresh-token");
+
+    await handleRefreshToken(req, res);
+
+    expect(mockUser.refreshToken).toBe("new-refresh-token");
+    expect(saveMock).toHaveBeenCalled();
   });
 });
