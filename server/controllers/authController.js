@@ -40,18 +40,12 @@ const handleLogin = async (req, res) => {
     const result = await foundUser.save();
     // console.log(result);
 
-    res.cookie(
-      "jwt",
-      refreshToken,
-      {
-        httpOnly: true,
-        sameSite: "None",
-        // secure: true,
-        maxAge: 24 * 60 * 60 * 1000,
-      },
-      "_id",
-      _id
-    );
+    res.cookie("jwt", refreshToken, {
+      httpOnly: true,
+      sameSite: "None",
+      // secure: true,
+      maxAge: 24 * 60 * 60 * 1000,
+    });
     // TODO: uncomment secure for production
     // refreshToken included in body so mobile clients (React Native) can store it —
     // httpOnly cookies are not persisted by the native HTTP stack
