@@ -23,7 +23,7 @@ const handleRefreshToken = async (req, res) => {
     const accessToken = jwt.sign(
       { UserInfo: { username: decoded.username, roles, _id: foundUser._id } },
       process.env.SECRET,
-      { expiresIn: "24h" }
+      { expiresIn: "15m" }
     );
 
     // Rotate refresh token — issue a new one and persist it
@@ -35,7 +35,12 @@ const handleRefreshToken = async (req, res) => {
     foundUser.refreshToken = newRefreshToken;
     await foundUser.save();
 
-    // Return new refresh token in body so mobile clients can store it in SecureStore
+    // Set cookie for web clients; return in body for mobile clients (SecureStore)
+    res.cookie("jwt", newRefreshToken, {
+      httpOnly: true,
+      sameSite: "None",
+      maxAge: 24 * 60 * 60 * 1000,
+    });
     res.json({ roles, accessToken, _id: foundUser._id, refreshToken: newRefreshToken });
   } catch (err) {
     res.sendStatus(403);

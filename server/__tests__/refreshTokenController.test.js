@@ -15,6 +15,7 @@ describe("handleRefreshToken", () => {
       status: jest.fn().mockReturnThis(),
       json: jest.fn(),
       sendStatus: jest.fn(),
+      cookie: jest.fn(),
     };
     jest.clearAllMocks();
   });
@@ -142,5 +143,48 @@ describe("handleRefreshToken", () => {
 
     expect(mockUser.refreshToken).toBe("new-refresh-token");
     expect(saveMock).toHaveBeenCalled();
+  });
+
+  it("signs access token with 15m expiry", async () => {
+    const mockUser = { username: "testuser", roles: { User: 2001 }, _id: "507f1f77bcf86cd799439011", refreshToken: "valid-refresh-token", save: jest.fn().mockResolvedValue({}) };
+    User.findOne.mockReturnValue({ exec: jest.fn().mockResolvedValue(mockUser) });
+    jwt.verify.mockImplementation((_token, _secret, callback) => {
+      callback(null, { username: "testuser" });
+    });
+    jwt.sign
+      .mockReturnValueOnce("new-access-token")
+      .mockReturnValueOnce("new-refresh-token");
+
+    await handleRefreshToken(req, res);
+
+    expect(jwt.sign).toHaveBeenNthCalledWith(
+      1,
+      expect.any(Object),
+      expect.any(String),
+      { expiresIn: "15m" }
+    );
+  });
+
+  it("sets rotated refresh token as httpOnly cookie for web clients", async () => {
+    const mockUser = { username: "testuser", roles: { User: 2001 }, _id: "507f1f77bcf86cd799439011", refreshToken: "valid-refresh-token", save: jest.fn().mockResolvedValue({}) };
+    User.findOne.mockReturnValue({ exec: jest.fn().mockResolvedValue(mockUser) });
+    jwt.verify.mockImplementation((_token, _secret, callback) => {
+      callback(null, { username: "testuser" });
+    });
+    jwt.sign
+      .mockReturnValueOnce("new-access-token")
+      .mockReturnValueOnce("new-refresh-token");
+
+    await handleRefreshToken(req, res);
+
+    expect(res.cookie).toHaveBeenCalledWith(
+      "jwt",
+      "new-refresh-token",
+      expect.objectContaining({
+        httpOnly: true,
+        sameSite: "None",
+        maxAge: 24 * 60 * 60 * 1000,
+      })
+    );
   });
 });
