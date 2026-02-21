@@ -64,6 +64,7 @@ app.use("/users", require("./routes/api/users"));
 app.use("/videos", require("./routes/api/video"));
 app.use("/subscribe", require("./routes/api/subscribe"));
 app.use("/likes", require("./routes/api/likes"));
+app.use("/connections", require("./routes/api/connections"));
 
 // app.all("*", (req, res) => {
 //   res.status(404);
