@@ -395,10 +395,10 @@ describe("connectionController", () => {
       expect(res.json).toHaveBeenCalledWith({ success: true, status: "connected", connectionId: CONNECTION_ID });
     });
 
-    it("returns declined when status is declined", async () => {
+    it("returns none when status is declined (maps to no-connection)", async () => {
       Connection.findOne.mockResolvedValue({ ...mockConnection, status: "declined" });
       await getConnectionStatus(req, res);
-      expect(res.json).toHaveBeenCalledWith({ success: true, status: "declined", connectionId: CONNECTION_ID });
+      expect(res.json).toHaveBeenCalledWith({ success: true, status: "none" });
     });
 
     it("returns 500 on unexpected error", async () => {

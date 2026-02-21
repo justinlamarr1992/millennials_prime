@@ -32,7 +32,7 @@ connectionSchema.index({ pairKey: 1 }, { unique: true });
 // Keep directional index for query performance
 connectionSchema.index({ requester: 1, recipient: 1 });
 
-connectionSchema.pre("save", function (next) {
+connectionSchema.pre("validate", function (next) {
   this.pairKey = [this.requester.toString(), this.recipient.toString()].sort().join("_");
   next();
 });

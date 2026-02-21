@@ -167,13 +167,14 @@ const getConnectionStatus = async (req, res) => {
       return res.status(200).json({ success: true, status: "connected", connectionId: connection._id });
     }
 
-    if (connection.status === "declined") {
-      return res.status(200).json({ success: true, status: "declined", connectionId: connection._id });
+    if (connection.status === "pending") {
+      const pendingStatus =
+        connection.requester.toString() === req.userId ? "pending_sent" : "pending_received";
+      return res.status(200).json({ success: true, status: pendingStatus, connectionId: connection._id });
     }
 
-    const pendingStatus =
-      connection.requester.toString() === req.userId ? "pending_sent" : "pending_received";
-    res.status(200).json({ success: true, status: pendingStatus, connectionId: connection._id });
+    // declined (or any unexpected status) — treat as no connection per documented contract
+    res.status(200).json({ success: true, status: "none" });
   } catch (err) {
     res.status(500).json({ success: false, message: err.message });
   }
