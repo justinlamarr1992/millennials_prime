@@ -60,6 +60,29 @@ describe("userController", () => {
       expect(res.json).toHaveBeenCalledWith(SAFE_USER);
     });
 
+    it("returns full profile fields including interests, b2b, and verification fields", async () => {
+      req = { params: { id: MOCK_ID } };
+      const fullProfile = {
+        ...SAFE_USER,
+        interests: ["tech", "business"],
+        b2bOpportunities: true,
+        b2bOpportunityTags: ["SaaS", "consulting"],
+        isVerified: true,
+        verifiedSince: new Date("2024-01-01"),
+      };
+      User.findOne.mockReturnValue({
+        select: jest.fn().mockReturnValue({ exec: jest.fn().mockResolvedValue(fullProfile) }),
+      });
+      await getUser(req, res);
+      expect(res.status).toHaveBeenCalledWith(200);
+      const response = res.json.mock.calls[0][0];
+      expect(response.interests).toEqual(["tech", "business"]);
+      expect(response.b2bOpportunities).toBe(true);
+      expect(response.b2bOpportunityTags).toEqual(["SaaS", "consulting"]);
+      expect(response.isVerified).toBe(true);
+      expect(response.verifiedSince).toBeDefined();
+    });
+
     it("returns 500 with sanitized message on database error", async () => {
       req = { params: { id: MOCK_ID } };
       User.findOne.mockReturnValue({
