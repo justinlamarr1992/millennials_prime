@@ -4,7 +4,7 @@ const Schema = mongoose.Schema;
 const videoSchema = new Schema(
   {
     // BunnyCDN GUID (e.g. "abc-123-guid"). Required and unique.
-    // Frontend constructs the stream URL as: {BUNNYCDN_CDN_URL}/{video}/playlist.m3u8
+    // Frontend should construct the stream URL as: {BUNNYCDN_CDN_URL}/{video}/playlist.m3u8
     // Stored via POST /videos/save → saveVideo controller.
     video: { type: String, unique: true, required: true },
     userPosting: { type: Schema.Types.ObjectId, ref: "MillPrimeUser" },
