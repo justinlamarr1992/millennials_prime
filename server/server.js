@@ -34,8 +34,8 @@ app.use(cookieParser());
 app.use(function (req, res, next) {
   // this is used to make the development work
   // res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
-  res.setHeader("Access-Control-Allow-Headers", "Content-Type");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
+  res.setHeader("Access-Control-Allow-Headers", "Content-Type, Authorization");
   // without origins changes this to false
   res.setHeader("Access-Control-Allow-Credentials", true);
   next();
@@ -64,6 +64,7 @@ app.use("/users", require("./routes/api/users"));
 app.use("/videos", require("./routes/api/video"));
 app.use("/subscribe", require("./routes/api/subscribe"));
 app.use("/likes", require("./routes/api/likes"));
+app.use("/connections", require("./routes/api/connections"));
 
 // app.all("*", (req, res) => {
 //   res.status(404);
