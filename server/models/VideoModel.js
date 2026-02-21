@@ -1,16 +1,17 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// other models have new schema this may be an error
-
 const videoSchema = new Schema(
   {
+    // BunnyCDN GUID (e.g. "abc-123-guid"). Required and unique.
+    // Frontend constructs the stream URL as: {BUNNYCDN_CDN_URL}/{video}/playlist.m3u8
+    // Stored via POST /videos/save → saveVideo controller.
     video: { type: String, unique: true, required: true },
     userPosting: { type: Schema.Types.ObjectId, ref: "MillPrimeUser" },
     title: { type: String, maxlength: 50 },
     description: { type: String },
-    // replaces his privacy
     prime: { type: String },
+    // Legacy fields — unused. Reserved for future local-storage support.
     filePath: { type: String },
     file: { type: String },
     category: String,
