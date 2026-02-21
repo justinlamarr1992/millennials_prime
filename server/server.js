@@ -34,7 +34,7 @@ app.use(cookieParser());
 app.use(function (req, res, next) {
   // this is used to make the development work
   // res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE");
+  res.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE");
   res.setHeader("Access-Control-Allow-Headers", "Content-Type");
   // without origins changes this to false
   res.setHeader("Access-Control-Allow-Credentials", true);

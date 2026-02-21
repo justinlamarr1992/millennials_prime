@@ -56,6 +56,13 @@ describe("connectionController", () => {
       expect(res.json).toHaveBeenCalledWith({ success: false, message: "Cannot connect with yourself" });
     });
 
+    it("returns 400 when recipientId is not a valid ObjectId", async () => {
+      req.body = { recipientId: "not-a-valid-id" };
+      await sendRequest(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ success: false, message: "Invalid recipientId" });
+    });
+
     it("returns 404 when recipient does not exist", async () => {
       User.findById.mockResolvedValue(null);
       await sendRequest(req, res);
@@ -71,26 +78,22 @@ describe("connectionController", () => {
       expect(res.json).toHaveBeenCalledWith({ success: false, message: "Connection already exists" });
     });
 
-    it("returns 201 when previous connection was declined — allows re-request", async () => {
+    it("reuses declined connection via findOneAndUpdate — does not create new", async () => {
+      const reactivated = { ...mockConnection, status: "pending" };
       User.findById.mockResolvedValue({ _id: RECIPIENT_ID });
       Connection.findOne.mockResolvedValue(null);
-      Connection.create.mockResolvedValue({ ...mockConnection, status: "pending" });
+      Connection.findOneAndUpdate.mockResolvedValue(reactivated);
       await sendRequest(req, res);
+      expect(Connection.findOneAndUpdate).toHaveBeenCalled();
+      expect(Connection.create).not.toHaveBeenCalled();
       expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith({ success: true, connection: reactivated });
     });
 
-    it("returns 201 with created connection on success", async () => {
+    it("returns 201 with created connection when no declined record exists", async () => {
       User.findById.mockResolvedValue({ _id: RECIPIENT_ID });
       Connection.findOne.mockResolvedValue(null);
-      Connection.create.mockResolvedValue(mockConnection);
-      await sendRequest(req, res);
-      expect(res.status).toHaveBeenCalledWith(201);
-      expect(res.json).toHaveBeenCalledWith({ success: true, connection: mockConnection });
-    });
-
-    it("creates connection with requester from req.userId", async () => {
-      User.findById.mockResolvedValue({ _id: RECIPIENT_ID });
-      Connection.findOne.mockResolvedValue(null);
+      Connection.findOneAndUpdate.mockResolvedValue(null);
       Connection.create.mockResolvedValue(mockConnection);
       await sendRequest(req, res);
       expect(Connection.create).toHaveBeenCalledWith({
@@ -98,6 +101,18 @@ describe("connectionController", () => {
         recipient: RECIPIENT_ID,
         status: "pending",
       });
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith({ success: true, connection: mockConnection });
+    });
+
+    it("returns 409 when create throws E11000 duplicate key error", async () => {
+      User.findById.mockResolvedValue({ _id: RECIPIENT_ID });
+      Connection.findOne.mockResolvedValue(null);
+      Connection.findOneAndUpdate.mockResolvedValue(null);
+      Connection.create.mockRejectedValue({ code: 11000 });
+      await sendRequest(req, res);
+      expect(res.status).toHaveBeenCalledWith(409);
+      expect(res.json).toHaveBeenCalledWith({ success: false, message: "Connection already exists" });
     });
 
     it("returns 500 on unexpected error", async () => {
@@ -113,6 +128,13 @@ describe("connectionController", () => {
   describe("acceptRequest", () => {
     beforeEach(() => {
       req = { userId: RECIPIENT_ID, params: { id: CONNECTION_ID } };
+    });
+
+    it("returns 400 when connection id is not a valid ObjectId", async () => {
+      req.params = { id: "not-valid" };
+      await acceptRequest(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ success: false, message: "Invalid connection id" });
     });
 
     it("returns 404 when connection is not found", async () => {
@@ -159,6 +181,13 @@ describe("connectionController", () => {
       req = { userId: RECIPIENT_ID, params: { id: CONNECTION_ID } };
     });
 
+    it("returns 400 when connection id is not a valid ObjectId", async () => {
+      req.params = { id: "not-valid" };
+      await declineRequest(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ success: false, message: "Invalid connection id" });
+    });
+
     it("returns 404 when connection is not found", async () => {
       Connection.findById.mockResolvedValue(null);
       await declineRequest(req, res);
@@ -199,6 +228,13 @@ describe("connectionController", () => {
 
     beforeEach(() => {
       req = { userId: REQUESTER_ID, params: { id: CONNECTION_ID } };
+    });
+
+    it("returns 400 when connection id is not a valid ObjectId", async () => {
+      req.params = { id: "not-valid" };
+      await removeConnection(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ success: false, message: "Invalid connection id" });
     });
 
     it("returns 404 when connection is not found", async () => {
@@ -323,6 +359,13 @@ describe("connectionController", () => {
       req.params = {};
       await getConnectionStatus(req, res);
       expect(res.status).toHaveBeenCalledWith(400);
+    });
+
+    it("returns 400 when userId is not a valid ObjectId", async () => {
+      req.params = { userId: "not-valid" };
+      await getConnectionStatus(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ success: false, message: "Invalid userId" });
     });
 
     it("returns none when no connection exists", async () => {
