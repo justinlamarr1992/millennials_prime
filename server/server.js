@@ -1,15 +1,12 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const path = require("path");
 // const fileUpload = require("express-fileupload");
 const cors = require("cors");
 const corsOptions = require("./config/corsOptions");
 const { logger } = require("./middleware/logEvents");
-const errorHandler = require("./middleware/errorHandler");
 const verifyJWT = require("./middleware/verifyJWT");
 const cookieParser = require("cookie-parser");
-var bodyParser = require("body-parser");
 const credentials = require("./middleware/credentials");
 const mongoose = require("mongoose");
 // YOUTUBE TUTUTIAL
@@ -43,26 +40,10 @@ app.use(function (req, res, next) {
   res.setHeader("Access-Control-Allow-Credentials", true);
   next();
 });
-// TEST
 
-// Testing Restart
-// app.use(bodyParser.json({ limit: "200mb" }));
-// app.use(
-//   bodyParser.urlencoded({
-//     limit: "200mb",
-//     extended: true,
-//     parameterLimit: 1000000,
-//   })
-// );
-
-// Testing Restart
-//middleware
+// body parsing middleware — express.json handles local dev; Firebase Functions handles cloud
 app.use(express.json({ limit: "1mb" }));
 app.use(express.urlencoded({ limit: "30mb", extended: true }));
-// app.use((req, res, next) => {
-//   console.log(req.path, req.method);
-//   next();
-// });
 
 // Routes
 // Testing Restart
@@ -83,9 +64,6 @@ app.use("/users", require("./routes/api/users"));
 app.use("/videos", require("./routes/api/video"));
 app.use("/subscribe", require("./routes/api/subscribe"));
 app.use("/likes", require("./routes/api/likes"));
-
-// ALSO TESTING
-// app.use("/testUploads", require("./routes/api/testUploads"));
 
 // app.all("*", (req, res) => {
 //   res.status(404);
