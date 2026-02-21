@@ -71,6 +71,14 @@ describe("connectionController", () => {
       expect(res.json).toHaveBeenCalledWith({ success: false, message: "Connection already exists" });
     });
 
+    it("returns 201 when previous connection was declined — allows re-request", async () => {
+      User.findById.mockResolvedValue({ _id: RECIPIENT_ID });
+      Connection.findOne.mockResolvedValue(null);
+      Connection.create.mockResolvedValue({ ...mockConnection, status: "pending" });
+      await sendRequest(req, res);
+      expect(res.status).toHaveBeenCalledWith(201);
+    });
+
     it("returns 201 with created connection on success", async () => {
       User.findById.mockResolvedValue({ _id: RECIPIENT_ID });
       Connection.findOne.mockResolvedValue(null);
@@ -205,6 +213,13 @@ describe("connectionController", () => {
       expect(res.status).toHaveBeenCalledWith(403);
     });
 
+    it("returns 400 when connection is not accepted", async () => {
+      Connection.findById.mockResolvedValue({ ...mockConnection, requester: REQUESTER_ID, recipient: RECIPIENT_ID, status: "pending" });
+      await removeConnection(req, res);
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith({ success: false, message: "Can only remove accepted connections" });
+    });
+
     it("returns 200 and deletes when requester removes", async () => {
       const conn = { ...accepted, requester: REQUESTER_ID, recipient: RECIPIENT_ID, deleteOne: jest.fn().mockResolvedValue({}) };
       Connection.findById.mockResolvedValue(conn);
@@ -335,6 +350,12 @@ describe("connectionController", () => {
       Connection.findOne.mockResolvedValue({ ...mockConnection, status: "accepted" });
       await getConnectionStatus(req, res);
       expect(res.json).toHaveBeenCalledWith({ success: true, status: "connected", connectionId: CONNECTION_ID });
+    });
+
+    it("returns declined when status is declined", async () => {
+      Connection.findOne.mockResolvedValue({ ...mockConnection, status: "declined" });
+      await getConnectionStatus(req, res);
+      expect(res.json).toHaveBeenCalledWith({ success: true, status: "declined", connectionId: CONNECTION_ID });
     });
 
     it("returns 500 on unexpected error", async () => {

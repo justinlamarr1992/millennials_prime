@@ -25,6 +25,7 @@ const sendRequest = async (req, res) => {
         { requester: req.userId, recipient: recipientId },
         { requester: recipientId, recipient: req.userId },
       ],
+      status: { $in: ["pending", "accepted"] },
     });
     if (existing) {
       return res.status(409).json({ success: false, message: "Connection already exists" });
@@ -91,6 +92,9 @@ const removeConnection = async (req, res) => {
     ) {
       return res.status(403).json({ success: false, message: "Not authorized" });
     }
+    if (connection.status !== "accepted") {
+      return res.status(400).json({ success: false, message: "Can only remove accepted connections" });
+    }
     await connection.deleteOne();
     res.status(200).json({ success: true });
   } catch (err) {
@@ -143,6 +147,10 @@ const getConnectionStatus = async (req, res) => {
 
     if (connection.status === "accepted") {
       return res.status(200).json({ success: true, status: "connected", connectionId: connection._id });
+    }
+
+    if (connection.status === "declined") {
+      return res.status(200).json({ success: true, status: "declined", connectionId: connection._id });
     }
 
     const pendingStatus =
