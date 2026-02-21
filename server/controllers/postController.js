@@ -1,187 +1,144 @@
-// const Post = require("../models/postModel");
-// const User = require("../models/userModel");
-// const mongoose = require("mongoose");
-// const { db } = require("../models/userModel");
+const Post = require("../models/postModel");
+const User = require("../models/MillPrimeUser");
+const mongoose = require("mongoose");
 
-// // Get all post
-// const getPosts = async (req, res) => {
-//   const posts = await Post.find({}).sort({ createdAt: -1 });
+const POPULATE_FIELDS = "name username prime roles";
 
-//   res.status(200).json(posts);
-// };
+const isValidId = (id, label, res) => {
+  if (!mongoose.isValidObjectId(id)) {
+    res.status(400).json({ success: false, message: `Invalid ${label}` });
+    return false;
+  }
+  return true;
+};
 
-// // will be used for all friends/ connections post
-// // // get all post
-// // const getPosts = async (req, res) => {
-// //   const posts = await Post.find({}).sort({ createdAt: -1 });
+const fetchPostsByAuthor = (authorId) =>
+  Post.find({ author: authorId })
+    .populate("author", POPULATE_FIELDS)
+    .sort({ createdAt: -1 })
+    .exec();
 
-// //   res.status(200).json(posts);
-// // };
+const findAuthorizedPost = async (id, userId, res) => {
+  const post = await Post.findById(id);
+  if (!post) {
+    res.status(404).json({ success: false, message: "Post not found" });
+    return null;
+  }
+  if (post.author.toString() !== userId) {
+    res.status(403).json({ success: false, message: "Not authorized" });
+    return null;
+  }
+  return post;
+};
 
-// // Get profile post
-// const getProfilePosts = async (req, res) => {
-//   const user_id = req.user._id;
-//   const posts = await Post.find({ user_id }).sort({ createdAt: -1 });
+const toPostResponse = (doc) => {
+  const author = doc.author;
+  const post = {
+    id: doc._id.toString(),
+    type: doc.type,
+    title: doc.title,
+    description: doc.description,
+    authorId: author._id.toString(),
+    authorName: author.name || author.username,
+    isPrime: !!author.prime,
+    isAdmin: !!author.roles?.Admin,
+    createdAt: doc.createdAt.toISOString(),
+    likeCount: doc.likeCount,
+    commentCount: doc.commentCount,
+  };
+  if (doc.type === "picture") post.imageUrl = doc.imageUrl;
+  if (doc.type === "video") post.videoId = doc.videoId;
+  return post;
+};
 
-//   res.status(200).json(posts);
-// };
+const getOwnPosts = async (req, res) => {
+  try {
+    const docs = await fetchPostsByAuthor(req.userId);
+    const posts = docs.map(toPostResponse);
+    res.status(200).json({ success: true, posts, totalCount: posts.length });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
 
-// // get sinlge post
-// const getPost = async (req, res) => {
-//   const { id } = req.params;
+const getUserPosts = async (req, res) => {
+  if (!isValidId(req.params.userId, "userId", res)) return;
+  try {
+    const user = await User.findById(req.params.userId);
+    if (!user) {
+      return res.status(404).json({ success: false, message: "User not found" });
+    }
+    const docs = await fetchPostsByAuthor(req.params.userId);
+    const posts = docs.map(toPostResponse);
+    res.status(200).json({ success: true, posts, totalCount: posts.length });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
 
-//   if (!mongoose.Types.ObjectId.isValid(id)) {
-//     return res.status(404).json({ error: "This Post doesn't Exist" });
-//   }
+const createPost = async (req, res) => {
+  const { type, title, description, imageUrl, videoId } = req.body;
 
-//   const post = await Post.findById(id);
+  if (!type) {
+    return res.status(400).json({ success: false, message: "type is required" });
+  }
+  if (!["text", "picture", "video"].includes(type)) {
+    return res.status(400).json({ success: false, message: "Invalid post type" });
+  }
+  if (!title) {
+    return res.status(400).json({ success: false, message: "title is required" });
+  }
+  if (type === "picture" && !imageUrl) {
+    return res.status(400).json({ success: false, message: "imageUrl is required for picture posts" });
+  }
+  if (type === "video" && !videoId) {
+    return res.status(400).json({ success: false, message: "videoId is required for video posts" });
+  }
 
-//   if (!post) {
-//     return res.status(404).json({ error: "This Post doesn't Exist" });
-//   }
+  try {
+    const doc = await Post.create({
+      type,
+      title,
+      description: description || "",
+      author: req.userId,
+      ...(type === "picture" && { imageUrl }),
+      ...(type === "video" && { videoId }),
+    });
+    const populated = await doc.populate("author", POPULATE_FIELDS);
+    res.status(201).json({ success: true, post: toPostResponse(populated) });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
 
-//   res.status(200).json(post);
-// };
+const updatePost = async (req, res) => {
+  if (!isValidId(req.params.id, "post id", res)) return;
+  try {
+    const post = await findAuthorizedPost(req.params.id, req.userId, res);
+    if (!post) return;
+    const { title, description, imageUrl, videoId } = req.body;
+    if (title !== undefined) post.title = title;
+    if (description !== undefined) post.description = description;
+    if (imageUrl !== undefined) post.imageUrl = imageUrl;
+    if (videoId !== undefined) post.videoId = videoId;
+    await post.save();
+    const populated = await post.populate("author", POPULATE_FIELDS);
+    res.status(200).json({ success: true, post: toPostResponse(populated) });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
 
-// // create new post
-// const createPost = async (req, res) => {
-//   const { title, status, name } = req.body;
-//   const user_id = req.user._id;
+const deletePost = async (req, res) => {
+  if (!isValidId(req.params.id, "post id", res)) return;
+  try {
+    const post = await findAuthorizedPost(req.params.id, req.userId, res);
+    if (!post) return;
+    await post.deleteOne();
+    res.status(200).json({ success: true });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
 
-//   // const user = await User.findOne({ _id: _id });
-//   // console.log(user);
-
-//   // const test = await db.getUsers();
-
-//   let emptyFields = [];
-
-//   if (!title) {
-//     emptyFields.push("title");
-//   }
-//   if (!status) {
-//     emptyFields.push("status");
-//   }
-//   if (!name) {
-//     emptyFields.push("name");
-//   }
-//   if (emptyFields.length > 0) {
-//     return res
-//       .status(400)
-//       .json({ error: "Please Fill in all the fields", emptyFields });
-//   }
-
-//   //   add doc to db
-//   try {
-//     const user_id = req.user._id;
-//     // These are all the things that will be saved for a post
-//     const post = await Post.create({ title, status, user_id, name });
-//     res.status(200).json(post);
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
-// // ADD To DATABASE NOTES
-// // in order to save to database you need to add object here ...{title,status, name} =req.body this is whats sent in the front end
-
-// // create new post
-// const testPost = async (req, res) => {
-//   const { title, status } = req.body;
-//   const user_id = req.user._id;
-
-//   const user = await User.findOne({ _id: _id });
-//   // console.log(user);
-
-//   // const test = await db.getUsers();
-
-//   let emptyFields = [];
-
-//   if (!title) {
-//     emptyFields.push("title");
-//   }
-//   if (!status) {
-//     emptyFields.push("status");
-//   }
-//   if (emptyFields.length > 0) {
-//     return res
-//       .status(400)
-//       .json({ error: "Please Fill in all the fields", emptyFields });
-//   }
-
-//   //   add doc to db
-//   try {
-//     const user_id = req.user._id;
-//     // These are all the things that will be saved for a post
-//     const post = await Post.create({ title, status, user_id });
-//     res.status(200).json(post);
-//   } catch (error) {
-//     res.status(400).json({ error: error.message });
-//   }
-// };
-
-// // create post for pictures
-// const createPicPost = async (req, res) => {
-//   if (req.files === null) {
-//     return res.status(400).json({ msg: "No File Uplaoded" });
-//   }
-//   console.log("req.files.file: ", req.files.file);
-
-//   const file = req.files.file;
-//   file.mv(`../client/public/uploads/${file.name}`, (err) => {
-//     if (err) {
-//       console.error(err);
-//       console.log("Error in back end");
-//       return res.status(500).send(err);
-//     }
-//     res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
-//   });
-// };
-
-// // delete a post
-// const deletePost = async (req, res) => {
-//   const { id } = req.params;
-
-//   if (!mongoose.Types.ObjectId.isValid(id)) {
-//     return res.status(404).json({ error: "This Post doesn't Exist" });
-//   }
-
-//   const post = await Post.findByIdAndDelete({ _id: id });
-
-//   if (!post) {
-//     return res.status(400).json({ error: "This Post doesn't Exist" });
-//   }
-
-//   res.status(200).json(post);
-// };
-
-// // update a post
-// const updatePost = async (req, res) => {
-//   const { id } = req.params;
-
-//   if (!mongoose.Types.ObjectId.isValid(id)) {
-//     return res.status(404).json({ error: "This Post doesn't Exist" });
-//   }
-
-//   const post = await Post.findOneAndUpdate(
-//     { _id: id },
-//     {
-//       ...req.body,
-//     }
-//   );
-
-//   if (!post) {
-//     return res.status(404).json({ error: "This Post doesn't Exist" });
-//   }
-
-//   res.status(200).json(post);
-// };
-
-// module.exports = {
-//   createPost,
-//   createPicPost,
-//   getPosts,
-//   getProfilePosts,
-//   getPost,
-//   deletePost,
-//   updatePost,
-//   testPost,
-// };
+module.exports = { getOwnPosts, getUserPosts, createPost, updatePost, deletePost };
