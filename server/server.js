@@ -9,7 +9,7 @@ const verifyJWT = require("./middleware/verifyJWT");
 const cookieParser = require("cookie-parser");
 const credentials = require("./middleware/credentials");
 const mongoose = require("mongoose");
-// YOUTUBE TUTUTIAL
+// YOUTUBE TUTORIAL
 const functions = require("firebase-functions");
 
 const connectDB = require("./config/dbConn");
@@ -83,5 +83,5 @@ mongoose.connection.once("open", () => {
   app.listen(PORT, () => console.log(`Listening to Port at ${Date.now()}`));
 });
 
-// YOUTUBE TUTUTIAL
+// YOUTUBE TUTORIAL
 exports.api = functions.https.onRequest(app);
