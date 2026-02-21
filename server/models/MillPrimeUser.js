@@ -64,7 +64,7 @@ const userSchema = new Schema(
       support: { type: String },
       critics: { type: String },
       specificIntegral: { type: Boolean },
-      whatSpecfic: { type: String },
+      whatSpecific: { type: String },
     },
     prime: { type: Boolean, default: false },
     interests: [{ type: String }],

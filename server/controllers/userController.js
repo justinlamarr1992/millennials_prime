@@ -328,7 +328,7 @@ const updateArtInfo = async (req, res) => {
     support,
     critics,
     specificIntegral,
-    whatSpecfic,
+    whatSpecific,
   } = req.body.values;
   let art = {
     artist,
@@ -343,7 +343,7 @@ const updateArtInfo = async (req, res) => {
     support,
     critics,
     specificIntegral,
-    whatSpecfic,
+    whatSpecific,
   };
   try {
     if (!req?.params?.id)
@@ -365,7 +365,7 @@ const updateArtInfo = async (req, res) => {
           support,
           critics,
           specificIntegral,
-          whatSpecfic,
+          whatSpecific,
         },
       }
     );
