@@ -82,6 +82,18 @@ describe("saveVideo", () => {
     });
   });
 
+  it("returns 409 when Video.create throws a duplicate key error", async () => {
+    const err = new Error("E11000 duplicate key error");
+    err.code = 11000;
+    Video.create.mockRejectedValue(err);
+    await saveVideo(req, res);
+    expect(res.status).toHaveBeenCalledWith(409);
+    expect(res.json).toHaveBeenCalledWith({
+      success: false,
+      message: "Video GUID already exists",
+    });
+  });
+
   it("returns 500 when Video.create throws an unexpected error", async () => {
     Video.create.mockRejectedValue(new Error("DB connection failed"));
     await saveVideo(req, res);

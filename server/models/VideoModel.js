@@ -5,7 +5,7 @@ const Schema = mongoose.Schema;
 
 const videoSchema = new Schema(
   {
-    video: String,
+    video: { type: String, unique: true },
     userPosting: { type: Schema.Types.ObjectId, ref: "MillPrimeUser" },
     title: { type: String, maxlength: 50 },
     description: { type: String },

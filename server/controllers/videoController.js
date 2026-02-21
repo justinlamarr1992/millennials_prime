@@ -109,6 +109,9 @@ const saveVideo = async (req, res) => {
     });
     res.status(201).json({ success: true, videoId: video.video });
   } catch (err) {
+    if (err.code === 11000) {
+      return res.status(409).json({ success: false, message: "Video GUID already exists" });
+    }
     if (err.name === "ValidationError" || err.name === "CastError") {
       return res.status(400).json({ success: false, message: err.message });
     }
