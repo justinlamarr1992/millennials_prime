@@ -87,4 +87,55 @@ describe("handleLogin", () => {
       expect.objectContaining({ accessToken: "mock-token", _id: mockId })
     );
   });
+
+  it("sets refresh token cookie with correct options and no extra arguments", async () => {
+    const mockUser = {
+      username: "testuser",
+      password: "hashed",
+      roles: { User: 2001 },
+      _id: "507f1f77bcf86cd799439011",
+      refreshToken: null,
+      save: jest.fn().mockResolvedValue({}),
+    };
+    User.findOne.mockReturnValue({ exec: jest.fn().mockResolvedValue(mockUser) });
+    bcrypt.compare.mockResolvedValue(true);
+    jwt.sign
+      .mockReturnValueOnce("mock-access-token")
+      .mockReturnValueOnce("mock-refresh-token");
+
+    await handleLogin(req, res);
+
+    expect(res.cookie).toHaveBeenCalledWith(
+      "jwt",
+      "mock-refresh-token",
+      {
+        httpOnly: true,
+        sameSite: "None",
+        maxAge: 24 * 60 * 60 * 1000,
+      }
+    );
+  });
+
+  it("includes refreshToken in response body on success", async () => {
+    const mockId = "507f1f77bcf86cd799439011";
+    const mockUser = {
+      username: "testuser",
+      password: "hashed",
+      roles: { User: 2001 },
+      _id: mockId,
+      refreshToken: null,
+      save: jest.fn().mockResolvedValue({}),
+    };
+    User.findOne.mockReturnValue({ exec: jest.fn().mockResolvedValue(mockUser) });
+    bcrypt.compare.mockResolvedValue(true);
+    jwt.sign
+      .mockReturnValueOnce("mock-access-token")
+      .mockReturnValueOnce("mock-refresh-token");
+
+    await handleLogin(req, res);
+
+    expect(res.json).toHaveBeenCalledWith(
+      expect.objectContaining({ refreshToken: "mock-refresh-token" })
+    );
+  });
 });

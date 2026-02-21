@@ -1,0 +1,202 @@
+{
+  "info": {
+    "_postman_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
+    "name": "MillPrime — Connections",
+    "description": "Connection endpoints for MillennialsPrime. Run 'Login as Me' first, then 'Login as Other User', then the connection requests.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login as Me",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const r = pm.response.json();",
+                  "pm.environment.set('accessToken', r.accessToken);",
+                  "pm.environment.set('myUserId', r._id);",
+                  "console.log('myUserId set to:', r._id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user\": \"{{myUsername}}\",\n  \"password\": \"{{myPassword}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth"]
+            }
+          }
+        },
+        {
+          "name": "Login as Other User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const r = pm.response.json();",
+                  "pm.environment.set('otherUserId', r._id);",
+                  "console.log('otherUserId set to:', r._id);",
+                  "// accessToken is NOT overwritten — keep my token for subsequent requests"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user\": \"{{otherUsername}}\",\n  \"password\": \"{{otherPassword}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Connections",
+      "item": [
+        {
+          "name": "Send Connection Request",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  const r = pm.response.json();",
+                  "  pm.environment.set('connectionId', r._id);",
+                  "  console.log('connectionId set to:', r._id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"recipientId\": \"{{otherUserId}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/connections/request",
+              "host": ["{{baseUrl}}"],
+              "path": ["connections", "request"]
+            }
+          }
+        },
+        {
+          "name": "Get Connection Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/connections/status/{{otherUserId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["connections", "status", "{{otherUserId}}"]
+            }
+          }
+        },
+        {
+          "name": "Get Pending Requests (incoming)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/connections/pending",
+              "host": ["{{baseUrl}}"],
+              "path": ["connections", "pending"]
+            }
+          }
+        },
+        {
+          "name": "Accept Connection Request",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/connections/accept/{{connectionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["connections", "accept", "{{connectionId}}"]
+            }
+          }
+        },
+        {
+          "name": "Decline Connection Request",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/connections/decline/{{connectionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["connections", "decline", "{{connectionId}}"]
+            }
+          }
+        },
+        {
+          "name": "Get My Connections",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/connections",
+              "host": ["{{baseUrl}}"],
+              "path": ["connections"]
+            }
+          }
+        },
+        {
+          "name": "Remove Connection",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/connections/{{connectionId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["connections", "{{connectionId}}"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
