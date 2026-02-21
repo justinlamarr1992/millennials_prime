@@ -3,6 +3,8 @@ const { getBunnyInfo } = require('../controllers/videoController');
 
 jest.mock('../models/MillPrimeUser');
 
+const MOCK_USER_ID = '507f1f77bcf86cd799439011';
+
 describe('getBunnyInfo', () => {
   let req;
   let res;
@@ -20,7 +22,11 @@ describe('getBunnyInfo', () => {
   });
 
   beforeEach(() => {
-    req = { body: { videoID: 'test-video-guid', title: 'Test Video' }, user: 'testuser' };
+    req = {
+      body: { videoID: 'test-video-guid', title: 'Test Video' },
+      user: 'testuser',
+      userId: MOCK_USER_ID,
+    };
     res = {
       status: jest.fn().mockReturnThis(),
       json: jest.fn().mockReturnThis(),
@@ -29,6 +35,22 @@ describe('getBunnyInfo', () => {
     delete process.env.BUNNYCDN_API_KEY;
     jest.clearAllMocks();
   });
+
+  const mockUserLookup = (resolvedValue) => {
+    User.findById.mockReturnValue({
+      select: jest.fn().mockReturnValue({
+        lean: jest.fn().mockResolvedValue(resolvedValue),
+      }),
+    });
+  };
+
+  const mockUserLookupError = (error) => {
+    User.findById.mockReturnValue({
+      select: jest.fn().mockReturnValue({
+        lean: jest.fn().mockRejectedValue(error),
+      }),
+    });
+  };
 
   it('returns 503 when env vars are missing', async () => {
     await getBunnyInfo(req, res);
@@ -60,7 +82,7 @@ describe('getBunnyInfo', () => {
   it('returns 403 when user is not a prime content creator', async () => {
     process.env.BUNNYCDN_LIBRARY_ID = '147838';
     process.env.BUNNYCDN_API_KEY = 'test-key';
-    User.findOne.mockResolvedValue({ prime: false });
+    mockUserLookup({ prime: false });
     await getBunnyInfo(req, res);
     expect(res.status).toHaveBeenCalledWith(403);
     expect(res.json).toHaveBeenCalledWith({ success: false, message: 'Content creators only' });
@@ -69,7 +91,7 @@ describe('getBunnyInfo', () => {
   it('returns 403 when user is not found', async () => {
     process.env.BUNNYCDN_LIBRARY_ID = '147838';
     process.env.BUNNYCDN_API_KEY = 'test-key';
-    User.findOne.mockResolvedValue(null);
+    mockUserLookup(null);
     await getBunnyInfo(req, res);
     expect(res.status).toHaveBeenCalledWith(403);
     expect(res.json).toHaveBeenCalledWith({ success: false, message: 'Content creators only' });
@@ -78,7 +100,7 @@ describe('getBunnyInfo', () => {
   it('returns 500 when user lookup fails', async () => {
     process.env.BUNNYCDN_LIBRARY_ID = '147838';
     process.env.BUNNYCDN_API_KEY = 'test-key';
-    User.findOne.mockRejectedValue(new Error('DB error'));
+    mockUserLookupError(new Error('DB error'));
     await getBunnyInfo(req, res);
     expect(res.status).toHaveBeenCalledWith(500);
     expect(res.json).toHaveBeenCalledWith({ success: false, message: expect.any(String) });
@@ -87,7 +109,7 @@ describe('getBunnyInfo', () => {
   it('returns 200 with correct payload when user is prime and all params valid', async () => {
     process.env.BUNNYCDN_LIBRARY_ID = '147838';
     process.env.BUNNYCDN_API_KEY = 'test-key';
-    User.findOne.mockResolvedValue({ prime: true });
+    mockUserLookup({ prime: true });
     await getBunnyInfo(req, res);
     expect(res.status).toHaveBeenCalledWith(200);
     const response = res.json.mock.calls[0][0];
@@ -97,10 +119,20 @@ describe('getBunnyInfo', () => {
     expect(response.authorizationExpire).toBeDefined();
   });
 
+  it('looks up user by userId and selects only prime field', async () => {
+    process.env.BUNNYCDN_LIBRARY_ID = '147838';
+    process.env.BUNNYCDN_API_KEY = 'test-key';
+    const mockSelect = jest.fn().mockReturnValue({ lean: jest.fn().mockResolvedValue({ prime: true }) });
+    User.findById.mockReturnValue({ select: mockSelect });
+    await getBunnyInfo(req, res);
+    expect(User.findById).toHaveBeenCalledWith(MOCK_USER_ID);
+    expect(mockSelect).toHaveBeenCalledWith('prime');
+  });
+
   it('returns libraryId from env var, not hardcoded 181057', async () => {
     process.env.BUNNYCDN_LIBRARY_ID = '147838';
     process.env.BUNNYCDN_API_KEY = 'test-key';
-    User.findOne.mockResolvedValue({ prime: true });
+    mockUserLookup({ prime: true });
     await getBunnyInfo(req, res);
     const response = res.json.mock.calls[0][0];
     expect(response.libraryId).toBe('147838');

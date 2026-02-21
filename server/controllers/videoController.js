@@ -5,7 +5,7 @@ var mongoose = require("mongoose");
 
 const sha256 = require("sha256");
 
-const getVideos = async (req, res) => {
+const getVideos = async (_req, res) => {
   const videos = await Video.find().sort({ createdAt: -1 });
   if (!videos) return res.status(204).json({ message: `No Videos ` });
   res.status(200).json({ success: true, videos });
@@ -22,11 +22,7 @@ const getSubscriptionVideos = async (req, res) => {
       .json({ message: "The User is not subscribed to Any Users" });
 
   try {
-    let subscribedUsers = [];
-
-    subscriptions.map((subscriber) => {
-      subscribedUsers.push(subscriber.userTo);
-    });
+    const subscribedUsers = subscriptions.map((subscriber) => subscriber.userTo);
 
     const videos = await Video.find({ userPosting: { $in: subscribedUsers } })
       .populate("userPosting")
@@ -52,7 +48,7 @@ const getSingleVideo = async (req, res) => {
   res.status(200).json({ success: true, video });
 };
 
-const getPrimeNewsVideo = async (req, res) => {
+const getPrimeNewsVideo = async (_req, res) => {
   try {
     const video = await Video.find().sort({ _id: -1 }).limit(1);
     res.status(200).json({ success: true, video });
@@ -62,8 +58,6 @@ const getPrimeNewsVideo = async (req, res) => {
 };
 
 async function getBunnyInfo(req, res) {
-  const body = req.body;
-
   const libraryId = process.env.BUNNYCDN_LIBRARY_ID;
   const api_key = process.env.BUNNYCDN_API_KEY;
 
@@ -71,33 +65,30 @@ async function getBunnyInfo(req, res) {
     return res.status(503).json({ success: false, message: "BunnyCDN not configured" });
   }
 
-  const video_id = body.videoID;
+  const video_id = req.body.videoID;
   if (!video_id) {
     return res.status(400).json({ success: false, message: "videoID is required" });
   }
 
   try {
-    const user = await User.findOne({ username: req.user });
+    const user = await User.findById(req.userId).select("prime").lean();
     if (!user || !user.prime) {
       return res.status(403).json({ success: false, message: "Content creators only" });
     }
+
+    const authorizationExpire = Math.floor(Date.now() / 1000) + 3600 * 48;
+    const shaAttempt = sha256(libraryId + api_key + authorizationExpire + video_id);
+
+    res.status(200).json({
+      success: true,
+      shaAttempt,
+      authorizationExpire,
+      video_id,
+      libraryId,
+    });
   } catch (err) {
-    return res.status(500).json({ success: false, message: err.message });
+    res.status(500).json({ success: false, message: err.message });
   }
-
-  const authorizationExpire = Math.floor(Date.now() / 1000) + 3600 * 48; // authorize for two days
-
-  const shaAttempt = sha256(
-    libraryId + api_key + authorizationExpire + video_id
-  );
-
-  res.status(200).json({
-    success: true,
-    shaAttempt,
-    authorizationExpire,
-    video_id,
-    libraryId,
-  });
 }
 
 const saveVideo = async (req, res) => {
