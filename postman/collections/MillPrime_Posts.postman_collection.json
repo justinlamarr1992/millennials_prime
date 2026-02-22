@@ -1,0 +1,179 @@
+{
+  "info": {
+    "_postman_id": "b2c3d4e5-f6a7-8901-bcde-f12345678901",
+    "name": "MillPrime — Posts",
+    "description": "Post endpoints for MillennialsPrime. Run 'Login as Me' first, then use the Posts requests. 'Create Post' sets {{postId}} automatically.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Login as Me",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const r = pm.response.json();",
+                  "pm.environment.set('accessToken', r.accessToken);",
+                  "pm.environment.set('myUserId', r._id);",
+                  "console.log('myUserId set to:', r._id);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user\": \"{{myUsername}}\",\n  \"password\": \"{{myPassword}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth"]
+            }
+          }
+        },
+        {
+          "name": "Login as Other User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const r = pm.response.json();",
+                  "pm.environment.set('otherUserId', r._id);",
+                  "console.log('otherUserId set to:', r._id);",
+                  "// accessToken is NOT overwritten — keep my token for subsequent requests"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"user\": \"{{otherUsername}}\",\n  \"password\": \"{{otherPassword}}\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/auth",
+              "host": ["{{baseUrl}}"],
+              "path": ["auth"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Posts",
+      "item": [
+        {
+          "name": "Get My Posts",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/posts/profile",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", "profile"]
+            }
+          }
+        },
+        {
+          "name": "Get Posts by User",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/posts/{{otherUserId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", "{{otherUserId}}"]
+            }
+          }
+        },
+        {
+          "name": "Create Post",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "  const r = pm.response.json();",
+                  "  pm.environment.set('postId', r.post.id);",
+                  "  console.log('postId set to:', r.post.id);",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"type\": \"text\",\n  \"title\": \"My first post\",\n  \"description\": \"Hello from Postman\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/posts",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts"]
+            }
+          }
+        },
+        {
+          "name": "Update Post",
+          "request": {
+            "method": "PATCH",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Updated title\",\n  \"description\": \"Updated description\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/posts/{{postId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", "{{postId}}"]
+            }
+          }
+        },
+        {
+          "name": "Delete Post",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{accessToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/posts/{{postId}}",
+              "host": ["{{baseUrl}}"],
+              "path": ["posts", "{{postId}}"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
