@@ -2,6 +2,7 @@
 const User = require("../models/MillPrimeUser");
 const Image = require("../models/Image");
 const Subscriber = require("../models/Subscriber");
+const logger = require("../utils/logger");
 var mongoose = require("mongoose");
 
 const EXCLUDED_FIELDS = "-password -refreshToken";
@@ -11,8 +12,6 @@ const EXCLUDED_FIELDS_PROJECTION = { password: 0, refreshToken: 0 };
 
 const getModalInfo = async (req, res) => {
   const _id = new mongoose.Types.ObjectId(req.body._id);
-
-  console.log(_id);
 
   // TODO: Get better ways to refine this
 
@@ -53,19 +52,16 @@ const getModalInfo = async (req, res) => {
     connects = _randomslice(connects, 3);
 
     const ranArray = [];
-    const newTest = connects.map((newItem, i) => {
-      console.log("New user", i, ": ", newItem.userTo);
+    const newTest = connects.map((newItem) => {
       // ranArray.push(User.findOne({ _id: newItem._id }).exec());
       ranArray.push(newItem.userTo);
     });
-
-    console.log("The New Array of _ids: ", ranArray);
 
     connects = ranArray;
 
     res.status(200).json({ follows, connects });
   } catch (err) {
-    console.log(err);
+    logger.error(err);
     res.status(500).json({ message: err.message });
   }
 };
@@ -85,7 +81,7 @@ const getUser = async (req, res) => {
     }
     res.status(200).json(user);
   } catch (err) {
-    console.log(err);
+    logger.error(err);
     res.status(500).json({ message: err.message });
   }
 };
@@ -127,9 +123,6 @@ const deleteUser = async (req, res) => {
 };
 
 const getUserReq = async (req, res) => {
-  console.log(req.body.userTo);
-  console.log(req.body.userFrom);
-
   if (!req?.body?.userTo || !req?.body?.userFrom)
     return res.status(400).json({ message: "User ID required" });
 
@@ -148,14 +141,13 @@ const getUserReq = async (req, res) => {
     }
     res.status({ success: true, userFrom });
   } catch (err) {
-    console.log(err);
+    logger.error(err);
   }
 };
 
 const getSingleUser = async (req, res) => {};
 
 const updateUserInfo = async (req, res) => {
-  console.log("UPDATE USER INFO NOW");
   const _id = new mongoose.Types.ObjectId(req.params);
   const { name, email, DOB, country, state, city, zip } = req.body.values;
   let location = { country, state, city, zip };
@@ -179,10 +171,10 @@ const updateUserInfo = async (req, res) => {
         .status(204)
         .json({ message: `No User matches ID ${req.params.id}` });
     }
-    console.log("User Updated ", name, email, DOB, location);
+    logger.info("User updated successfully");
     res.status(200).json({ name, email, DOB, location });
   } catch (err) {
-    console.log(err);
+    logger.error(err);
     return res.status(400).json({ success: false, message: err.message });
   }
 };
@@ -253,13 +245,12 @@ const updateBusinessInfo = async (req, res) => {
     }
     res.status(200).json({ success: true });
   } catch (err) {
-    console.log(err);
+    logger.error(err);
     res.status(400).json({ success: false, message: err.message });
   }
 };
 const updateProfileSettings = async (req, res) => {
   const _id = new mongoose.Types.ObjectId(req.params);
-  console.log(_id);
   const {
     canLike,
     canDislike,
@@ -280,7 +271,6 @@ const updateProfileSettings = async (req, res) => {
     eComm,
     upload,
   };
-  console.log(profileSettings);
   try {
     if (!req?.params?.id)
       return res.status(400).json({ message: "User ID required" });
@@ -300,7 +290,6 @@ const updateProfileSettings = async (req, res) => {
         },
       }
     );
-    console.log(user);
     // Trying Insert next
     if (!user) {
       return res
@@ -309,7 +298,7 @@ const updateProfileSettings = async (req, res) => {
     }
     res.status(200).json({ success: true, profileSettings });
   } catch (err) {
-    console.log(err);
+    logger.error(err);
     res.status(400).json({ success: false, message: err.message });
   }
 };
@@ -376,7 +365,7 @@ const updateArtInfo = async (req, res) => {
     }
     res.status(200).json({ success: true, art });
   } catch (err) {
-    console.log(err);
+    logger.error(err);
     res.status(400).json({ success: false, message: err.message });
   }
 };
@@ -394,7 +383,7 @@ const getPicture = async (req, res) => {
       const getImageToClient = getImage[0].image;
       res.status(200).json({ success: true, getImageToClient });
     } catch (err) {
-      console.log(err);
+      logger.error(err);
       res.status(408).json({ message: err.message });
     }
   } catch (err) {
@@ -412,7 +401,7 @@ const createProfilePicture = async (req, res) => {
     const user = await User.findByIdAndUpdate(_id, { profilePic: picture }, { new: true }).select(EXCLUDED_FIELDS);
     res.status(200).json({ success: true, picture, user });
   } catch (err) {
-    console.log(err);
+    logger.error(err);
     return res.status(400).json({ success: false, message: err.message });
   }
 };

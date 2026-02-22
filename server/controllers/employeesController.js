@@ -1,4 +1,5 @@
 const Employee = require("../models/Employee");
+const logger = require("../utils/logger");
 
 const getAllEmployees = async (req, res) => {
   const employees = await Employee.find();
@@ -19,7 +20,8 @@ const createNewEmployee = async (req, res) => {
     });
     res.status(201).json(result);
   } catch (err) {
-    console.error(err);
+    logger.error(err);
+    return res.status(500).json({ message: "Internal server error" });
   }
 };
 
