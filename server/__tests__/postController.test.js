@@ -249,6 +249,12 @@ describe("postController", () => {
   describe("updatePost", () => {
     let docForUpdate;
 
+    const makeTypedDoc = (type, extraFields = {}) => ({
+      ...docForUpdate,
+      type,
+      populate: jest.fn().mockResolvedValue({ ...mockPostPopulated, type, ...extraFields }),
+    });
+
     beforeEach(() => {
       req = { userId: AUTHOR_ID, params: { id: POST_ID }, body: { title: "Updated Title" } };
       docForUpdate = {
@@ -305,27 +311,19 @@ describe("postController", () => {
     });
 
     it("applies imageUrl to a picture post", async () => {
-      const picDoc = {
-        ...docForUpdate,
-        type: "picture",
-        populate: jest.fn().mockResolvedValue({ ...mockPostPopulated, type: "picture", imageUrl: UPDATED_IMAGE_URL }),
-      };
+      const doc = makeTypedDoc("picture", { imageUrl: UPDATED_IMAGE_URL });
       req.body = { imageUrl: UPDATED_IMAGE_URL };
-      Post.findById.mockResolvedValue(picDoc);
+      Post.findById.mockResolvedValue(doc);
       await updatePost(req, res);
-      expect(picDoc.imageUrl).toBe(UPDATED_IMAGE_URL);
+      expect(doc.imageUrl).toBe(UPDATED_IMAGE_URL);
     });
 
     it("applies videoId to a video post", async () => {
-      const vidDoc = {
-        ...docForUpdate,
-        type: "video",
-        populate: jest.fn().mockResolvedValue({ ...mockPostPopulated, type: "video", videoId: UPDATED_VIDEO_ID }),
-      };
+      const doc = makeTypedDoc("video", { videoId: UPDATED_VIDEO_ID });
       req.body = { videoId: UPDATED_VIDEO_ID };
-      Post.findById.mockResolvedValue(vidDoc);
+      Post.findById.mockResolvedValue(doc);
       await updatePost(req, res);
-      expect(vidDoc.videoId).toBe(UPDATED_VIDEO_ID);
+      expect(doc.videoId).toBe(UPDATED_VIDEO_ID);
     });
 
     it("returns 500 on unexpected error", async () => {
