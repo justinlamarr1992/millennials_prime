@@ -6,6 +6,7 @@ const concat = require("stream-concat");
 var fs = require("fs");
 const { MongoClient, ObjectId, GridFSBucket } = require("mongodb");
 var mime = require("mime");
+const logger = require("../utils/logger");
 // const User = require("../models/PrimeUser");
 // const User = require("../models/MillPrimeUser");
 
@@ -49,7 +50,6 @@ connect.once("open", () => {
 });
 
 const uploadVideo = async (req, res) => {
-  console.log(req.body);
   // try {
   //   client.connect((err) => {
   //     const db = client.db("test");
@@ -93,7 +93,7 @@ const uploadVideo = async (req, res) => {
 //       };
 //     res.status(200).json({ success: true });
 //   } catch (err) {
-//     console.log(err);
+//     logger.error(err);
 //     res.status(400).json({ success: false, err });
 //   }
 // };
@@ -209,7 +209,6 @@ const uploadVideoInfo = async (req, res, next) => {
         });
       }
       files.map((file) => {
-        console.log(file);
         const changeId = file._id;
         // gfs.put({ _id: changeId }, { filename: "TEst" });
         // if (
@@ -241,8 +240,6 @@ const downloadVideo = async (req, res) => {};
 const deleteVideo = async (req, res) => {
   const fileId = new ObjectId("63d40176741612651ed5f84c");
 
-  const file = await gfs.find({ _id: fileId }).toArray();
-  console.log(file);
   await gfs.delete({ _id: fileId });
 };
 const getVideo = async (req, res) => {
@@ -276,7 +273,7 @@ const getVideo = async (req, res) => {
     //     callback(null, chunk);
     //   });
   } catch (err) {
-    console.log(err);
+    logger.error(err);
     res.status(400).json({ success: false, err });
   }
 };
@@ -295,7 +292,7 @@ const getVideos = async (req, res) => {
       });
     });
   } catch (err) {
-    console.log(err);
+    logger.error(err);
     res.status(400).json({ success: false, err });
   }
 };

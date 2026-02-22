@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Like = require("../models/Like");
 const Dislike = require("../models/Dislike");
+const logger = require("../utils/logger");
 
 var mongoose = require("mongoose");
 
@@ -13,8 +14,6 @@ const getLikes = async (req, res) => {
   let commentId;
 
   const body = req.body;
-
-  console.log("Request Body", req.body);
 
   if (body.hasOwnProperty("videoId")) {
     videoId = req.body.videoId;
@@ -31,7 +30,6 @@ const getLikes = async (req, res) => {
   try {
     const likes = await Like.find(varFind).exec();
     res.status(200).json({ success: true, likes });
-    console.log(likes);
   } catch (err) {
     res.status(400).send(err);
   }
@@ -45,8 +43,6 @@ const getDislikes = async (req, res) => {
   let commentId;
 
   const body = req.body;
-
-  console.log(req.body);
 
   if (body.hasOwnProperty("videoId")) {
     videoId = req.body.videoId;
@@ -85,7 +81,7 @@ const postLike = async (req, res) => {
     }
     res.status(200).json({ success: true, like });
   } catch (err) {
-    console.log(err);
+    logger.error(err);
     return res.status(400).json({ success: false, err });
   }
 };
@@ -106,7 +102,7 @@ const postDislike = async (req, res) => {
     }
     res.status(200).json({ success: true, dislike });
   } catch (err) {
-    console.log(err);
+    logger.error(err);
     return res.status(400).json({ success: false, err });
   }
 };
@@ -123,7 +119,7 @@ const postUnlike = async (req, res) => {
     Like.findOneAndDelete(variable).exec();
     res.status(200).json({ success: true });
   } catch (err) {
-    console.log("There has been an error of ", err);
+    logger.error(err);
     return res.status(400).json({ success: false, err });
   }
 };
@@ -140,7 +136,7 @@ const postUndislike = async (req, res) => {
     Dislike.findOneAndDelete(variable).exec();
     res.status(200).json({ success: true });
   } catch (err) {
-    console.log("There has been an error of ", err);
+    logger.error(err);
     return res.status(400).json({ success: false, err });
   }
 };

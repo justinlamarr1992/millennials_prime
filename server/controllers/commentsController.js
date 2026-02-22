@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Comment = require("../models/Comment");
 const Video = require("../models/VideoModel");
+const logger = require("../utils/logger");
 
 const postComment = async (req, res) => {
   const comment = await Comment.create(req.body);
@@ -12,17 +13,15 @@ const postComment = async (req, res) => {
       .exec();
 
     comment.save();
-    console.log(comment);
 
     return res.status(200).json({ success: true, result });
   } catch (err) {
-    console.log(err);
+    logger.error(err);
     return res.json({ success: false, err });
   }
 };
 
 const getComments = async (req, res) => {
-  console.log(req.body.videoId);
   videoId = req.body.videoId;
   try {
     const comments = await Comment.find({ postId: req.body.videoId })
