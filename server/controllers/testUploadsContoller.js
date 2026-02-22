@@ -43,6 +43,10 @@ connect.once("open", () => {
   });
 });
 
+// TODO: Implement video upload handling:
+//  - Accept incoming video data (likely via multer)
+//  - Store the file in the "videos" GridFS bucket
+//  - Save any relevant metadata using the Video model
 const uploadVideo = async (req, res) => {};
 
 const uploadVideoInfo = async (req, res, next) => {
