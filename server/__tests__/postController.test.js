@@ -14,6 +14,10 @@ jest.mock("../models/MillPrimeUser");
 const AUTHOR_ID = "507f1f77bcf86cd799439011";
 const OTHER_ID = "507f1f77bcf86cd799439012";
 const POST_ID = "507f1f77bcf86cd799439013";
+const IMAGE_URL = "https://example.com/img.jpg";
+const VIDEO_ID = "bunny-guid-123";
+const UPDATED_IMAGE_URL = "https://example.com/updated.jpg";
+const UPDATED_VIDEO_ID = "bunny-guid-updated";
 
 const mockAuthor = {
   _id: AUTHOR_ID,
@@ -93,6 +97,15 @@ describe("postController", () => {
       await getOwnPosts(req, res);
       expect(res.status).toHaveBeenCalledWith(200);
       expect(res.json).toHaveBeenCalledWith({ success: true, posts: [], totalCount: 0 });
+    });
+
+    it("falls back to 'Unknown' when author has no name or username", async () => {
+      const anonymousAuthor = { _id: AUTHOR_ID, name: null, username: null, prime: false, roles: {} };
+      const anonymousPost = { ...mockPost, author: anonymousAuthor };
+      Post.find.mockReturnValue(findChain([anonymousPost]));
+      await getOwnPosts(req, res);
+      const json = res.json.mock.calls[0][0];
+      expect(json.posts[0].authorName).toBe("Unknown");
     });
 
     it("returns 500 on unexpected error", async () => {
@@ -199,8 +212,8 @@ describe("postController", () => {
     });
 
     it("returns 201 with created picture post including imageUrl", async () => {
-      req.body = { type: "picture", title: "Pic Post", imageUrl: "https://example.com/img.jpg" };
-      const picPost = { ...mockPost, type: "picture", imageUrl: "https://example.com/img.jpg" };
+      req.body = { type: "picture", title: "Pic Post", imageUrl: IMAGE_URL };
+      const picPost = { ...mockPost, type: "picture", imageUrl: IMAGE_URL };
       const picPopulated = { ...picPost, author: mockAuthor };
       const doc = { ...picPost, populate: jest.fn().mockResolvedValue(picPopulated) };
       Post.create.mockResolvedValue(doc);
@@ -208,12 +221,12 @@ describe("postController", () => {
       expect(res.status).toHaveBeenCalledWith(201);
       const json = res.json.mock.calls[0][0];
       expect(json.post.type).toBe("picture");
-      expect(json.post.imageUrl).toBe("https://example.com/img.jpg");
+      expect(json.post.imageUrl).toBe(IMAGE_URL);
     });
 
     it("returns 201 with created video post including videoId", async () => {
-      req.body = { type: "video", title: "Vid Post", videoId: "bunny-guid-123" };
-      const vidPost = { ...mockPost, type: "video", videoId: "bunny-guid-123" };
+      req.body = { type: "video", title: "Vid Post", videoId: VIDEO_ID };
+      const vidPost = { ...mockPost, type: "video", videoId: VIDEO_ID };
       const vidPopulated = { ...vidPost, author: mockAuthor };
       const doc = { ...vidPost, populate: jest.fn().mockResolvedValue(vidPopulated) };
       Post.create.mockResolvedValue(doc);
@@ -221,7 +234,7 @@ describe("postController", () => {
       expect(res.status).toHaveBeenCalledWith(201);
       const json = res.json.mock.calls[0][0];
       expect(json.post.type).toBe("video");
-      expect(json.post.videoId).toBe("bunny-guid-123");
+      expect(json.post.videoId).toBe(VIDEO_ID);
     });
 
     it("returns 500 on unexpected error", async () => {
@@ -275,6 +288,44 @@ describe("postController", () => {
       expect(res.json).toHaveBeenCalledWith(
         expect.objectContaining({ success: true, post: expect.objectContaining({ title: "Updated Title" }) })
       );
+    });
+
+    it("does not apply imageUrl to a text post", async () => {
+      req.body = { imageUrl: UPDATED_IMAGE_URL };
+      Post.findById.mockResolvedValue(docForUpdate);
+      await updatePost(req, res);
+      expect(docForUpdate.imageUrl).toBeUndefined();
+    });
+
+    it("does not apply videoId to a text post", async () => {
+      req.body = { videoId: UPDATED_VIDEO_ID };
+      Post.findById.mockResolvedValue(docForUpdate);
+      await updatePost(req, res);
+      expect(docForUpdate.videoId).toBeUndefined();
+    });
+
+    it("applies imageUrl to a picture post", async () => {
+      const picDoc = {
+        ...docForUpdate,
+        type: "picture",
+        populate: jest.fn().mockResolvedValue({ ...mockPostPopulated, type: "picture", imageUrl: UPDATED_IMAGE_URL }),
+      };
+      req.body = { imageUrl: UPDATED_IMAGE_URL };
+      Post.findById.mockResolvedValue(picDoc);
+      await updatePost(req, res);
+      expect(picDoc.imageUrl).toBe(UPDATED_IMAGE_URL);
+    });
+
+    it("applies videoId to a video post", async () => {
+      const vidDoc = {
+        ...docForUpdate,
+        type: "video",
+        populate: jest.fn().mockResolvedValue({ ...mockPostPopulated, type: "video", videoId: UPDATED_VIDEO_ID }),
+      };
+      req.body = { videoId: UPDATED_VIDEO_ID };
+      Post.findById.mockResolvedValue(vidDoc);
+      await updatePost(req, res);
+      expect(vidDoc.videoId).toBe(UPDATED_VIDEO_ID);
     });
 
     it("returns 500 on unexpected error", async () => {

@@ -15,7 +15,7 @@ const postSchema = new Schema(
       ref: "MillPrimeUser",
       required: true,
     },
-    // picture posts only
+    // picture posts only (fully qualified image URL)
     imageUrl: { type: String },
     // video posts only (BunnyCDN GUID — see VideoModel for URL construction)
     videoId: { type: String },

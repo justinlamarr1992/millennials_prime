@@ -39,7 +39,7 @@ const toPostResponse = (doc) => {
     title: doc.title,
     description: doc.description,
     authorId: author._id.toString(),
-    authorName: author.name || author.username,
+    authorName: author.name || author.username || "Unknown",
     isPrime: !!author.prime,
     isAdmin: !!author.roles?.Admin,
     createdAt: doc.createdAt.toISOString(),
@@ -119,8 +119,8 @@ const updatePost = async (req, res) => {
     const { title, description, imageUrl, videoId } = req.body;
     if (title !== undefined) post.title = title;
     if (description !== undefined) post.description = description;
-    if (imageUrl !== undefined) post.imageUrl = imageUrl;
-    if (videoId !== undefined) post.videoId = videoId;
+    if (post.type === "picture" && imageUrl !== undefined) post.imageUrl = imageUrl;
+    if (post.type === "video" && videoId !== undefined) post.videoId = videoId;
     await post.save();
     const populated = await post.populate("author", POPULATE_FIELDS);
     res.status(200).json({ success: true, post: toPostResponse(populated) });
