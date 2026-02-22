@@ -1,7 +1,4 @@
-const express = require("express");
-const router = express.Router();
 const Comment = require("../models/Comment");
-const Video = require("../models/VideoModel");
 const logger = require("../utils/logger");
 
 const postComment = async (req, res) => {
@@ -31,11 +28,6 @@ const getComments = async (req, res) => {
     res.status(400).send(err);
   }
 };
-
-// const postReplyComment = async (req, res) => {
-//   try {
-//   } catch (err) {}
-// };
 
 module.exports = {
   postComment,
