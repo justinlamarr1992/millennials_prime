@@ -1,3 +1,1 @@
-const functions = require("firebase-functions/logger");
-
-module.exports = functions;
+module.exports = require("firebase-functions/logger");

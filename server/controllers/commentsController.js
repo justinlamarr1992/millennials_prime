@@ -22,7 +22,6 @@ const postComment = async (req, res) => {
 };
 
 const getComments = async (req, res) => {
-  videoId = req.body.videoId;
   try {
     const comments = await Comment.find({ postId: req.body.videoId })
       .populate("writer")

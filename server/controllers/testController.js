@@ -1,4 +1,5 @@
 const User = require("../models/MillPrimeUser");
+const logger = require("../utils/logger");
 
 const handleTestWeb = async (req, res) => {
   try {
