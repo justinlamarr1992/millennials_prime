@@ -1,4 +1,3 @@
-// const User = require("../models/PrimeUser");
 const User = require("../models/MillPrimeUser");
 const Image = require("../models/Image");
 const Subscriber = require("../models/Subscriber");
@@ -8,38 +7,18 @@ var mongoose = require("mongoose");
 const EXCLUDED_FIELDS = "-password -refreshToken";
 const EXCLUDED_FIELDS_PROJECTION = { password: 0, refreshToken: 0 };
 
-// const User = require("../models/user");
-
 const getModalInfo = async (req, res) => {
   const _id = new mongoose.Types.ObjectId(req.body._id);
 
   // TODO: Get better ways to refine this
 
   try {
-    // This is the code for who to follow that is doing good
-    // So instead of just users find users with most activity of
-    // some sort
-
-    // const follows = await User.find({
-    //   _id: { $nin: [_id] },
-    // }).limit(3);
     const follows = await User.aggregate([
       { $sample: { size: 3 } },
       { $project: EXCLUDED_FIELDS_PROJECTION },
     ]);
 
-    // This is the code for who to connects that is doing good
-
-    // First Connects
-    // const connects = await User.find({
-    //   _id: { $nin: [_id] },
-    // }).limit(3);
-    // const subscribed = await Subscriber.find({
-    //     $and: [{ userTo, userFrom }],
-    //   }).exec();
-
     let connects = await Subscriber.find({ userFrom: _id });
-    // console.log("This is the Random Connects List", randomConnects);
 
     const _randomslice = (ar, size) => {
       let new_ar = [...ar];
@@ -47,13 +26,10 @@ const getModalInfo = async (req, res) => {
       return ar.length <= size + 1 ? new_ar : _randomslice(new_ar, size);
     };
 
-    // console.log("This is the Code im trying", _randomslice(randomConnects, 2));
-
     connects = _randomslice(connects, 3);
 
     const ranArray = [];
     const newTest = connects.map((newItem) => {
-      // ranArray.push(User.findOne({ _id: newItem._id }).exec());
       ranArray.push(newItem.userTo);
     });
 
@@ -70,7 +46,6 @@ const getUser = async (req, res) => {
     return res.status(400).json({ message: "User ID required" });
 
   const _id = new mongoose.Types.ObjectId(req.params.id);
-  // console.log(_id);
 
   try {
     const user = await User.findOne({ _id }).select(EXCLUDED_FIELDS).exec();
@@ -197,7 +172,6 @@ const updateBusinessInfo = async (req, res) => {
     factorsOfLocation,
   } = req.body.values;
   let business = {
-    // businessLogo,
     entrepreneur,
     companyName,
     industry,
@@ -220,7 +194,6 @@ const updateBusinessInfo = async (req, res) => {
       { _id },
       {
         business: {
-          // businessLogo,
           entrepreneur,
           companyName,
           industry,
@@ -290,7 +263,6 @@ const updateProfileSettings = async (req, res) => {
         },
       }
     );
-    // Trying Insert next
     if (!user) {
       return res
         .status(204)
@@ -371,12 +343,10 @@ const updateArtInfo = async (req, res) => {
 };
 
 const getPicture = async (req, res) => {
-  // console.log("Decode Encode Practice");
   const _id = req.body._id;
   try {
     const user = await User.find({ _id });
     const image = user[0].profilePic;
-    // console.log(image);
 
     try {
       const getImage = await Image.find({ _id: image });
