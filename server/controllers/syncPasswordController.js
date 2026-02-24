@@ -8,18 +8,12 @@ const handleSyncPassword = async (req, res) => {
   if (!authHeader?.startsWith("Bearer ")) return res.sendStatus(401);
 
   const { newPassword } = req.body;
-  if (typeof newPassword !== "string") {
+  if (typeof newPassword !== "string" || newPassword.length === 0) {
     return res
       .status(400)
       .json({ message: "newPassword must be a non-empty string" });
   }
-  const trimmedPassword = newPassword.trim();
-  if (trimmedPassword.length === 0) {
-    return res
-      .status(400)
-      .json({ message: "newPassword must be a non-empty string" });
-  }
-  if (trimmedPassword.length < 6) {
+  if (newPassword.length < 6) {
     return res
       .status(400)
       .json({ message: "newPassword must be at least 6 characters long" });
@@ -50,11 +44,11 @@ const handleSyncPassword = async (req, res) => {
   if (!foundUser) return res.sendStatus(404);
 
   try {
-    const hashedPassword = await bcrypt.hash(trimmedPassword, 10);
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
     foundUser.password = hashedPassword;
     await foundUser.save();
   } catch (saveError) {
-    logger.error("syncPassword: DB write error:", saveError);
+    logger.error("syncPassword: password update error:", saveError);
     return res.sendStatus(500);
   }
 

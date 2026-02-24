@@ -67,11 +67,20 @@ describe("handleSyncPassword", () => {
   });
 
   it("returns 400 when newPassword is an empty string", async () => {
-    req.body = { newPassword: "   " };
+    req.body = { newPassword: "" };
     await handleSyncPassword(req, res);
     expect(res.status).toHaveBeenCalledWith(400);
     expect(res.json).toHaveBeenCalledWith({
       message: "newPassword must be a non-empty string",
+    });
+  });
+
+  it("returns 400 when newPassword contains only whitespace (too short)", async () => {
+    req.body = { newPassword: "   " };
+    await handleSyncPassword(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      message: "newPassword must be at least 6 characters long",
     });
   });
 
