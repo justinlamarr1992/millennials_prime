@@ -52,26 +52,34 @@ describe("handleSyncPassword", () => {
     req.body = {};
     await handleSyncPassword(req, res);
     expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith({ message: "newPassword must be a non-empty string" });
+    expect(res.json).toHaveBeenCalledWith({
+      message: "newPassword must be a non-empty string",
+    });
   });
 
   it("returns 400 when newPassword is a non-string type", async () => {
     req.body = { newPassword: { evil: "object" } };
     await handleSyncPassword(req, res);
     expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith({ message: "newPassword must be a non-empty string" });
+    expect(res.json).toHaveBeenCalledWith({
+      message: "newPassword must be a non-empty string",
+    });
   });
 
   it("returns 400 when newPassword is an empty string", async () => {
     req.body = { newPassword: "   " };
     await handleSyncPassword(req, res);
     expect(res.status).toHaveBeenCalledWith(400);
-    expect(res.json).toHaveBeenCalledWith({ message: "newPassword must be a non-empty string" });
+    expect(res.json).toHaveBeenCalledWith({
+      message: "newPassword must be a non-empty string",
+    });
   });
 
   it("returns 404 when user is not found in MongoDB", async () => {
     admin.auth.mockReturnValue({
-      verifyIdToken: jest.fn().mockResolvedValue({ email: "unknown@example.com" }),
+      verifyIdToken: jest
+        .fn()
+        .mockResolvedValue({ email: "unknown@example.com" }),
     });
     User.findOne.mockReturnValue({ exec: jest.fn().mockResolvedValue(null) });
     await handleSyncPassword(req, res);
@@ -87,7 +95,9 @@ describe("handleSyncPassword", () => {
     admin.auth.mockReturnValue({
       verifyIdToken: jest.fn().mockResolvedValue({ email: "user@example.com" }),
     });
-    User.findOne.mockReturnValue({ exec: jest.fn().mockResolvedValue(mockUser) });
+    User.findOne.mockReturnValue({
+      exec: jest.fn().mockResolvedValue(mockUser),
+    });
     bcrypt.hash.mockResolvedValue("new-bcrypt-hash");
 
     await handleSyncPassword(req, res);
@@ -115,10 +125,33 @@ describe("handleSyncPassword", () => {
     admin.auth.mockReturnValue({
       verifyIdToken: jest.fn().mockResolvedValue({ email: "user@example.com" }),
     });
-    User.findOne.mockReturnValue({ exec: jest.fn().mockResolvedValue(mockUser) });
+    User.findOne.mockReturnValue({
+      exec: jest.fn().mockResolvedValue(mockUser),
+    });
     bcrypt.hash.mockResolvedValue("new-bcrypt-hash");
 
     await handleSyncPassword(req, res);
     expect(res.sendStatus).toHaveBeenCalledWith(500);
+  });
+
+  it("returns 500 when User.findOne throws a database error", async () => {
+    admin.auth.mockReturnValue({
+      verifyIdToken: jest.fn().mockResolvedValue({ email: "user@example.com" }),
+    });
+    User.findOne.mockReturnValue({
+      exec: jest.fn().mockRejectedValue(new Error("DB read error")),
+    });
+
+    await handleSyncPassword(req, res);
+    expect(res.sendStatus).toHaveBeenCalledWith(500);
+  });
+
+  it("returns 400 when newPassword is fewer than 6 characters", async () => {
+    req.body = { newPassword: "abc" };
+    await handleSyncPassword(req, res);
+    expect(res.status).toHaveBeenCalledWith(400);
+    expect(res.json).toHaveBeenCalledWith({
+      message: "newPassword must be at least 6 characters long",
+    });
   });
 });
