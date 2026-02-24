@@ -1,6 +1,7 @@
 const admin = require("../config/firebaseAdmin");
 const User = require("../models/MillPrimeUser");
 const bcrypt = require("bcrypt");
+const logger = require("../utils/logger");
 
 const handleSyncPassword = async (req, res) => {
   const authHeader = req.headers.authorization || req.headers.Authorization;
@@ -43,7 +44,7 @@ const handleSyncPassword = async (req, res) => {
   try {
     foundUser = await User.findOne({ username: email }).exec();
   } catch (dbError) {
-    console.error("syncPassword: DB lookup error:", dbError);
+    logger.error("syncPassword: DB lookup error:", dbError);
     return res.sendStatus(500);
   }
   if (!foundUser) return res.sendStatus(404);
@@ -53,7 +54,7 @@ const handleSyncPassword = async (req, res) => {
     foundUser.password = hashedPassword;
     await foundUser.save();
   } catch (saveError) {
-    console.error("syncPassword: DB write error:", saveError);
+    logger.error("syncPassword: DB write error:", saveError);
     return res.sendStatus(500);
   }
 
