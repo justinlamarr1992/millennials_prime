@@ -4,8 +4,11 @@ const PrimeNews = () => {
   const libraryId = process.env.REACT_APP_BUNNY_LIBRARY_ID;
   const accessKey = process.env.REACT_APP_BUNNY_ACCESS_KEY;
   const [video, setVideo] = useState({});
+  const [error, setError] = useState(false);
 
   useEffect(() => {
+    if (!libraryId || !accessKey) return;
+
     fetch(
       `https://video.bunnycdn.com/library/${libraryId}/videos?page=1&itemsPerPage=2&orderBy=date`,
       {
@@ -19,7 +22,10 @@ const PrimeNews = () => {
           setVideo(response.items[0]);
         }
       })
-      .catch((err) => console.error(err));
+      .catch((err) => {
+        console.error(err);
+        setError(true);
+      });
   }, [libraryId, accessKey]);
 
   return (
@@ -29,21 +35,25 @@ const PrimeNews = () => {
     >
       <h2 className="pr-title title-space">Prime News</h2>
 
-      <iframe
-        title="Prime News latest video"
-        src={
-          video.guid
-            ? `https://video.bunnycdn.com/embed/${libraryId}/${video.guid}`
-            : "Loading"
-        }
-        className="pr-video p-con-shade"
-        loading="lazy"
-        width="1280"
-        height="720"
-        style={{ border: "none" }}
-        allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
-        allowFullScreen={true}
-      ></iframe>
+      {error ? (
+        <p role="alert" className="pr-video p-con-shade">
+          Unable to load video. Please try again later.
+        </p>
+      ) : video.guid ? (
+        <iframe
+          title="Prime News latest video"
+          src={`https://video.bunnycdn.com/embed/${libraryId}/${video.guid}`}
+          className="pr-video p-con-shade"
+          loading="lazy"
+          width="1280"
+          height="720"
+          style={{ border: "none" }}
+          allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;"
+          allowFullScreen={true}
+        />
+      ) : (
+        <div className="pr-video p-con-shade" aria-label="Video loading" />
+      )}
 
       <div className="pr-video-info-news">
         <h3>{video.title ?? "Loading"}</h3>
