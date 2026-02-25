@@ -1,6 +1,9 @@
 import React from "react";
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import PrimeNews from "./PrimeNews";
+
+process.env.REACT_APP_BUNNY_LIBRARY_ID = "147838";
+process.env.REACT_APP_BUNNY_ACCESS_KEY = "test-key";
 
 const makeFetchResponse = (items) =>
   Promise.resolve({ json: () => Promise.resolve({ items }) });
@@ -29,7 +32,9 @@ describe("PrimeNews", () => {
     await screen.findByText("Test Video");
     expect(global.fetch).toHaveBeenCalledTimes(1);
     expect(global.fetch).toHaveBeenCalledWith(
-      expect.stringContaining("bunnycdn.com/library"),
+      expect.stringContaining(
+        `bunnycdn.com/library/${process.env.REACT_APP_BUNNY_LIBRARY_ID}/videos`,
+      ),
       expect.objectContaining({ method: "GET" }),
     );
   });
@@ -67,6 +72,19 @@ describe("PrimeNews", () => {
     render(<PrimeNews />);
 
     await screen.findByText("This is the description");
+  });
+
+  it("renders loading state when API returns empty items array", async () => {
+    global.fetch.mockReturnValue(makeFetchResponse([]));
+
+    render(<PrimeNews />);
+
+    // act flushes all microtasks including the resolved fetch promise and
+    // any resulting state updates — catches crashes from setVideo(undefined)
+    await act(async () => {
+      await Promise.resolve();
+    });
+    expect(screen.getByText("Loading")).toBeInTheDocument();
   });
 
   it("logs an error when the fetch fails", async () => {

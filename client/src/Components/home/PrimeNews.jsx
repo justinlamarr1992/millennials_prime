@@ -1,25 +1,26 @@
 import React, { useEffect, useState } from "react";
 
-const LIBRARY_ID = "147838";
-const ACCESS_KEY = "a80779d4-9931-4345-80c1ca2315d2-fc09-4143";
-
 const PrimeNews = () => {
+  const libraryId = process.env.REACT_APP_BUNNY_LIBRARY_ID;
+  const accessKey = process.env.REACT_APP_BUNNY_ACCESS_KEY;
   const [video, setVideo] = useState({});
 
   useEffect(() => {
     fetch(
-      `https://video.bunnycdn.com/library/${LIBRARY_ID}/videos?page=1&itemsPerPage=2&orderBy=date`,
+      `https://video.bunnycdn.com/library/${libraryId}/videos?page=1&itemsPerPage=2&orderBy=date`,
       {
         method: "GET",
-        headers: { accept: "application/json", AccessKey: ACCESS_KEY },
+        headers: { accept: "application/json", AccessKey: accessKey },
       },
     )
       .then((response) => response.json())
       .then((response) => {
-        setVideo(response.items[0]);
+        if (response.items && response.items.length > 0) {
+          setVideo(response.items[0]);
+        }
       })
       .catch((err) => console.error(err));
-  }, []);
+  }, [libraryId, accessKey]);
 
   return (
     <section
@@ -32,7 +33,7 @@ const PrimeNews = () => {
         title="Prime News latest video"
         src={
           video.guid
-            ? `https://video.bunnycdn.com/embed/${LIBRARY_ID}/${video.guid}`
+            ? `https://video.bunnycdn.com/embed/${libraryId}/${video.guid}`
             : "Loading"
         }
         className="pr-video p-con-shade"
